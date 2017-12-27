@@ -1,0 +1,243 @@
+body {
+    font-family:verdana,helvetica,arial,sans-serif;
+    padding:20px;
+    font-size:12px;
+    margin:0;
+}
+h2 {
+    font-size:18px;
+    font-weight:bold;
+    margin:0;
+    margin-bottom:15px;
+}
+
+hr.thin {
+  height: 1px;
+}
+hr.fat {
+  height: 3px;
+}
+
+.uniworks-info{
+	padding:0 0 12px 0;
+}
+.uniworks-tip{
+	display:none;
+}
+
+#apprAuthInfo {
+	border-collapse: collapse;
+	border: 2px solid gray;
+	border-spacing: 0;
+	empty-cells: show;
+	width: 100%;
+	table-layout: fixed;
+}
+
+#apprAuthInfo .td_head01 {
+	padding: 3px;
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;
+	border-bottom: 2px solid gray;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	background: url(../../image/sprites.png) repeat-x 0px -120px;
+	vertical-align: middle;
+}
+
+#apprAuthInfo .td_title01 {
+	padding: 3px;
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;
+	font-size: 12px;
+	vertical-align: middle;
+	text-align: center;
+	background: url(../../image/sprites.png) repeat-x 0px -120px;
+}
+
+#apprAuthInfo .td_class01 {
+	padding: 3px;
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;
+	font-size: 12px;
+	vertical-align: middle;
+	background-color: white;
+}
+
+#apprLine {
+	border-collapse: collapse;
+	border: 2px solid gray;
+	width: 100%;
+	border-spacing: 0;
+	empty-cells: show;
+	table-layout: fixed;
+}
+
+#apprLine .td_head01 {
+	padding: 3px;
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;
+	border-bottom: 2px solid gray;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	background: url(../../image/sprites.png) repeat-x 0px -120px;
+	vertical-align: middle;
+}
+
+#apprLine .td_class01 {
+	padding: 3px;
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;
+	font-size: 12px;
+	vertical-align: middle;
+	background-color: white;
+	text-align: center;	
+}
+
+.apprRcptRfnc {
+	border-collapse: collapse;
+	border: 2px solid gray;
+	width: 100%;
+	border-spacing: 0;
+	empty-cells: show;
+	table-layout: fixed;
+}
+
+.apprRcptRfnc .td_head01 {
+	padding: 3px;
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;
+	border-bottom: 2px solid gray;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	background: url(../../image/sprites.png) repeat-x 0px -120px;
+	vertical-align: middle;
+}
+
+.apprRcptRfnc .td_title01 {
+	padding: 3px;
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;
+	font-size: 12px;
+	width: 120px;
+	vertical-align: middle;
+	text-align: center;
+	background: url(../../image/sprites.png) repeat-x 0px -120px;
+}
+
+.apprRcptRfnc .td_class01 {
+	padding: 3px;
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;
+	font-size: 12px;
+	vertical-align: middle;
+	background-color: white;
+}
+
+.attachFile {
+	border-collapse: collapse;
+	border: 2px solid gray;
+	width: 100%;
+	border-spacing: 0;
+	empty-cells: show;
+	table-layout: fixed;
+}
+
+.attachFile .td_head01 {
+	padding: 3px;
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;
+	border-bottom: 2px solid gray;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	background: url(../../image/sprites.png) repeat-x 0px -120px;
+	vertical-align: middle;
+}
+
+.attachFile .td_title01 {
+	padding: 3px;
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;
+	font-size: 12px;
+	vertical-align: middle;
+	text-align: center;
+	background: url(../../image/sprites.png) repeat-x 0px -120px;
+}
+
+.attachFile .td_class01 {
+	padding: 3px;
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;
+	font-size: 12px;
+	vertical-align: middle;
+	background-color: white;
+}
+
+.alignLeft {
+	text-align: left;
+}
+
+.alignCenter {
+	text-align: center;
+}
+
+.alignRight {
+	text-align: right;
+}
+
+table#approvalForm {
+	width: 100%;
+}
+
+table#approvalForm td {
+	width: 25%;
+	padding:10px;
+}
+
+table th {
+	align: center;	
+}
+
+iframe#frmMain {
+	border-top-style: none;
+	border-left-style: none;
+	border-bottom-style: none;
+	border-right-style: none;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	overflow: hidden;
+}
+
+.bg-grayLighter {
+  background: #eeeeee !important;
+}
+
+.floatLeft2 {
+	padding: 2px;
+	float: left;
+}
+
+.floatRight2 {
+	padding: 2px;
+	float: right;
+}
+
+.floatCenter2 {
+	padding: 2px;
+	float: center;
+}
+
+.tinymce01 {
+	width: 100%;
+	height: 300px; 
+}
+
+.noscroll{
+   overflow:hidden;
+}

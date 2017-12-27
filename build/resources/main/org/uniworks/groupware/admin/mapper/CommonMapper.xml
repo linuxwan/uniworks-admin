@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.CommonMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.CommonCode">
+		<result column="MAJ_CODE" jdbcType="VARCHAR" property="majCode" />
+		<result column="SUB_CODE" jdbcType="VARCHAR" property="subCode" />
+		<result column="RESC_KEY" jdbcType="VARCHAR" property="rescKey" />
+		<result column="USE_INDC" jdbcType="VARCHAR" property="useIndc" />
+		<result column="RESC_KEY_VALUE" jdbcType="VARCHAR" property="rescKeyValue" />
+		<result column="RESC_KEY_DESC" jdbcType="VARCHAR" property="rescKeyDesc" />
+	</resultMap>
+		
+	<!-- 주코드에 해당하는 하위 코드 목록을 가져온다. -->
+	<select id="selectByCommonSubCodeList" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select A.MAJ_CODE as MAJ_CODE, A.SUB_CODE as SUB_CODE, A.RESC_KEY as RESC_KEY, A.USE_INDC as USE_INDC,  
+			   B.RESC_KEY_VALUE as RESC_KEY_VALUE, B.RESC_KEY_DESC as RESC_KEY_DESC
+		from   cm002c A, cm003m B
+		where  A.MAJ_CODE = #{majCode,jdbcType=VARCHAR}
+		  and  A.RESC_KEY = B.RESC_KEY
+		  and  B.LOCALE = #{lang,jdbcType=VARCHAR}
+		<if test="orderBy == 'rescKey'">  
+		order  by B.RESC_KEY
+		</if>
+		<if test="orderBy != 'rescKey'">
+		order  by B.RESC_KEY_VALUE
+		</if>
+	</select>
+</mapper>

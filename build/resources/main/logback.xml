@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- 30초마다 설정 파일의 변경을 확인한다. 파일이 변경되면 다시 로딩한다 -->
+	<configuration scan="true" scanPeriod="30 seconds">
+ 
+    <!-- 외부 설정파일을 사용할 수 있다. -->
+    <property resource="resource.properties"/>
+ 
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+            	%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    
+    <!-- file로 log 남기기 -->    
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>D:\Temp\uniworks_admin-webapp.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 파일이 하루에 한개씩 생성된다 -->
+            <fileNamePattern>uniworks_admin-webapp.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+ 
+            <!-- maxHIstory 설정은 위 부분에 롤링 정책에 따라 적용되 된다고 보면된다. 위 설정데로 라면 30일이 지난 파일은 삭제가 된다.-->
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+ 
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+ 
+    <logger name="org.springframework" level="debug" />
+    <logger name="org.apache.ibatis" level="debug"/>
+    <logger name="org.uniworks.groupware.admin" level="debug"/>
+    
+    <!-- Query Loggers -->
+    <logger name="java.sql" level="error">        
+        <appender-ref ref="console" />
+        <appender-ref ref="FILE"/>
+    </logger>    
+    <!-- SQL문만을 로그로 남기며, PreparedStatement일 경우 관련된 argument 값으로 대체된 SQL문이 보여진다. -->
+    <logger name="jdbc.sqlonly" additivity="true" level="debug">
+        <appender-ref ref="console" />
+    </logger>
+    <!-- SQL문과 해당 SQL을 실행시키는데 수행된 시간 정보(milliseconds)를 포함한다. -->
+    <logger name="jdbc.sqltiming" level="debug">
+        <appender-ref ref="console" />
+    </logger>
+    <!-- ResultSet을 제외한 모든 JDBC 호출 정보를 로그로 남긴다. 많은 양의 로그가 생성되므로 특별히 JDBC 문제를 추적해야 할 필요가 있는 경우를 제외하고는 사용을 권장하지 않는다. -->
+    <logger name="jdbc.audit" level="error">
+    	<appender-ref ref="console" />
+    </logger>
+    <!-- ResultSet을 포함한 모든 JDBC 호출 정보를 로그로 남기므로 매우 방대한 양의 로그가 생성된다. -->
+    <logger name="jdbc.resultset" level="error">
+    	<appender-ref ref="console" />
+    </logger>
+
+    <logger name="jdbc.connection" level="info">
+    	<appender-ref ref="console" />
+    </logger>
+    
+    <logger name="org.springframework.jdbc.core.JdbcTemplate" additivity="false" level="info">
+        <appender-ref ref="console" />
+    </logger>
+
+
+    <logger name="org.springframework.jdbc.core.StatementCreatorUtils" additivity="false" level="info">
+        <appender-ref ref="console" />
+    </logger>
+    
+    <logger name="org.mybatis.spring.SqlSessionUtils" level="info" additivity="false">
+        <appender-ref ref="console" />        
+    </logger>
+    
+    
+    <root level="debug">
+    	<appender-ref ref="console"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

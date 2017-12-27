@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Cm010cMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Cm010c"> 
+		<result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" /> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="EMP_NO" jdbcType="VARCHAR" property="empNo" /> 
+		<result column="PSWD" jdbcType="VARCHAR" property="pswd" /> 
+		<result column="PSWD_CHNG_DATE" jdbcType="TIMESTAMP" property="pswdChngDate" /> 
+		<result column="USE_ST_DATE" jdbcType="TIMESTAMP" property="useStDate" /> 
+		<result column="USE_FIN_DATE" jdbcType="TIMESTAMP" property="useFinDate" /> 
+		<result column="ADMIN_TYPE" jdbcType="VARCHAR" property="adminType" /> 
+	</resultMap> 
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  ADMIN_ID, CO_ID, EMP_NO, PSWD, PSWD_CHNG_DATE, USE_ST_DATE, USE_FIN_DATE, ADMIN_TYPE
+		from   cm010c
+	</select> 
+ 
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  ADMIN_ID, CO_ID, EMP_NO, PSWD, PSWD_CHNG_DATE, USE_ST_DATE, USE_FIN_DATE, ADMIN_TYPE
+		from   cm010c
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and  ADMIN_ID	=	#{adminId,jdbcType=VARCHAR}		 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Cm010c"> 
+		insert	into cm010c(ADMIN_ID, CO_ID, EMP_NO, PSWD, PSWD_CHNG_DATE, USE_ST_DATE, USE_FIN_DATE, ADMIN_TYPE) 
+		values (#{adminId,jdbcType=VARCHAR},#{coId,jdbcType=VARCHAR},#{empNo,jdbcType=VARCHAR},#{pswd,jdbcType=VARCHAR},#{pswdChngDate,jdbcType=TIMESTAMP},#{useStDate,jdbcType=TIMESTAMP},#{useFinDate,jdbcType=TIMESTAMP} 
+,#{adminType,jdbcType=VARCHAR}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Cm010c"> 
+		update	cm010c 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="coId != null">CO_ID= #{coId,jdbcType=VARCHAR},</if> 
+			<if test="empNo != null">EMP_NO= #{empNo,jdbcType=VARCHAR},</if> 
+			<if test="pswd != null">PSWD= #{pswd,jdbcType=VARCHAR},</if> 
+			<if test="pswdChngDate != null">PSWD_CHNG_DATE= #{pswdChngDate,jdbcType=TIMESTAMP},</if> 
+			<if test="useStDate != null">USE_ST_DATE= #{useStDate,jdbcType=TIMESTAMP},</if> 
+			<if test="useFinDate != null">USE_FIN_DATE= #{useFinDate,jdbcType=TIMESTAMP},</if> 
+			<if test="adminType != null">ADMIN_TYPE= #{adminType,jdbcType=VARCHAR},</if> 
+		</trim> 
+		where	ADMIN_ID	=	#{adminId,jdbcType=VARCHAR} 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from cm010c 
+		where	ADMIN_ID	=	#{adminId,jdbcType=VARCHAR} 
+	</delete> 
+</mapper>
