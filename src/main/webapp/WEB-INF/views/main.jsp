@@ -52,7 +52,7 @@
         		<div class="easyui-panel" title="Menu" style="width:100%;">
 		        <div class="easyui-menu" data-options="inline:true" style="width:100%">
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.companyMgr"/>','/admin/companyMgr')"><spring:message code="resc.menu.companyMgr"/></div>		            
-		            <div onclick="javascript:goPage('new')">관리자 정보</div>
+		            <div onclick="javascript:goPage('<spring:message code="resc.menu.adminInfo"/>','/admin/adminMgr')"><spring:message code="resc.menu.adminInfo"/></div>
 		            <div onclick="javascript:goPage('new')">코드 관리</div>
 		            <div onclick="javascript:goPage('new')">조직 관리</div>
 		            <div onclick="javascript:goPage('new')">인사 관리</div>
