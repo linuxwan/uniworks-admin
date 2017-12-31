@@ -16,6 +16,12 @@
 	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
 		select  ADMIN_ID, CO_ID, EMP_NO, PSWD, PSWD_CHNG_DATE, USE_ST_DATE, USE_FIN_DATE, ADMIN_TYPE
 		from   cm010c
+		<where>
+			<if test="adminType != 'SYS_ADM'">
+				CO_ID	=	#{coId,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by CO_ID, ADMIN_ID
 	</select> 
  
 	<!-- 상세 조회 --> 

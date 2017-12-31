@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.util.WebUtils;
+import org.uniworks.groupware.admin.common.UserSession;
 import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.domain.Hr001m;
 import org.uniworks.groupware.admin.domain.Hr001mExtend;
@@ -50,6 +52,11 @@ public class CompanyController {
 	@GetMapping(value = "/company")
 	public ResponseEntity<List<Hr001m>> getCompanyListAll(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		//Session 정보를 가져온다.
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		map.put("adminType", userSession.getAdminType());
+		map.put("coId",  userSession.getCoId());
+		
 		List<Hr001m> list = hr001mService.getHr001mList(map);
 		List<Hr001m> returnList = new ArrayList<Hr001m>();
 		
