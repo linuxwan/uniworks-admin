@@ -15,7 +15,7 @@
 
     <script type="text/javascript">	
     $(function(){
-    	$('#adminList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
+    	$('#adminList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());    	
     });
     
     
@@ -124,10 +124,14 @@
     </div>	
     <script type="text/javascript">
     function append() {
+    	/*
     	var apprLevel = $("#apprLevel").val();
 		var url = "<c:out value="${contextPath}"/>/admin/adminAddForm";
 		$.popupWindow(url, { height: 450, width: 700 });
+		*/
+    	$('#adminAdd').dialog('open');
     }
     </script>	
+    <jsp:include page="/WEB-INF/views/admin/admin_add_form_01.jsp"></jsp:include>
 </body>
 </html>

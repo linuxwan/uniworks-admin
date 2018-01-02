@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="org.uniworks.groupware.admin.mapper.Cm002cMapper"> 
 	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Cm002c"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
 		<result column="MAJ_CODE" jdbcType="VARCHAR" property="majCode" /> 
 		<result column="SUB_CODE" jdbcType="VARCHAR" property="subCode" /> 
 		<result column="RESC_KEY" jdbcType="VARCHAR" property="rescKey" /> 
@@ -12,22 +13,24 @@
 
 	<!-- 목록 조회 --> 
 	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
-		select  MAJ_CODE, SUB_CODE, RESC_KEY, SUB_CODE_NAME, SUB_CODE_DESC, USE_INDC
+		select  CO_ID, MAJ_CODE, SUB_CODE, RESC_KEY, SUB_CODE_NAME, SUB_CODE_DESC, USE_INDC
 		from   cm002c
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR}
 	</select> 
  
 	<!-- 상세 조회 --> 
 	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
-		select  MAJ_CODE, SUB_CODE, RESC_KEY, SUB_CODE_NAME, SUB_CODE_DESC, USE_INDC
+		select  CO_ID, MAJ_CODE, SUB_CODE, RESC_KEY, SUB_CODE_NAME, SUB_CODE_DESC, USE_INDC
 		from   cm002c
-		where  MAJ_CODE	=	#{majCode,jdbcType=VARCHAR} 
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and  MAJ_CODE	=	#{majCode,jdbcType=VARCHAR} 
 		  and  SUB_CODE	=	#{subCode,jdbcType=VARCHAR} 
 	</select> 
  
 	<!-- 등록 --> 
 	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Cm002c"> 
-		insert	into cm002c(MAJ_CODE, SUB_CODE, RESC_KEY, SUB_CODE_NAME, SUB_CODE_DESC, USE_INDC) 
-		values (#{majCode,jdbcType=VARCHAR},#{subCode,jdbcType=VARCHAR},#{rescKey,jdbcType=VARCHAR},#{subCodeName,jdbcType=VARCHAR},#{subCodeDesc,jdbcType=VARCHAR},#{useIndc,jdbcType=VARCHAR}) 
+		insert	into cm002c(CO_ID, MAJ_CODE, SUB_CODE, RESC_KEY, SUB_CODE_NAME, SUB_CODE_DESC, USE_INDC) 
+		values (#{coId,jdbcType=VARCHAR},#{majCode,jdbcType=VARCHAR},#{subCode,jdbcType=VARCHAR},#{rescKey,jdbcType=VARCHAR},#{subCodeName,jdbcType=VARCHAR},#{subCodeDesc,jdbcType=VARCHAR},#{useIndc,jdbcType=VARCHAR}) 
 	</insert> 
  
 	<!-- 수정 --> 
@@ -39,14 +42,16 @@
 			<if test="subCodeDesc != null">SUB_CODE_DESC= #{subCodeDesc,jdbcType=VARCHAR},</if> 
 			<if test="useIndc != null">USE_INDC= #{useIndc,jdbcType=VARCHAR},</if> 
 		</trim> 
-		where	MAJ_CODE	=	#{majCode,jdbcType=VARCHAR} 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and   MAJ_CODE	=	#{majCode,jdbcType=VARCHAR} 
 		  and	SUB_CODE	=	#{subCode,jdbcType=VARCHAR} 
 	</update> 
  
 	<!-- 삭제 --> 
 	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
 		delete	from cm002c 
-		where	MAJ_CODE	=	#{majCode,jdbcType=VARCHAR} 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and   MAJ_CODE	=	#{majCode,jdbcType=VARCHAR} 
 		  and	SUB_CODE	=	#{subCode,jdbcType=VARCHAR} 
 	</delete> 
 </mapper>

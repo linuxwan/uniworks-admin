@@ -17,16 +17,23 @@ import org.pojomatic.annotations.AutoProperty;
  * 관련 테이블 : Cm001c
  */ 
 @XmlRootElement(name = "cm001c") 
-@XmlType(propOrder = {"majCode", "rescKey", "majCodeName", "majCodeDesc", "useIndc"}) 
+@XmlType(propOrder = {"coId", "majCode", "rescKey", "majCodeName", "majCodeDesc", "useIndc"}) 
 @AutoProperty 
 @SuppressWarnings("serial") 
-public class Cm001c implements Serializable {  
+public class Cm001c implements Serializable {
+	private String coId;
 	private String majCode; 
 	private String rescKey; 
 	private String majCodeName; 
 	private String majCodeDesc; 
 	private String useIndc; 
 
+	public String getCoId() {
+		return coId;
+	}
+	public void setCoId(String coId) {
+		this.coId = coId;
+	}
 	public void setMajCode(String majCode) { 
 		this.majCode = majCode; 
 	} 
