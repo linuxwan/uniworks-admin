@@ -300,9 +300,13 @@
 	<table style="width:100%">
 		<tr>
 			<td colspan="2">
+			<sec:authorize access="hasRole('SYS_ADM')">
 				<a href="#" id="btnAdd" class="easyui-linkbutton" data-options="iconCls:'icon-add'"><spring:message code="resc.btn.enrollment"/></a>
+			</sec:authorize>
 				<a href="#" id="btnModify" class="easyui-linkbutton" data-options="iconCls:'icon-edit'"><spring:message code="resc.btn.modify"/></a>
+			<sec:authorize access="hasRole('SYS_ADM')">				
         		<a href="#" id="btnDelete" class="easyui-linkbutton" data-options="iconCls:'icon-remove'"><spring:message code="resc.btn.delete"/></a>
+        	</sec:authorize>
 			</td>
 		</tr>
 		<tr>

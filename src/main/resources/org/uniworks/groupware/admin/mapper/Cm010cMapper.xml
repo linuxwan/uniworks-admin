@@ -17,8 +17,11 @@
 		select  ADMIN_ID, CO_ID, EMP_NO, PSWD, PSWD_CHNG_DATE, USE_ST_DATE, USE_FIN_DATE, ADMIN_TYPE
 		from   cm010c
 		<where>
-			<if test="adminType != 'SYS_ADM'">
+			<if test="adminType == 'CNT_ADM'">
 				CO_ID	=	#{coId,jdbcType=VARCHAR}
+			</if>
+			<if test="adminType == 'GRP_ADM'">
+				CO_ID	IN (select  CO_ID  from    hr001m where CO_ID =  #{coId,jdbcType=VARCHAR}  or  PRNT_CO_CODE = #{coId,jdbcType=VARCHAR})		
 			</if>
 		</where>
 		order by CO_ID, ADMIN_ID
@@ -43,7 +46,6 @@
 	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Cm010c"> 
 		update	cm010c 
 		<trim prefix="SET" suffixOverrides=","> 
-			<if test="coId != null">CO_ID= #{coId,jdbcType=VARCHAR},</if> 
 			<if test="empNo != null">EMP_NO= #{empNo,jdbcType=VARCHAR},</if> 
 			<if test="pswd != null">PSWD= #{pswd,jdbcType=VARCHAR},</if> 
 			<if test="pswdChngDate != null">PSWD_CHNG_DATE= #{pswdChngDate,jdbcType=TIMESTAMP},</if> 
@@ -51,12 +53,14 @@
 			<if test="useFinDate != null">USE_FIN_DATE= #{useFinDate,jdbcType=TIMESTAMP},</if> 
 			<if test="adminType != null">ADMIN_TYPE= #{adminType,jdbcType=VARCHAR},</if> 
 		</trim> 
-		where	ADMIN_ID	=	#{adminId,jdbcType=VARCHAR} 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and	ADMIN_ID	=	#{adminId,jdbcType=VARCHAR} 
 	</update> 
  
 	<!-- 삭제 --> 
 	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
 		delete	from cm010c 
-		where	ADMIN_ID	=	#{adminId,jdbcType=VARCHAR} 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and	ADMIN_ID	=	#{adminId,jdbcType=VARCHAR} 
 	</delete> 
 </mapper>

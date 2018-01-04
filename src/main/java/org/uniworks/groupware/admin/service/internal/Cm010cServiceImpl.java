@@ -5,6 +5,7 @@
  */ 
 package org.uniworks.groupware.admin.service.internal; 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,4 +70,21 @@ public class Cm010cServiceImpl implements Cm010cService {
 	public int deleteCm010c(Map<String, Object> map) { 
 		return cm010cMapper.deleteByPrimaryKey(map); 
 	} 
+	
+	/**
+	 * 등록된 관리자가 있는지 체크한다.
+	 * @param coId
+	 * @param adminId
+	 * @return
+	 */
+	public boolean isAdminExist(String coId, String adminId) {
+		boolean chk = false;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", coId);
+		map.put("adminId", adminId);
+		
+		Cm010c cm010c = cm010cMapper.selectByPrimaryKey(map);
+		if (cm010c != null && cm010c.getCoId().length() > 0) chk = true;
+		return chk;
+	}
 } 

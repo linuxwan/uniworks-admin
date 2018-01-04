@@ -18,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.web.util.WebUtils;
-import org.uniworks.groupware.admin.common.UserSession;
+import org.uniworks.groupware.admin.common.util.SecurityUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.domain.Hr001m;
 import org.uniworks.groupware.admin.domain.Hr001mExtend;
@@ -51,11 +51,13 @@ public class CompanyController {
 	 */
 	@GetMapping(value = "/company")
 	public ResponseEntity<List<Hr001m>> getCompanyListAll(HttpServletRequest request) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		//Session 정보를 가져온다.
-		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
-		map.put("adminType", userSession.getAdminType());
-		map.put("coId",  userSession.getCoId());
+		Map<String, Object> map = new HashMap<String, Object>();		
+		
+		//로그인한 사용자의 UserName과 Authority 정보를 가져온다.
+		String coId = SecurityUtil.getUserName().substring(0,  4);
+		String adminType = SecurityUtil.getAuthority();
+		map.put("adminType", adminType);
+		map.put("coId",  coId);
 		
 		List<Hr001m> list = hr001mService.getHr001mList(map);
 		List<Hr001m> returnList = new ArrayList<Hr001m>();
@@ -114,6 +116,7 @@ public class CompanyController {
 	 * @param ucBuilder
 	 * @return
 	 */
+	@Secured("SYS_ADM")
 	@PostMapping(value = "/company/create")
 	public ResponseEntity<Hr001m> createCompany(@RequestBody final Hr001m hr001m, final UriComponentsBuilder ucBuilder) {
 		ResponseEntity<Hr001m> returnResEnty = null;
@@ -155,6 +158,7 @@ public class CompanyController {
 	 * @param stDate
 	 * @return
 	 */
+	@Secured("SYS_ADM")
 	@DeleteMapping(value = "/company/delete/{coId}/stDate/{stDate}")
 	public ResponseEntity<Void> deleteCompany(@PathVariable("coId") final String coId, @PathVariable("stDate") final String stDate) {
 		Map<String, Object> map = new HashMap<String, Object>();

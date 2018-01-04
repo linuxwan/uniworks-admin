@@ -26,8 +26,11 @@
 				ZIP_CODE, CO_ADDR, CO_PHON_NO, CO_FAX_NO, HOME_PAGE_URL, BASE_OGAN_LEV, SPRT_LANG
 		from    hr001m
 		<where>
-			<if test="adminType != 'SYS_ADM'">
+			<if test="adminType == 'CNT_ADM'">
 				CO_ID	=	#{coId,jdbcType=VARCHAR}
+			</if>
+			<if test="adminType == 'GRP_ADM'">
+				CO_ID	IN (select  CO_ID  from    hr001m where CO_ID =  #{coId,jdbcType=VARCHAR}  or  PRNT_CO_CODE = #{coId,jdbcType=VARCHAR})		
 			</if>
 			<if test="prntCoCode != null">
 				PRNT_CO_CODE= #{prntCoCode,jdbcType=VARCHAR}

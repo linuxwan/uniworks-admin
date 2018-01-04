@@ -14,6 +14,8 @@
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.popupwindow.js"></script>
 
     <script type="text/javascript">	
+    var mode = "ADD";
+    
     $(function(){
     	$('#adminList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());    	
     });
@@ -117,21 +119,17 @@
             </tr>
         </thead>
     </table>    	
-    <div id="tb" style="height:auto">
+    <div id="tb" style="height:auto">    
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()"><spring:message code="resc.btn.add"/></a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()"><spring:message code="resc.btn.delete"/></a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modify()"><spring:message code="resc.btn.modify"/></a>        
     </div>	
     <script type="text/javascript">
-    function append() {
-    	/*
+    function append() {    	
     	var apprLevel = $("#apprLevel").val();
 		var url = "<c:out value="${contextPath}"/>/admin/adminAddForm";
-		$.popupWindow(url, { height: 450, width: 700 });
-		*/
-    	$('#adminAdd').dialog('open');
+		$.popupWindow(url, { height: 270, width: 700 });		    	
     }
-    </script>	
-    <jsp:include page="/WEB-INF/views/admin/admin_add_form_01.jsp"></jsp:include>
+    </script>	    
 </body>
 </html>
