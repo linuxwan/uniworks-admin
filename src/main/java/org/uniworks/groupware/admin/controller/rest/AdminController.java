@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.web.util.WebUtils;
-import org.uniworks.groupware.admin.common.UserSession;
 import org.uniworks.groupware.admin.common.util.SecurityUtil;
+import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.domain.Cm010c;
 import org.uniworks.groupware.admin.service.Cm010cService;
 
@@ -40,6 +40,7 @@ import org.uniworks.groupware.admin.service.Cm010cService;
 public class AdminController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	@Autowired Cm010cService cm010cService;
+	@Autowired PasswordEncoder passwordEncoder;
 	
 	/**
 	 * 관리자 목록을 가져온다.
@@ -93,6 +94,9 @@ public class AdminController {
 		if (cm010cService.isAdminExist(cm010c.getCoId(), cm010c.getAdminId())) {
 			return new ResponseEntity<Cm010c>(HttpStatus.CONFLICT);
 		}
+		
+		//입력한 비밀번호를 암호화
+		cm010c.setPswd(passwordEncoder.encode(cm010c.getPswd()));
 		
 		int cnt = cm010cService.addCm010c(cm010c);
 		

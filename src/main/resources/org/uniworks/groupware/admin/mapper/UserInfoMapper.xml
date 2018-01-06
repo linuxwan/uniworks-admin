@@ -13,4 +13,10 @@
  		FROM   CM010C A  		
  		WHERE  A.ADMIN_ID	=	#{username,jdbcType=VARCHAR}
  	</select>
+ 	
+ 	<select id="getUserInfoList" parameterType="java.lang.String" resultMap="BaseResultMap"> 
+ 		SELECT A.CO_ID as CO_ID, A.ADMIN_ID as USER_ID, A.PSWD as PASSWORD, A.ADMIN_TYPE as ROLE
+ 		FROM   CM010C A  		
+ 		WHERE  A.ADMIN_ID	=	#{username,jdbcType=VARCHAR}
+ 	</select>
 </mapper>

@@ -53,7 +53,7 @@
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>	
+	</filter-mapping>		
 	
 	<context-param>
 		<param-name>contextClass</param-name>
@@ -96,8 +96,8 @@
 	<servlet-mapping>
 		<servlet-name>uniworks-admin</servlet-name>
 		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-
+	</servlet-mapping>	
+	
 	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>*.jsp</url-pattern>

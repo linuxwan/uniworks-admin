@@ -537,6 +537,7 @@ function dashparser(s){
  * @returns
  */
 function pointformatter(date){
+	console.log(date);
     var y = date.getFullYear();
     var m = date.getMonth()+1;
     var d = date.getDate();

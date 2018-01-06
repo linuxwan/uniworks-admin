@@ -12,6 +12,34 @@
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/locale/easyui-lang-${userSession.lang}.js"></script>
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/js/common.js"></script>
     <script type="text/javascript">
+    $(function(){
+	    $('#btnSave').bind('click', function(){
+	    	if($('#adminAddForm').form('enableValidation').form('validate')) {  
+	    		var formData = parseFormHelper('adminAddForm');
+	    		var strUrl = '<c:out value="${contextPath}"/>/rest/admin/create';
+	    		console.log(formData);
+	    		$.ajax({
+					type: 'POST',
+					url: strUrl,
+					data: formData, 
+					dataType: 'json',						
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader("Accept", "application/json");
+				        xhr.setRequestHeader("Content-Type", "application/json");
+						//데이터를 전송하기 전에 헤더에 csrf값을 설정한다.					
+						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+					},  				
+					success : function(json) {
+						opener.getData();
+					},
+					error : function(xhr, status, error) {
+						console.log("error: " + error);
+					}
+	    		});
+	    		return false;
+	    	}
+		});   
+    });
     
     </script>
 </head>
@@ -75,7 +103,7 @@
         </table>
     </form>
     	<div style="text-align:center;padding:5px 0">
-	        <a href="javascript:void(0)" id="btnSave" class="easyui-linkbutton" onclick="submitForm()" style="width:80px"><spring:message code="resc.btn.save"/></a>			            
+	        <a href="javascript:void(0)" id="btnSave" class="easyui-linkbutton" style="width:80px"><spring:message code="resc.btn.save"/></a>			            
 	        <a href="javascript:void(0)" id="btnClose" class="easyui-linkbutton" onclick="window.close()" style="width:80px"><spring:message code="resc.btn.close"/></a>
 	    </div> 
     </div> 

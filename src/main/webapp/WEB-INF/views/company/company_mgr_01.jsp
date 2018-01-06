@@ -296,26 +296,16 @@
     </script>
 </head>
 <body>
-	<input type="hidden" id="mode" name="mode" value=""/>		
+	<input type="hidden" id="mode" name="mode" value=""/>			
 	<table style="width:100%">
 		<tr>
-			<td colspan="2">
-			<sec:authorize access="hasRole('SYS_ADM')">
-				<a href="#" id="btnAdd" class="easyui-linkbutton" data-options="iconCls:'icon-add'"><spring:message code="resc.btn.enrollment"/></a>
-			</sec:authorize>
-				<a href="#" id="btnModify" class="easyui-linkbutton" data-options="iconCls:'icon-edit'"><spring:message code="resc.btn.modify"/></a>
-			<sec:authorize access="hasRole('SYS_ADM')">				
-        		<a href="#" id="btnDelete" class="easyui-linkbutton" data-options="iconCls:'icon-remove'"><spring:message code="resc.btn.delete"/></a>
-        	</sec:authorize>
-			</td>
-		</tr>
-		<tr>
 			<td style="width:40%">				
-       			<table id="coTree" title="" class="easyui-treegrid" style="width:100%;height:100%"
+       			<table id="coTree" title="<spring:message code="resc.label.companyMgr"/>" class="easyui-treegrid" style="width:100%;height:100%"
 			            data-options="			                
 			                lines: false,
 			                rownumbers: true,
 			                fitColumns: true,
+			                toolbar:'#tb',
 			                url: '<c:out value="${contextPath}"/>/rest/company',
 			                method: 'get',
 			                idField: 'coId',
@@ -332,7 +322,16 @@
 			                <th data-options="field:'finDate',halign:'center',align:'center',width:80,formatter:formatDateYYYYMMDD"><spring:message code="resc.label.finDate"/></th>
 			            </tr>
 			        </thead>
-			    </table>    			
+			    </table>  
+			    <div id="tb" style="height:auto">    
+					<sec:authorize access="hasAuthority('SYS_ADM')">
+						<a href="#" id="btnAdd" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"><spring:message code="resc.btn.enrollment"/></a>
+					</sec:authorize>
+						<a href="#" id="btnModify" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"><spring:message code="resc.btn.modify"/></a>
+					<sec:authorize access="hasAuthority('SYS_ADM')">				
+		        		<a href="#" id="btnDelete" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"><spring:message code="resc.btn.delete"/></a>
+		        	</sec:authorize>
+				</div>  			
 			</td>
 			<td style="width:60%">
 				<div class="easyui-panel" title="" style="width:100%;max-width:100%;padding:10px 10px;">
@@ -450,6 +449,6 @@
 			    </div>
 			</td>
 		</tr>
-	</table>
+	</table>	
 </body>
 </html>

@@ -5,17 +5,17 @@
  */
 package org.uniworks.groupware.admin.service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.uniworks.groupware.admin.domain.UserInfo;
+import org.uniworks.groupware.admin.domain.security.Role;
 import org.uniworks.groupware.admin.mapper.UserInfoMapper;
 
 /**
@@ -24,20 +24,26 @@ import org.uniworks.groupware.admin.mapper.UserInfoMapper;
  */
 @Service
 public class AuthenticationService implements UserDetailsService {
+	private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 	@Autowired UserInfoMapper userInfoMapper;
 	
 	/* (non-Javadoc)
 	 * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
 	 */
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserInfo loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		UserInfo userInfo = userInfoMapper.getUserInfo(username);
 		userInfo.setUsername(userInfo.getCoId() + ":" + userInfo.getUsername());
-		GrantedAuthority authority = new SimpleGrantedAuthority(userInfo.getRole());
-		UserDetails userDetails = (UserDetails)new User(userInfo.getUsername(), 
-				userInfo.getPassword(), Arrays.asList(authority));
-		return userDetails;
+		
+		Role role = new Role();
+		role.setName(userInfo.getRole());
+		
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(role);
+		userInfo.setAuthorities(roles);
+				
+		return userInfo;
 	}
 
 }
