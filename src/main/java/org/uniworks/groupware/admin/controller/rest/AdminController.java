@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.uniworks.groupware.admin.common.util.SecurityUtil;
-import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.domain.Cm010c;
 import org.uniworks.groupware.admin.service.Cm010cService;
 
@@ -89,7 +88,7 @@ public class AdminController {
 	 * @return
 	 */
 	@PostMapping(value = "/admin/create")
-	public ResponseEntity<Cm010c> createAdminUser(@RequestBody final Cm010c cm010c, final UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<Cm010c> createAdminUser(@RequestBody final Cm010c cm010c, final UriComponentsBuilder ucBuilder) {		
 		ResponseEntity<Cm010c> returnResEnty = null;
 		if (cm010cService.isAdminExist(cm010c.getCoId(), cm010c.getAdminId())) {
 			return new ResponseEntity<Cm010c>(HttpStatus.CONFLICT);

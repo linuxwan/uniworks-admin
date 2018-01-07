@@ -29,7 +29,26 @@
     	$('#btnAdd').bind('click', function(){
     		formReset();
     		setReadOnly(false);
-    		$('#finDate').textbox('setValue', "9999.12.31");
+    		
+    		var rowData = $("#coTree").treegrid('getSelected');
+    		
+    		if (rowData != null && rowData.prntCoCode != 'root') {
+    			var title = '<spring:message code="resc.label.confirm"/>';
+    			var msg = '<spring:message code="resc.msg.childCoNotMake"/>';
+    			
+    			alertMsg(title, msg);
+    			return;
+    		}
+    		
+    		if ($('#mode').val() == 'ADD' || rowData == null) {    			    			    			
+    			$('#prntCoCode').textbox('setValue', "root");
+        		$('#prntCoCode').textbox('readonly', true);
+    		} else {
+    			$('#prntCoCode').textbox('setValue', rowData.coId);
+        		$('#prntCoCode').textbox('readonly', true);
+    		}
+    		    		
+    		$('#finDate').textbox('setValue', "9999-12-31");
     		$('#finDate').textbox('readonly', true);
     		$('#mode').val('ADD');    	
     		$('#btnSave').linkbutton({
@@ -122,8 +141,9 @@
             var row = rows[i];
             if (!exists(rows, row._parentId)){
                 nodes.push({
-                    coId:row.coId,
-                    coName:row.coName,
+                    coId: row.coId,
+                    coName: row.coName,
+                    prntCoCode: row.prntCoCode,
                     stDate: row.stDate,
                     finDate: row.finDate
                 });
@@ -318,6 +338,7 @@
 			            <tr>
 			                <th data-options="field:'coId',halign:'center',align:'center',width:100"><spring:message code="resc.label.coId"/></th>
 			                <th data-options="field:'coName',halign:'center',align:'center',width:150"><spring:message code="resc.label.coName"/></th>
+			                <th data-options="field:'prntCoCode',halign:'center',align:'center',width:0"><spring:message code="resc.label.coName"/></th>
 			                <th data-options="field:'stDate',halign:'center',align:'center',width:80,formatter:formatDateYYYYMMDD"><spring:message code="resc.label.stDate"/></th>
 			                <th data-options="field:'finDate',halign:'center',align:'center',width:80,formatter:formatDateYYYYMMDD"><spring:message code="resc.label.finDate"/></th>
 			            </tr>
@@ -360,12 +381,12 @@
 			        <tr>
 			            <td style="width:50%;padding:0px 10px;">
 				            <div style="margin-bottom:10px">
-				                <input class="easyui-datebox" id="stDate" name="stDate" style="width:100%" data-options="label:'<spring:message code="resc.label.stDate"/>:',required:true,formatter:pointformatter,parser:pointparser,labelWidth:100">
+				                <input class="easyui-datebox" id="stDate" name="stDate" style="width:100%" data-options="label:'<spring:message code="resc.label.stDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
 				            </div>
 			            </td>
 			            <td style="width:50%;padding:0px 10px;">
 				            <div style="margin-bottom:10px">
-				                <input class="easyui-datebox" id="finDate" name="finDate" style="width:100%" data-options="label:'<spring:message code="resc.label.finDate"/>:',required:true,formatter:pointformatter,parser:pointparser,labelWidth:100">
+				                <input class="easyui-datebox" id="finDate" name="finDate" style="width:100%" data-options="label:'<spring:message code="resc.label.finDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
 				            </div>
 			            </td>
 			        </tr>

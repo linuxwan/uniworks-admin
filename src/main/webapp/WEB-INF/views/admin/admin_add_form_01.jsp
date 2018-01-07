@@ -30,7 +30,7 @@
 						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 					},  				
 					success : function(json) {
-						opener.getData();
+						window.opener.reload();
 					},
 					error : function(xhr, status, error) {
 						console.log("error: " + error);
@@ -72,12 +72,12 @@
 	        <tr>
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-datebox" id="useStDate" name="useStDate" style="width:100%" data-options="label:'<spring:message code="resc.label.useStDate"/>:',required:true,formatter:pointformatter,parser:pointparser,labelWidth:100">
+		                <input class="easyui-datebox" id="useStDate" name="useStDate" style="width:100%" data-options="label:'<spring:message code="resc.label.useStDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
 		            </div>
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-datebox" id="useFinDate" name="useFinDate" style="width:100%" data-options="label:'<spring:message code="resc.label.useFinDate"/>:',required:true,formatter:pointformatter,parser:pointparser,labelWidth:100">
+		                <input class="easyui-datebox" id="useFinDate" name="useFinDate" style="width:100%" data-options="label:'<spring:message code="resc.label.useFinDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
 		            </div>
 	            </td>
 	        </tr>
@@ -112,7 +112,7 @@
 <script type="text/javascript">	
 	$(function(){
 		var adminType = '${adminType}';		
-		$('#useFinDate').textbox('setValue', '9999.12.31');
+		$('#useFinDate').textbox('setValue', '9999-12-31');
 		$('#useFinDate').textbox('readonly', true);
 	});
 </script>

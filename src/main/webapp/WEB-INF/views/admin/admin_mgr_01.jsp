@@ -20,6 +20,12 @@
     	$('#adminList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());    	
     });
     
+    /**
+    * 팝업창에서 호출하기 위한 함수(refresh)
+    */
+    function reload() {
+    	$('#adminList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
+    }
     
     /**
      * Grid에 가져올 관리자 목록을 호출

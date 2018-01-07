@@ -125,8 +125,8 @@ public class CompanyController {
 		}
 		
 		//입력된 일자의 .(dot)를 제거한다.
-		hr001m.setStDate(StringUtil.delDot(hr001m.getStDate()));
-		hr001m.setFinDate(StringUtil.delDot(hr001m.getFinDate()));
+		hr001m.setStDate(StringUtil.delDash(hr001m.getStDate()));
+		hr001m.setFinDate(StringUtil.delDash(hr001m.getFinDate()));
 		int cnt = hr001mService.addHr001m(hr001m);
 		
 		if (cnt > 0) {
@@ -145,8 +145,8 @@ public class CompanyController {
 	@PutMapping(value = "/company/update")
 	public ResponseEntity<Hr001m> updateCompany(@RequestBody final Hr001m hr001m) {
 		//입력된 일자의 .(dot)를 제거한다.
-		hr001m.setStDate(StringUtil.delDot(hr001m.getStDate()));
-		hr001m.setFinDate(StringUtil.delDot(hr001m.getFinDate()));
+		hr001m.setStDate(StringUtil.delDash(hr001m.getStDate()));
+		hr001m.setFinDate(StringUtil.delDash(hr001m.getFinDate()));
 		
 		int cnt = hr001mService.updateHr001m(hr001m);
 		return new ResponseEntity<Hr001m>(hr001m, HttpStatus.OK);
@@ -163,7 +163,7 @@ public class CompanyController {
 	public ResponseEntity<Void> deleteCompany(@PathVariable("coId") final String coId, @PathVariable("stDate") final String stDate) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("coId", coId);
-		map.put("stDate", StringUtil.delDot(stDate));
+		map.put("stDate", StringUtil.delDash(stDate));
 		int cnt = hr001mService.deleteHr001m(map);
 		
 		if (cnt > 0) {
