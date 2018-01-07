@@ -123,11 +123,13 @@ public class AdminMgrController {
 		//로그인한 사용자의 UserName과 Authority 정보를 가져온다.
 		String coId = StringUtil.null2void(request.getParameter("coId"));					
 		String adminId = StringUtil.null2void(request.getParameter("adminId"));
+		String adminType = SecurityUtil.getAuthority();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("coId", coId);
 		map.put("adminId", adminId);
-		Cm010c cm010c = cm010cService.getCm010c(map);
+		
+		Cm010c cm010c = cm010cService.getCm010c(map);		
 		
 		//공통 코드에서 관리자 유형을 가져온다.
 		map.put("majCode", "CD000");
@@ -136,7 +138,7 @@ public class AdminMgrController {
 		List<CommonCode> codeList = commonService.getCommonSubCodeList(map);
 
 		//관리자 유형 목록을 정리
-		codeList = getGrantedAdminTypeList(cm010c.getAdminType(), codeList);
+		codeList = getGrantedAdminTypeList(adminType, codeList);
 				
 		mav.addObject("cm010c", cm010c);
 		mav.addObject("codeList", codeList);

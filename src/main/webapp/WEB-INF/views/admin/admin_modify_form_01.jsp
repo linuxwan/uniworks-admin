@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><spring:message code="resc.label.adminAddForm"/></title>
+<title><spring:message code="resc.label.adminModifyForm"/></title>
 	<link rel='shortcut icon' type='image/x-icon' href='<c:out value="${contextPath}"/>/image/testimonials.png' />
     <link rel="stylesheet" type="text/css" href="<c:out value="${contextPath}"/>/easyui/css/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="<c:out value="${contextPath}"/>/easyui/css/themes/icon.css">    
@@ -14,12 +14,12 @@
     <script type="text/javascript">
     $(function(){
 	    $('#btnSave').bind('click', function(){
-	    	if($('#adminAddForm').form('enableValidation').form('validate')) {  
-	    		var formData = parseFormHelper('adminAddForm');
-	    		var strUrl = '<c:out value="${contextPath}"/>/rest/admin/create';
+	    	if($('#adminModifyForm').form('enableValidation').form('validate')) {  
+	    		var formData = parseFormHelper('adminModifyForm');
+	    		var strUrl = '<c:out value="${contextPath}"/>/rest/admin/update';
 	    		
 	    		$.ajax({
-					type: 'POST',
+					type: 'PUT',
 					url: strUrl,
 					data: formData, 
 					dataType: 'json',						
@@ -29,8 +29,11 @@
 						//데이터를 전송하기 전에 헤더에 csrf값을 설정한다.					
 						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 					},  				
-					success : function(json) {
-						window.opener.reload();
+					success : function(json) {												
+						$.messager.alert('<spring:message code="resc.label.confirm"/>', '<spring:message code="resc.msg.modifyOk"/>',"info", function(){
+							window.opener.reload();
+							window.close();
+						});												
 					},
 					error : function(xhr, status, error) {
 						console.log("error: " + error);
@@ -44,8 +47,8 @@
     </script>
 </head>
 <body>
-	<div class="easyui-panel" title="<spring:message code="resc.label.adminAddForm"/>" style="width:100%;max-width:100%;padding:10px 10px;">     
-	<form id="adminAddForm">
+	<div class="easyui-panel" title="<spring:message code="resc.label.adminModifyForm"/>" style="width:100%;max-width:100%;padding:10px 10px;">     
+	<form id="adminModifyForm">
 	<jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>
 		<table style="width:100%">
 	        <tr>
@@ -63,12 +66,12 @@
 	        <tr>
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-datebox" id="useStDate" name="useStDate" style="width:100%" value="${cm010c.useStDate}" data-options="label:'<spring:message code="resc.label.useStDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
+		                <input class="easyui-datebox" id="useStDate" name="useStDate" style="width:100%" value='<fmt:formatDate value="${cm010c.useStDate}" pattern="yyyy-MM-dd" />' data-options="label:'<spring:message code="resc.label.useStDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
 		            </div>
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-datebox" id="useFinDate" name="useFinDate" style="width:100%" value="${cm010c.useFinDate}" data-options="label:'<spring:message code="resc.label.useFinDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
+		                <input class="easyui-datebox" id="useFinDate" name="useFinDate" style="width:100%" value='<fmt:formatDate value="${cm010c.useFinDate}" pattern="yyyy-MM-dd" />' data-options="label:'<spring:message code="resc.label.useFinDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
 		            </div>
 	            </td>
 	        </tr>
@@ -80,7 +83,7 @@
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="pswd" name="pswd" type="password" style="width:100%" value="${cm010c.pswd}" data-options="label:'<spring:message code="resc.label.pswd"/>:',required:true,labelWidth:100">
+		                <input class="easyui-textbox" id="pswd" name="pswd" type="password" style="width:100%" data-options="label:'<spring:message code="resc.label.pswd"/>:',required:true,labelWidth:100">
 		            </div>
 	            </td>
 	        </tr>	        	       
@@ -102,10 +105,3 @@
 	        <a href="javascript:void(0)" id="btnClose" class="easyui-linkbutton" onclick="window.close()" style="width:80px"><spring:message code="resc.btn.close"/></a>
 	    </div> 
     </div> 
-
-
-<script type="text/javascript">	
-	$(function(){
-		var adminType = '${cm010c.adminType}';
-	});
-</script>

@@ -287,6 +287,54 @@ function formatDate(val, row) {
 	return strDate;
 }
 
+/**
+ * DataGrid에서 날짜 포맷에 맞게 변환하는 함수
+ * @param val
+ * @param row
+ * @returns {String}
+ */
+function formatDateDash(val, row) {
+	if (val == null || val == "") return "";
+	var date = new Date(Number(val));		
+					
+	var strMonth = '';
+	if (date.getMonth() + 1 < 10) {
+		strMonth = '0' + (date.getMonth() + 1);
+	} else {
+		strMonth = (date.getMonth() + 1);
+	}
+	var strDate = '';
+	if (date.getDate() < 10) {
+		strDate = '0' + date.getDate();
+	} else {
+		strDate = date.getDate();
+	}
+	
+	var strHours = '';
+	if (date.getHours() < 10) {
+		strHours = '0' + date.getHours();
+	} else {
+		strHours = date.getHours();
+	}
+	
+	var strMinutes = '';
+	if (date.getMinutes() < 10) {
+		strMinutes = '0' + date.getMinutes();
+	} else {
+		strMinutes = date.getMinutes();
+	}
+	
+	var strSeconds = '';
+	if (date.getSeconds() < 10) {
+		strSeconds = '0' + date.getSeconds();
+	} else {
+		strSeconds = date.getSeconds();
+	}
+	
+	var strDate = date.getFullYear() + '-' + strMonth + '-' + strDate; // + ' ' + strHours + ':' + strMinutes + ':' + strSeconds; 
+	return strDate;
+}
+
 /***
  * 8자리의 날짜정보에 "."를 추가해서 반환. (grid에서 날짜타입으로 변환하기 위한 용도)
  * @param val

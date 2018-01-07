@@ -156,7 +156,7 @@
     	var rowData = $("#adminList").datagrid('getSelected');
     	if (rowData == null) {
     		var title = '<spring:message code="resc.label.confirm"/>';
-    		var msg = '<spring:message code="resc.msg.adminNotSelect"/>';
+    		var msg = '<spring:message code="resc.msg.selectDelItem"/>';
     		
     		alertMsg(title, msg);
 			return;
@@ -186,7 +186,9 @@
 				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 			},  				
 			success : function(json) {
-				reload();
+				$.messager.alert('<spring:message code="resc.label.confirm"/>', '<spring:message code="resc.msg.deleteOk"/>',"info", function(){
+					reload();
+				});					
 			},
 			error : function(xhr, status, error) {
 				console.log("error: " + error);

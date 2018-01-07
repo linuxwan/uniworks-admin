@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.common.util.SecurityUtil;
 import org.uniworks.groupware.admin.domain.Cm010c;
 import org.uniworks.groupware.admin.service.Cm010cService;
@@ -113,7 +114,11 @@ public class AdminController {
 	 * @return
 	 */
 	@PutMapping(value = "/admin/update")
-	public ResponseEntity<Cm010c> updateCompany(@RequestBody final Cm010c cm010c) {				
+	public ResponseEntity<Cm010c> updateCompany(@RequestBody final Cm010c cm010c) {
+		//입력한 비밀번호를 암호화
+		cm010c.setPswd(passwordEncoder.encode(cm010c.getPswd()));
+		cm010c.setPswdChngDate(DateUtil.getCurrentDate());
+		
 		int cnt = cm010cService.updateCm010c(cm010c);
 		return new ResponseEntity<Cm010c>(cm010c, HttpStatus.OK);
 	}
