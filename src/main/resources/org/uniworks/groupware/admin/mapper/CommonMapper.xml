@@ -19,6 +19,7 @@
 		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
 		  and  A.MAJ_CODE = #{majCode,jdbcType=VARCHAR}
 		  and  A.RESC_KEY = B.RESC_KEY
+		  and  A.CO_ID = B.CO_ID
 		  and  B.LOCALE = #{lang,jdbcType=VARCHAR}
 		<if test="orderBy == 'rescKey'">  
 		order  by B.RESC_KEY

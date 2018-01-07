@@ -136,6 +136,64 @@
 		var url = "<c:out value="${contextPath}"/>/admin/adminAddForm";
 		$.popupWindow(url, { height: 270, width: 700 });		    	
     }
+    
+    function modify() {    	
+    	var rowData = $("#adminList").datagrid('getSelected');
+    	if (rowData == null) {
+    		var title = '<spring:message code="resc.label.confirm"/>';
+    		var msg = '<spring:message code="resc.msg.adminNotSelect"/>';
+    		
+    		alertMsg(title, msg);
+			return;
+    	} 
+    	
+    	var apprLevel = $("#apprLevel").val();
+		var url = "<c:out value="${contextPath}"/>/admin/adminModifyForm?coId=" + rowData.coId + "&adminId=" + rowData.adminId;
+		$.popupWindow(url, { height: 270, width: 700 });		    	
+    }
+    
+    function removeit() {
+    	var rowData = $("#adminList").datagrid('getSelected');
+    	if (rowData == null) {
+    		var title = '<spring:message code="resc.label.confirm"/>';
+    		var msg = '<spring:message code="resc.msg.adminNotSelect"/>';
+    		
+    		alertMsg(title, msg);
+			return;
+    	}    	
+    	
+    	var title = '<spring:message code="resc.label.confirm"/>';
+    	var msg = '<spring:message code="resc.msg.confirmDel"/>';    		
+		$.messager.confirm(title, msg, function(r) {
+			if (r) {
+				deleteAdmin(rowData.coId, rowData.adminId);
+			}
+		});    	
+    }
+    
+    /**
+    * 관리자 정보를 삭제한다.
+    */
+    function deleteAdmin(coId, adminId) {
+		var strUrl = '<c:out value="${contextPath}"/>/rest/admin/delete/coId/' + coId + '/adminId/' + adminId;
+    	$.ajax({
+			type: 'DELETE',
+			url: strUrl,						
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+		        xhr.setRequestHeader("Content-Type", "application/json");
+				//데이터를 전송하기 전에 헤더에 csrf값을 설정한다.					
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},  				
+			success : function(json) {
+				reload();
+			},
+			error : function(xhr, status, error) {
+				console.log("error: " + error);
+			}
+		});
+		return false;
+    }
     </script>	    
 </body>
 </html>

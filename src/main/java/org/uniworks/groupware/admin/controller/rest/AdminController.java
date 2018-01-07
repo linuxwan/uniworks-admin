@@ -124,7 +124,7 @@ public class AdminController {
 	 * @param adminId
 	 * @return
 	 */
-	@DeleteMapping(value = "/company/delete/coId/{coId}/adminId/{adminId}")
+	@DeleteMapping(value = "/admin/delete/coId/{coId}/adminId/{adminId}")
 	public ResponseEntity<Void> deleteCompany(@PathVariable("coId") final String coId, @PathVariable("adminId") final String adminId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("coId", coId);

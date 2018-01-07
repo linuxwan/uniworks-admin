@@ -21,7 +21,8 @@
 				CO_ID	=	#{coId,jdbcType=VARCHAR}
 			</if>
 			<if test="adminType == 'GRP_ADM'">
-				CO_ID	IN (select  CO_ID  from    hr001m where CO_ID =  #{coId,jdbcType=VARCHAR}  or  PRNT_CO_CODE = #{coId,jdbcType=VARCHAR})		
+				CO_ID	IN (select  CO_ID  from    hr001m where CO_ID =  #{coId,jdbcType=VARCHAR}  or  PRNT_CO_CODE = #{coId,jdbcType=VARCHAR})	
+		  and	ADMIN_TYPE != 'SYS_ADM'	
 			</if>
 		</where>
 		order by CO_ID, ADMIN_ID

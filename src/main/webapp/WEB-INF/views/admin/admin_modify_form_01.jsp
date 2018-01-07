@@ -51,45 +51,36 @@
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">			        	
 		            <div style="margin-bottom:10px">
-		            <c:if test="${adminType == 'SYS_ADM' }">
-		                <input class="easyui-textbox" id="coId" name="coId" style="width:100%" data-options="label:'<spring:message code="resc.label.coId"/>:',required:true,labelWidth:100">
-		            </c:if>
-		            <c:if test="${adminType != 'SYS_ADM' }">
-		            	<select class="easyui-combobox" id="coId" name="coId" style="width:100%;" data-options="panelHeight:'auto',label:'<spring:message code="resc.label.coId"/>:',required:true,labelWidth:100">
-		            	<c:forEach items="${coList}" var="opt" varStatus="st">
-		            		<option value="${opt.coId}">${opt.coId}: ${opt.coName}</option>
-		            	</c:forEach>
-		            	</select>
-		            </c:if>
+		                <input class="easyui-textbox" id="coId" name="coId" style="width:100%" value="${cm010c.coId}" data-options="label:'<spring:message code="resc.label.coId"/>:',required:true,labelWidth:100,readonly:true">		            
 		            </div>
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="adminId" name="adminId" style="width:100%" data-options="label:'<spring:message code="resc.label.adminID"/>:',required:true,labelWidth:100">
+		                <input class="easyui-textbox" id="adminId" name="adminId" style="width:100%" value="${cm010c.adminId}" data-options="label:'<spring:message code="resc.label.adminID"/>:',required:true,labelWidth:100,readonly:true">
 		            </div>
 	            </td>
 	        </tr>
 	        <tr>
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-datebox" id="useStDate" name="useStDate" style="width:100%" data-options="label:'<spring:message code="resc.label.useStDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
+		                <input class="easyui-datebox" id="useStDate" name="useStDate" style="width:100%" value="${cm010c.useStDate}" data-options="label:'<spring:message code="resc.label.useStDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
 		            </div>
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-datebox" id="useFinDate" name="useFinDate" style="width:100%" data-options="label:'<spring:message code="resc.label.useFinDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
+		                <input class="easyui-datebox" id="useFinDate" name="useFinDate" style="width:100%" value="${cm010c.useFinDate}" data-options="label:'<spring:message code="resc.label.useFinDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
 		            </div>
 	            </td>
 	        </tr>
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="empNo" name="empNo" style="width:100%" data-options="label:'<spring:message code="resc.label.empNo"/>:',required:true,labelWidth:100">
+		                <input class="easyui-textbox" id="empNo" name="empNo" style="width:100%" value="${cm010c.empNo}" data-options="label:'<spring:message code="resc.label.empNo"/>:',required:true,labelWidth:100">
 		            </div>
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="pswd" name="pswd" type="password" style="width:100%" data-options="label:'<spring:message code="resc.label.pswd"/>:',required:true,labelWidth:100">
+		                <input class="easyui-textbox" id="pswd" name="pswd" type="password" style="width:100%" value="${cm010c.pswd}" data-options="label:'<spring:message code="resc.label.pswd"/>:',required:true,labelWidth:100">
 		            </div>
 	            </td>
 	        </tr>	        	       
@@ -98,7 +89,7 @@
 		            <div style="margin-bottom:10px">		                
 		                <select class="easyui-combobox" id="adminType" name="adminType" style="width:100%;" data-options="panelHeight:'auto',label:'<spring:message code="resc.label.adminType"/>:',required:true,labelWidth:100">
 		            	<c:forEach items="${codeList}" var="code" varStatus="st">
-		            		<option value="${code.subCode}">${code.subCode}: ${code.rescKeyValue}</option>
+		            		<option value="${code.subCode}" <c:if test="${code.subCode == cm010c.adminType}">selected="selected"</c:if> >${code.subCode}: ${code.rescKeyValue}</option>
 		            	</c:forEach>
 		            	</select>
 		            </div>
@@ -115,8 +106,6 @@
 
 <script type="text/javascript">	
 	$(function(){
-		var adminType = '${adminType}';		
-		$('#useFinDate').textbox('setValue', '9999-12-31');
-		$('#useFinDate').textbox('readonly', true);
+		var adminType = '${cm010c.adminType}';
 	});
 </script>
