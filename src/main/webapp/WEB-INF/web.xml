@@ -76,7 +76,7 @@
 		<servlet-name>uniworks-admin</servlet-name>
 		<servlet-class>
 			org.springframework.web.servlet.DispatcherServlet
-		</servlet-class>
+		</servlet-class>		
 		<init-param>
 			<param-name>contextClass</param-name>
 			<param-value>
@@ -90,7 +90,7 @@
 		<init-param>
 			<param-name>dispatchOptionsRequest</param-name>
 			<param-value>true</param-value>
-		</init-param>
+		</init-param>		
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>

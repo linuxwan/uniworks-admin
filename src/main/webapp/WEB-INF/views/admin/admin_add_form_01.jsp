@@ -29,8 +29,11 @@
 						//데이터를 전송하기 전에 헤더에 csrf값을 설정한다.					
 						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 					},  				
-					success : function(json) {
-						window.opener.reload();
+					success : function(msg) {
+						var title = '<spring:message code="resc.label.confirm"/>';		    			
+						$.messager.alert(title, msg, "info",  function(){
+							window.opener.reload();
+						});						
 					},
 					error : function(xhr, status, error) {
 						console.log("error: " + error);

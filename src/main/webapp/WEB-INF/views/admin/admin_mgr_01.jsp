@@ -132,7 +132,6 @@
     </div>	
     <script type="text/javascript">
     function append() {    	
-    	var apprLevel = $("#apprLevel").val();
 		var url = "<c:out value="${contextPath}"/>/admin/adminAddForm";
 		$.popupWindow(url, { height: 270, width: 700 });		    	
     }
@@ -147,7 +146,6 @@
 			return;
     	} 
     	
-    	var apprLevel = $("#apprLevel").val();
 		var url = "<c:out value="${contextPath}"/>/admin/adminModifyForm?coId=" + rowData.coId + "&adminId=" + rowData.adminId;
 		$.popupWindow(url, { height: 270, width: 700 });		    	
     }

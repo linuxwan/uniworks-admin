@@ -91,6 +91,7 @@ public class LoginController {
 		//로그인 사용자 ID가져 오기.		
 		String userId = authentication.getName();
 		logger.debug("authentication name : " + authentication.getName());		
+		String coId = "";
 		
 		Locale locale = request.getLocale();
 		Map<String, Object> map = new HashMap<String, Object>();		
@@ -106,7 +107,7 @@ public class LoginController {
 		if (userId != null) {
 			if (userSession == null) {
 				StringTokenizer st = new StringTokenizer(userId, ":");
-				String coId = st.nextToken();
+				coId = st.nextToken();
 				String adminId = st.nextToken();
 				
 				map.put("coId", coId);
@@ -134,6 +135,7 @@ public class LoginController {
 		Map<String, Object> codeMap = new HashMap<String, Object>();
 		codeMap.put("majCode", "CD001");
 		codeMap.put("lang", lang);
+		codeMap.put("coId", coId);
 		List<CommonCode> codeList = cmmService.getCommonSubCodeList(codeMap);
 		
 		mav.addObject("langList", codeList);
@@ -228,6 +230,7 @@ public class LoginController {
 			Map<String, Object> codeMap = new HashMap<String, Object>();
 			codeMap.put("majCode", "CD001");
 			codeMap.put("lang", userSession.getLang());
+			codeMap.put("coId", userSession.getCoId());
 			List<CommonCode> codeList = cmmService.getCommonSubCodeList(codeMap);
 			
 			mav.addObject("langList", codeList);			

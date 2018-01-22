@@ -10,10 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,12 +26,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.common.util.SecurityUtil;
 import org.uniworks.groupware.admin.domain.Cm010c;
+import org.uniworks.groupware.admin.domain.Hr001m;
 import org.uniworks.groupware.admin.service.Cm010cService;
+import org.uniworks.groupware.admin.service.Hr001mService;
 
 /**
  * @author Park Chung Wan
@@ -40,7 +45,9 @@ import org.uniworks.groupware.admin.service.Cm010cService;
 public class AdminController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	@Autowired Cm010cService cm010cService;
+	@Autowired Hr001mService hr001mService;
 	@Autowired PasswordEncoder passwordEncoder;
+	@Autowired private MessageSource messageSource;
 	
 	/**
 	 * 관리자 목록을 가져온다.
@@ -89,10 +96,20 @@ public class AdminController {
 	 * @return
 	 */
 	@PostMapping(value = "/admin/create")
-	public ResponseEntity<Cm010c> createAdminUser(@RequestBody final Cm010c cm010c, final UriComponentsBuilder ucBuilder) {		
-		ResponseEntity<Cm010c> returnResEnty = null;
+	public ResponseEntity<String> createAdminUser(@RequestBody final Cm010c cm010c, HttpServletResponse response, final UriComponentsBuilder ucBuilder) {
+		String result = "";
 		if (cm010cService.isAdminExist(cm010c.getCoId(), cm010c.getAdminId())) {
-			return new ResponseEntity<Cm010c>(HttpStatus.CONFLICT);
+			result = messageSource.getMessage("resc.msg.idExist", null, response.getLocale());
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", cm010c.getCoId());
+		Hr001m hr001m = hr001mService.getHr001m(map);
+		
+		if (hr001m == null) {
+			result = messageSource.getMessage("resc.msg.coIdNotExist", null, response.getLocale());
+			return new ResponseEntity<String>(result, HttpStatus.OK);
 		}
 		
 		//입력한 비밀번호를 암호화
@@ -101,11 +118,11 @@ public class AdminController {
 		int cnt = cm010cService.addCm010c(cm010c);
 		
 		if (cnt > 0) {
-			returnResEnty = new ResponseEntity<Cm010c>(cm010c, HttpStatus.CREATED);
+			result = messageSource.getMessage("resc.msg.addOk", null, response.getLocale());
 		} else {
-			returnResEnty = new ResponseEntity<Cm010c>(cm010c, HttpStatus.EXPECTATION_FAILED);
+			result = messageSource.getMessage("resc.msg.addFail", null, response.getLocale());
 		}
-		return returnResEnty;
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	
 	/**
@@ -114,13 +131,17 @@ public class AdminController {
 	 * @return
 	 */
 	@PutMapping(value = "/admin/update")
-	public ResponseEntity<Cm010c> updateCompany(@RequestBody final Cm010c cm010c) {
+	public ResponseEntity<String> updateCompany(@RequestBody final Cm010c cm010c, HttpServletResponse response) {
+		String result = "";
 		//입력한 비밀번호를 암호화
 		cm010c.setPswd(passwordEncoder.encode(cm010c.getPswd()));
 		cm010c.setPswdChngDate(DateUtil.getCurrentDate());
 		
 		int cnt = cm010cService.updateCm010c(cm010c);
-		return new ResponseEntity<Cm010c>(cm010c, HttpStatus.OK);
+		if (cnt > 0) {
+			result = messageSource.getMessage("resc.msg.modifyOk", null, response.getLocale());
+		}
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	
 	/**

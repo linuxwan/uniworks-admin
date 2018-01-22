@@ -11,18 +11,34 @@
 	</resultMap> 
 
 	<!-- 목록 조회 --> 
-	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
-		select  CO_ID, MAJ_CODE, RESC_KEY, MAJ_CODE_NAME, MAJ_CODE_DESC, USE_INDC
-		from   cm001c
-		where  CO_ID	=	#{coId,jdbcType=VARCHAR}
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 			
+		select  A.CO_ID as CO_ID, A.MAJ_CODE as MAJ_CODE, A.RESC_KEY as RESC_KEY, B.RESC_KEY_VALUE as MAJ_CODE_NAME, 
+		B.RESC_KEY_DESC as MAJ_CODE_DESC, A.USE_INDC as USE_INDC
+		from   cm001c A 
+		INNER JOIN cm003m B on (
+		  	   A.CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and  A.CO_ID	=	B.CO_ID
+		  and  A.RESC_KEY = B.RESC_KEY
+		  and  B.LOCALE = #{lang,jdbcType=VARCHAR}
+		  <if test="useIndc != null">
+		  and  A.USE_INDC= #{useIndc,jdbcType=VARCHAR}
+		  </if>
+		)
+		order by A.CO_ID, A.MAJ_CODE    
 	</select> 
  
 	<!-- 상세 조회 --> 
-	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
-		select  CO_ID, MAJ_CODE, RESC_KEY, MAJ_CODE_NAME, MAJ_CODE_DESC, USE_INDC
-		from   cm001c
-		where  CO_ID	=	#{coId,jdbcType=VARCHAR}
-		  and  MAJ_CODE	=	#{majCode,jdbcType=VARCHAR} 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap">   
+		select  A.CO_ID as CO_ID, A.MAJ_CODE as MAJ_CODE, A.RESC_KEY as RESC_KEY, B.RESC_KEY_VALUE as MAJ_CODE_NAME, 
+		B.RESC_KEY_DESC as MAJ_CODE_DESC, A.USE_INDC as USE_INDC
+		from   cm001c A 
+		INNER JOIN cm003m B on (
+		  	   A.CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and  A.CO_ID	=	B.CO_ID
+		  and  A.MAJ_CODE	=	#{majCode,jdbcType=VARCHAR}
+		  and  A.RESC_KEY = B.RESC_KEY
+		  and  B.LOCALE = #{lang,jdbcType=VARCHAR}		  
+		)		 
 	</select> 
  
 	<!-- 등록 --> 
