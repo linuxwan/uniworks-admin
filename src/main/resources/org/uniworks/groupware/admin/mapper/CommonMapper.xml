@@ -24,7 +24,7 @@
 		<if test="orderBy == 'rescKey'">  
 		order  by B.RESC_KEY
 		</if>
-		<if test="orderBy != 'rescKey'">
+		<if test="orderBy == 'rescKeyValue'">
 		order  by B.RESC_KEY_VALUE
 		</if>
 	</select>

@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><spring:message code="resc.label.majCodeAddForm"/></title>
+<title><spring:message code="resc.label.subCodeAddForm"/></title>
 	<link rel='shortcut icon' type='image/x-icon' href='<c:out value="${contextPath}"/>/image/testimonials.png' />
     <link rel="stylesheet" type="text/css" href="<c:out value="${contextPath}"/>/easyui/css/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="<c:out value="${contextPath}"/>/easyui/css/themes/icon.css">    
@@ -14,11 +14,12 @@
     <script type="text/javascript">
     $(function(){
 	    $('#btnSave').bind('click', function(){
-	    	if($('#majCodeAddForm').form('enableValidation').form('validate')) {
-	    		var majCode = $('#majCode').textbox('getValue');	
-	    		$('#rescKey').textbox('setValue', majCode);
-	    		var formData = parseFormHelper('majCodeAddForm');	    		
-	    		var strUrl = '<c:out value="${contextPath}"/>/rest/mastercode/create';	    		    		
+	    	if($('#subCodeAddForm').form('enableValidation').form('validate')) {
+	    		var majCode = $('#majCode').textbox('getValue');
+	    		var subCode = $('#subCode').textbox('getValue');	
+	    		$('#rescKey').textbox('setValue', majCode + subCode);
+	    		var formData = parseFormHelper('subCodeAddForm');	    		
+	    		var strUrl = '<c:out value="${contextPath}"/>/rest/subcode/create';	    		    		
 	    		
 	    		$.ajax({
 					type: 'POST',
@@ -34,7 +35,7 @@
 					success : function(msg) {
 						var title = '<spring:message code="resc.label.confirm"/>';		    			
 						$.messager.alert(title, msg, "info",  function(){
-							window.opener.masterCodeReload();
+							window.opener.subCodeReload();
 							window.close();
 						});						
 					},
@@ -44,39 +45,41 @@
 	    		});
 	    		return false;
 	    	}
-		});
-	    
-	    var coId = window.opener.$('#coId').combobox('getValue'); 
-	    $('#coId').textbox('setValue', coId);
-	    $('#coId').textbox('readonly', true);
-	    $('#rescKey').textbox('readonly', true);
+		});	    
     });                   
     </script>
 </head>
 <body>
-	<div class="easyui-panel" title="<spring:message code="resc.label.majCodeAddForm"/>" style="width:100%;max-width:100%;padding:10px 10px;">     
-	<form id="majCodeAddForm">
+	<div class="easyui-panel" title="<spring:message code="resc.label.subCodeAddForm"/>" style="width:100%;max-width:100%;padding:10px 10px;">     
+	<form id="subCodeAddForm">
 	<jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>
 		<table style="width:100%">
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">			        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="coId" name="coId" style="width:100%" data-options="label:'<spring:message code="resc.label.coId"/>:',required:true,labelWidth:120">
+		                <input class="easyui-textbox" id="coId" name="coId" style="width:100%" data-options="label:'<spring:message code="resc.label.coId"/>:',readonly:true,required:true,labelWidth:120" value="${coId}">
 		            </div>
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="majCode" name="majCode" style="width:100%" data-options="label:'<spring:message code="resc.label.majCode"/>:',required:true,labelWidth:120">
+		                <input class="easyui-textbox" id="majCode" name="majCode" style="width:100%" data-options="label:'<spring:message code="resc.label.majCode"/>:',readonly:true,required:true,labelWidth:120" value="${majCode}">
 		            </div>
 	            </td>
 	        </tr>
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="rescKey" name="rescKey" style="width:100%" data-options="label:'<spring:message code="resc.label.rescKey"/>:',labelWidth:120">
+		                <input class="easyui-textbox" id="subCode" name="subCode" style="width:100%" data-options="label:'<spring:message code="resc.label.subCode"/>:',labelWidth:120">
 		            </div>
 	            </td>
-	            <td style="width:50%;padding:0px 10px;">
+	        	<td style="width:50%;padding:0px 10px;">		        	
+		            <div style="margin-bottom:10px">
+		                <input class="easyui-textbox" id="rescKey" name="rescKey" style="width:100%" data-options="label:'<spring:message code="resc.label.rescKey"/>:',labelWidth:120">
+		            </div>
+	            </td>	            
+	        </tr>
+	        <tr>
+	        	<td style="width:50%;padding:0px 10px;" colspan="2">
 		            <div style="margin-bottom:10px">
 		            	<spring:message code="resc.label.useIndc"/>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                <input class="easyui-validatebox" id="useIndcY" name="useIndc" type="radio" data-options="required:true" value="Y" checked="checked"><spring:message code="resc.label.use"/>
@@ -88,12 +91,12 @@
 	        <tr>	        	
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="majCodeName_<c:out value="${lang.rescKeyValue}"/>" name="majCodeName_<c:out value="${lang.rescKeyValue}"/>" style="width:100%" data-options="label:'<spring:message code="resc.label.majCodeName"/>(${lang.rescKeyValue}):',required:true,labelWidth:120">
+		                <input class="easyui-textbox" id="subCodeName_<c:out value="${lang.rescKeyValue}"/>" name="subCodeName_<c:out value="${lang.rescKeyValue}"/>" style="width:100%" data-options="label:'<spring:message code="resc.label.subCodeName"/>(${lang.rescKeyValue}):',required:true,labelWidth:120">
 		            </div>
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="majCodeDesc_<c:out value="${lang.rescKeyValue}"/>" name="majCodeDesc_<c:out value="${lang.rescKeyValue}"/>" style="width:100%" data-options="label:'<spring:message code="resc.label.majCodeDesc"/>(${lang.rescKeyValue}):',labelWidth:120">
+		                <input class="easyui-textbox" id="subCodeDesc_<c:out value="${lang.rescKeyValue}"/>" name="subCodeDesc_<c:out value="${lang.rescKeyValue}"/>" style="width:100%" data-options="label:'<spring:message code="resc.label.subCodeDesc"/>(${lang.rescKeyValue}):',labelWidth:120">
 		            </div>
 	            </td>	            
 	        </tr>

@@ -40,27 +40,90 @@
     });
     
     /**
-     * 회사 정보를 삭제한다.
+     * 주코드 정보를 삭제한다.
     **/
-    function deleteMasterCode() {
-    	var coId = $('#coId').textbox('getValue');
-    	var stDate = replaceAll($('#stDate').textbox('getValue'), ".", "");    	
-    	var strUrl = "<c:out value="${contextPath}"/>/rest/company/delete/" + coId + "/stDate/" + stDate;
+    function removeMasterCode() {
+    	var rowData = $("#masterCodeList").datagrid('getSelected');
+    	
+		var title = '<spring:message code="resc.label.confirm"/>';
+		var msg = '<spring:message code="resc.msg.selectMajCode"/>';
+		if ($('#mode').val() != '' || rowData == null) {    			    			    			
+			alertMsg(title, msg);
+			return;
+		}
+		
+    	var coId = rowData.coId;
+    	var majCode = rowData.majCode;   
+    	var rescKey = rowData.rescKey;
+    	var strUrl = "<c:out value="${contextPath}"/>/rest/mastercode/delete/coId/" + coId + "/majCode/" + majCode + "/rescKey/" + rescKey;
 
-    	$.ajax({
-			type: 'DELETE',
-			url: strUrl,					
-			beforeSend: function(xhr) {
-				//데이터를 전송하기 전에 헤더에 csrf값을 설정한다.					
-				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-			},  				
-			success : function(json) {
-				$("#coTree").treegrid('reload');	
-			},
-			error : function(xhr, status, error) {
-				console.log("error: " + status);
+    	var title = '<spring:message code="resc.label.confirm"/>';
+    	msg = majCode + " : " + '<spring:message code="resc.msg.confirmDel"/>';    		
+    	$.messager.confirm(title, msg, function(r) {
+			if (r) {
+				$.ajax({
+					type: 'DELETE',
+					url: strUrl,					
+					beforeSend: function(xhr) {
+						//데이터를 전송하기 전에 헤더에 csrf값을 설정한다.					
+						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+					},  				
+					success : function(msg) {
+						var title = '<spring:message code="resc.label.confirm"/>';		    			
+						$.messager.alert(title, msg, "info",  function(){
+							$("#masterCodeList").datagrid('reload');
+						});					
+					},
+					error : function(xhr, status, error) {
+						console.log("error: " + status);
+					}
+				});
 			}
-		});
+		});    
+    }
+    
+    /**
+     * 부코드 정보를 삭제한다.
+    **/
+    function removeitSubCode() {
+    	var rowData = $("#subCodeList").datagrid('getSelected');
+    	
+		var title = '<spring:message code="resc.label.confirm"/>';
+		var msg = '<spring:message code="resc.msg.selectSubCode"/>';
+		if ($('#mode').val() != '' || rowData == null) {    			    			    			
+			alertMsg(title, msg);
+			return;
+		}
+		
+    	var coId = rowData.coId;
+    	var majCode = rowData.majCode;
+    	var subCode = rowData.subCode;
+    	var rescKey = rowData.rescKey;
+    	var strUrl = "<c:out value="${contextPath}"/>/rest/subcode/delete/coId/" + coId + "/majCode/" + majCode + "/subCode/" + subCode + "/rescKey/" + rescKey;
+
+    	var title = '<spring:message code="resc.label.confirm"/>';
+    	msg = rescKey + " : " + '<spring:message code="resc.msg.confirmDel"/>';    		
+    	$.messager.confirm(title, msg, function(r) {
+			if (r) {
+				$.ajax({
+					type: 'DELETE',
+					url: strUrl,					
+					beforeSend: function(xhr) {
+						//데이터를 전송하기 전에 헤더에 csrf값을 설정한다.					
+						xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+					},  				
+					success : function(msg) {
+						var title = '<spring:message code="resc.label.confirm"/>';		    			
+						$.messager.alert(title, msg, "info",  function(){
+							$("#subCodeList").datagrid('reload');
+						});					
+					},
+					error : function(xhr, status, error) {
+						console.log("error: " + status);
+					}
+				});
+			}
+		});    
     }
     
     /*
@@ -84,6 +147,84 @@
 		var formHeight = 200 + (30 * cnt);
 		$.popupWindow(url, { height: formHeight, width: 800 });
     }
+    
+    /*
+     * 주코드 수정 화면 호출
+    */
+    function modifyMasterCode() {
+    	var rowData = $("#masterCodeList").datagrid('getSelected');
+    	
+    	var title = '<spring:message code="resc.label.confirm"/>';
+		var msg = '<spring:message code="resc.msg.selectMajCode"/>';
+		if ($('#mode').val() != '' || rowData == null) {    			    			    			
+			alertMsg(title, msg);
+			return;
+		}
+		
+    	var coId = rowData.coId;
+    	var majCode = rowData.majCode;
+		var url = "<c:out value="${contextPath}"/>/admin/codeMgr/masterCodeModifyForm?coId=" + coId + "&majCode=" + majCode;
+		var cnt = ${fn:length(langList)};		
+		var formHeight = 200 + (30 * cnt);
+		$.popupWindow(url, { height: formHeight, width: 800 });
+    }
+    
+    /*
+     * 부코드 등록 화면 호출
+    */
+    function appendSubCode() {
+    	var rowData = $("#masterCodeList").datagrid('getSelected');
+    	
+    	var title = '<spring:message code="resc.label.confirm"/>';
+		var msg = '<spring:message code="resc.msg.selectMajCode"/>';
+		if ($('#mode').val() != '' || rowData == null) {    			    			    			
+			alertMsg(title, msg);
+			return;
+		}
+		
+    	var coId = rowData.coId;
+    	var majCode = rowData.majCode;
+		var url = "<c:out value="${contextPath}"/>/admin/codeMgr/subCodeAddForm?coId=" + coId + "&majCode=" + majCode;
+		var cnt = ${fn:length(langList)};		
+		var formHeight = 230 + (30 * cnt);
+		$.popupWindow(url, { height: formHeight, width: 800 });
+    }
+    
+    /*
+     * 부코드 수정 화면 호출
+    */
+    function modifySubCode() {
+    	var rowData = $("#subCodeList").datagrid('getSelected');
+    	
+    	var title = '<spring:message code="resc.label.confirm"/>';
+		var msg = '<spring:message code="resc.msg.selectSubCode"/>';
+		if ($('#mode').val() != '' || rowData == null) {    			    			    			
+			alertMsg(title, msg);
+			return;
+		}
+		
+    	var coId = rowData.coId;
+    	var majCode = rowData.majCode;
+    	var subCode = rowData.subCode;
+		var url = "<c:out value="${contextPath}"/>/admin/codeMgr/subCodeModifyForm?coId=" + coId + "&majCode=" + majCode + "&subCode=" + subCode;
+		var cnt = ${fn:length(langList)};		
+		var formHeight = 230 + (30 * cnt);
+		$.popupWindow(url, { height: formHeight, width: 800 });
+    }
+    
+    /**
+     * 팝업창에서 호출하기 위한 함수(refresh)
+     */
+     function masterCodeReload() {
+     	$('#masterCodeList').datagrid('reload');
+     }
+    
+     /**
+      * 팝업창에서 호출하기 위한 함수(refresh)
+      */
+      function subCodeReload() {
+      	$('#subCodeList').datagrid('reload');
+      }
     </script>
 </head>
 <body>
@@ -139,9 +280,9 @@
 			        </thead>
 			    </table>    	
 			    <div id="subCodeTb" style="height:auto">    
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()"><spring:message code="resc.btn.add"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()"><spring:message code="resc.btn.delete"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modify()"><spring:message code="resc.btn.modify"/></a>        
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendSubCode()"><spring:message code="resc.btn.add"/></a>
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitSubCode()"><spring:message code="resc.btn.delete"/></a>
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifySubCode()"><spring:message code="resc.btn.modify"/></a>        
 			    </div> 			    
 			</td>
 		</tr>

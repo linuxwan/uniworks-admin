@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
@@ -36,7 +35,7 @@ import org.uniworks.groupware.admin.service.Hr001mService;
  * @author Park Chung Wan
  *
  */
-@RestController
+@Controller
 @RequestMapping(value = "/admin")
 public class AdminMgrController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminMgrController.class);
@@ -171,61 +170,5 @@ public class AdminMgrController {
 		}
 		
 		return selCodeList;
-	}
-	
-	/**
-	 * 코드 관리
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "/codeMgr", method = RequestMethod.GET)
-	public ModelAndView codeMgr(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("code/code_mgr_01");
-		//Session 정보를 가져온다.		
-		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
-		//로그인한 사용자의 coId와 Authority(관리자유형) 정보를 가져온다.
-		String coId = userSession.getCoId();					
-		String adminType = SecurityUtil.getAuthority();
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("adminType", adminType);
-		map.put("coId",  coId);
-		List<Hr001m> coList = hr001mService.getHr001mList(map);
-		
-		//지원 언어 목록 체크
-		map.put("lang", userSession.getLang());
-		map.put("majCode", "CD001"); //지원언어가 저장되어져 있는 주코드 CD001
-		map.put("orderBy", "rescKeyValue");	//코드 정렬 방법 셋팅
-		List<CommonCode> langList = commonService.getCommonSubCodeList(map);
-		
-		mav.addObject("coList", coList);
-		mav.addObject("userSession", userSession);
-		mav.addObject("langList", langList);
-		return mav;
-	}
-	
-	/**
-	 * 주코드 입력 폼
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "/codeMgr/masterCodeAddForm", method = RequestMethod.GET)
-	public ModelAndView codeMasterAddForm(HttpServletRequest request, HttpServletResponse response) {
-		String coId = StringUtil.null2void(request.getParameter("coId"));
-		ModelAndView mav = new ModelAndView("code/master_code_add_form_01");
-		//Session 정보를 가져온다.		
-		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
-		//지원 언어 정보를 일반코드에서 가져온다. MAJ_CODE : CD001
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("lang", userSession.getLang());
-		map.put("coId", coId);
-		map.put("majCode", "CD001"); //지원언어가 저장되어져 있는 주코드 CD001
-		map.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
-		List<CommonCode> langList = commonService.getCommonSubCodeList(map);
-		
-		mav.addObject("langList", langList);
-		return mav;
 	}
 }

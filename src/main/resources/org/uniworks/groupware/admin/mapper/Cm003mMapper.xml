@@ -14,6 +14,10 @@
 		select  CO_ID, RESC_KEY, LOCALE, RESC_KEY_VALUE, RESC_KEY_DESC
 		from   cm003m
 		where  CO_ID	=	#{coId,jdbcType=VARCHAR}
+		<if test="rescKey != null">
+		  and  RESC_KEY	=	#{rescKey,jdbcType=VARCHAR} 
+		</if>
+		order by CO_ID, RESC_KEY
 	</select> 
  
 	<!-- 상세 조회 --> 
@@ -21,8 +25,8 @@
 		select  CO_ID, RESC_KEY, LOCALE, RESC_KEY_VALUE, RESC_KEY_DESC
 		from   cm003m
 		where  CO_ID	=	#{coId,jdbcType=VARCHAR}
-		  and  LOCALE	=	#{locale,jdbcType=VARCHAR} 
 		  and  RESC_KEY	=	#{rescKey,jdbcType=VARCHAR} 
+		  and  LOCALE	=	#{locale,jdbcType=VARCHAR} 		  
 	</select> 
  
 	<!-- 등록 --> 
@@ -46,8 +50,10 @@
 	<!-- 삭제 --> 
 	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
 		delete	from cm003m 
-		where	CO_ID	=	#{coId,jdbcType=VARCHAR}
-		  and   LOCALE	=	#{locale,jdbcType=VARCHAR} 
-		  and	RESC_KEY	=	#{rescKey,jdbcType=VARCHAR} 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR}		   
+		  and	RESC_KEY	=	#{rescKey,jdbcType=VARCHAR}
+		  <if test="locale != null">
+		  and   LOCALE	=	#{locale,jdbcType=VARCHAR}
+		  </if> 
 	</delete> 
 </mapper>

@@ -6,8 +6,10 @@
 package org.uniworks.groupware.admin.service; 
 
 import java.util.List;
+import java.util.Map;
 
-import org.uniworks.groupware.admin.domain.Cm002c; 
+import org.uniworks.groupware.admin.domain.Cm002c;
+import org.uniworks.groupware.admin.domain.Cm003m; 
 
 public interface Cm002cService { 
 	/** 
@@ -44,4 +46,27 @@ public interface Cm002cService {
 	 * @return 
 	 */ 
 	int deleteCm002c(java.util.Map<String,Object> map); 
+	
+	/**
+	 * 부코드와 다국어 명칭을 등록한다.
+	 * @param cm002c
+	 * @param cm003m
+	 * @return
+	 */
+	int addSubCodeInfo(Cm002c cm002c, List<Cm003m> cm003mList);
+	
+	/**
+	 * 부코드와 다국어 명칭을 수정한다.
+	 * @param cm002c
+	 * @param cm003mList
+	 * @return
+	 */
+	int updateSubCodeInfo(Cm002c cm002c, List<Cm003m> cm003mList);
+	
+	/**
+	 * 부코드와 다국어 명칭을 모두 삭제한다.
+	 * @param map
+	 * @return
+	 */
+	int deleteSubCodeAndMultiLanguage(Map<String, Object> map);
 } 
