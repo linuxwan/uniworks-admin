@@ -54,7 +54,7 @@
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.companyMgr"/>','/admin/companyMgr')"><spring:message code="resc.menu.companyMgr"/></div>		            
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.adminInfo"/>','/admin/adminMgr')"><spring:message code="resc.menu.adminInfo"/></div>
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.codeMgr"/>','/admin/codeMgr')"><spring:message code="resc.menu.codeMgr"/></div>
-		            <div onclick="javascript:goPage('new')">조직 관리</div>
+		            <div onclick="javascript:goPage('<spring:message code="resc.menu.oganMgr"/>','/admin/oganMgr')"><spring:message code="resc.menu.oganMgr"/></div>
 		            <div onclick="javascript:goPage('new')">인사 관리</div>
 		            <div onclick="javascript:goPage('new')">사용자 관리</div>
 		            <div onclick="javascript:goPage('new')">게시판 Master 관리</div>
