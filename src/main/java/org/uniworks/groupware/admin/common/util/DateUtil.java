@@ -103,6 +103,7 @@ public class DateUtil {
 	 */
 	public boolean parseDate(String dt) {
 	    boolean flag = false;
+	    
 	    if(dt.length() == 8) {
 	    	Calendar calendar = Calendar.getInstance();
 	    	try {

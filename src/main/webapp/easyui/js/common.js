@@ -255,11 +255,11 @@ function formatDate(val, row) {
 	} else {
 		strMonth = (date.getMonth() + 1);
 	}
-	var strDate = '';
+	var strDay = '';
 	if (date.getDate() < 10) {
-		strDate = '0' + date.getDate();
+		strDay = '0' + date.getDate();
 	} else {
-		strDate = date.getDate();
+		strDay = date.getDate();
 	}
 	
 	var strHours = '';
@@ -283,7 +283,7 @@ function formatDate(val, row) {
 		strSeconds = date.getSeconds();
 	}
 	
-	var strDate = date.getFullYear() + '.' + strMonth + '.' + strDate + ' ' + strHours + ':' + strMinutes + ':' + strSeconds; 
+	var strDate = date.getFullYear() + '.' + strMonth + '.' + strDay + ' ' + strHours + ':' + strMinutes + ':' + strSeconds; 
 	return strDate;
 }
 
@@ -303,11 +303,11 @@ function formatDateDash(val, row) {
 	} else {
 		strMonth = (date.getMonth() + 1);
 	}
-	var strDate = '';
+	var strDay = '';
 	if (date.getDate() < 10) {
-		strDate = '0' + date.getDate();
+		strDay = '0' + date.getDate();
 	} else {
-		strDate = date.getDate();
+		strDay = date.getDate();
 	}
 	
 	var strHours = '';
@@ -331,8 +331,63 @@ function formatDateDash(val, row) {
 		strSeconds = date.getSeconds();
 	}
 	
-	var strDate = date.getFullYear() + '-' + strMonth + '-' + strDate; // + ' ' + strHours + ':' + strMinutes + ':' + strSeconds; 
+	var strDate = date.getFullYear() + '-' + strMonth + '-' + strDay; // + ' ' + strHours + ':' + strMinutes + ':' + strSeconds; 
 	return strDate;
+}
+
+/**
+ * databox에서 날짜 포맷에 맞게 변환하는 함수
+ * @param val
+ * @param row
+ * @returns {String}
+ */
+function dateBoxformatDate(val) {
+	if (val == null || val == "") return "";
+	var date = new Date(Number(val));
+	
+	var strMonth = '';
+	if (date.getMonth() + 1 < 10) {
+		strMonth = '0' + (date.getMonth() + 1);
+	} else {
+		strMonth = (date.getMonth() + 1);
+	}
+	var strDay = '';
+	if (date.getDate() < 10) {
+		strDay = '0' + date.getDate();
+	} else {
+		strDay = date.getDate();
+	}
+	    	    	
+	var strDate = date.getFullYear() + '-' + strMonth + '-' + strDay;  
+	return strDate;
+}
+
+/**
+ * datebox에서 날짜 포맷에 맞게 변환하는 함수
+ * @param val
+ * @param row
+ * @returns {String}
+ */
+function dateBoxformatDateDash(val) {
+	if (val == null || val == "") return "";
+	var date = new Date(Number(val));		
+					
+	var strMonth = '';
+	if (date.getMonth() + 1 < 10) {
+		strMonth = '0' + (date.getMonth() + 1);
+	} else {
+		strMonth = (date.getMonth() + 1);
+	}
+	var strDay = '';
+	if (date.getDate() < 10) {
+		strDay = '0' + date.getDate();
+	} else {
+		strDay = date.getDate();
+	}    	    	
+	
+	if (!isNaN(date.getFullYear()) && !isNaN(strMonth) && !isNaN(strDay)) {
+		return new Date(date.getFullYear, Number(strMonth) - 1, strDay);
+	}    	
 }
 
 /***

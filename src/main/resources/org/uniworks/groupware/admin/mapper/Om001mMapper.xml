@@ -15,6 +15,20 @@
 		<result column="OGAN_DESC" jdbcType="VARCHAR" property="oganDesc" /> 
 	</resultMap> 
 
+	<resultMap id="BaseResultMap2" type="org.uniworks.groupware.admin.domain.OganInfo"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="OGAN_CODE" jdbcType="VARCHAR" property="oganCode" /> 
+		<result column="OGAN_LEV" jdbcType="VARCHAR" property="oganLev" /> 
+		<result column="OGAN_ESTB_DATE" jdbcType="TIMESTAMP" property="oganEstbDate" /> 
+		<result column="OGAN_NAME" jdbcType="VARCHAR" property="oganName" /> 
+		<result column="RESC_KEY" jdbcType="VARCHAR" property="rescKey" /> 
+		<result column="OGAN_CLS_DATE" jdbcType="TIMESTAMP" property="oganClsDate" /> 
+		<result column="HIGH_OGAN_CODE" jdbcType="VARCHAR" property="highOganCode" /> 
+		<result column="HIGH_OGAN_LEV" jdbcType="VARCHAR" property="highOganLev" /> 
+		<result column="OGAN_TYPE" jdbcType="VARCHAR" property="oganType" /> 
+		<result column="OGAN_DESC" jdbcType="VARCHAR" property="oganDesc" />
+		<result column="LOCALE" jdbcType="VARCHAR" property="lang" />  
+	</resultMap>
 	<!-- 목록 조회 --> 
 	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
 		select  A.CO_ID, A.OGAN_CODE, A.OGAN_LEV, A.OGAN_ESTB_DATE, B.RESC_KEY_VALUE OGAN_NAME, A.RESC_KEY, A.OGAN_CLS_DATE, A.HIGH_OGAN_CODE, A.HIGH_OGAN_LEV, 
@@ -30,14 +44,30 @@
  
 	<!-- 상세 조회 --> 
 	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
-		select  CO_ID, OGAN_CODE, OGAN_LEV, OGAN_ESTB_DATE, OGAN_NAME, RESC_KEY, OGAN_CLS_DATE, HIGH_OGAN_CODE, HIGH_OGAN_LEV, 
-				OGAN_TYPE, OGAN_DESC
-		from   om001m
-		where  CO_ID	=	#{coId,jdbcType=VARCHAR} 
-		  and  OGAN_CODE	=	#{oganCode,jdbcType=VARCHAR} 
-		  and  OGAN_LEV	=	#{oganLev,jdbcType=VARCHAR}
-		  and  OGAN_ESTB_DATE	=	#{oganEstbDate,jdbcType=TIMESTAMP} 		  
-	</select> 
+		select  A.CO_ID, A.OGAN_CODE, A.OGAN_LEV, A.OGAN_ESTB_DATE, B.RESC_KEY_VALUE OGAN_NAME, A.RESC_KEY, A.OGAN_CLS_DATE, A.HIGH_OGAN_CODE, A.HIGH_OGAN_LEV, 
+				A.OGAN_TYPE, A.OGAN_DESC
+		from   om001m A
+		LEFT JOIN gw.om002m B ON  (
+		      B.LOCALE	=	#{lang,jdbcType=VARCHAR}
+		  and B.RESC_KEY = A.RESC_KEY)
+		where  A.CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  A.OGAN_CODE	=	#{oganCode,jdbcType=VARCHAR} 
+		  and  A.OGAN_LEV	=	#{oganLev,jdbcType=VARCHAR}
+		  and  #{crntDate,jdbcType=TIMESTAMP} between A.OGAN_ESTB_DATE and A.OGAN_CLS_DATE		  
+	</select>
+	
+	<!-- 상세 조회 (등록된 다국어 모두 가져온다) --> 
+	<select id="selectByLangList" parameterType="java.util.Map" resultMap="BaseResultMap2"> 
+		select  A.CO_ID, A.OGAN_CODE, A.OGAN_LEV, A.OGAN_ESTB_DATE, B.RESC_KEY_VALUE OGAN_NAME, A.RESC_KEY, A.OGAN_CLS_DATE, A.HIGH_OGAN_CODE, A.HIGH_OGAN_LEV, 
+				A.OGAN_TYPE, A.OGAN_DESC, B.LOCALE
+		from   om001m A
+		LEFT JOIN gw.om002m B ON  (
+				B.RESC_KEY = A.RESC_KEY)
+		where 	A.CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and 	A.OGAN_CODE	=	#{oganCode,jdbcType=VARCHAR} 
+		  and 	A.OGAN_LEV	=	#{oganLev,jdbcType=VARCHAR}
+		  and 	#{crntDate,jdbcType=TIMESTAMP} between A.OGAN_ESTB_DATE and A.OGAN_CLS_DATE		  
+	</select>  
  
 	<!-- 등록 --> 
 	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Om001m"> 

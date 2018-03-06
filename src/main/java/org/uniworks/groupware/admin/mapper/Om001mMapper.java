@@ -5,9 +5,10 @@
  */ 
 package org.uniworks.groupware.admin.mapper; 
 
-import java.util.List; 
-import java.util.Map; 
+import java.util.List;
+import java.util.Map;
 
+import org.uniworks.groupware.admin.domain.OganInfo;
 import org.uniworks.groupware.admin.domain.Om001m; 
 
 
@@ -28,6 +29,12 @@ public interface Om001mMapper {
 	 * @return 
 	 */ 
 	Om001m selectByPrimaryKey(Map<String, Object> map); 
+	/**
+	 * 정보 가져오기(등록된 다국어별로 정보를 모두 가져온다.) 
+	 * @param map
+	 * @return
+	 */
+	List<OganInfo> selectByLangList(Map<String, Object> map);
 	/** 
 	 * 등록한다 
 	 * @param om001m 
