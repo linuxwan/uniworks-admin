@@ -131,7 +131,7 @@ public class Om001mServiceImpl implements Om001mService {
 	public int deleteOm001mOm002m(Map<String, Object> map) {
 		int row = 0;
 		
-		row = om002mMapper.deleteByPrimaryKey(map);
+		row = om002mMapper.deleteByRescKey(map);
 		row = om001mMapper.deleteByPrimaryKey(map);
 		
 		return row;

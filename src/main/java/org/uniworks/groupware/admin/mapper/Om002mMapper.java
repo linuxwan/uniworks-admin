@@ -45,5 +45,11 @@ public interface Om002mMapper {
 	 * @param map 
 	 * @return 
 	 */ 
-	int deleteByPrimaryKey(Map<String, Object> map); 
+	int deleteByPrimaryKey(Map<String, Object> map);
+	/** 
+	 * 삭제한다 - 다국어 모두 
+	 * @param map 
+	 * @return 
+	 */
+	int deleteByRescKey(Map<String, Object> map);
 } 

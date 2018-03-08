@@ -17,13 +17,14 @@ import org.pojomatic.annotations.AutoProperty;
  * 관련 테이블 : Om002m
  */ 
 @XmlRootElement(name = "om002m") 
-@XmlType(propOrder = {"rescKey", "locale", "rescKeyValue"}) 
+@XmlType(propOrder = {"rescKey", "locale", "rescKeyValue", "rescKeyValueDesc"}) 
 @AutoProperty 
 @SuppressWarnings("serial") 
 public class Om002m implements Serializable {  
 	private String rescKey; 
 	private String locale; 
 	private String rescKeyValue; 
+	private String rescKeyValueDesc;
 
 	public void setRescKey(String rescKey) { 
 		this.rescKey = rescKey; 
@@ -43,6 +44,12 @@ public class Om002m implements Serializable {
 	public String getRescKeyValue() { 
 		return this.rescKeyValue; 
 	} 
+	public String getRescKeyValueDesc() {
+		return rescKeyValueDesc;
+	}
+	public void setRescKeyValueDesc(String rescKeyValueDesc) {
+		this.rescKeyValueDesc = rescKeyValueDesc;
+	}
 	@Override 
 	public boolean equals(Object o) {  
 		return Pojomatic.equals(this, o); 

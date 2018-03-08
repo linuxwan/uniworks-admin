@@ -81,6 +81,27 @@
     		$('#btnClear').linkbutton('enable');
     	});
     	
+    	//수정 버튼 클릭 시
+    	$('#btnModify').bind('click', function(){
+    		var node = $('#oganTree').tree("getSelected");
+    		if (node == null) {
+    			var title = '<spring:message code="resc.label.confirm"/>';
+    			var msg = '<spring:message code="resc.msg.noSelectOgan"/>';
+    			
+    			alertMsg(title, msg);
+    			return;
+    		}
+    		
+    		setReadOnly(false);
+   			$('#highOganCode').textbox('readonly', true);
+   	     	$('#highOganLev').textbox('readonly', true);
+   	    	$('#oganCode').textbox('readonly', true);
+   	    	$('#oganLev').textbox('readonly', true); 
+   	    	
+   	    	$('#mode').val('MODIFY'); 
+    		$('#btnSave').linkbutton('enable');
+    	});
+    	
     	//삭제 버튼 클릭 시
     	$('#btnDelete').bind('click', function(){
     		var rowData = $("#oganTree").tree('getSelected');
@@ -110,9 +131,41 @@
     });
     
     /*
+     * 조직 정보를 삭제한다.
+     */
+    function deleteOgan() {
+    	var rowData = $("#oganTree").tree('getSelected');
+    	var coId = $("#selCoId").combobox('getValue');    	    	
+    	var strUrl = "<c:out value="${contextPath}"/>/rest/ogan/delete/coId/" + coId + "/oganCode/" + rowData.id + "/oganLev/" + rowData.oganLev;
+    	
+    	$.ajax({
+			type: 'DELETE',
+			url: strUrl,					
+			beforeSend: function(xhr) {
+				//데이터를 전송하기 전에 헤더에 csrf값을 설정한다.					
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},  				
+			success : function(msg) {
+				var title = '<spring:message code="resc.label.confirm"/>';		    			
+				$.messager.alert(title, msg, "info",  function(){
+					$("#oganTree").tree('reload');	
+					formReset();
+					//저장, 초기화 버튼 비활성화
+			    	$('#btnClear').linkbutton('disable');
+			    	$('#btnSave').linkbutton('disable');
+				});								
+			},
+			error : function(xhr, status, error) {
+				console.log("error: " + status);
+			}
+		});
+    }
+    
+    /*
      * form 내의 입력 관련 Object를 리셋한다.
     */
     function formReset() {
+    	$('#mode').val("");
     	$('#oganCode').textbox('setValue', "");
     	$('#oganLev').textbox('setValue', "");
     	$('#oganEstbDate').textbox('setValue', "");
@@ -125,7 +178,7 @@
     	<c:forEach items="${langList}" var="lang">	
     	$('#oganName_' + '${lang.rescKeyValue}').textbox('setValue', "");
     	$('#oganDesc_' + '${lang.rescKeyValue}').textbox('setValue', "");
-    	</c:forEach>
+    	</c:forEach>    	    	
     }
     
     /**
@@ -294,13 +347,26 @@
 					//데이터를 전송하기 전에 헤더에 csrf값을 설정한다.					
 					xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 				},  				
-				success : function(json) {
+				success : function(msg) {
 					if (mode == "ADD") {
-						$("#coTree").treegrid('reload');	
+						var title = '<spring:message code="resc.label.confirm"/>';		    			
+						$.messager.alert(title, msg, "info",  function(){
+							$("#oganTree").tree('reload');	
+							formReset();
+							//저장, 초기화 버튼 비활성화
+					    	$('#btnClear').linkbutton('disable');
+					    	$('#btnSave').linkbutton('disable');
+						});												
 					} else if (mode == "MODIFY") {
-						var coId = $('#coId').textbox('getValue');
-						var stDate = $('#stDate').textbox('getValue');
-						getCompanyInfo(coId, stDate);
+						var title = '<spring:message code="resc.label.confirm"/>';		 
+						$.messager.alert(title, msg, "info",  function() {
+							var rowData = $("#oganTree").tree('getSelected');
+							var coId = $("#selCoId").combobox('getValue');
+							getOganInfo(coId, rowData.id, rowData.oganLev);
+							//저장, 초기화 버튼 비활성화
+					    	$('#btnClear').linkbutton('disable');
+					    	$('#btnSave').linkbutton('disable');
+						});	
 					}
 				},
 				error : function(xhr, status, error) {
