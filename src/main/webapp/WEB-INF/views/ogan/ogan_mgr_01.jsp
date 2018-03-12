@@ -22,6 +22,7 @@
     		onChange(newValue, oldValue) {
     			$('#coId').val($("#selCoId").combobox('getValue'));
     			getOganList('oganTree', newValue);
+    			formReset();
     		}
     	});
     	

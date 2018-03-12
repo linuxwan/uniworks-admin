@@ -34,12 +34,13 @@
 		select  A.CO_ID, A.OGAN_CODE, A.OGAN_LEV, A.OGAN_ESTB_DATE, B.RESC_KEY_VALUE OGAN_NAME, A.RESC_KEY, A.OGAN_CLS_DATE, A.HIGH_OGAN_CODE, A.HIGH_OGAN_LEV, 
 				A.OGAN_TYPE, B.RESC_KEY_VALUE_DESC OGAN_DESC
 		from   om001m A
-		LEFT JOIN gw.om002m B ON  (
+		LEFT JOIN gw.om002m B ON  ( 
 		      B.LOCALE	=	#{lang,jdbcType=VARCHAR}
 		  and B.RESC_KEY = A.RESC_KEY)
-		where  CO_ID	=	#{coId,jdbcType=VARCHAR} 
-		  and  SYSDATE() between OGAN_ESTB_DATE and OGAN_CLS_DATE
-		order by OGAN_LEV, OGAN_CODE, HIGH_OGAN_LEV, HIGH_OGAN_CODE
+		where  A.CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and  A.CO_ID	= B.CO_ID 
+		  and  SYSDATE() between A.OGAN_ESTB_DATE and A.OGAN_CLS_DATE
+		order by A.OGAN_LEV, A.OGAN_CODE, A.HIGH_OGAN_LEV, A.HIGH_OGAN_CODE
 	</select> 
  
 	<!-- 상세 조회 --> 
@@ -51,6 +52,7 @@
 		      B.LOCALE	=	#{lang,jdbcType=VARCHAR}
 		  and B.RESC_KEY = A.RESC_KEY)
 		where  A.CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  A.CO_ID  =   B.CO_ID
 		  and  A.OGAN_CODE	=	#{oganCode,jdbcType=VARCHAR} 
 		  and  A.OGAN_LEV	=	#{oganLev,jdbcType=VARCHAR}
 		  and  #{crntDate,jdbcType=TIMESTAMP} between A.OGAN_ESTB_DATE and A.OGAN_CLS_DATE		  
@@ -61,9 +63,10 @@
 		select  A.CO_ID, A.OGAN_CODE, A.OGAN_LEV, A.OGAN_ESTB_DATE, B.RESC_KEY_VALUE OGAN_NAME, A.RESC_KEY, A.OGAN_CLS_DATE, A.HIGH_OGAN_CODE, A.HIGH_OGAN_LEV, 
 				A.OGAN_TYPE, B.RESC_KEY_VALUE_DESC OGAN_DESC, B.LOCALE
 		from   om001m A
-		LEFT JOIN gw.om002m B ON  (
+		LEFT JOIN gw.om002m B ON  (		          
 				B.RESC_KEY = A.RESC_KEY)
-		where 	A.CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		where 	A.CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and	A.CO_ID = B.CO_ID 
 		  and 	A.OGAN_CODE	=	#{oganCode,jdbcType=VARCHAR} 
 		  and 	A.OGAN_LEV	=	#{oganLev,jdbcType=VARCHAR}
 		  and 	#{crntDate,jdbcType=TIMESTAMP} between A.OGAN_ESTB_DATE and A.OGAN_CLS_DATE		  

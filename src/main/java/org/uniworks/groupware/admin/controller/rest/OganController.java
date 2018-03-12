@@ -153,6 +153,7 @@ public class OganController {
 			}
 			
 			Om002m om002m = new Om002m();
+			om002m.setCoId(om001m.getCoId());
 			om002m.setRescKey(om001m.getRescKey());
 			om002m.setLocale(commonCode.getRescKeyValue());
 			om002m.setRescKeyValue(oganName);
@@ -238,6 +239,7 @@ public class OganController {
 		map.put("oganCode", om001m.getOganCode());
 		map.put("oganLev", om001m.getOganLev());
 		map.put("crntDate", crntDate);
+		map.put("lang", userSession.getLang());
 		
 		Map<String, Object> lanMap = new HashMap<String, Object>();
 		lanMap.put("lang", userSession.getLang());
@@ -266,6 +268,7 @@ public class OganController {
 			}
 			
 			Om002m om002m = new Om002m();
+			om002m.setCoId(om001m.getCoId());
 			om002m.setRescKey(om001m.getRescKey());
 			om002m.setLocale(commonCode.getRescKeyValue());
 			om002m.setRescKeyValue(oganName);

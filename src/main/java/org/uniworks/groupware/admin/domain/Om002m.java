@@ -17,15 +17,22 @@ import org.pojomatic.annotations.AutoProperty;
  * 관련 테이블 : Om002m
  */ 
 @XmlRootElement(name = "om002m") 
-@XmlType(propOrder = {"rescKey", "locale", "rescKeyValue", "rescKeyValueDesc"}) 
+@XmlType(propOrder = {"coId", "rescKey", "locale", "rescKeyValue", "rescKeyValueDesc"}) 
 @AutoProperty 
 @SuppressWarnings("serial") 
 public class Om002m implements Serializable {  
+	private String coId;
 	private String rescKey; 
 	private String locale; 
 	private String rescKeyValue; 
 	private String rescKeyValueDesc;
-
+	
+	public String getCoId() {
+		return coId;
+	}
+	public void setCoId(String coId) {
+		this.coId = coId;
+	}
 	public void setRescKey(String rescKey) { 
 		this.rescKey = rescKey; 
 	} 

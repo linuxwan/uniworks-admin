@@ -68,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	http    
     		.csrf()
     		.and()
-    			.headers().frameOptions().disable() //iframe 사용을 허용하도록 변경.
+    			.headers().frameOptions().sameOrigin() //iframe 사용을 허용하도록 변경.
     		.and()    		
     		.authorizeRequests()    			 
     			.antMatchers("/loginForm").access("permitAll")
