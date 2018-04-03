@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.HumanResourceMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.HumanResource" >
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" />
+		<result column="EMP_NO" jdbcType="VARCHAR" property="empNo" />
+		<result column="SYS_USER_ID" jdbcType="VARCHAR" property="sysUserId" />
+		<result column="EMP_NAME_KOR" jdbcType="VARCHAR" property="empNameKor" />
+		<result column="EMP_NAME_CHN" jdbcType="VARCHAR" property="empNameChn" />
+		<result column="EMP_NAME_ENG" jdbcType="VARCHAR" property="empNameEng" />
+		<result column="WORK_INDC" jdbcType="VARCHAR" property="workIndc" />
+		<result column="DUTY_CODE" jdbcType="VARCHAR" property="dutyCode" />
+		<result column="DUTY_DESC" jdbcType="VARCHAR" property="dutyDesc" />
+		<result column="PSTN_CODE" jdbcType="VARCHAR" property="pstnCode" />
+		<result column="PSTN_DESC" jdbcType="VARCHAR" property="pstnDesc" />
+		<result column="ASGN_OGAN_CODE_1" jdbcType="VARCHAR" property="asgnOganCode1" />
+		<result column="ASGN_OGAN_DESC_1" jdbcType="VARCHAR" property="asgnOganDesc1" />
+		<result column="ASGN_OGAN_CODE_2" jdbcType="VARCHAR" property="asgnOganCode2" />
+		<result column="ASGN_OGAN_DESC_2" jdbcType="VARCHAR" property="asgnOganDesc2" />
+		<result column="ASGN_OGAN_CODE_3" jdbcType="VARCHAR" property="asgnOganCode3" />
+		<result column="ASGN_OGAN_DESC_3" jdbcType="VARCHAR" property="asgnOganDesc3" />
+		<result column="ASGN_OGAN_CODE_4" jdbcType="VARCHAR" property="asgnOganCode4" />
+		<result column="ASGN_OGAN_DESC_4" jdbcType="VARCHAR" property="asgnOganDesc4" />
+		<result column="ASGN_OGAN_CODE_5" jdbcType="VARCHAR" property="asgnOganCode5" />
+		<result column="ASGN_OGAN_DESC_5" jdbcType="VARCHAR" property="asgnOganDesc5" />
+		<result column="ASGN_OGAN_CODE_6" jdbcType="VARCHAR" property="asgnOganCode6" />
+		<result column="ASGN_OGAN_DESC_6" jdbcType="VARCHAR" property="asgnOganDesc6" />
+		<result column="ASGN_OGAN_CODE_7" jdbcType="VARCHAR" property="asgnOganCode7" />
+		<result column="ASGN_OGAN_DESC_7" jdbcType="VARCHAR" property="asgnOganDesc7" />
+		<result column="ASGN_OGAN_CODE_8" jdbcType="VARCHAR" property="asgnOganCode8" />
+		<result column="ASGN_OGAN_DESC_8" jdbcType="VARCHAR" property="asgnOganDesc8" />
+		<result column="ASGN_OGAN_CODE_9" jdbcType="VARCHAR" property="asgnOganCode9" />
+		<result column="ASGN_OGAN_DESC_9" jdbcType="VARCHAR" property="asgnOganDesc9" />
+		<result column="ASGN_OGAN_CODE_10" jdbcType="VARCHAR" property="asgnOganCode10" />
+		<result column="ASGN_OGAN_DESC_10" jdbcType="VARCHAR" property="asgnOganDesc10" />
+		<result column="ASGN_OGAN_CODE_11" jdbcType="VARCHAR" property="asgnOganCode11" />
+		<result column="ASGN_OGAN_DESC_11" jdbcType="VARCHAR" property="asgnOganDesc11" />
+		<result column="ASGN_OGAN_CODE_12" jdbcType="VARCHAR" property="asgnOganCode12" />
+		<result column="ASGN_OGAN_DESC_12" jdbcType="VARCHAR" property="asgnOganDesc12" />
+		<result column="OFFC_TEL_NO" jdbcType="VARCHAR" property="offcTelNo" />
+		<result column="MOBL_PHON_NO" jdbcType="VARCHAR" property="moblPhoneNo" />
+		<result column="BIRTH_DATE" jdbcType="VARCHAR" property="birthDate" />
+		<result column="SSN" jdbcType="VARCHAR" property="ssn" />
+		<result column="MAIL_ADDR" jdbcType="VARCHAR" property="mailAddr" />
+		<result column="ENTR_DATE" jdbcType="VARCHAR" property="entrDate" />
+		<result column="RSGN_DATE" jdbcType="VARCHAR" property="rsgnDate" />
+		<result column="OFFC_ORD_DATE" jdbcType="VARCHAR" property="offcOrdDate" />
+		<result column="MARRIAGE_INDC" jdbcType="VARCHAR" property="marriageIndc" />
+		<result column="MARRIAGE_DATE" jdbcType="VARCHAR" property="marriageDate" />
+		<result column="ORGN_OGAN_CODE_1" jdbcType="VARCHAR" property="orgnOganCode1" />
+		<result column="ORGN_OGAN_DESC_1" jdbcType="VARCHAR" property="orgnOganDesc1" />
+		<result column="ORGN_OGAN_CODE_2" jdbcType="VARCHAR" property="orgnOganCode2" />
+		<result column="ORGN_OGAN_DESC_2" jdbcType="VARCHAR" property="orgnOganDesc2" />
+		<result column="ORGN_OGAN_CODE_3" jdbcType="VARCHAR" property="orgnOganCode3" />
+		<result column="ORGN_OGAN_DESC_3" jdbcType="VARCHAR" property="orgnOganDesc3" />
+		<result column="ORGN_OGAN_CODE_4" jdbcType="VARCHAR" property="orgnOganCode4" />
+		<result column="ORGN_OGAN_DESC_4" jdbcType="VARCHAR" property="orgnOganDesc4" />
+		<result column="ORGN_OGAN_CODE_5" jdbcType="VARCHAR" property="orgnOganCode5" />
+		<result column="ORGN_OGAN_DESC_5" jdbcType="VARCHAR" property="orgnOganDesc5" />
+		<result column="ORGN_OGAN_CODE_6" jdbcType="VARCHAR" property="orgnOganCode6" />
+		<result column="ORGN_OGAN_DESC_6" jdbcType="VARCHAR" property="orgnOganDesc6" />
+		<result column="ORGN_OGAN_CODE_7" jdbcType="VARCHAR" property="orgnOganCode7" />
+		<result column="ORGN_OGAN_DESC_7" jdbcType="VARCHAR" property="orgnOganDesc7" />
+		<result column="ORGN_OGAN_CODE_8" jdbcType="VARCHAR" property="orgnOganCode8" />
+		<result column="ORGN_OGAN_DESC_8" jdbcType="VARCHAR" property="orgnOganDesc8" />
+		<result column="ORGN_OGAN_CODE_9" jdbcType="VARCHAR" property="orgnOganCode9" />
+		<result column="ORGN_OGAN_DESC_9" jdbcType="VARCHAR" property="orgnOganDesc9" />
+		<result column="ORGN_OGAN_CODE_10" jdbcType="VARCHAR" property="orgnOganCode10" />
+		<result column="ORGN_OGAN_DESC_10" jdbcType="VARCHAR" property="orgnOganDesc10" />
+		<result column="ORGN_OGAN_CODE_11" jdbcType="VARCHAR" property="orgnOganCode11" />
+		<result column="ORGN_OGAN_DESC_11" jdbcType="VARCHAR" property="orgnOganDesc11" />
+		<result column="ORGN_OGAN_CODE_12" jdbcType="VARCHAR" property="orgnOganCode12" />
+		<result column="ORGN_OGAN_DESC_12" jdbcType="VARCHAR" property="orgnOganDesc12" />
+		<result column="BASE_ASGN_OGAN_LEV" jdbcType="VARCHAR" property="baseAsgnOganLev" />
+		<result column="BASE_ORGN_OGAN_LEV" jdbcType="VARCHAR" property="baseOrgnOganLev" />
+		<result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+		<result column="DEPT_DESC" jdbcType="VARCHAR" property="deptDesc" />
+	</resultMap>
+	
+	<!-- groupware 사용자의 인사정보를 가져온다. -->
+	<select id="selectByHumanResource" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select A.CO_ID as CO_ID, A.EMP_NO as EMP_NO, A.SYS_USER_ID as SYS_USER_ID, C.LOCALE as LOCALE,
+		  F.EMP_NAME as EMP_NAME_KOR, A.EMP_NAME_CHN as EMP_NAME_CHN, A.EMP_NAME_ENG as EMP_NAME_ENG, A.WORK_INDC as WORK_INDC,
+		  A.DUTY_CODE as DUTY_CODE, C.RESC_KEY_VALUE as DUTY_DESC, A.PSTN_CODE as PSTN_CODE, E.RESC_KEY_VALUE as PSTN_DESC, 
+		  A.ASGN_OGAN_CODE_1 as ASGN_OGAN_CODE_1, A.ASGN_OGAN_DESC_1 as ASGN_OGAN_DESC_1, A.ASGN_OGAN_CODE_2 as ASGN_OGAN_CODE_2, 
+		  A.ASGN_OGAN_DESC_2 as ASGN_OGAN_DESC_2, A.ASGN_OGAN_CODE_3 as ASGN_OGAN_CODE_3, A.ASGN_OGAN_DESC_3 as ASGN_OGAN_DESC_3, 
+		  A.ASGN_OGAN_CODE_4 as ASGN_OGAN_CODE_4, A.ASGN_OGAN_DESC_4 as ASGN_OGAN_DESC_4, A.ASGN_OGAN_CODE_5 as ASGN_OGAN_CODE_5,
+		  A.ASGN_OGAN_DESC_5 as ASGN_OGAN_DESC_5, A.ASGN_OGAN_CODE_6 as ASGN_OGAN_CODE_6, A.ASGN_OGAN_DESC_6 as ASGN_OGAN_DESC_6, 
+		  A.ASGN_OGAN_CODE_7 as ASGN_OGAN_CODE_7, A.ASGN_OGAN_DESC_7 as ASGN_OGAN_DESC_7, A.ASGN_OGAN_CODE_8 as ASGN_OGAN_CODE_8, 
+		  A.ASGN_OGAN_DESC_8 as ASGN_OGAN_DESC_8, A.ASGN_OGAN_CODE_9 as ASGN_OGAN_CODE_9, A.ASGN_OGAN_DESC_9 as ASGN_OGAN_DESC_9, 
+		  A.ASGN_OGAN_CODE_10 as ASGN_OGAN_CODE_10, A.ASGN_OGAN_DESC_10 as ASGN_OGAN_DESC_10, A.ASGN_OGAN_CODE_11 as ASGN_OGAN_CODE_11, 
+		  A.ASGN_OGAN_DESC_11 as ASGN_OGAN_DESC_11, A.ASGN_OGAN_CODE_12 as ASGN_OGAN_CODE_12, A.ASGN_OGAN_DESC_12 as ASGN_OGAN_DESC_12,
+		  A.OFFC_TEL_NO as OFFC_TEL_NO, A.MOBL_PHON_NO as MOBL_PHON_NO, A.BIRTH_DATE as BIRTH_DATE, A.SSN as SSN, A.MAIL_ADDR as MAIL_ADDR,
+		  A.ENTR_DATE as ENTR_DATE, A.RSGN_DATE as RSGN_DATE, A.OFFC_ORD_DATE as OFFC_ORD_DATE, A.MARRIAGE_INDC as MARRIAGE_INDC, 
+		  A.MARRIAGE_DATE as MARRIAGE_DATE, A.ORGN_OGAN_CODE_1 as ORGN_OGAN_CODE_1, A.ORGN_OGAN_DESC_1 as ORGN_OGAN_DESC_1,
+		  A.ORGN_OGAN_CODE_2 as ORGN_OGAN_CODE_2, A.ORGN_OGAN_DESC_2 as ORGN_OGAN_DESC_2, A.ORGN_OGAN_CODE_3 as ORGN_OGAN_CODE_3, 
+		  A.ORGN_OGAN_DESC_3 as ORGN_OGAN_DESC_3, A.ORGN_OGAN_CODE_4 as ORGN_OGAN_CODE_4, A.ORGN_OGAN_DESC_4 as ORGN_OGAN_DESC_4,
+		  A.ORGN_OGAN_CODE_5 as ORGN_OGAN_CODE_5, A.ORGN_OGAN_DESC_5 as ORGN_OGAN_DESC_5, A.ORGN_OGAN_CODE_6 as ORGN_OGAN_CODE_6, 
+		  A.ORGN_OGAN_DESC_6 as ORGN_OGAN_DESC_6, A.ORGN_OGAN_CODE_7 as ORGN_OGAN_CODE_7, A.ORGN_OGAN_DESC_7 as ORGN_OGAN_DESC_7,
+		  A.ORGN_OGAN_CODE_8 as ORGN_OGAN_CODE_8, A.ORGN_OGAN_DESC_8 as ORGN_OGAN_DESC_8, A.ORGN_OGAN_CODE_9 as ORGN_OGAN_CODE_9, 
+		  A.ORGN_OGAN_DESC_9 as ORGN_OGAN_DESC_9, A.ORGN_OGAN_CODE_10 as ORGN_OGAN_CODE_10, A.ORGN_OGAN_DESC_10 as ORGN_OGAN_DESC_10, 
+		  A.ORGN_OGAN_CODE_11 as ORGN_OGAN_CODE_11, A.ORGN_OGAN_DESC_11 as ORGN_OGAN_DESC_11, A.ORGN_OGAN_CODE_12 as ORGN_OGAN_CODE_12,
+		  A.ORGN_OGAN_DESC_12 as ORGN_OGAN_DESC_12, A.BASE_ASGN_OGAN_LEV as BASE_ASGN_OGAN_LEV, A.BASE_ORGN_OGAN_LEV as BASE_ORGN_OGAN_LEV,
+		  '' as DEPT_CODE, '' as DEPT_DESC 
+		from hr010m as A LEFT OUTER JOIN cm002c as D on D.CO_ID = A.CO_ID and D.SUB_CODE = A.PSTN_CODE and D.MAJ_CODE = 'CD006'
+						 LEFT OUTER JOIN cm003m as E on E.CO_ID = A.CO_ID and E.RESC_KEY = D.RESC_KEY and E.LOCALE = #{lang,jdbcType=VARCHAR},
+			 cm002c B, cm003m C, hr011m F
+		where	A.CO_ID = #{coId,jdbcType=VARCHAR}	  	
+		  and	A.EMP_NO like #{empNo,jdbcType=VARCHAR}
+		  <if test="workIndc != null">and	A.WORK_INDC = #{workIndc,jdbcType=VARCHAR}</if>
+		  and   A.CO_ID = B.CO_ID
+		  and	B.MAJ_CODE ='CD004'
+		  and	A.DUTY_CODE = B.SUB_CODE
+		  and	B.RESC_KEY = C.RESC_KEY
+		  and	B.CO_ID = C.CO_ID
+		  and	C.LOCALE = #{lang,jdbcType=VARCHAR}
+		  and	A.CO_ID = F.CO_ID
+		  and	A.EMP_NO = F.EMP_NO
+		  and	F.LOCALE = #{lang,jdbcType=VARCHAR}
+		order by F.EMP_NAME
+	</select>
+	
+	<!-- 사번에 해당하는 직원 정보를 가져온다. 본인이 속한 최종 조직의 조직코드와 명칭을 가져온다. -->
+	<select id="selectEmployeeInfoByEmpNo" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select A.CO_ID as CO_ID, A.EMP_NO as EMP_NO, A.SYS_USER_ID as SYS_USER_ID, C.LOCALE as LOCALE,
+			  F.EMP_NAME as EMP_NAME_KOR, A.EMP_NAME_CHN as EMP_NAME_CHN, A.EMP_NAME_ENG as EMP_NAME_ENG, A.WORK_INDC as WORK_INDC,
+			  A.DUTY_CODE as DUTY_CODE, C.RESC_KEY_VALUE as DUTY_DESC, A.PSTN_CODE as PSTN_CODE, E.RESC_KEY_VALUE as PSTN_DESC, 
+			  A.ASGN_OGAN_CODE_1 as ASGN_OGAN_CODE_1, A.ASGN_OGAN_DESC_1 as ASGN_OGAN_DESC_1, A.ASGN_OGAN_CODE_2 as ASGN_OGAN_CODE_2, 
+			  A.ASGN_OGAN_DESC_2 as ASGN_OGAN_DESC_2, A.ASGN_OGAN_CODE_3 as ASGN_OGAN_CODE_3, A.ASGN_OGAN_DESC_3 as ASGN_OGAN_DESC_3, 
+			  A.ASGN_OGAN_CODE_4 as ASGN_OGAN_CODE_4, A.ASGN_OGAN_DESC_4 as ASGN_OGAN_DESC_4, A.ASGN_OGAN_CODE_5 as ASGN_OGAN_CODE_5,
+			  A.ASGN_OGAN_DESC_5 as ASGN_OGAN_DESC_5, A.ASGN_OGAN_CODE_6 as ASGN_OGAN_CODE_6, A.ASGN_OGAN_DESC_6 as ASGN_OGAN_DESC_6, 
+			  A.ASGN_OGAN_CODE_7 as ASGN_OGAN_CODE_7, A.ASGN_OGAN_DESC_7 as ASGN_OGAN_DESC_7, A.ASGN_OGAN_CODE_8 as ASGN_OGAN_CODE_8, 
+			  A.ASGN_OGAN_DESC_8 as ASGN_OGAN_DESC_8, A.ASGN_OGAN_CODE_9 as ASGN_OGAN_CODE_9, A.ASGN_OGAN_DESC_9 as ASGN_OGAN_DESC_9, 
+			  A.ASGN_OGAN_CODE_10 as ASGN_OGAN_CODE_10, A.ASGN_OGAN_DESC_10 as ASGN_OGAN_DESC_10, A.ASGN_OGAN_CODE_11 as ASGN_OGAN_CODE_11, 
+			  A.ASGN_OGAN_DESC_11 as ASGN_OGAN_DESC_11, A.ASGN_OGAN_CODE_12 as ASGN_OGAN_CODE_12, A.ASGN_OGAN_DESC_12 as ASGN_OGAN_DESC_12,
+			  A.OFFC_TEL_NO as OFFC_TEL_NO, A.MOBL_PHON_NO as MOBL_PHON_NO, A.BIRTH_DATE as BIRTH_DATE, A.SSN as SSN, A.MAIL_ADDR as MAIL_ADDR,
+			  A.ENTR_DATE as ENTR_DATE, A.RSGN_DATE as RSGN_DATE, A.OFFC_ORD_DATE as OFFC_ORD_DATE, A.MARRIAGE_INDC as MARRIAGE_INDC, 
+			  A.MARRIAGE_DATE as MARRIAGE_DATE, A.ORGN_OGAN_CODE_1 as ORGN_OGAN_CODE_1, A.ORGN_OGAN_DESC_1 as ORGN_OGAN_DESC_1,
+			  A.ORGN_OGAN_CODE_2 as ORGN_OGAN_CODE_2, A.ORGN_OGAN_DESC_2 as ORGN_OGAN_DESC_2, A.ORGN_OGAN_CODE_3 as ORGN_OGAN_CODE_3, 
+			  A.ORGN_OGAN_DESC_3 as ORGN_OGAN_DESC_3, A.ORGN_OGAN_CODE_4 as ORGN_OGAN_CODE_4, A.ORGN_OGAN_DESC_4 as ORGN_OGAN_DESC_4,
+			  A.ORGN_OGAN_CODE_5 as ORGN_OGAN_CODE_5, A.ORGN_OGAN_DESC_5 as ORGN_OGAN_DESC_5, A.ORGN_OGAN_CODE_6 as ORGN_OGAN_CODE_6, 
+			  A.ORGN_OGAN_DESC_6 as ORGN_OGAN_DESC_6, A.ORGN_OGAN_CODE_7 as ORGN_OGAN_CODE_7, A.ORGN_OGAN_DESC_7 as ORGN_OGAN_DESC_7,
+			  A.ORGN_OGAN_CODE_8 as ORGN_OGAN_CODE_8, A.ORGN_OGAN_DESC_8 as ORGN_OGAN_DESC_8, A.ORGN_OGAN_CODE_9 as ORGN_OGAN_CODE_9, 
+			  A.ORGN_OGAN_DESC_9 as ORGN_OGAN_DESC_9, A.ORGN_OGAN_CODE_10 as ORGN_OGAN_CODE_10, A.ORGN_OGAN_DESC_10 as ORGN_OGAN_DESC_10, 
+			  A.ORGN_OGAN_CODE_11 as ORGN_OGAN_CODE_11, A.ORGN_OGAN_DESC_11 as ORGN_OGAN_DESC_11, A.ORGN_OGAN_CODE_12 as ORGN_OGAN_CODE_12,
+			  A.ORGN_OGAN_DESC_12 as ORGN_OGAN_DESC_12, A.BASE_ASGN_OGAN_LEV as BASE_ASGN_OGAN_LEV, A.BASE_ORGN_OGAN_LEV as BASE_ORGN_OGAN_LEV,
+			  CASE #{baseOganLev,jdbcType=VARCHAR} WHEN '1' THEN ASGN_OGAN_CODE_1
+	                                WHEN '2' THEN ASGN_OGAN_CODE_2
+	                                WHEN '3' THEN ASGN_OGAN_CODE_3
+	                                WHEN '4' THEN ASGN_OGAN_CODE_4
+	                                WHEN '5' THEN ASGN_OGAN_CODE_5
+	                                WHEN '6' THEN ASGN_OGAN_CODE_6
+	                                WHEN '7' THEN ASGN_OGAN_CODE_7
+	                                WHEN '8' THEN ASGN_OGAN_CODE_8
+	                                WHEN '9' THEN ASGN_OGAN_CODE_9
+	                                WHEN '10' THEN ASGN_OGAN_CODE_10
+	                                WHEN '11' THEN ASGN_OGAN_CODE_11
+	                                WHEN '12' THEN ASGN_OGAN_CODE_12 END DEPT_CODE,
+			  CASE #{baseOganLev,jdbcType=VARCHAR} WHEN '1' THEN ASGN_OGAN_DESC_1
+	                                WHEN '2' THEN ASGN_OGAN_DESC_2
+	                                WHEN '3' THEN ASGN_OGAN_DESC_3
+	                                WHEN '4' THEN ASGN_OGAN_DESC_4
+	                                WHEN '5' THEN ASGN_OGAN_DESC_5
+	                                WHEN '6' THEN ASGN_OGAN_DESC_6
+	                                WHEN '7' THEN ASGN_OGAN_DESC_7
+	                                WHEN '8' THEN ASGN_OGAN_DESC_8
+	                                WHEN '9' THEN ASGN_OGAN_DESC_9
+	                                WHEN '10' THEN ASGN_OGAN_DESC_10
+	                                WHEN '11' THEN ASGN_OGAN_DESC_11
+	                                WHEN '12' THEN ASGN_OGAN_DESC_12 END DEPT_DESC 
+			from hr010m as A LEFT OUTER JOIN cm002c as D on D.CO_ID = A.CO_ID and D.SUB_CODE = A.PSTN_CODE and D.MAJ_CODE = 'CD006'
+							 LEFT OUTER JOIN cm003m as E on E.CO_ID = A.CO_ID and E.RESC_KEY = D.RESC_KEY and E.LOCALE = #{lang,jdbcType=VARCHAR} ,
+				 cm002c B, cm003m C, hr011m F
+			where 	A.CO_ID = #{coId,jdbcType=VARCHAR}	  	
+			  and	A.EMP_NO = #{empNo,jdbcType=VARCHAR}
+			  <if test="workIndc != null">and	A.WORK_INDC = #{workIndc,jdbcType=VARCHAR}</if>
+			  and	A.CO_ID = B.CO_ID
+			  and	B.MAJ_CODE ='CD004'
+			  and	A.DUTY_CODE = B.SUB_CODE
+			  and	B.CO_ID = C.CO_ID
+			  and	B.RESC_KEY = C.RESC_KEY
+			  and	C.LOCALE = #{lang,jdbcType=VARCHAR}
+			  and	A.CO_ID = F.CO_ID
+			  and	A.EMP_NO = F.EMP_NO
+			  and	F.LOCALE = #{lang,jdbcType=VARCHAR}
+			order by F.EMP_NAME
+	</select>
+	
+	<!-- 해당 조직코드의 소속된 인원들을 가져온다. 기준조직레벨보다 작은 레벨의 경우에는 보직자만 가져온다. 그렇지 않을 경우에는 해당 조직레벨에 해당하는 인원들을 가져온다. -->
+	<!-- 기준조직이 6레벨 이상이 될 경우에는 쿼리문을 더 추가해야 함. -->
+	<select id="selectByOganLevelEmpList" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select A.CO_ID as CO_ID, A.EMP_NO as EMP_NO, A.SYS_USER_ID as SYS_USER_ID, C.LOCALE as LOCALE,
+			  F.EMP_NAME as EMP_NAME_KOR, A.EMP_NAME_CHN as EMP_NAME_CHN, A.EMP_NAME_ENG as EMP_NAME_ENG, A.WORK_INDC as WORK_INDC,
+			  A.DUTY_CODE as DUTY_CODE, C.RESC_KEY_VALUE as DUTY_DESC, A.PSTN_CODE as PSTN_CODE, E.RESC_KEY_VALUE as PSTN_DESC, 
+			  A.ASGN_OGAN_CODE_1 as ASGN_OGAN_CODE_1, A.ASGN_OGAN_DESC_1 as ASGN_OGAN_DESC_1, A.ASGN_OGAN_CODE_2 as ASGN_OGAN_CODE_2, 
+			  A.ASGN_OGAN_DESC_2 as ASGN_OGAN_DESC_2, A.ASGN_OGAN_CODE_3 as ASGN_OGAN_CODE_3, A.ASGN_OGAN_DESC_3 as ASGN_OGAN_DESC_3, 
+			  A.ASGN_OGAN_CODE_4 as ASGN_OGAN_CODE_4, A.ASGN_OGAN_DESC_4 as ASGN_OGAN_DESC_4, A.ASGN_OGAN_CODE_5 as ASGN_OGAN_CODE_5,
+			  A.ASGN_OGAN_DESC_5 as ASGN_OGAN_DESC_5, A.ASGN_OGAN_CODE_6 as ASGN_OGAN_CODE_6, A.ASGN_OGAN_DESC_6 as ASGN_OGAN_DESC_6, 
+			  A.ASGN_OGAN_CODE_7 as ASGN_OGAN_CODE_7, A.ASGN_OGAN_DESC_7 as ASGN_OGAN_DESC_7, A.ASGN_OGAN_CODE_8 as ASGN_OGAN_CODE_8, 
+			  A.ASGN_OGAN_DESC_8 as ASGN_OGAN_DESC_8, A.ASGN_OGAN_CODE_9 as ASGN_OGAN_CODE_9, A.ASGN_OGAN_DESC_9 as ASGN_OGAN_DESC_9, 
+			  A.ASGN_OGAN_CODE_10 as ASGN_OGAN_CODE_10, A.ASGN_OGAN_DESC_10 as ASGN_OGAN_DESC_10, A.ASGN_OGAN_CODE_11 as ASGN_OGAN_CODE_11, 
+			  A.ASGN_OGAN_DESC_11 as ASGN_OGAN_DESC_11, A.ASGN_OGAN_CODE_12 as ASGN_OGAN_CODE_12, A.ASGN_OGAN_DESC_12 as ASGN_OGAN_DESC_12,
+			  A.OFFC_TEL_NO as OFFC_TEL_NO, A.MOBL_PHON_NO as MOBL_PHON_NO, A.BIRTH_DATE as BIRTH_DATE, A.SSN as SSN, A.MAIL_ADDR as MAIL_ADDR,
+			  A.ENTR_DATE as ENTR_DATE, A.RSGN_DATE as RSGN_DATE, A.OFFC_ORD_DATE as OFFC_ORD_DATE, A.MARRIAGE_INDC as MARRIAGE_INDC, 
+			  A.MARRIAGE_DATE as MARRIAGE_DATE, A.ORGN_OGAN_CODE_1 as ORGN_OGAN_CODE_1, A.ORGN_OGAN_DESC_1 as ORGN_OGAN_DESC_1,
+			  A.ORGN_OGAN_CODE_2 as ORGN_OGAN_CODE_2, A.ORGN_OGAN_DESC_2 as ORGN_OGAN_DESC_2, A.ORGN_OGAN_CODE_3 as ORGN_OGAN_CODE_3, 
+			  A.ORGN_OGAN_DESC_3 as ORGN_OGAN_DESC_3, A.ORGN_OGAN_CODE_4 as ORGN_OGAN_CODE_4, A.ORGN_OGAN_DESC_4 as ORGN_OGAN_DESC_4,
+			  A.ORGN_OGAN_CODE_5 as ORGN_OGAN_CODE_5, A.ORGN_OGAN_DESC_5 as ORGN_OGAN_DESC_5, A.ORGN_OGAN_CODE_6 as ORGN_OGAN_CODE_6, 
+			  A.ORGN_OGAN_DESC_6 as ORGN_OGAN_DESC_6, A.ORGN_OGAN_CODE_7 as ORGN_OGAN_CODE_7, A.ORGN_OGAN_DESC_7 as ORGN_OGAN_DESC_7,
+			  A.ORGN_OGAN_CODE_8 as ORGN_OGAN_CODE_8, A.ORGN_OGAN_DESC_8 as ORGN_OGAN_DESC_8, A.ORGN_OGAN_CODE_9 as ORGN_OGAN_CODE_9, 
+			  A.ORGN_OGAN_DESC_9 as ORGN_OGAN_DESC_9, A.ORGN_OGAN_CODE_10 as ORGN_OGAN_CODE_10, A.ORGN_OGAN_DESC_10 as ORGN_OGAN_DESC_10, 
+			  A.ORGN_OGAN_CODE_11 as ORGN_OGAN_CODE_11, A.ORGN_OGAN_DESC_11 as ORGN_OGAN_DESC_11, A.ORGN_OGAN_CODE_12 as ORGN_OGAN_CODE_12,
+			  A.ORGN_OGAN_DESC_12 as ORGN_OGAN_DESC_12, A.BASE_ASGN_OGAN_LEV as BASE_ASGN_OGAN_LEV, A.BASE_ORGN_OGAN_LEV as BASE_ORGN_OGAN_LEV,
+			  CASE #{baseOganLev,jdbcType=VARCHAR} WHEN '1' THEN ASGN_OGAN_CODE_1
+	                                WHEN '2' THEN ASGN_OGAN_CODE_2
+	                                WHEN '3' THEN ASGN_OGAN_CODE_3
+	                                WHEN '4' THEN ASGN_OGAN_CODE_4
+	                                WHEN '5' THEN ASGN_OGAN_CODE_5
+	                                WHEN '6' THEN ASGN_OGAN_CODE_6
+	                                WHEN '7' THEN ASGN_OGAN_CODE_7
+	                                WHEN '8' THEN ASGN_OGAN_CODE_8
+	                                WHEN '9' THEN ASGN_OGAN_CODE_9
+	                                WHEN '10' THEN ASGN_OGAN_CODE_10
+	                                WHEN '11' THEN ASGN_OGAN_CODE_11
+	                                WHEN '12' THEN ASGN_OGAN_CODE_12 END DEPT_CODE,
+			  CASE #{baseOganLev,jdbcType=VARCHAR} WHEN '1' THEN ASGN_OGAN_DESC_1
+	                                WHEN '2' THEN ASGN_OGAN_DESC_2
+	                                WHEN '3' THEN ASGN_OGAN_DESC_3
+	                                WHEN '4' THEN ASGN_OGAN_DESC_4
+	                                WHEN '5' THEN ASGN_OGAN_DESC_5
+	                                WHEN '6' THEN ASGN_OGAN_DESC_6
+	                                WHEN '7' THEN ASGN_OGAN_DESC_7
+	                                WHEN '8' THEN ASGN_OGAN_DESC_8
+	                                WHEN '9' THEN ASGN_OGAN_DESC_9
+	                                WHEN '10' THEN ASGN_OGAN_DESC_10
+	                                WHEN '11' THEN ASGN_OGAN_DESC_11
+	                                WHEN '12' THEN ASGN_OGAN_DESC_12 END DEPT_DESC  
+			from hr010m as A LEFT OUTER JOIN cm002c as D on D.CO_ID = A.CO_ID and D.SUB_CODE = A.PSTN_CODE and D.MAJ_CODE = 'CD006'
+							 LEFT OUTER JOIN cm003m as E on E.CO_ID = A.CO_ID and E.RESC_KEY = D.RESC_KEY and E.LOCALE = #{lang,jdbcType=VARCHAR} ,
+				 cm002c B, cm003m C, hr011m F
+			where	A.CO_ID = #{coId,jdbcType=VARCHAR}	  	
+				<if test="baseOganLev == 1">
+				and A.ASGN_OGAN_CODE_1 = #{oganCode,jdbcType=VARCHAR}
+				</if>
+				<if test="baseOganLev == 2">				
+				and A.ASGN_OGAN_CODE_2 = #{oganCode,jdbcType=VARCHAR}
+				</if>
+				<if test="baseOganLev == 3">
+				and A.ASGN_OGAN_CODE_3 = #{oganCode,jdbcType=VARCHAR}
+				</if>
+				<if test="baseOganLev == 4">
+				and A.ASGN_OGAN_CODE_4 = #{oganCode,jdbcType=VARCHAR}
+				</if>
+				<if test="baseOganLev == 5">
+				and A.ASGN_OGAN_CODE_5 = #{oganCode,jdbcType=VARCHAR}
+				</if>
+				<if test="baseOganLev == 6">
+				and A.ASGN_OGAN_CODE_6 = #{oganCode,jdbcType=VARCHAR}
+				</if>
+				<if test="pstnIndc != null and pstnIndc.equalsIgnoreCase('Y')">
+				and A.PSTN_CODE LIKE concat(#{baseOganLev,jdbcType=VARCHAR}, '%')
+				</if>
+				and A.WORK_INDC = #{workIndc,jdbcType=VARCHAR}
+				and	A.CO_ID = B.CO_ID
+				and B.MAJ_CODE ='CD004'
+				and A.DUTY_CODE = B.SUB_CODE
+				and B.CO_ID = C.CO_ID
+				and B.RESC_KEY = C.RESC_KEY
+				and C.LOCALE = #{lang,jdbcType=VARCHAR}
+				and A.CO_ID = F.CO_ID
+				and A.EMP_NO = F.EMP_NO
+				and F.LOCALE = #{lang,jdbcType=VARCHAR}
+			order by A.PSTN_CODE DESC, F.EMP_NAME
+	</select>
+	
+	<!-- groupware 사용자를 성명으로 검색한다.(Like) -->
+	<select id="selectBySearchEmpName" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select A.CO_ID as CO_ID, A.EMP_NO as EMP_NO, A.SYS_USER_ID as SYS_USER_ID, C.LOCALE as LOCALE,
+			  F.EMP_NAME as EMP_NAME_KOR, A.EMP_NAME_CHN as EMP_NAME_CHN, A.EMP_NAME_ENG as EMP_NAME_ENG, A.WORK_INDC as WORK_INDC,
+			  A.DUTY_CODE as DUTY_CODE, C.RESC_KEY_VALUE as DUTY_DESC, A.PSTN_CODE as PSTN_CODE, E.RESC_KEY_VALUE as PSTN_DESC, 
+			  A.ASGN_OGAN_CODE_1 as ASGN_OGAN_CODE_1, A.ASGN_OGAN_DESC_1 as ASGN_OGAN_DESC_1, A.ASGN_OGAN_CODE_2 as ASGN_OGAN_CODE_2, 
+			  A.ASGN_OGAN_DESC_2 as ASGN_OGAN_DESC_2, A.ASGN_OGAN_CODE_3 as ASGN_OGAN_CODE_3, A.ASGN_OGAN_DESC_3 as ASGN_OGAN_DESC_3, 
+			  A.ASGN_OGAN_CODE_4 as ASGN_OGAN_CODE_4, A.ASGN_OGAN_DESC_4 as ASGN_OGAN_DESC_4, A.ASGN_OGAN_CODE_5 as ASGN_OGAN_CODE_5,
+			  A.ASGN_OGAN_DESC_5 as ASGN_OGAN_DESC_5, A.ASGN_OGAN_CODE_6 as ASGN_OGAN_CODE_6, A.ASGN_OGAN_DESC_6 as ASGN_OGAN_DESC_6, 
+			  A.ASGN_OGAN_CODE_7 as ASGN_OGAN_CODE_7, A.ASGN_OGAN_DESC_7 as ASGN_OGAN_DESC_7, A.ASGN_OGAN_CODE_8 as ASGN_OGAN_CODE_8, 
+			  A.ASGN_OGAN_DESC_8 as ASGN_OGAN_DESC_8, A.ASGN_OGAN_CODE_9 as ASGN_OGAN_CODE_9, A.ASGN_OGAN_DESC_9 as ASGN_OGAN_DESC_9, 
+			  A.ASGN_OGAN_CODE_10 as ASGN_OGAN_CODE_10, A.ASGN_OGAN_DESC_10 as ASGN_OGAN_DESC_10, A.ASGN_OGAN_CODE_11 as ASGN_OGAN_CODE_11, 
+			  A.ASGN_OGAN_DESC_11 as ASGN_OGAN_DESC_11, A.ASGN_OGAN_CODE_12 as ASGN_OGAN_CODE_12, A.ASGN_OGAN_DESC_12 as ASGN_OGAN_DESC_12,
+			  A.OFFC_TEL_NO as OFFC_TEL_NO, A.MOBL_PHON_NO as MOBL_PHON_NO, A.BIRTH_DATE as BIRTH_DATE, A.SSN as SSN, A.MAIL_ADDR as MAIL_ADDR,
+			  A.ENTR_DATE as ENTR_DATE, A.RSGN_DATE as RSGN_DATE, A.OFFC_ORD_DATE as OFFC_ORD_DATE, A.MARRIAGE_INDC as MARRIAGE_INDC, 
+			  A.MARRIAGE_DATE as MARRIAGE_DATE, A.ORGN_OGAN_CODE_1 as ORGN_OGAN_CODE_1, A.ORGN_OGAN_DESC_1 as ORGN_OGAN_DESC_1,
+			  A.ORGN_OGAN_CODE_2 as ORGN_OGAN_CODE_2, A.ORGN_OGAN_DESC_2 as ORGN_OGAN_DESC_2, A.ORGN_OGAN_CODE_3 as ORGN_OGAN_CODE_3, 
+			  A.ORGN_OGAN_DESC_3 as ORGN_OGAN_DESC_3, A.ORGN_OGAN_CODE_4 as ORGN_OGAN_CODE_4, A.ORGN_OGAN_DESC_4 as ORGN_OGAN_DESC_4,
+			  A.ORGN_OGAN_CODE_5 as ORGN_OGAN_CODE_5, A.ORGN_OGAN_DESC_5 as ORGN_OGAN_DESC_5, A.ORGN_OGAN_CODE_6 as ORGN_OGAN_CODE_6, 
+			  A.ORGN_OGAN_DESC_6 as ORGN_OGAN_DESC_6, A.ORGN_OGAN_CODE_7 as ORGN_OGAN_CODE_7, A.ORGN_OGAN_DESC_7 as ORGN_OGAN_DESC_7,
+			  A.ORGN_OGAN_CODE_8 as ORGN_OGAN_CODE_8, A.ORGN_OGAN_DESC_8 as ORGN_OGAN_DESC_8, A.ORGN_OGAN_CODE_9 as ORGN_OGAN_CODE_9, 
+			  A.ORGN_OGAN_DESC_9 as ORGN_OGAN_DESC_9, A.ORGN_OGAN_CODE_10 as ORGN_OGAN_CODE_10, A.ORGN_OGAN_DESC_10 as ORGN_OGAN_DESC_10, 
+			  A.ORGN_OGAN_CODE_11 as ORGN_OGAN_CODE_11, A.ORGN_OGAN_DESC_11 as ORGN_OGAN_DESC_11, A.ORGN_OGAN_CODE_12 as ORGN_OGAN_CODE_12,
+			  A.ORGN_OGAN_DESC_12 as ORGN_OGAN_DESC_12, A.BASE_ASGN_OGAN_LEV as BASE_ASGN_OGAN_LEV, A.BASE_ORGN_OGAN_LEV as BASE_ORGN_OGAN_LEV,
+			  CASE #{baseOganLev,jdbcType=VARCHAR} WHEN '1' THEN ASGN_OGAN_CODE_1
+	                                WHEN '2' THEN ASGN_OGAN_CODE_2
+	                                WHEN '3' THEN ASGN_OGAN_CODE_3
+	                                WHEN '4' THEN ASGN_OGAN_CODE_4
+	                                WHEN '5' THEN ASGN_OGAN_CODE_5
+	                                WHEN '6' THEN ASGN_OGAN_CODE_6
+	                                WHEN '7' THEN ASGN_OGAN_CODE_7
+	                                WHEN '8' THEN ASGN_OGAN_CODE_8
+	                                WHEN '9' THEN ASGN_OGAN_CODE_9
+	                                WHEN '10' THEN ASGN_OGAN_CODE_10
+	                                WHEN '11' THEN ASGN_OGAN_CODE_11
+	                                WHEN '12' THEN ASGN_OGAN_CODE_12 END DEPT_CODE,
+			  CASE #{baseOganLev,jdbcType=VARCHAR} WHEN '1' THEN ASGN_OGAN_DESC_1
+	                                WHEN '2' THEN ASGN_OGAN_DESC_2
+	                                WHEN '3' THEN ASGN_OGAN_DESC_3
+	                                WHEN '4' THEN ASGN_OGAN_DESC_4
+	                                WHEN '5' THEN ASGN_OGAN_DESC_5
+	                                WHEN '6' THEN ASGN_OGAN_DESC_6
+	                                WHEN '7' THEN ASGN_OGAN_DESC_7
+	                                WHEN '8' THEN ASGN_OGAN_DESC_8
+	                                WHEN '9' THEN ASGN_OGAN_DESC_9
+	                                WHEN '10' THEN ASGN_OGAN_DESC_10
+	                                WHEN '11' THEN ASGN_OGAN_DESC_11
+	                                WHEN '12' THEN ASGN_OGAN_DESC_12 END DEPT_DESC 
+			from hr010m as A LEFT OUTER JOIN cm002c as D on D.CO_ID = A.CO_ID and D.SUB_CODE = A.PSTN_CODE and D.MAJ_CODE = 'CD006'
+							 LEFT OUTER JOIN cm003m as E on E.CO_ID = A.CO_ID and E.RESC_KEY = D.RESC_KEY and E.LOCALE = #{lang,jdbcType=VARCHAR} ,
+				 cm002c B, cm003m C, hr011m F
+			where	A.CO_ID = #{coId,jdbcType=VARCHAR}	  	
+			  and	A.WORK_INDC = #{workIndc,jdbcType=VARCHAR}
+			  and	A.CO_ID = B.CO_ID
+			  and	B.MAJ_CODE ='CD004'
+			  and	A.DUTY_CODE = B.SUB_CODE
+			  and	B.CO_ID = C.CO_ID
+			  and	B.RESC_KEY = C.RESC_KEY
+			  and	C.LOCALE = #{lang,jdbcType=VARCHAR}
+			  and	A.CO_ID = F.CO_ID
+			  and	F.EMP_NAME LIKE #{empName,jdbcType=VARCHAR}
+			  and	A.EMP_NO = F.EMP_NO
+			  and	F.LOCALE = #{lang,jdbcType=VARCHAR}
+			order by F.EMP_NAME
+	</select>
+</mapper>

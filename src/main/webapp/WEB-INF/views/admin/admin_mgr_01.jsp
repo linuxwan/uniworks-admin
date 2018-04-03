@@ -31,7 +31,7 @@
      * Grid에 가져올 관리자 목록을 호출
     */
     function getData() {  
-    	getAjaxData();
+        getAjaxData();
     	return rows;    	
     }
     
