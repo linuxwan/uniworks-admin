@@ -8,7 +8,7 @@ package org.uniworks.groupware.admin.service;
 import java.util.List;
 import java.util.Map;
 
-import org.uniworks.groupware.admin.domain.OganInfo;
+import org.uniworks.groupware.admin.domain.Ogan;
 import org.uniworks.groupware.admin.domain.Om001m;
 import org.uniworks.groupware.admin.domain.Om002m; 
 
@@ -32,7 +32,7 @@ public interface Om001mService {
 	 * @param map
 	 * @return
 	 */
-	List<OganInfo> getOm001mListLang(java.util.Map<String, Object> map);
+	List<Ogan> getOm001mListLang(java.util.Map<String, Object> map);
 	
 	/** 
 	 * 등록한다. 

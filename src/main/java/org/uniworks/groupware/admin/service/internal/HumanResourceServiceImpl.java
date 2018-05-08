@@ -5,13 +5,18 @@
  */
 package org.uniworks.groupware.admin.service.internal;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.uniworks.groupware.admin.domain.Hr010m;
+import org.uniworks.groupware.admin.domain.Hr011m;
 import org.uniworks.groupware.admin.domain.HumanResource;
+import org.uniworks.groupware.admin.mapper.Hr010mMapper;
+import org.uniworks.groupware.admin.mapper.Hr011mMapper;
 import org.uniworks.groupware.admin.mapper.HumanResourceMapper;
 import org.uniworks.groupware.admin.service.HumanResourceService;
 
@@ -23,6 +28,8 @@ import org.uniworks.groupware.admin.service.HumanResourceService;
 @Transactional(readOnly = true) 
 public class HumanResourceServiceImpl implements HumanResourceService {
 	@Autowired HumanResourceMapper hrMapper;
+	@Autowired Hr010mMapper hr010mMapper;
+	@Autowired Hr011mMapper hr011mMapper;
 	
 	/**
 	 * 인사마스터 정보에서 직원 정보를 가져온다.
@@ -72,4 +79,27 @@ public class HumanResourceServiceImpl implements HumanResourceService {
 		return hrList;
 	}
 
+	/**
+	 * 회사별 소속 직원 정보 등록.
+	 * @param record
+	 */
+	@Override
+	public void addEmpInfo(Hr010m record, ArrayList<Hr011m> arr) {
+		// TODO Auto-generated method stub
+		hr010mMapper.insert(record);
+		
+		// Hr011m 테이블의 정보를 등록
+		addHr011m(arr);
+	}
+	
+	/**
+	 * Hr011m 테이블에 언어별 이름을 insert한다.
+	 * @param arr
+	 */
+	private void addHr011m(ArrayList<Hr011m> arr) {
+		for (int i = 0; i < arr.size(); i++) {
+			Hr011m hr011m = arr.get(i);
+			hr011mMapper.insert(hr011m);
+		}
+	}
 }

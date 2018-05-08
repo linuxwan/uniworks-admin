@@ -35,7 +35,7 @@ import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.common.util.WebUtil;
 import org.uniworks.groupware.admin.domain.CommonCode;
-import org.uniworks.groupware.admin.domain.OganInfo;
+import org.uniworks.groupware.admin.domain.Ogan;
 import org.uniworks.groupware.admin.domain.Om001m;
 import org.uniworks.groupware.admin.domain.Om002m;
 import org.uniworks.groupware.admin.service.CommonService;
@@ -81,7 +81,7 @@ public class OganController {
 	 * @return
 	 */
 	@GetMapping(value = "/ogan/oganInfo/coId/{coId}/oganCode/{oganCode}/oganLev/{oganLev}")
-	public ResponseEntity<List<OganInfo>> getOganLangList(@PathVariable("coId") String coId, @PathVariable("oganCode") String oganCode,  
+	public ResponseEntity<List<Ogan>> getOganLangList(@PathVariable("coId") String coId, @PathVariable("oganCode") String oganCode,  
 			@PathVariable("oganLev") String oganLev, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();	
 		Date crntDate = DateUtil.getCurrentDate();
@@ -90,9 +90,9 @@ public class OganController {
 		map.put("oganLev", oganLev);
 		map.put("crntDate", crntDate);
 		
-		List<OganInfo> oganInfoList = om001mService.getOm001mListLang(map);
+		List<Ogan> oganInfoList = om001mService.getOm001mListLang(map);
 		
-		return new ResponseEntity<List<OganInfo>>(oganInfoList, HttpStatus.OK);
+		return new ResponseEntity<List<Ogan>>(oganInfoList, HttpStatus.OK);
 	}
 	
 	/**

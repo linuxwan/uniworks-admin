@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.uniworks.groupware.admin.domain.OganInfo;
+import org.uniworks.groupware.admin.domain.Ogan;
 import org.uniworks.groupware.admin.domain.Om001m;
 import org.uniworks.groupware.admin.domain.Om002m;
 import org.uniworks.groupware.admin.mapper.Om001mMapper;
@@ -48,7 +48,7 @@ public class Om001mServiceImpl implements Om001mService {
 	 * @param map
 	 * @return
 	 */
-	public List<OganInfo> getOm001mListLang(java.util.Map<String, Object> map) {
+	public List<Ogan> getOm001mListLang(java.util.Map<String, Object> map) {
 		return om001mMapper.selectByLangList(map);
 	}
 	/** 

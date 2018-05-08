@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
 import org.uniworks.groupware.admin.common.util.SecurityUtil;
+import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.Hr001m;
 import org.uniworks.groupware.admin.service.CommonService;
@@ -71,6 +72,23 @@ public class OganMgrController {
 		mav.addObject("coList", coList);
 		mav.addObject("langList", langList);
 		mav.addObject("oganTypeList", oganTypeList);
+		return mav;
+	}
+	
+	/**
+	 * 조직 선택 Popup 창
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/selectOgan", method = RequestMethod.GET)
+	public ModelAndView selectOgan(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("ogan/ogan_select_popup_01");
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String targetObj = StringUtil.null2void(request.getParameter("targetObj"));
+		
+		mav.addObject("coId", coId);
+		mav.addObject("targetObj", targetObj);
 		return mav;
 	}
 }

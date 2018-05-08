@@ -145,7 +145,7 @@
 		var url = "<c:out value="${contextPath}"/>/admin/codeMgr/masterCodeAddForm?coId=" + coId;
 		var cnt = ${fn:length(langList)};		
 		var formHeight = 200 + (30 * cnt);
-		$.popupWindow(url, { height: formHeight, width: 800 });
+		$.popupWindow(url, { name: 'addMasterCode', height: formHeight, width: 800 });
     }
     
     /*
@@ -166,7 +166,7 @@
 		var url = "<c:out value="${contextPath}"/>/admin/codeMgr/masterCodeModifyForm?coId=" + coId + "&majCode=" + majCode;
 		var cnt = ${fn:length(langList)};		
 		var formHeight = 200 + (30 * cnt);
-		$.popupWindow(url, { height: formHeight, width: 800 });
+		$.popupWindow(url, { name: 'modifyMasterCode', height: formHeight, width: 800 });
     }
     
     /*
@@ -187,7 +187,7 @@
 		var url = "<c:out value="${contextPath}"/>/admin/codeMgr/subCodeAddForm?coId=" + coId + "&majCode=" + majCode;
 		var cnt = ${fn:length(langList)};		
 		var formHeight = 230 + (30 * cnt);
-		$.popupWindow(url, { height: formHeight, width: 800 });
+		$.popupWindow(url, { name: 'addSubCode', height: formHeight, width: 800 });
     }
     
     /*
@@ -209,7 +209,7 @@
 		var url = "<c:out value="${contextPath}"/>/admin/codeMgr/subCodeModifyForm?coId=" + coId + "&majCode=" + majCode + "&subCode=" + subCode;
 		var cnt = ${fn:length(langList)};		
 		var formHeight = 230 + (30 * cnt);
-		$.popupWindow(url, { height: formHeight, width: 800 });
+		$.popupWindow(url, { name: 'modifySubCode', height: formHeight, width: 800 });
     }
     
     /**

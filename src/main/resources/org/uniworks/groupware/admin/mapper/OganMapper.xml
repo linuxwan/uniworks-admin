@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uniworks.groupware.admin.mapper.OganMapper">
+	<resultMap type="org.uniworks.groupware.admin.domain.Ogan" id="ogan_ResultMap">
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" />
+		<result column="OGAN_CODE" jdbcType="VARCHAR" property="oganCode" />
+		<result column="OGAN_LEV" jdbcType="VARCHAR" property="oganLev" />
+		<result column="OGAN_ESTB_DATE" jdbcType="VARCHAR" property="oganEstbDate" />
+		<result column="OGAN_NAME" jdbcType="VARCHAR" property="oganName" />
+		<result column="RESC_KEY" jdbcType="VARCHAR" property="rescKey" />
+		<result column="OGAN_CLS_DATE" jdbcType="VARCHAR" property="oganClsDate" />
+		<result column="HIGH_OGAN_CODE" jdbcType="VARCHAR" property="highOganCode" />
+		<result column="HIGH_OGAN_LEV" jdbcType="VARCHAR" property="highOganLev" />
+		<result column="OGAN_TYPE" jdbcType="VARCHAR" property="oganType" />
+		<result column="OGAN_DESC" jdbcType="VARCHAR" property="oganDesc" />
+	</resultMap>
+	
+	<resultMap type="org.uniworks.groupware.admin.domain.OganTree" id="oganTree_ResultMap">
+		<result column="OGAN_CODE" jdbcType="VARCHAR" property="id" />
+		<result column="OGAN_NAME" jdbcType="VARCHAR" property="text" />
+		<result column="OGAN_LEV" jdbcType="VARCHAR" property="oganLev" />
+		<result column="HIGH_OGAN_CODE" jdbcType="VARCHAR" property="parentId" />
+		<result column="HIGH_OGAN_LEV" jdbcType="VARCHAR" property="parentLev" />
+	</resultMap>
+	
+	<!-- 조직레벨과 조직코드에 해당하는 조직 정보를 가져온다. -->
+	<select id="selectByOganInfo" parameterType="java.util.Map" resultMap="ogan_ResultMap">
+		select  A.CO_ID as CO_ID, A.OGAN_CODE as OGAN_CODE, A.OGAN_LEV as OGAN_LEV, A.OGAN_ESTB_DATE as OGAN_ESTB_DATE,
+       			B.RESC_KEY_VALUE as OGAN_NAME, B.RESC_KEY as RESC_KEY, A.OGAN_CLS_DATE as OGAN_CLS_DATE,
+       			A.HIGH_OGAN_CODE as HIGH_OGAN_CODE, A.HIGH_OGAN_LEV as HIGH_OGAN_LEV, A.OGAN_TYPE as OGAN_TYPE, B.RESC_KEY_VALUE_DESC as OGAN_DESC
+		from   GW.OM001M A, GW.OM002M B
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR}		  
+  		  and  A.OGAN_LEV = #{oganLev,jdbcType=VARCHAR}
+  		  and  A.OGAN_CODE = #{oganCode,jdbcType=VARCHAR}
+  		  and  DATE(#{oganEstbDate,jdbcType=TIMESTAMP}) between DATE(A.OGAN_ESTB_DATE) and DATE(A.OGAN_CLS_DATE)
+  		  and  A.CO_ID = B.CO_ID
+  		  and  A.RESC_KEY = B.RESC_KEY
+  		  and  B.LOCALE = #{lang,jdbcType=VARCHAR}
+		order by OGAN_NAME
+	</select>
+	
+	<!-- 조직 레별에 맞는 조직 목록 가져오기. -->
+	<select id="selectByLevelOganList" parameterType="java.util.Map" resultMap="ogan_ResultMap">
+		select  A.CO_ID as CO_ID, A.OGAN_CODE as OGAN_CODE, A.OGAN_LEV as OGAN_LEV, A.OGAN_ESTB_DATE as OGAN_ESTB_DATE,
+       			B.RESC_KEY_VALUE as OGAN_NAME, B.RESC_KEY as RESC_KEY, A.OGAN_CLS_DATE as OGAN_CLS_DATE,
+       			A.HIGH_OGAN_CODE as HIGH_OGAN_CODE, A.HIGH_OGAN_LEV as HIGH_OGAN_LEV, A.OGAN_TYPE as OGAN_TYPE, B.RESC_KEY_VALUE_DESC as OGAN_DESC
+		from   GW.OM001M A, GW.OM002M B
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
+  		  and  A.OGAN_LEV = #{oganLev,jdbcType=VARCHAR}
+  		  and  DATE(#{oganEstbDate,jdbcType=TIMESTAMP}) between DATE(A.OGAN_ESTB_DATE) and DATE(A.OGAN_CLS_DATE)
+  		  and  A.CO_ID = B.CO_ID
+  		  and  A.RESC_KEY = B.RESC_KEY
+  		  and  B.LOCALE = #{lang,jdbcType=VARCHAR}
+		order by OGAN_NAME
+	</select>
+	
+	<!-- 하위 조직 목록 가져오기. -->
+	<select id="selectBySubOganList" parameterType="java.util.Map" resultMap="ogan_ResultMap">
+		select  A.CO_ID as CO_ID, A.OGAN_CODE as OGAN_CODE, A.OGAN_LEV as OGAN_LEV, A.OGAN_ESTB_DATE as OGAN_ESTB_DATE,
+       			B.RESC_KEY_VALUE as OGAN_NAME, B.RESC_KEY as RESC_KEY, A.OGAN_CLS_DATE as OGAN_CLS_DATE,
+       			A.HIGH_OGAN_CODE as HIGH_OGAN_CODE, A.HIGH_OGAN_LEV as HIGH_OGAN_LEV, A.OGAN_TYPE as OGAN_TYPE, B.RESC_KEY_VALUE_DESC as OGAN_DESC
+       	from   GW.OM001M A, GW.OM002M B
+       	where  A.CO_ID = #{coId,jdbcType=VARCHAR}
+  		  and  A.HIGH_OGAN_CODE = #{oganCode,jdbcType=VARCHAR}
+  		  and  A.HIGH_OGAN_LEV = #{oganLev,jdbcType=VARCHAR}
+  		  and  DATE(#{oganEstbDate,jdbcType=TIMESTAMP}) between DATE(A.OGAN_ESTB_DATE) and DATE(A.OGAN_CLS_DATE)
+  		  and  A.CO_ID = B.CO_ID
+  		  and  A.RESC_KEY = B.RESC_KEY
+  		  and  B.LOCALE = #{lang,jdbcType=VARCHAR}
+  		order by OGAN_NAME
+	</select>
+	
+	<!-- 조직 목록 전체 가져오기 - easyui tree를 그리기 위함. -->
+	<select id="selectByAllOganTree" parameterType="java.util.Map" resultMap="oganTree_ResultMap">
+		select  A.OGAN_CODE as OGAN_CODE, A.OGAN_LEV as OGAN_LEV, B.RESC_KEY_VALUE as OGAN_NAME,
+				A.HIGH_OGAN_CODE as HIGH_OGAN_CODE, A.HIGH_OGAN_LEV as HIGH_OGAN_LEV
+       	from   GW.OM001M A, GW.OM002M B
+       	where  A.CO_ID = #{coId,jdbcType=VARCHAR}
+  		  and  DATE(#{oganEstbDate,jdbcType=TIMESTAMP}) between DATE(A.OGAN_ESTB_DATE) and DATE(A.OGAN_CLS_DATE)
+  		  and  A.CO_ID = B.CO_ID
+  		  and  A.RESC_KEY = B.RESC_KEY
+  		  and  B.LOCALE = #{lang,jdbcType=VARCHAR}
+  		order by OGAN_NAME
+	</select>
+	
+	<!-- 조직명칭 검색에 맞는 조직 목록 가져오기 -->
+	<select id="selectOganListByOganName" parameterType="java.util.Map" resultMap="ogan_ResultMap">
+		select  A.CO_ID as CO_ID, A.OGAN_CODE as OGAN_CODE, A.OGAN_LEV as OGAN_LEV, A.OGAN_ESTB_DATE as OGAN_ESTB_DATE,
+       			B.RESC_KEY_VALUE as OGAN_NAME, B.RESC_KEY as RESC_KEY, A.OGAN_CLS_DATE as OGAN_CLS_DATE,
+       			A.HIGH_OGAN_CODE as HIGH_OGAN_CODE, A.HIGH_OGAN_LEV as HIGH_OGAN_LEV, A.OGAN_TYPE as OGAN_TYPE, B.RESC_KEY_VALUE_DESC as OGAN_DESC
+		from   GW.OM001M A, GW.OM002M B
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
+  		  and  DATE(#{oganEstbDate,jdbcType=TIMESTAMP}) between DATE(A.OGAN_ESTB_DATE) and DATE(A.OGAN_CLS_DATE)
+  		  and  A.CO_ID = B.CO_ID
+  		  and  A.RESC_KEY = B.RESC_KEY
+  		  and  B.LOCALE = #{lang,jdbcType=VARCHAR}
+  		  and  B.RESC_KEY_VALUE like #{oganName,jdbcType=VARCHAR}
+		order by OGAN_NAME
+	</select>
+	
+	<!-- 조직명칭 검색에 맞는 보직자가 존재하는 조직 목록 가져오기 -->
+	<select id="selectOganListByChief" parameterType="java.util.Map" resultMap="ogan_ResultMap">
+		select  A.CO_ID as CO_ID, A.OGAN_CODE as OGAN_CODE, A.OGAN_LEV as OGAN_LEV, A.OGAN_ESTB_DATE as OGAN_ESTB_DATE,
+       			B.RESC_KEY_VALUE as OGAN_NAME, B.RESC_KEY as RESC_KEY, A.OGAN_CLS_DATE as OGAN_CLS_DATE,
+       			A.HIGH_OGAN_CODE as HIGH_OGAN_CODE, A.HIGH_OGAN_LEV as HIGH_OGAN_LEV, A.OGAN_TYPE as OGAN_TYPE, B.RESC_KEY_VALUE_DESC as OGAN_DESC
+		from   GW.OM001M A, GW.OM002M B,
+			  (SELECT CASE 
+                        WHEN substr(PSTN_CODE,1,1) = '1'
+                        THEN ASGN_OGAN_CODE_1
+                        WHEN substr(PSTN_CODE,1,1) = '2'
+                        THEN ASGN_OGAN_CODE_2
+                        WHEN substr(PSTN_CODE,1,1) = '3'
+                        THEN ASGN_OGAN_CODE_3
+                        WHEN substr(PSTN_CODE,1,1) = '4'
+                        THEN ASGN_OGAN_CODE_4
+                        WHEN substr(PSTN_CODE,1,1) = '5'
+                        THEN ASGN_OGAN_CODE_5
+						END AS OGAN_CODE, substr(PSTN_CODE,1,1) AS OGAN_LEV 
+			   FROM GW.HR010M 
+               WHERE trim(PSTN_CODE) != ''
+                 AND WORK_INDC = '1') C
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
+  		  and  DATE(#{oganEstbDate,jdbcType=TIMESTAMP}) between DATE(A.OGAN_ESTB_DATE) and DATE(A.OGAN_CLS_DATE)
+  		  and  A.CO_ID = B.CO_ID
+  		  and  A.RESC_KEY = B.RESC_KEY
+  		  and  B.LOCALE = #{lang,jdbcType=VARCHAR}
+  		  and  B.RESC_KEY_VALUE like #{oganName,jdbcType=VARCHAR}  		  
+  		  and  C.OGAN_LEV = A.OGAN_LEV
+  		  and  C.OGAN_CODE = A.OGAN_CODE
+		order by OGAN_NAME
+	</select>
+</mapper>

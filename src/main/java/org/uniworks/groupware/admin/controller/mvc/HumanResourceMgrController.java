@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
 import org.uniworks.groupware.admin.common.util.SecurityUtil;
+import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.Hr001m;
 import org.uniworks.groupware.admin.service.CommonService;
@@ -72,5 +73,52 @@ public class HumanResourceMgrController {
 		mav.addObject("langList", langList);
 		mav.addObject("oganTypeList", oganTypeList);
 		return mav;		
+	}
+	
+	/**
+	 * 조직 구성원을 등록하기 위한 화면을 호출한다.
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value ="/hrAddForm", method = RequestMethod.GET)
+	public ModelAndView humanResourceAddForm(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("hr/human_resource_add_form_01");
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String oganLev = StringUtil.null2void(request.getParameter("oganLev"));
+		String oganCode = StringUtil.null2void(request.getParameter("oganCode"));
+		String oganDesc = StringUtil.null2void(request.getParameter("oganDesc"));
+		//근무자유형 정보를 일반코드에서 가져온다. MAJ_CODE : CD003
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("lang", userSession.getLang());
+		map.put("coId", coId);
+		map.put("majCode", "CD003"); //지원언어가 저장되어져 있는 주코드 CD001
+		map.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
+		List<CommonCode> workIndcList = commonService.getCommonSubCodeList(map);
+		
+		//직위 정보를 일반코드에서 가져온다. MAJ_CODE : CD004
+		map.put("majCode", "CD004");
+		List<CommonCode> dutyList = commonService.getCommonSubCodeList(map);
+		
+		//보직 정보를 일반코드에서 가져온다. MAJ_CODE : CD006
+		map.put("majCode", "CD006");
+		List<CommonCode> pstnList = commonService.getCommonSubCodeList(map);
+		
+		//결혼구분 정보를 일반코드에서 가져온다. MAJ_CODE : CD005
+		map.put("majCode", "CD005");
+		List<CommonCode> mrgList = commonService.getCommonSubCodeList(map);
+		
+		mav.addObject("workIndcList", workIndcList);
+		mav.addObject("dutyList", dutyList);
+		mav.addObject("pstnList", pstnList);
+		mav.addObject("mrgList", mrgList);
+		mav.addObject("coId", coId);
+		mav.addObject("oganLev", oganLev);
+		mav.addObject("oganCode", oganCode);
+		mav.addObject("oganDesc", oganDesc);
+				
+		return mav;
 	}
 }

@@ -20,7 +20,7 @@ import org.pojomatic.annotations.AutoProperty;
 @XmlType(propOrder = {"coId", "oganCode", "oganLev", "oganEstbDate", "oganName", "rescKey", "oganClsDate", "highOganCode", "highOganLev", "oganType", "oganDesc", "lang"}) 
 @AutoProperty 
 @SuppressWarnings("serial") 
-public class OganInfo {
+public class Ogan {
 	private String coId; 
 	private String oganCode; 
 	private String oganLev; 

@@ -11,7 +11,8 @@
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/js/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/locale/easyui-lang-${userSession.lang}.js"></script>
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/js/common.js"></script>
-
+	<script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.popupwindow.js"></script>
+	
     <script type="text/javascript">	        
     var url = "";
     
@@ -234,7 +235,18 @@
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()"><spring:message code="resc.btn.add"/></a>
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modify()"><spring:message code="resc.btn.modify"/></a>
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()"><spring:message code="resc.btn.delete"/></a>			               
-			    </div>	
+			    </div>
+			    <script type="text/javascript">
+			    function append() {    	
+			    	var coId = $("#selCoId").combobox('getValue');		
+			    	var node = $('#oganTree').tree("getSelected");
+					var url = "<c:out value="${contextPath}"/>/admin/hrAddForm?coId=" + coId;
+					if (node != null)	{
+						url = "<c:out value="${contextPath}"/>/admin/hrAddForm?coId=" + coId + "&oganLev=" + node.oganLev + "&oganCode=" + node.id + "&oganDesc=" + node.text;
+					}					
+					$.popupWindow(url, { name: 'addEmpPopup', height: 485, width: 750 });		    	
+			    }
+			    </script>
 			</td>
 		</tr>
 	</table>	
