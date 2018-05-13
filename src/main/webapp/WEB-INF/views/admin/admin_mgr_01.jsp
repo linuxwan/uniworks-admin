@@ -133,7 +133,7 @@
     <script type="text/javascript">
     function append() {    	
 		var url = "<c:out value="${contextPath}"/>/admin/adminAddForm";
-		$.popupWindow(url, { height: 270, width: 700 });		    	
+		$.popupWindow(url, { name: 'adminAdd', height: 270, width: 700 });		    	
     }
     
     function modify() {    	
@@ -147,7 +147,7 @@
     	} 
     	
 		var url = "<c:out value="${contextPath}"/>/admin/adminModifyForm?coId=" + rowData.coId + "&adminId=" + rowData.adminId;
-		$.popupWindow(url, { height: 270, width: 700 });		    	
+		$.popupWindow(url, { name: 'adminModify', height: 270, width: 700 });		    	
     }
     
     function removeit() {

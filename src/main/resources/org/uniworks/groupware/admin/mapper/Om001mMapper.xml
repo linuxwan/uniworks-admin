@@ -15,7 +15,7 @@
 		<result column="OGAN_DESC" jdbcType="VARCHAR" property="oganDesc" /> 
 	</resultMap> 
 
-	<resultMap id="BaseResultMap2" type="org.uniworks.groupware.admin.domain.OganInfo"> 
+	<resultMap id="BaseResultMap2" type="org.uniworks.groupware.admin.domain.Ogan"> 
 		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
 		<result column="OGAN_CODE" jdbcType="VARCHAR" property="oganCode" /> 
 		<result column="OGAN_LEV" jdbcType="VARCHAR" property="oganLev" /> 
