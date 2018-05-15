@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
+import org.uniworks.groupware.admin.common.util.CommUtil;
 import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.common.util.WebUtil;
@@ -124,28 +125,30 @@ public class HumanResourceController {
 		
 		//yyyy-MM-dd 형식으로 넘어온 날짜를 yyyyMMdd형식으로 변환
 		String birthDate = StringUtil.delDash((String)model.get("birthDate"));
-		String entrDate = StringUtil.delDash((String)model.get("entrDate"));
-		String rsgnDate = StringUtil.delDash((String)model.get("rsgnDate"));
+		String entrDate = StringUtil.delDash((String)model.get("entrDate"));		
+		String rsgnDate = StringUtil.delDash((String)model.get("rsgnDate"));		
 		String marriageDate = StringUtil.delDash((String)model.get("marriageDate"));
-		String offcOrdDate = StringUtil.delDash((String)model.get("offcOrdDate"));
+		String offcOrdDate = StringUtil.delDash((String)model.get("offcOrdDate"));				
 		
-		//yyyyMMdd형식의 문자열을 Date형으로 변환.
-		model.put("birthDate", new DateUtil(birthDate).getDate());
-		model.put("entrDate", new DateUtil(entrDate).getDate());
-		model.put("rsgnDate", new DateUtil(rsgnDate).getDate());
-		model.put("marriageDate", new DateUtil(marriageDate).getDate());
-		model.put("offcOrdDate", new DateUtil(offcOrdDate).getDate());
+		model.put("birthDate", birthDate);
+		model.put("entrDate", entrDate);
+		model.put("rsgnDate", rsgnDate);
+		model.put("marriageDate", marriageDate);
+		model.put("offcOrdDate", offcOrdDate);
 		
-		String workOganCode = StringUtil.delDash((String)model.get("workOganCode"));
-		String workOganLev = StringUtil.delDash((String)model.get("workOganLev"));
-		String orgnOganCode = StringUtil.delDash((String)model.get("orgnOganCode"));
-		String orgnOganLev = StringUtil.delDash((String)model.get("orgnOganLev"));
+		String workOganCode = StringUtil.null2void((String)model.get("workOganCode"));
+		String workOganLev = StringUtil.null2void((String)model.get("workOganLev"));
+		String orgnOganCode = StringUtil.null2void((String)model.get("orgnOganCode"));
+		String orgnOganLev = StringUtil.null2void((String)model.get("orgnOganLev"));
 				
 		Hr010m hr010m = new Hr010m();
 		WebUtil.bind(model, hr010m);
 		
 		hr010m.setBaseAsgnOganLev(workOganLev);
 		hr010m.setBaseOrgnOganLev(orgnOganLev);
+		
+		//사번을 Base64로 인코딩해서 sysUserId에 할당		
+		hr010m.setSysUserId(CommUtil.encodeBase64String(hr010m.getEmpNo()));
 		
 		ArrayList<Hr011m> arr = new ArrayList<Hr011m>();
 		// 지원언어 목록별로 성명을 저장한다.

@@ -13,6 +13,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.domain.Ogan;
 import org.uniworks.groupware.admin.domain.OganTree;
 import org.uniworks.groupware.admin.domain.Om001m;
@@ -115,9 +116,9 @@ public class OganServiceImpl implements OganService {
 		if (lev >= 1) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("coId", ogan.getCoId());
-			map.put("oganLev", ogan.getOganLev());
-			map.put("oganCode", ogan.getOganCode());
-			map.put("oganEstbDate", ogan.getOganEstbDate());
+			map.put("oganLev", ogan.getHighOganLev());
+			map.put("oganCode", ogan.getHighOganCode());
+			map.put("oganEstbDate", DateUtil.getCurrentDate());
 			map.put("lang", lang);
 			
 			Ogan oganInfo = oganMapper.selectByOganInfo(map);

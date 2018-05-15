@@ -52,7 +52,11 @@
 	    
 	    if (oganCode != "" && oganLev != "" && oganDesc != "") {
 	    	$('#workOgan').textbox('setValue', oganCode + ":" + oganDesc);
-	    	$('#orgnOgan').textbox('setValue', oganCode + ":" + oganDesc);
+	    	$('#orgnOgan').textbox('setValue', oganCode + ":" + oganDesc);	  
+	    	$('#workOganLev').val(oganLev);
+	    	$('#workOganCode').val(oganCode);
+	    	$('#orgnOganLev').val(oganLev);
+	    	$('#orgnOganCode').val(oganCode);
 	    }
     });            
     
@@ -66,8 +70,8 @@
     //PopUp 창에서 호출하는 Function
     function callBackOganInfo(targetOgan, oganLev, oganCode, oganName) {
     	$('#' + targetOgan).textbox('setValue', oganCode + ":" + oganName);
-    	$('#' + targetOgan + "Code").textbox('setValue', oganCode);
-    	$('#' + targetOgan + "Lev").textbox('setValue', oganLev);
+    	$('#' + targetOgan + "Code").val(oganCode);
+    	$('#' + targetOgan + "Lev").val(oganLev);
     }
     </script>
 </head>
