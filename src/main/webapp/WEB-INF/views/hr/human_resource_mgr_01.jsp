@@ -193,7 +193,7 @@
 <body>
 	<form id="frmHr">
 	<input type="hidden" id="mode" name="mode" value=""/>
-	<input type="hidden" id="coId" name="coId" value=""/>
+	<input type="hidden" id="coId" name="coId" value=""/>	
 	<jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>			
 	<table style="width:99%">
 		<tr>
@@ -203,7 +203,7 @@
 			    	<c:forEach items="${coList}" var="opt" varStatus="st">
 		            	<option value="${opt.coId}" <c:if test="${opt.coId == userSession.coId}">selected="selected"</c:if> >${opt.coId}: ${opt.coName}</option>
 		            </c:forEach>		            	
-		        	</select>		            
+		        	</select>		        			           
 				</div>
 			</td>
 		</tr>

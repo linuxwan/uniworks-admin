@@ -41,6 +41,7 @@ import org.uniworks.groupware.admin.domain.Ogan;
 import org.uniworks.groupware.admin.domain.Om001m;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.Hr001mService;
+import org.uniworks.groupware.admin.service.Hr010mService;
 import org.uniworks.groupware.admin.service.HumanResourceService;
 import org.uniworks.groupware.admin.service.OganService;
 
@@ -55,6 +56,7 @@ public class HumanResourceController {
 	@Autowired private CommonService commonService;
 	@Autowired private MessageSource messageSource;
 	@Autowired private Hr001mService hr001mService;
+	@Autowired private Hr010mService hr010mService;
 	@Autowired private HumanResourceService hrService;
 	@Autowired private OganService oganService;
 	
@@ -194,7 +196,19 @@ public class HumanResourceController {
 		oganService.getHighOganInfoRecursiveFunction(orgnOgan, userSession.getLang());
 		hr010m = setOrgnOganInfo(hr010m, oganService.getHighOganList(), baseOganLev);
 		
-		hrService.addEmpInfo(hr010m, arr);
+		map.put("empNo", hr010m.getEmpNo());
+		Hr010m existEmpNo = hr010mService.getHr010m(map);
+		if (existEmpNo != null && existEmpNo.getEmpNo().equalsIgnoreCase(hr010m.getEmpNo())) {
+			result = messageSource.getMessage("resc.msg.empExist", new String[] {hr010m.getEmpNameKor(), hr010m.getEmpNo()}, response.getLocale());
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		}								
+		
+		int rtn = hrService.addEmpInfo(hr010m, arr);
+		if (rtn > 0) {
+			result = messageSource.getMessage("resc.msg.addOk", null, response.getLocale());	
+		} else {
+			result = messageSource.getMessage("resc.msg.addFail", null, response.getLocale());
+		}
 		
 		return new ResponseEntity<String>(result, HttpStatus.OK); 
 	}

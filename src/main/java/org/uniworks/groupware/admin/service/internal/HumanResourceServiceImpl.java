@@ -84,12 +84,14 @@ public class HumanResourceServiceImpl implements HumanResourceService {
 	 * @param record
 	 */
 	@Override
-	public void addEmpInfo(Hr010m record, ArrayList<Hr011m> arr) {
+	public int addEmpInfo(Hr010m record, ArrayList<Hr011m> arr) {
 		// TODO Auto-generated method stub
-		hr010mMapper.insert(record);
+		int rtn = hr010mMapper.insert(record);
 		
 		// Hr011m 테이블의 정보를 등록
 		addHr011m(arr);
+		
+		return rtn;
 	}
 	
 	/**

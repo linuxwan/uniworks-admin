@@ -53,5 +53,5 @@ public interface HumanResourceService {
 	 * @param record
 	 * @param arr
 	 */
-	void addEmpInfo(Hr010m record, ArrayList<Hr011m> arr);
+	int addEmpInfo(Hr010m record, ArrayList<Hr011m> arr);
 }
