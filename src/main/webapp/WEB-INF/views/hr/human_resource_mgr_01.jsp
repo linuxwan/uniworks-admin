@@ -246,6 +246,77 @@
 					}					
 					$.popupWindow(url, { name: 'addEmpPopup', height: 485, width: 750 });		    	
 			    }
+			    
+			    function modify() {
+			    	var coId = $("#selCoId").combobox('getValue');	
+			    	var rowData = $("#oganMemberList").datagrid('getSelected');			    	
+			    	
+			    	if (rowData == null) {
+			    		var title = '<spring:message code="resc.label.confirm"/>';
+			    		var msg = '<spring:message code="resc.msg.noSelectEmp"/>';
+			    		alertMsg(title, msg);
+						return;
+			    	}
+			    	
+			    	var url = "<c:out value="${contextPath}"/>/admin/hrModifyForm?coId=" + coId + "&empNo=" + rowData.empNo;
+			    	$.popupWindow(url, { name: 'modifyEmpPopup', height: 485, width: 750 });	
+			    }
+			    
+			    function removeit() {
+			    	var coId = $("#selCoId").combobox('getValue');	
+			    	var rowData = $("#oganMemberList").datagrid('getSelected');		    	
+			    	
+			    	if (rowData == null) {
+			    		var title = '<spring:message code="resc.label.confirm"/>';
+			    		var msg = '<spring:message code="resc.msg.noSelectEmp"/>';
+			    		alertMsg(title, msg);
+						return;
+			    	}
+			    	
+			    	msg = '<spring:message code="resc.msg.confirmDel"/>';    		
+		    		$.messager.confirm(title, msg, function(r) {
+		    			if (r) {
+		    				deleteEmpNo();
+		    			}
+		    		});
+			    }
+			    
+			    function deleteEmpNo() {
+			    	var coId = $("#selCoId").combobox('getValue');	
+			    	var rowData = $("#oganMemberList").datagrid('getSelected');			    				    	
+			    
+					var strUrl = "<c:out value="${contextPath}"/>/rest/hr/delete/coId/" + coId + "/empNo/" + rowData.empNo;
+			    	
+			    	$.ajax({
+						type: 'DELETE',
+						url: strUrl,						 				
+						dataType: 'json',						
+						beforeSend: function(xhr) {
+							xhr.setRequestHeader("Accept", "application/json");
+					        xhr.setRequestHeader("Content-Type", "application/json");
+							//데이터를 전송하기 전에 헤더에 csrf값을 설정한다.					
+							xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+						},  				
+						success : function(msg) {
+							var title = '<spring:message code="resc.label.confirm"/>';		    			
+							$.messager.alert(title, msg, "info",  function(){
+								refreshEmpList();
+							});						
+						},
+						error : function(xhr, status, error) {
+							console.log("error: " + status);
+						}
+		    		});
+			    }
+			    
+			    function refreshEmpList() {
+			    	var coId = $("#selCoId").combobox('getValue');
+			    	var rowData = $("#oganTree").tree('getSelected');		
+					var oganCode = rowData.id;
+					var oganLev = rowData.oganLev;				
+					url = "<c:out value="${contextPath}"/>/rest/hr/coId/" + coId + "/oganLev/" + oganLev + "/oganCode/" + oganCode + "/workIndc/1";				
+					$('#oganMemberList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
+			    }
 			    </script>
 			</td>
 		</tr>

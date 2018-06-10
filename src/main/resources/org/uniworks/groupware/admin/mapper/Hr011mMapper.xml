@@ -45,6 +45,8 @@
 		delete	from hr011m 
 		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
 		  and	EMP_NO	=	#{empNo,jdbcType=VARCHAR} 
-		  and	LOCALE	=	#{locale,jdbcType=VARCHAR} 
+		  <if test="locale != null">
+		  and	LOCALE	=	#{locale,jdbcType=VARCHAR}
+		  </if> 
 	</delete> 
 </mapper>

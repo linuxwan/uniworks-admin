@@ -407,6 +407,24 @@ function formatDateYYYYMMDD(val, row)  {
 	}
 	return strDate;
 }
+
+/***
+ * 8자리의 날짜정보에 "."를 추가해서 반환. (grid에서 날짜타입으로 변환하기 위한 용도)
+ * @param val
+ * @param row
+ * @returns
+ */
+function formatDateDashYYYYMMDD(val, row)  {
+	if (val == null || val == "") return "";
+	var strDate = "";
+	
+	if (val.length == 8) {
+		strDate = val.substring(0,4) + '-' + val.substring(4,6) + '-' + val.substring(6,8);
+	} else {
+		return "";		
+	}
+	return strDate;
+}
 /***
  * 
  * @param val
@@ -418,7 +436,7 @@ function stringFormatDate(strDate, sign)  {
 	
 	
 	if (strDate.length == 8) {
-		strDate = strDate.substring(0,4) + '.' + strDate.substring(4,6) + '.' + strDate.substring(6,8);
+		strDate = strDate.substring(0,4) + sign + strDate.substring(4,6) + sign + strDate.substring(6,8);
 	} else {
 		return "";		
 	}

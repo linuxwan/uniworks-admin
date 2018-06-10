@@ -25,8 +25,10 @@ import org.uniworks.groupware.admin.common.util.SecurityUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.Hr001m;
+import org.uniworks.groupware.admin.domain.HumanResource;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.Hr001mService;
+import org.uniworks.groupware.admin.service.HumanResourceService;
 
 /**
  * @author Park Chung Wan
@@ -39,6 +41,7 @@ public class HumanResourceMgrController {
 	
 	@Autowired CommonService commonService;
 	@Autowired Hr001mService hr001mService;
+	@Autowired HumanResourceService hrResourceService;
 	
 	/**
 	 * 인사 관리
@@ -118,6 +121,54 @@ public class HumanResourceMgrController {
 		mav.addObject("oganLev", oganLev);
 		mav.addObject("oganCode", oganCode);
 		mav.addObject("oganDesc", oganDesc);
+				
+		return mav;
+	}
+	
+	/**
+	 * 조직 구성원을 수정하기 위한 화면을 호출한다.
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value ="/hrModifyForm", method = RequestMethod.GET)
+	public ModelAndView humanResourceModifyForm(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("hr/human_resource_modify_form_01");
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String empNo = StringUtil.null2void(request.getParameter("empNo"));
+		
+		//근무자유형 정보를 일반코드에서 가져온다. MAJ_CODE : CD003
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("lang", userSession.getLang());
+		map.put("coId", coId);
+		map.put("majCode", "CD003"); //지원언어가 저장되어져 있는 주코드 CD001
+		map.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
+		List<CommonCode> workIndcList = commonService.getCommonSubCodeList(map);
+		
+		//직위 정보를 일반코드에서 가져온다. MAJ_CODE : CD004
+		map.put("majCode", "CD004");
+		List<CommonCode> dutyList = commonService.getCommonSubCodeList(map);
+		
+		//보직 정보를 일반코드에서 가져온다. MAJ_CODE : CD006
+		map.put("majCode", "CD006");
+		List<CommonCode> pstnList = commonService.getCommonSubCodeList(map);
+		
+		//결혼구분 정보를 일반코드에서 가져온다. MAJ_CODE : CD005
+		map.put("majCode", "CD005");
+		List<CommonCode> mrgList = commonService.getCommonSubCodeList(map);
+		
+		//직원 정보를 가져온다.(Hr010m)
+		map.put("lang", userSession.getLang());
+		map.put("empNo", empNo);
+		HumanResource hr = hrResourceService.getByHumanResource(map);
+		
+		mav.addObject("workIndcList", workIndcList);
+		mav.addObject("dutyList", dutyList);
+		mav.addObject("pstnList", pstnList);
+		mav.addObject("mrgList", mrgList);		
+		mav.addObject("hr", hr);
 				
 		return mav;
 	}

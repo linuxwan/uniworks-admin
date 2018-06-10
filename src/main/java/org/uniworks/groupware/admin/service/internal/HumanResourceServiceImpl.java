@@ -6,6 +6,7 @@
 package org.uniworks.groupware.admin.service.internal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -103,5 +104,54 @@ public class HumanResourceServiceImpl implements HumanResourceService {
 			Hr011m hr011m = arr.get(i);
 			hr011mMapper.insert(hr011m);
 		}
+	}
+	
+	/**
+	 * 회사별 소속 직원 정보 수정
+	 * @param record
+	 * @param arr
+	 * @return
+	 */
+	@Override
+	public int updateEmpInfo(Hr010m record, ArrayList<Hr011m> arr) {
+		int rtn = hr010mMapper.updateByPrimaryKey(record);
+		
+		// Hr011m 테이블의 정보를 삭제 후 등록
+		updateHr011m(arr);
+		
+		return rtn;
+	}
+	
+	/**
+	 * Hr011m 테이블의 데이터를 삭제하고 새로 Insert한다.
+	 * @param arr
+	 */
+	private void updateHr011m(ArrayList<Hr011m> arr) {
+		if (arr.size() < 1) return;
+		//기존 데이터 삭제	
+		Hr011m tempHr011m = arr.get(0);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", tempHr011m.getCoId());
+		map.put("empNo", tempHr011m.getEmpNo());
+		
+		hr011mMapper.deleteByPrimaryKey(map);
+		
+		//새롭게 Insert
+		for (int i = 0; i < arr.size(); i++) {
+			Hr011m hr011m = arr.get(i);
+			hr011mMapper.insert(hr011m);
+		}
+	}
+	
+	/**
+	 * 회사별 소속 직원 정보 삭제
+	 * @param hr010m
+	 * @return
+	 */
+	public int deleteEmpInfo(Map<String, Object> map) {
+		hr011mMapper.deleteByPrimaryKey(map);
+		int rtn = hr010mMapper.deleteByPrimaryKey(map);		
+				
+		return rtn;
 	}
 }

@@ -38,7 +38,7 @@
 		<result column="ASGN_OGAN_CODE_12" jdbcType="VARCHAR" property="asgnOganCode12" />
 		<result column="ASGN_OGAN_DESC_12" jdbcType="VARCHAR" property="asgnOganDesc12" />
 		<result column="OFFC_TEL_NO" jdbcType="VARCHAR" property="offcTelNo" />
-		<result column="MOBL_PHON_NO" jdbcType="VARCHAR" property="moblPhoneNo" />
+		<result column="MOBL_PHON_NO" jdbcType="VARCHAR" property="moblPhonNo" />
 		<result column="BIRTH_DATE" jdbcType="VARCHAR" property="birthDate" />
 		<result column="SSN" jdbcType="VARCHAR" property="ssn" />
 		<result column="MAIL_ADDR" jdbcType="VARCHAR" property="mailAddr" />
@@ -75,6 +75,8 @@
 		<result column="BASE_ORGN_OGAN_LEV" jdbcType="VARCHAR" property="baseOrgnOganLev" />
 		<result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
 		<result column="DEPT_DESC" jdbcType="VARCHAR" property="deptDesc" />
+		<result column="ORGN_DEPT_CODE" jdbcType="VARCHAR" property="orgnDeptCode" />
+		<result column="ORGN_DEPT_DESC" jdbcType="VARCHAR" property="orgnDeptDesc" />
 	</resultMap>
 	
 	<!-- groupware 사용자의 인사정보를 가져온다. -->
@@ -100,8 +102,55 @@
 		  A.ORGN_OGAN_CODE_8 as ORGN_OGAN_CODE_8, A.ORGN_OGAN_DESC_8 as ORGN_OGAN_DESC_8, A.ORGN_OGAN_CODE_9 as ORGN_OGAN_CODE_9, 
 		  A.ORGN_OGAN_DESC_9 as ORGN_OGAN_DESC_9, A.ORGN_OGAN_CODE_10 as ORGN_OGAN_CODE_10, A.ORGN_OGAN_DESC_10 as ORGN_OGAN_DESC_10, 
 		  A.ORGN_OGAN_CODE_11 as ORGN_OGAN_CODE_11, A.ORGN_OGAN_DESC_11 as ORGN_OGAN_DESC_11, A.ORGN_OGAN_CODE_12 as ORGN_OGAN_CODE_12,
-		  A.ORGN_OGAN_DESC_12 as ORGN_OGAN_DESC_12, A.BASE_ASGN_OGAN_LEV as BASE_ASGN_OGAN_LEV, A.BASE_ORGN_OGAN_LEV as BASE_ORGN_OGAN_LEV,
-		  '' as DEPT_CODE, '' as DEPT_DESC 
+		  A.ORGN_OGAN_DESC_12 as ORGN_OGAN_DESC_12, A.BASE_ASGN_OGAN_LEV as BASE_ASGN_OGAN_LEV, A.BASE_ORGN_OGAN_LEV as BASE_ORGN_OGAN_LEV,		   
+ 		  CASE A.BASE_ASGN_OGAN_LEV WHEN '1' THEN ASGN_OGAN_CODE_1
+	                                WHEN '2' THEN ASGN_OGAN_CODE_2
+	                                WHEN '3' THEN ASGN_OGAN_CODE_3
+	                                WHEN '4' THEN ASGN_OGAN_CODE_4
+	                                WHEN '5' THEN ASGN_OGAN_CODE_5
+	                                WHEN '6' THEN ASGN_OGAN_CODE_6
+	                                WHEN '7' THEN ASGN_OGAN_CODE_7
+	                                WHEN '8' THEN ASGN_OGAN_CODE_8
+	                                WHEN '9' THEN ASGN_OGAN_CODE_9
+	                                WHEN '10' THEN ASGN_OGAN_CODE_10
+	                                WHEN '11' THEN ASGN_OGAN_CODE_11
+	                                WHEN '12' THEN ASGN_OGAN_CODE_12 END DEPT_CODE,
+		  CASE A.BASE_ASGN_OGAN_LEV WHEN '1' THEN ASGN_OGAN_DESC_1
+	                                WHEN '2' THEN ASGN_OGAN_DESC_2
+	                                WHEN '3' THEN ASGN_OGAN_DESC_3
+	                                WHEN '4' THEN ASGN_OGAN_DESC_4
+	                                WHEN '5' THEN ASGN_OGAN_DESC_5
+	                                WHEN '6' THEN ASGN_OGAN_DESC_6
+	                                WHEN '7' THEN ASGN_OGAN_DESC_7
+	                                WHEN '8' THEN ASGN_OGAN_DESC_8
+	                                WHEN '9' THEN ASGN_OGAN_DESC_9
+	                                WHEN '10' THEN ASGN_OGAN_DESC_10
+	                                WHEN '11' THEN ASGN_OGAN_DESC_11
+	                                WHEN '12' THEN ASGN_OGAN_DESC_12 END DEPT_DESC,
+	      CASE A.BASE_ORGN_OGAN_LEV WHEN '1' THEN ASGN_OGAN_CODE_1
+	                                WHEN '2' THEN ASGN_OGAN_CODE_2
+	                                WHEN '3' THEN ASGN_OGAN_CODE_3
+	                                WHEN '4' THEN ASGN_OGAN_CODE_4
+	                                WHEN '5' THEN ASGN_OGAN_CODE_5
+	                                WHEN '6' THEN ASGN_OGAN_CODE_6
+	                                WHEN '7' THEN ASGN_OGAN_CODE_7
+	                                WHEN '8' THEN ASGN_OGAN_CODE_8
+	                                WHEN '9' THEN ASGN_OGAN_CODE_9
+	                                WHEN '10' THEN ASGN_OGAN_CODE_10
+	                                WHEN '11' THEN ASGN_OGAN_CODE_11
+	                                WHEN '12' THEN ASGN_OGAN_CODE_12 END ORGN_DEPT_CODE,
+		  CASE A.BASE_ORGN_OGAN_LEV WHEN '1' THEN ASGN_OGAN_DESC_1
+	                                WHEN '2' THEN ASGN_OGAN_DESC_2
+	                                WHEN '3' THEN ASGN_OGAN_DESC_3
+	                                WHEN '4' THEN ASGN_OGAN_DESC_4
+	                                WHEN '5' THEN ASGN_OGAN_DESC_5
+	                                WHEN '6' THEN ASGN_OGAN_DESC_6
+	                                WHEN '7' THEN ASGN_OGAN_DESC_7
+	                                WHEN '8' THEN ASGN_OGAN_DESC_8
+	                                WHEN '9' THEN ASGN_OGAN_DESC_9
+	                                WHEN '10' THEN ASGN_OGAN_DESC_10
+	                                WHEN '11' THEN ASGN_OGAN_DESC_11
+	                                WHEN '12' THEN ASGN_OGAN_DESC_12 END ORGN_DEPT_DESC                           
 		from hr010m as A LEFT OUTER JOIN cm002c as D on D.CO_ID = A.CO_ID and D.SUB_CODE = A.PSTN_CODE and D.MAJ_CODE = 'CD006'
 						 LEFT OUTER JOIN cm003m as E on E.CO_ID = A.CO_ID and E.RESC_KEY = D.RESC_KEY and E.LOCALE = #{lang,jdbcType=VARCHAR},
 			 cm002c B, cm003m C, hr011m F
@@ -270,6 +319,7 @@
 				and A.CO_ID = F.CO_ID
 				and A.EMP_NO = F.EMP_NO
 				and F.LOCALE = #{lang,jdbcType=VARCHAR}
+				and A.BASE_ASGN_OGAN_LEV = #{baseOganLev,jdbcType=VARCHAR}
 			order by A.PSTN_CODE DESC, F.EMP_NAME
 	</select>
 	

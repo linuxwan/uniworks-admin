@@ -21,10 +21,10 @@ import org.pojomatic.annotations.AutoProperty;
 @XmlType(propOrder = {"coId","empNo","sysUserId","empNameKor","empNameChn","empNameEng","workIndc","dutyCode","dutyDesc","pstnCode","pstnDesc","asgnOganCode1","asgnOganDesc1","asgnOganCode2",
 		"asgnOganDesc2","asgnOganCode3","asgnOganDesc3","asgnOganCode4","asgnOganDesc4","asgnOganCode5","asgnOganDesc5","asgnOganCode6","asgnOganDesc6","asgnOganCode7","asgnOganDesc7",
 		"asgnOganCode8","asgnOganDesc8","asgnOganCode9","asgnOganDesc9","asgnOganCode10","asgnOganDesc10","asgnOganCode11","asgnOganDesc11","asgnOganCode12","asgnOganDesc12",
-		"offcTelNo","moblPhoneNo","birthDate","ssn","mailAddr","entrDate","rsgnDate","offcOrdDate","marriageIndc","marriageDate","orgnOganCode1","orgnOganDesc1","orgnOganCode2",
+		"offcTelNo","moblPhonNo","birthDate","ssn","mailAddr","entrDate","rsgnDate","offcOrdDate","marriageIndc","marriageDate","orgnOganCode1","orgnOganDesc1","orgnOganCode2",
 		"orgnOganDesc2","orgnOganCode3","orgnOganDesc3","orgnOganCode4","orgnOganDesc4","orgnOganCode5","orgnOganDesc5","orgnOganCode6","orgnOganDesc6","orgnOganCode7","orgnOganDesc7",
 		"orgnOganCode8","orgnOganDesc8","orgnOganCode9","orgnOganDesc9","orgnOganCode10","orgnOganDesc10","orgnOganCode11","orgnOganDesc11","orgnOganCode12","orgnOganDesc12",
-		"baseAsgnOganLev","baseOrgnOganLev","deptCode","deptDesc"})
+		"baseAsgnOganLev","baseOrgnOganLev","deptCode","deptDesc", "orgnDeptCode", "orgnDeptDesc"})
 @AutoProperty 
 @SuppressWarnings("serial")
 public class HumanResource implements Serializable {
@@ -64,7 +64,7 @@ public class HumanResource implements Serializable {
 	private String asgnOganCode12;	//소속 조직 코드 12
 	private String asgnOganDesc12;	//소속 조직 명칭 12
 	private String offcTelNo;		//사무실 전화번호
-	private String moblPhoneNo;		//모바일 번호
+	private String moblPhonNo;		//모바일 번호
 	private String birthDate;		//생년 월일
 	private String ssn;				//주민 등록 번호
 	private String mailAddr;		//메일 주소
@@ -101,6 +101,8 @@ public class HumanResource implements Serializable {
 	private String baseOrgnOganLev;	//원소속 조직 기본 레벨
 	private String deptCode;	//기준이 되는 조직코드
 	private String deptDesc;	//기준이 되는 조직명칭
+	private String orgnDeptCode;	//기준이 되는 원소속 조직코드
+	private String orgnDeptDesc;	//기준이 되는 원소속 조직명칭
 	
 	public String getCoId() {
 		return coId;
@@ -318,11 +320,11 @@ public class HumanResource implements Serializable {
 	public void setOffcTelNo(String offcTelNo) {
 		this.offcTelNo = offcTelNo;
 	}
-	public String getMoblPhoneNo() {
-		return moblPhoneNo;
+	public String getMoblPhonNo() {
+		return moblPhonNo;
 	}
-	public void setMoblPhoneNo(String moblPhoneNo) {
-		this.moblPhoneNo = moblPhoneNo;
+	public void setMoblPhonNo(String moblPhonNo) {
+		this.moblPhonNo = moblPhonNo;
 	}
 	public String getBirthDate() {
 		return birthDate;
@@ -539,6 +541,18 @@ public class HumanResource implements Serializable {
 	}
 	public void setDeptDesc(String deptDesc) {
 		this.deptDesc = deptDesc;
+	}
+	public String getOrgnDeptCode() {
+		return orgnDeptCode;
+	}
+	public void setOrgnDeptCode(String orgnDeptCode) {
+		this.orgnDeptCode = orgnDeptCode;
+	}
+	public String getOrgnDeptDesc() {
+		return orgnDeptDesc;
+	}
+	public void setOrgnDeptDesc(String orgnDeptDesc) {
+		this.orgnDeptDesc = orgnDeptDesc;
 	}
 	@Override 
 	public boolean equals(Object o) {  

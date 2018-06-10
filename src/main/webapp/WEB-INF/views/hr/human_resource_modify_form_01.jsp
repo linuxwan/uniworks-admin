@@ -18,21 +18,10 @@
 	    $('#btnSave').bind('click', function(){
 	    	if($('#hrInfoForm').form('enableValidation').form('validate')) {
 	    		var formData = parseFormHelper('hrInfoForm');	    		
-	    		var strUrl = '<c:out value="${contextPath}"/>/rest/hr/create';	    		    		
-	    		var workIndc = $('#workIndc').textbox('getValue');
-	    		
-	    		if (workIndc == "9") { //퇴직일자가 있을 경우에는 workIndc를 9로 설정(1:근무자, 2:군휴직자, 3:신병휴직자, 9:퇴직)
-	    			var rsgnDate = $('#rsgnDate').textbox('getValue');
-	    			if (rsgnDate == null || rsgnDate == "" || rsgnDate.length < 8) {
-	    				var title = '<spring:message code="resc.label.confirm"/>';	
-	    				var msg = '<spring:message code="resc.msg.enterRetireDate"/>';
-	    				alertMsg(title, msg);
-	    				return;
-	    			}	    			
-	    		}
+	    		var strUrl = '<c:out value="${contextPath}"/>/rest/hr/update';	    		    		
 	    		
 	    		$.ajax({
-					type: 'POST',
+					type: 'PUT',
 					url: strUrl,
 					data: formData, 					
 					dataType: 'json',						
@@ -45,7 +34,7 @@
 					success : function(msg) {
 						var title = '<spring:message code="resc.label.confirm"/>';		    			
 						$.messager.alert(title, msg, "info",  function(){
-							window.opener.refreshEmpList();
+							window.opener.subCodeReload();
 							window.close();
 						});						
 					},
@@ -69,6 +58,12 @@
 	    	$('#orgnOganLev').val(oganLev);
 	    	$('#orgnOganCode').val(oganCode);
 	    }
+	    
+	    $('#birthDate').textbox('setValue', stringFormatDate("${hr.birthDate}", "-"));
+	    $('#entrDate').textbox('setValue', stringFormatDate("${hr.entrDate}", "-"));
+	    $('#rsgnDate').textbox('setValue', stringFormatDate("${hr.rsgnDate}", "-"));
+	    $('#marriageDate').textbox('setValue', stringFormatDate("${hr.marriageDate}", "-"));
+	    $('#offcOrdDate').textbox('setValue', stringFormatDate("${hr.offcOrdDate}", "-"));
     });            
     
     //조직선택 Popup창 호출
@@ -94,31 +89,32 @@
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">			        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="coId" name="coId" style="width:100%" data-options="label:'<spring:message code="resc.label.coId"/>:',readonly:true,required:true,labelWidth:100" value="${coId}">
+		                <input class="easyui-textbox" id="coId" name="coId" style="width:100%" data-options="label:'<spring:message code="resc.label.coId"/>:',readonly:true,required:true,labelWidth:100" value="${hr.coId}">
 		            </div>
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="empNo" name="empNo" style="width:100%" data-options="label:'<spring:message code="resc.label.empNo"/>:',required:true,labelWidth:100">
+		                <input class="easyui-textbox" id="empNo" name="empNo" style="width:100%" data-options="label:'<spring:message code="resc.label.empNo"/>:',readonly:true,required:true,labelWidth:100" value="${hr.empNo}">
+		                <input type="hidden" id="sysUserId" name="sysUserId" value="${hr.sysUserId}"/>
 		            </div>
 	            </td>
 	        </tr>
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="empNameKor" name="empNameKor" style="width:100%" data-options="label:'<spring:message code="resc.label.empName"/>:',required:true,labelWidth:100">
+		                <input class="easyui-textbox" id="empNameKor" name="empNameKor" style="width:100%" data-options="label:'<spring:message code="resc.label.empName"/>:',required:true,labelWidth:100" value="${hr.empNameKor}">
 		            </div>
 	            </td>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="empNameEng" name="empNameEng" style="width:100%" data-options="label:'<spring:message code="resc.label.empNameEng"/>:',required:true,labelWidth:100">
+		                <input class="easyui-textbox" id="empNameEng" name="empNameEng" style="width:100%" data-options="label:'<spring:message code="resc.label.empNameEng"/>:',required:true,labelWidth:100" value="${hr.empNameEng}">
 		            </div>
 	            </td>	            
 	        </tr>
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="empNameChn" name="empNameChn" style="width:100%" data-options="label:'<spring:message code="resc.label.empNameChn"/>:',required:true,labelWidth:100" value="${empInfo.empNameChn}">
+		                <input class="easyui-textbox" id="empNameChn" name="empNameChn" style="width:100%" data-options="label:'<spring:message code="resc.label.empNameChn"/>:',required:true,labelWidth:100" value="${hr.empNameChn}">
 		            </div>
 	            </td>
 	        	<td style="width:50%;padding:0px 10px;">		        	
@@ -126,7 +122,7 @@
 		                <select class="easyui-combobox" id="workIndc" name="workIndc" style="width:100%;" data-options="panelHeight:'auto',label:'<spring:message code="resc.label.workIndc"/>:',required:true,labelWidth:100">
 		                	<option value=""></option>
 				    	<c:forEach items="${workIndcList}" var="opt" varStatus="st">
-			            	<option value="${opt.subCode}">${opt.subCode}:${opt.rescKeyValue}</option>
+			            	<option value="${opt.subCode}" <c:if test="${opt.subCode == hr.workIndc }">selected="selected"</c:if> >${opt.subCode}:${opt.rescKeyValue}</option>
 			            </c:forEach>		            	
 			        	</select>	
 		            </div>
@@ -138,7 +134,7 @@
 		                <select class="easyui-combobox" id="dutyCode" name="dutyCode" style="width:100%;" data-options="label:'<spring:message code="resc.label.dutyDesc"/>:',required:true,labelWidth:100">
 		                	<option value=""></option>
 				    	<c:forEach items="${dutyList}" var="opt" varStatus="st">
-			            	<option value="${opt.subCode}">${opt.subCode}:${opt.rescKeyValue}</option>
+			            	<option value="${opt.subCode}" <c:if test="${opt.subCode == hr.dutyCode}">selected="selected"</c:if> >${opt.subCode}:${opt.rescKeyValue}</option>
 			            </c:forEach>		            	
 			        	</select>
 		            </div>
@@ -148,7 +144,7 @@
 		                <select class="easyui-combobox" id="pstnCode" name="pstnCode" style="width:100%;" data-options="label:'<spring:message code="resc.label.pstnDesc"/>:',labelWidth:100">
 		                	<option value=""></option>
 				    	<c:forEach items="${pstnList}" var="opt" varStatus="st">
-			            	<option value="${opt.subCode}">${opt.subCode}:${opt.rescKeyValue}</option>
+			            	<option value="${opt.subCode}" <c:if test="${opt.subCode == hr.pstnCode}">selected="selected"</c:if> >${opt.subCode}:${opt.rescKeyValue}</option>
 			            </c:forEach>		            	
 			        	</select>
 		            </div>
@@ -157,54 +153,54 @@
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="workOgan" name="workOgan" style="width:70%" data-options="label:'<spring:message code="resc.label.workOgan"/>:',required:true,labelWidth:100">
+		                <input class="easyui-textbox" id="workOgan" name="workOgan" style="width:70%" data-options="label:'<spring:message code="resc.label.workOgan"/>:',required:true,labelWidth:100" value="${hr.deptCode}:${hr.deptDesc}"/>
 		                <a href="javascript:selectOgan('workOgan')" id="btnSelectWorkOgan" class="easyui-linkbutton" style="width:80px"><spring:message code="resc.label.selectOgan"/></a>
-		                <input type="hidden" id="workOganCode" name="workOganCode" />
-		                <input type="hidden" id="workOganLev" name="workOganLev" />
+		                <input type="hidden" id="workOganCode" name="workOganCode" value="${hr.deptCode}" />
+		                <input type="hidden" id="workOganLev" name="workOganLev" value="${hr.baseAsgnOganLev}" />
 		            </div>
 	            </td>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="orgnOgan" name="orgnOgan" style="width:70%" data-options="label:'<spring:message code="resc.label.orgnOgan"/>:',required:true,labelWidth:100">
+		                <input class="easyui-textbox" id="orgnOgan" name="orgnOgan" style="width:70%" data-options="label:'<spring:message code="resc.label.orgnOgan"/>:',required:true,labelWidth:100" value="${hr.orgnDeptCode}:${hr.orgnDeptDesc}"/>
 		                <a href="javascript:selectOgan('orgnOgan')" id="btnSelectOrgnOgan" class="easyui-linkbutton" style="width:80px"><spring:message code="resc.label.selectOgan"/></a>
-		                <input type="hidden" id="orgnOganCode" name="orgnOganCode" />
-		                <input type="hidden" id="orgnOganLev" name="orgnOganLev" />
+		                <input type="hidden" id="orgnOganCode" name="orgnOganCode" value="${hr.orgnDeptCode}" />
+		                <input type="hidden" id="orgnOganLev" name="orgnOganLev" value="${hr.baseOrgnOganLev}" />
 		            </div>
 	            </td>	            
 	        </tr>
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="offcTelNo" name="offcTelNo" style="width:100%" data-options="label:'<spring:message code="resc.label.offcTelNo"/>:',labelWidth:100">
+		                <input class="easyui-textbox" id="offcTelNo" name="offcTelNo" style="width:100%" data-options="label:'<spring:message code="resc.label.offcTelNo"/>:',labelWidth:100" value="${hr.offcTelNo}"/>
 		            </div>
 	            </td>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="moblPhonNo" name="moblPhonNo" style="width:100%" data-options="label:'<spring:message code="resc.label.moblPhonNo"/>:',labelWidth:100">
+		                <input class="easyui-textbox" id="moblPhonNo" name="moblPhonNo" style="width:100%" data-options="label:'<spring:message code="resc.label.moblPhonNo"/>:',labelWidth:100" value="${hr.moblPhonNo}"/>
 		            </div>
 	            </td>	            
 	        </tr>
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-datebox" id="birthDate" name="birthDate" style="width:100%" data-options="label:'<spring:message code="resc.label.birthDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
+		                <input class="easyui-datebox" id="birthDate" name="birthDate" style="width:100%" data-options="label:'<spring:message code="resc.label.birthDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100"/>
 		            </div>
 	            </td>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="mailAddr" name="mailAddr" style="width:100%" data-options="label:'<spring:message code="resc.label.mailAddr"/>:',labelWidth:100">
+		                <input class="easyui-textbox" id="mailAddr" name="mailAddr" style="width:100%" data-options="label:'<spring:message code="resc.label.mailAddr"/>:',labelWidth:100" value="${hr.mailAddr}">
 		            </div>
 	            </td>	            
 	        </tr>	        
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-datebox" id="entrDate" name="entrDate" style="width:100%" data-options="label:'<spring:message code="resc.label.entrDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
+		                <input class="easyui-datebox" id="entrDate" name="entrDate" style="width:100%" data-options="label:'<spring:message code="resc.label.entrDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100"/>
 		            </div>
 	            </td>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-datebox" id="rsgnDate" name="rsgnDate" style="width:100%" data-options="label:'<spring:message code="resc.label.rsgnDate"/>:',formatter:dashformatter,parser:dashparser,labelWidth:100">
+		                <input class="easyui-datebox" id="rsgnDate" name="rsgnDate" style="width:100%" data-options="label:'<spring:message code="resc.label.rsgnDate"/>:',formatter:dashformatter,parser:dashparser,labelWidth:100"/>
 		            </div>
 	            </td>	            
 	        </tr>
@@ -214,21 +210,21 @@
 		                <select class="easyui-combobox" id="marriageIndc" name="marriageIndc" style="width:100%;" data-options="panelHeight:'auto',label:'<spring:message code="resc.label.marriageIndc"/>:',required:true,labelWidth:100">
 		                	<option value=""></option>
 				    	<c:forEach items="${mrgList}" var="opt" varStatus="st">
-			            	<option value="${opt.subCode}">${opt.subCode}:${opt.rescKeyValue}</option>
+			            	<option value="${opt.subCode}" <c:if test="${opt.subCode == hr.marriageIndc}">selected="selected"</c:if> >${opt.subCode}:${opt.rescKeyValue}</option>
 			            </c:forEach>		            	
 			        	</select>
 		            </div>
 	            </td>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-datebox" id="marriageDate" name="marriageDate" style="width:100%" data-options="label:'<spring:message code="resc.label.marriageDate"/>:',formatter:dashformatter,parser:dashparser,labelWidth:100">
+		                <input class="easyui-datebox" id="marriageDate" name="marriageDate" style="width:100%" data-options="label:'<spring:message code="resc.label.marriageDate"/>:',formatter:dashformatter,parser:dashparser,labelWidth:100"/>
 		            </div>
 	            </td>	            
 	        </tr>	           
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-datebox" id="offcOrdDate" name="offcOrdDate" style="width:100%" data-options="label:'<spring:message code="resc.label.offcOrdDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
+		                <input class="easyui-datebox" id="offcOrdDate" name="offcOrdDate" style="width:100%" data-options="label:'<spring:message code="resc.label.offcOrdDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100"/>
 		            </div>
 	            </td>
 	        	<td style="width:50%;padding:0px 10px;">		        	

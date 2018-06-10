@@ -54,4 +54,19 @@ public interface HumanResourceService {
 	 * @param arr
 	 */
 	int addEmpInfo(Hr010m record, ArrayList<Hr011m> arr);
+	
+	/**
+	 * 회사별 소속 직원 정보 수정
+	 * @param record
+	 * @param arr
+	 * @return
+	 */
+	int updateEmpInfo(Hr010m record, ArrayList<Hr011m> arr);
+	
+	/**
+	 * 회사별 소속 직원 정보 삭제
+	 * @param hr010m
+	 * @return
+	 */
+	int deleteEmpInfo(Map<String, Object> map);
 }
