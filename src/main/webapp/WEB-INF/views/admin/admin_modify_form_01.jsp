@@ -105,3 +105,5 @@
 	        <a href="javascript:void(0)" id="btnClose" class="easyui-linkbutton" onclick="window.close()" style="width:80px"><spring:message code="resc.btn.close"/></a>
 	    </div> 
     </div> 
+</body>
+</html>    

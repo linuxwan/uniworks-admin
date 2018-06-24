@@ -6,7 +6,9 @@
 package org.uniworks.groupware.admin.mapper;
 
 import java.util.List;
+import java.util.Map;
 
+import org.uniworks.groupware.admin.domain.User;
 import org.uniworks.groupware.admin.domain.UserInfo;
 
 /**
@@ -26,4 +28,16 @@ public interface UserInfoMapper {
 	 * @return
 	 */
 	public List<UserInfo> getUserInfoList(String username);
+	/**
+	 * 등록된 사용자 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	public List<User> getUserList(Map<String, Object> map);
+	/**
+	 * 등록된 사용자 정보를 가져온다.
+	 * @param map
+	 * @return
+	 */
+	public User getUser(Map<String, Object> map);
 }

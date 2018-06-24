@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Nw101mMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Nw101m"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="USER_ID" jdbcType="VARCHAR" property="userId" /> 
+		<result column="PSWD_TYPE" jdbcType="VARCHAR" property="pswdType" /> 
+		<result column="PSWD_CHNG_TYPE" jdbcType="VARCHAR" property="pswdChngType" /> 
+		<result column="PSWD_CHNG_DATE_TIME" jdbcType="TIMESTAMP" property="pswdChngDateTime" /> 
+		<result column="PSWD_CHNG_USER_ID" jdbcType="VARCHAR" property="pswdChngUserId" /> 
+	</resultMap> 
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, USER_ID, PSWD_TYPE, PSWD_CHNG_TYPE, PSWD_CHNG_DATE_TIME, PSWD_CHNG_USER_ID
+		from   nw101m
+	</select> 
+ 
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, USER_ID, PSWD_TYPE, PSWD_CHNG_TYPE, PSWD_CHNG_DATE_TIME, PSWD_CHNG_USER_ID
+		from   nw101m
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  PSWD_CHNG_DATE_TIME	=	#{pswdChngDateTime,jdbcType=TIMESTAMP} 
+		  and  PSWD_CHNG_TYPE	=	#{pswdChngType,jdbcType=VARCHAR} 
+		  and  PSWD_TYPE	=	#{pswdType,jdbcType=VARCHAR} 
+		  and  USER_ID	=	#{userId,jdbcType=VARCHAR} 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw101m"> 
+		insert	into nw101m(CO_ID, USER_ID, PSWD_TYPE, PSWD_CHNG_TYPE, PSWD_CHNG_DATE_TIME, PSWD_CHNG_USER_ID) 
+		values (#{coId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{pswdType,jdbcType=VARCHAR},#{pswdChngType,jdbcType=VARCHAR},#{pswdChngDateTime,jdbcType=TIMESTAMP},#{pswdChngUserId,jdbcType=VARCHAR}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw101m"> 
+		update	nw101m 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="pswdChngUserId != null">PSWD_CHNG_USER_ID= #{pswdChngUserId,jdbcType=VARCHAR},</if> 
+		</trim> 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	USER_ID	=	#{userId,jdbcType=VARCHAR} 
+		  and	PSWD_TYPE	=	#{pswdType,jdbcType=VARCHAR} 
+		  and	PSWD_CHNG_TYPE	=	#{pswdChngType,jdbcType=VARCHAR} 
+		  and	PSWD_CHNG_DATE_TIME	=	#{pswdChngDateTime,jdbcType=TIMESTAMP} 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from nw101m 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	PSWD_CHNG_DATE_TIME	=	#{pswdChngDateTime,jdbcType=TIMESTAMP} 
+		  and	PSWD_CHNG_TYPE	=	#{pswdChngType,jdbcType=VARCHAR} 
+		  and	PSWD_TYPE	=	#{pswdType,jdbcType=VARCHAR} 
+		  and	USER_ID	=	#{userId,jdbcType=VARCHAR} 
+	</delete> 
+</mapper>

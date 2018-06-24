@@ -63,18 +63,13 @@ public class HumanResourceMgrController {
 		map.put("majCode", "CD001"); //지원언어가 저장되어져 있는 주코드 CD001
 		map.put("orderBy", "rescKeyValue");	//코드 정렬 방법 셋팅
 		List<CommonCode> langList = commonService.getCommonSubCodeList(map);
-		
-		//조직유형 가져오기
-		map.put("majCode", "CD002");
-		map.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
-		List<CommonCode> oganTypeList = commonService.getCommonSubCodeList(map);
-		
+				
 		map.put("adminType", adminType);
 		List<Hr001m> coList = hr001mService.getHr001mList(map);
 		
 		mav.addObject("coList", coList);
 		mav.addObject("langList", langList);
-		mav.addObject("oganTypeList", oganTypeList);
+
 		return mav;		
 	}
 	

@@ -107,9 +107,9 @@
 	}
     </script>
 </head>
-<body>
+<body style="height:97vh">
 	<input type="hidden" id="mode" name="mode" value=""/>		
-    <table id="adminList" class="easyui-datagrid" style="width:100%;height:650px" 		        
+    <table id="adminList" class="easyui-datagrid" style="width:100%;height:100%" 		        
        		title="<spring:message code="resc.label.adminList"/>" 
        		data-options="iconCls:'icon-edit', rownumbers:true, singleSelect:true, toolbar:'#tb', pagination:true, autoRowHeight:false, pageSize:20">
         <thead>
