@@ -80,12 +80,12 @@
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-passwordbox" id="pswd" name="pswd" style="width:100%" data-options="label:'<spring:message code="resc.label.pswd"/>:',required:true,labelWidth:120">
+		                <input class="easyui-passwordbox" id="pswd" name="pswd" style="width:100%" data-options="label:'<spring:message code="resc.label.pswd"/>:',labelWidth:120">
 		            </div>
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">
 		            <div style="margin-bottom:10px">
-		            	<input class="easyui-passwordbox" id="cnfmPswd" name="cnfmPswd" style="width:100%" data-options="label:'<spring:message code="resc.label.cnfmPswd"/>:',required:true,labelWidth:120">		            			            	
+		            	<input class="easyui-passwordbox" id="cnfmPswd" name="cnfmPswd" style="width:100%" data-options="label:'<spring:message code="resc.label.cnfmPswd"/>:',labelWidth:120">		            			            	
 		            </div>
 	            </td>
 	        </tr>

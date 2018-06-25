@@ -17,6 +17,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -139,13 +140,39 @@ public class UserController {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");		
 		nw100m.setPswd(passwordEncoder.encode(nw100m.getPswd()));
 		nw100m.setCnfmPswd(passwordEncoder.encode(nw100m.getCnfmPswd()));
-		nw100m.setPswdChngDate(DateUtil.getCurrentDate());
-		nw100m.setCnfmPswdChngDate(DateUtil.getCurrentDate());
+		//nw100m.setPswdChngDate(DateUtil.getCurrentDate());
+		//nw100m.setCnfmPswdChngDate(DateUtil.getCurrentDate());
 		
 		int cnt = nw100mService.updateNw100m(nw100m);
 		if (cnt > 0) {
 			result = messageSource.getMessage("resc.msg.modifyOk", null, response.getLocale());
 		}
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+	
+	/**
+	 * 사용자 정보 삭제
+	 * @param request
+	 * @param coId
+	 * @param userId
+	 * @return
+	 */
+	@DeleteMapping(value = "/user/delete/coId/{coId}/userId/{userId}")
+	public ResponseEntity<String> deleteUser(HttpServletRequest request, HttpServletResponse response,
+				@PathVariable("coId") String coId, @PathVariable("userId") String userId) {
+		String result = "";	
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", coId);
+		map.put("userId", userId);
+		
+		int cnt = nw100mService.deleteNw100m(map);
+		
+		if (cnt > 0) {
+			result = messageSource.getMessage("resc.msg.deleteOk", null, response.getLocale());
+		} else {
+			result = messageSource.getMessage("resc.msg.deleteFail", null, response.getLocale());
+		}
+		
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 }

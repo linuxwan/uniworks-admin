@@ -203,16 +203,16 @@
 			    	msg = '<spring:message code="resc.msg.confirmDel"/>';    		
 		    		$.messager.confirm(title, msg, function(r) {
 		    			if (r) {
-		    				deleteEmpNo();
+		    				deleteUserId();
 		    			}
 		    		});
 			    }
 			    
-			    function deleteEmpNo() {
+			    function deleteUserId() {
 			    	var coId = $("#selCoId").combobox('getValue');	
 			    	var rowData = $("#userList").datagrid('getSelected');			    				    	
 			    
-					var strUrl = "<c:out value="${contextPath}"/>/rest/hr/delete/coId/" + coId + "/empNo/" + rowData.empNo;
+					var strUrl = "<c:out value="${contextPath}"/>/rest/user/delete/coId/" + coId + "/userId/" + rowData.userId;
 			    	
 			    	$.ajax({
 						type: 'DELETE',
@@ -227,7 +227,7 @@
 						success : function(msg) {
 							var title = '<spring:message code="resc.label.confirm"/>';		    			
 							$.messager.alert(title, msg, "info",  function(){
-								refreshEmpList();
+								refreshUserList();
 							});						
 						},
 						error : function(xhr, status, error) {
@@ -236,12 +236,13 @@
 		    		});
 			    }
 			    
-			    function refreshEmpList() {
-			    	var coId = $("#selCoId").combobox('getValue');
-			    	var rowData = $("#oganTree").tree('getSelected');		
-					var oganCode = rowData.id;
-					var oganLev = rowData.oganLev;				
-					url = "<c:out value="${contextPath}"/>/rest/hr/coId/" + coId + "/oganLev/" + oganLev + "/oganCode/" + oganCode + "/workIndc/1";				
+			    function refreshUserList() {
+			    	var coId = $("#selCoId").combobox('getValue');			    	
+			    	var searchKind = "empNo";
+					var searchWord = "0";
+					var orderBy = "empName";
+					
+					url = "<c:out value="${contextPath}"/>/rest/user/coId/" + coId + "/searchKind/" + searchKind + "/searchWord/" + searchWord + "/orderBy/" + orderBy;
 					$('#userList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
 			    }
 			    </script>
