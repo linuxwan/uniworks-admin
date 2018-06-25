@@ -138,10 +138,10 @@ public class UserController {
 		String result = "";	
 		//Session 정보를 가져온다.		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");		
-		nw100m.setPswd(passwordEncoder.encode(nw100m.getPswd()));
-		nw100m.setCnfmPswd(passwordEncoder.encode(nw100m.getCnfmPswd()));
-		//nw100m.setPswdChngDate(DateUtil.getCurrentDate());
-		//nw100m.setCnfmPswdChngDate(DateUtil.getCurrentDate());
+		if (!nw100m.getPswd().trim().equals("")) nw100m.setPswd(passwordEncoder.encode(nw100m.getPswd()));
+		if (!nw100m.getCnfmPswd().trim().equals("")) nw100m.setCnfmPswd(passwordEncoder.encode(nw100m.getCnfmPswd()));
+		if (nw100m.getPswd().trim().equals("")) nw100m.setPswdChngDate(null);
+		if (nw100m.getCnfmPswd().trim().equals("")) nw100m.setCnfmPswdChngDate(null);
 		
 		int cnt = nw100mService.updateNw100m(nw100m);
 		if (cnt > 0) {

@@ -43,12 +43,12 @@
 	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw100m"> 
 		update	nw100m 
 		<trim prefix="SET" suffixOverrides=","> 
-			<if test="pswd != null">PSWD= #{pswd,jdbcType=VARCHAR},</if> 
+			<if test="pswd != null and pswd != ''">PSWD= #{pswd,jdbcType=VARCHAR},</if> 
 			<if test="pswd != null and pswd != ''">PSWD_CHNG_DATE= now(),</if> 
 			<if test="pswdInitIndc != null">PSWD_INIT_INDC= #{pswdInitIndc,jdbcType=VARCHAR},</if> 
 			<if test="internalMailAddr != null">INTERNAL_MAIL_ADDR= #{internalMailAddr,jdbcType=VARCHAR},</if> 
 			<if test="outsideMailAddr != null">OUTSIDE_MAIL_ADDR= #{outsideMailAddr,jdbcType=VARCHAR},</if> 
-			<if test="cnfmPswd != null">CNFM_PSWD= #{cnfmPswd,jdbcType=VARCHAR},</if> 
+			<if test="cnfmPswd != null and cnfmPswd != ''">CNFM_PSWD= #{cnfmPswd,jdbcType=VARCHAR},</if> 
 			<if test="cnfmPswd != null and cnfmPswd != ''">CNFM_PSWD_CHNG_DATE= now(),</if> 
 			<if test="userRgsrDate != null">USER_RGSR_DATE= #{userRgsrDate,jdbcType=TIMESTAMP},</if> 
 			<if test="useIndc != null">USE_INDC= #{useIndc,jdbcType=CHAR},</if> 
