@@ -115,7 +115,7 @@ public class UserController {
 		nw100m.setPswd(passwordEncoder.encode(nw100m.getPswd()));
 		nw100m.setCnfmPswd(passwordEncoder.encode(nw100m.getCnfmPswd()));
 		
-		int cnt = nw100mService.addNw100m(nw100m);
+		int cnt = userService.addUser(nw100m);
 		if (cnt > 0) {
 			result = messageSource.getMessage("resc.msg.addOk", null, response.getLocale());
 		} else {
@@ -143,7 +143,7 @@ public class UserController {
 		if (nw100m.getPswd().trim().equals("")) nw100m.setPswdChngDate(null);
 		if (nw100m.getCnfmPswd().trim().equals("")) nw100m.setCnfmPswdChngDate(null);
 		
-		int cnt = nw100mService.updateNw100m(nw100m);
+		int cnt = userService.updateUser(nw100m, userSession.getAdminId());
 		if (cnt > 0) {
 			result = messageSource.getMessage("resc.msg.modifyOk", null, response.getLocale());
 		}
@@ -164,8 +164,9 @@ public class UserController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("coId", coId);
 		map.put("userId", userId);
+		map.put("role", "ROLE_USER");
 		
-		int cnt = nw100mService.deleteNw100m(map);
+		int cnt = userService.deleteUser(map);
 		
 		if (cnt > 0) {
 			result = messageSource.getMessage("resc.msg.deleteOk", null, response.getLocale());

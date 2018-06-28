@@ -30,7 +30,7 @@
 	<!-- 등록 --> 
 	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw101m"> 
 		insert	into nw101m(CO_ID, USER_ID, PSWD_TYPE, PSWD_CHNG_TYPE, PSWD_CHNG_DATE_TIME, PSWD_CHNG_USER_ID) 
-		values (#{coId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{pswdType,jdbcType=VARCHAR},#{pswdChngType,jdbcType=VARCHAR},#{pswdChngDateTime,jdbcType=TIMESTAMP},#{pswdChngUserId,jdbcType=VARCHAR}) 
+		values (#{coId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{pswdType,jdbcType=VARCHAR},#{pswdChngType,jdbcType=VARCHAR},now(),#{pswdChngUserId,jdbcType=VARCHAR}) 
 	</insert> 
  
 	<!-- 수정 --> 

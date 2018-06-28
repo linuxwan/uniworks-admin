@@ -8,6 +8,8 @@ package org.uniworks.groupware.admin.service;
 import java.util.List;
 import java.util.Map;
 
+import org.uniworks.groupware.admin.domain.Nw100m;
+import org.uniworks.groupware.admin.domain.Nw101m;
 import org.uniworks.groupware.admin.domain.User;
 
 /**
@@ -27,4 +29,23 @@ public interface UserService {
 	 * @return
 	 */
 	User getUser(Map<String, Object> map);
+	/**
+	 * 사용자 정보를 등록한다.
+	 * @param nw100m
+	 * @param nw101m
+	 * @return
+	 */
+	int addUser(Nw100m nw100m);
+	/**
+	 * 사용자 정보를 수정한다.
+	 * @param nw100m
+	 * @return
+	 */
+	int updateUser(Nw100m nw100m, String loginUserId);
+	/**
+	 * 사용자 정보를 삭제한다.
+	 * @param map
+	 * @return
+	 */
+	int deleteUser(Map<String, Object> map);
 }
