@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uniworks.groupware.admin.mapper.ApprovalMasterMapper">
+	<resultMap id="ApprMstResultMap" type="org.uniworks.groupware.admin.domain.ApprovalMasterInfo"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="APPR_MST_ID" jdbcType="VARCHAR" property="apprMstId" /> 
+		<result column="APPR_DESC" jdbcType="VARCHAR" property="apprDesc" /> 
+		<result column="RCPT_INDC" jdbcType="VARCHAR" property="rcptIndc" /> 
+		<result column="RFNC_INDC" jdbcType="VARCHAR" property="rfncIndc" /> 
+		<result column="CPRTN_INDC" jdbcType="VARCHAR" property="cprtnIndc" /> 
+		<result column="CPRTN_TYPE" jdbcType="VARCHAR" property="cprtnType" /> 
+		<result column="CRCLTN_INDC" jdbcType="VARCHAR" property="crcltnIndc" /> 
+		<result column="DCSN_RULE_INDC" jdbcType="VARCHAR" property="dcsnRuleIndc" /> 
+		<result column="CRT_ID" jdbcType="VARCHAR" property="crtId" /> 
+		<result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" /> 
+		<result column="CHNG_ID" jdbcType="VARCHAR" property="chngId" /> 
+		<result column="CHNG_DATE" jdbcType="TIMESTAMP" property="chngDate" /> 
+		<result column="ATND_INDC" jdbcType="VARCHAR" property="atndIndc" /> 
+		<result column="APPR_TMPL_TYPE" jdbcType="VARCHAR" property="apprTmplType" /> 
+		<result column="BASE_PRSV_TERM" jdbcType="VARCHAR" property="basePrsvTerm" /> 
+		<result column="APPR_LEVEL" jdbcType="INTEGER" property="apprLevel" /> 
+	</resultMap>
+
+	<!-- 결재 마스터 목록을 가져온다. -->
+	<select id="selectApprMasterList" parameterType="java.util.Map" resultMap="ApprMstResultMap">
+		select  A.CO_ID as CO_ID, A.APPR_MST_ID as APPR_MST_ID, B.APPR_DESC as APPR_DESC, A.RCPT_INDC as RCPT_INDC, 
+       			A.RFNC_INDC as RFNC_INDC, A.CPRTN_INDC as CPRTN_INDC, A.CPRTN_TYPE as CPRTN_TYPE, A.CRCLTN_INDC as CRCLTN_INDC,
+       			A.DCSN_RULE_INDC as DCSN_RULE_INDC, A.CRT_ID as CRT_ID, A.CREATE_DATE as CREATE_DATE, A.CHNG_ID as CHNG_ID, C.APPR_LEVEL as APPR_LEVEL,
+       			A.CHNG_DATE as CHNG_DATE, A.ATND_INDC as ATND_INDC, E.APPR_ITEM_NAME as APPR_TMPL_TYPE, A.BASE_PRSV_TERM as BASE_PRSV_TERM
+		from 	gw.nw010m A 
+			LEFT JOIN gw.nw011m B 
+    			ON	A.CO_ID = B.CO_ID
+    			AND A.APPR_MST_ID = B.APPR_MST_ID
+    			AND B.LOCALE = #{lang,jdbcType=VARCHAR} 
+    		LEFT JOIN gw.nw012m C
+    			ON  A.CO_ID = C.CO_ID
+    			AND A.APPR_MST_ID = C.APPR_MST_ID
+    			AND #{crntDate,jdbcType=VARCHAR} BETWEEN C.CRT_DATE AND C.CLS_DATE
+    		LEFT JOIN gw.nw015m D
+    			ON  A.CO_ID = D.CO_ID
+    			AND A.APPR_MST_ID = D.APPR_MST_ID
+    		LEFT JOIN gw.nw014m E
+    			ON  D.CO_ID = E.CO_ID
+    			AND D.APPR_ITEM_ID = E.APPR_ITEM_ID
+    			AND E.LOCALE = #{lang,jdbcType=VARCHAR}
+		<where>
+			A.CO_ID = #{coId,jdbcType=VARCHAR}
+			<if test="searchKind == 'apprMstId'">	 
+				AND A.APPR_MST_ID LIKE #{searchWord,jdbcType=VARCHAR}
+			</if>
+			<if test="searchKind == 'apprDesc'">	 
+  				AND B.APPR_DESC LIKE #{searchWord,jdbcType=VARCHAR}
+  			</if>
+  		</where>  
+  		<if test="orderBy == 'apprMstId'">
+		order by APPR_MST_ID  
+		</if>
+		<if test="orderBy == 'apprDesc'">
+		order by APPR_DESC
+		</if> 
+	</select>
+</mapper>

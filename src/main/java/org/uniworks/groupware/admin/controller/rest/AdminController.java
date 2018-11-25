@@ -79,8 +79,7 @@ public class AdminController {
 	 * @return
 	 */
 	@GetMapping(value = "/admin/coId/{coId}/adminId/{adminId}") 
-	public ResponseEntity<Cm010c> getAdminInfo(@PathVariable("coId") String coId, @PathVariable("adminId") String adminId, 
-	HttpServletRequest request) {
+	public ResponseEntity<Cm010c> getAdminInfo(@PathVariable("coId") String coId, @PathVariable("adminId") String adminId, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("coId", coId);
 		map.put("adminId", adminId);
