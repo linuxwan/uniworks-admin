@@ -19,13 +19,13 @@ import org.pojomatic.annotations.AutoProperty;
  * ApprovalMaster.java 2012. 2. 17.
  */
 @XmlRootElement(name = "ApprovalMasterInfo") 
-@XmlType(propOrder = {"coId", "apprMstId", "apprTmplType", "apprDesc", "rcptIndc", "rfncIndc", "cprtnIndc", "cprtnType", "atndIndc", "crcltnIndc", "dcsnRuleIndc", "crtId", "createDate", "chngId", "chngDate", "basePrsvTerm", "apprLevel"}) 
+@XmlType(propOrder = {"coId", "apprMstId", "apprType", "apprDesc", "rcptIndc", "rfncIndc", "cprtnIndc", "cprtnType", "atndIndc", "crcltnIndc", "dcsnRuleIndc", "crtId", "createDate", "chngId", "chngDate", "basePrsvTerm", "apprLevel"}) 
 @AutoProperty 
 @SuppressWarnings("serial")
 public class ApprovalMasterInfo implements Serializable {
 	private String coId;	//회사구분
 	private String apprMstId;	//결재 Master ID
-	private String apprTmplType;	//결재양식유형
+	private String apprType;	//결재양식유형
 	private String apprDesc;	//결재명칭
 	private String rcptIndc;	//수신처유무
 	private String rfncIndc;	//참조처유무
@@ -54,11 +54,11 @@ public class ApprovalMasterInfo implements Serializable {
 	public void setApprMstId(String apprMstId) {
 		this.apprMstId = apprMstId;
 	}
-	public String getApprTmplType() {
-		return apprTmplType;
+	public String getApprType() {
+		return apprType;
 	}
-	public void setApprTmplType(String apprTmplType) {
-		this.apprTmplType = apprTmplType;
+	public void setApprType(String apprType) {
+		this.apprType = apprType;
 	}
 	public String getApprDesc() {
 		return apprDesc;

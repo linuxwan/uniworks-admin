@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
+import org.uniworks.groupware.admin.domain.Nw013m;
 
 /**
  * @author Park Chung Wan
@@ -21,4 +22,18 @@ public interface ApprovalMasterMapper {
 	 * @return
 	 */
 	List<ApprovalMasterInfo> selectApprMasterList(Map<String, Object> map);
+	
+	/**
+	 * 결재 유형 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	List<Nw013m> selectApprTypeList(Map<String, Object> map);
+	
+	/**
+	 * 결재 유형 정보를 가져온다.
+	 * @param map
+	 * @return
+	 */
+	Nw013m selectApprTypeInfo(Map<String, Object> map);
 }

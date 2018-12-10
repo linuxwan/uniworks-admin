@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Nw015mMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Nw015m"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="APPR_ITEM_ID" jdbcType="VARCHAR" property="apprItemId" /> 
+		<result column="APPR_MST_ID" jdbcType="VARCHAR" property="apprMstId" /> 
+		<result column="SEQ_NO" jdbcType="INTEGER" property="seqNo" /> 
+	</resultMap> 
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, APPR_ITEM_ID, APPR_MST_ID, SEQ_NO
+		from   nw015m
+	</select> 
+ 
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, APPR_ITEM_ID, APPR_MST_ID, SEQ_NO
+		from   nw015m
+		where  APPR_ITEM_ID	=	#{apprItemId,jdbcType=VARCHAR} 
+		  and  APPR_MST_ID	=	#{apprMstId,jdbcType=VARCHAR} 
+		  and  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw015m"> 
+		insert	into nw015m(CO_ID, APPR_ITEM_ID, APPR_MST_ID, SEQ_NO) 
+		values (#{coId,jdbcType=VARCHAR},#{apprItemId,jdbcType=VARCHAR},#{apprMstId,jdbcType=VARCHAR},#{seqNo,jdbcType=INTEGER}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw015m"> 
+		update	nw015m 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="seqNo != null">SEQ_NO= #{seqNo,jdbcType=INTEGER},</if> 
+		</trim> 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	APPR_ITEM_ID	=	#{apprItemId,jdbcType=VARCHAR} 
+		  and	APPR_MST_ID	=	#{apprMstId,jdbcType=VARCHAR} 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from nw015m 
+		where	APPR_ITEM_ID	=	#{apprItemId,jdbcType=VARCHAR} 
+		  and	APPR_MST_ID	=	#{apprMstId,jdbcType=VARCHAR} 
+		  and	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+	</delete> 
+</mapper>

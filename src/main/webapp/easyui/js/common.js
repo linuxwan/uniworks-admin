@@ -709,3 +709,26 @@ function parseFormHelper (formId) {
 function replaceAll(str, orgn, dest) {
 	return str.split(orgn).join(dest);
 }
+
+/***
+ * 현재일자를 가져온다. 입력한 문자를 구분자로 해서 가져온다.
+ * @returns
+ */
+function getCurrentDate(indc) {
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1;
+	var yyyy = today.getFullYear();
+	
+	if (dd < 10) {
+		dd = '0' + dd;		
+	}
+	
+	if (mm < 10) {
+		mm = '0' + mm;
+	}
+	
+	today = yyyy + indc + mm + indc + dd;
+	
+	return today;
+}

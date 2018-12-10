@@ -63,7 +63,7 @@
     				rows.push({
     					coId: entry["coId"],
     					apprMstId: entry["apprMstId"],
-    					apprTmplType: entry["apprTmplType"],
+    					apprType: entry["apprType"],
     					apprDesc: entry["apprDesc"],
     					rcptIndc: entry["rcptIndc"],
     					rfncIndc: entry["rfncIndc"],
@@ -151,7 +151,7 @@
 			            <tr>
 			            	<th data-options="field:'coId',halign:'center',align:'center',width:'5%'"><spring:message code="resc.label.coId"/></th>
 			                <th data-options="field:'apprMstId',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.apprMasterId"/></th>
-			                <th data-options="field:'apprTmplType',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.apprTmplType"/></th>
+			                <th data-options="field:'apprType',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.apprType"/></th>
 			                <th data-options="field:'apprDesc',halign:'center',align:'left',width:'18%'"><spring:message code="resc.label.apprDesc"/></th>
 			                <th data-options="field:'rcptIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.rcptIndc"/></th>
 			                <th data-options="field:'rfncIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.rfncIndc"/></th>

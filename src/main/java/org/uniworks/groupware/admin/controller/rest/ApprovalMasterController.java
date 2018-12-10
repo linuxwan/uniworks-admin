@@ -51,7 +51,7 @@ public class ApprovalMasterController {
 		map.put("searchWord", searchWord);
 		map.put("orderBy", orderBy);
 		
-		List<ApprovalMasterInfo> apprMst = apprMstService.selectApprMasterList(map);
+		List<ApprovalMasterInfo> apprMst = apprMstService.getApprMasterList(map);
 		return new ResponseEntity<List<ApprovalMasterInfo>>(apprMst, HttpStatus.OK);
 	}
 }

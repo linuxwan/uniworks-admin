@@ -16,17 +16,26 @@
 		<result column="CHNG_ID" jdbcType="VARCHAR" property="chngId" /> 
 		<result column="CHNG_DATE" jdbcType="TIMESTAMP" property="chngDate" /> 
 		<result column="ATND_INDC" jdbcType="VARCHAR" property="atndIndc" /> 
-		<result column="APPR_TMPL_TYPE" jdbcType="VARCHAR" property="apprTmplType" /> 
+		<result column="APPR_TYPE" jdbcType="VARCHAR" property="apprType" /> 
 		<result column="BASE_PRSV_TERM" jdbcType="VARCHAR" property="basePrsvTerm" /> 
 		<result column="APPR_LEVEL" jdbcType="INTEGER" property="apprLevel" /> 
 	</resultMap>
 
+	<resultMap id="ApprTypeResultMap" type="org.uniworks.groupware.admin.domain.Nw013m"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="APPR_ITEM_ID" jdbcType="VARCHAR" property="apprItemId" />
+		<result column="APPR_ITEM_NAME" jdbcType="VARCHAR" property="apprItemName" />
+		<result column="SEQ_NO" jdbcType="INTEGER" property="seqNo" />
+		<result column="CREATE_DATE" jdbcType="VARCHAR" property="createDate" />
+		<result column="IMG_URL" jdbcType="VARCHAR" property="imgUrl" />
+	</resultMap>
+	
 	<!-- 결재 마스터 목록을 가져온다. -->
 	<select id="selectApprMasterList" parameterType="java.util.Map" resultMap="ApprMstResultMap">
 		select  A.CO_ID as CO_ID, A.APPR_MST_ID as APPR_MST_ID, B.APPR_DESC as APPR_DESC, A.RCPT_INDC as RCPT_INDC, 
        			A.RFNC_INDC as RFNC_INDC, A.CPRTN_INDC as CPRTN_INDC, A.CPRTN_TYPE as CPRTN_TYPE, A.CRCLTN_INDC as CRCLTN_INDC,
        			A.DCSN_RULE_INDC as DCSN_RULE_INDC, A.CRT_ID as CRT_ID, A.CREATE_DATE as CREATE_DATE, A.CHNG_ID as CHNG_ID, C.APPR_LEVEL as APPR_LEVEL,
-       			A.CHNG_DATE as CHNG_DATE, A.ATND_INDC as ATND_INDC, E.APPR_ITEM_NAME as APPR_TMPL_TYPE, A.BASE_PRSV_TERM as BASE_PRSV_TERM
+       			A.CHNG_DATE as CHNG_DATE, A.ATND_INDC as ATND_INDC, E.APPR_ITEM_NAME as APPR_TYPE, A.BASE_PRSV_TERM as BASE_PRSV_TERM
 		from 	gw.nw010m A 
 			LEFT JOIN gw.nw011m B 
     			ON	A.CO_ID = B.CO_ID
@@ -58,5 +67,31 @@
 		<if test="orderBy == 'apprDesc'">
 		order by APPR_DESC
 		</if> 
+	</select>
+	
+	<!-- 결재 유형 목록을 가져온다. -->
+	<select id="selectApprTypeList" parameterType="java.util.Map" resultMap="ApprTypeResultMap">
+		select  A.CO_ID as CO_ID, A.APPR_ITEM_ID as APPR_ITEM_ID, B.APPR_ITEM_NAME as APPR_ITEM_NAME,
+				A.SEQ_NO as SEQ_NO, A.CREATE_DATE as CREATE_DATE, A.IMG_URL as IMG_URL
+		from    gw.nw013m A
+		    LEFT JOIN gw.nw014m B
+		        ON  A.CO_ID = B.CO_ID
+			   AND  A.APPR_ITEM_ID = B.APPR_ITEM_ID
+		       AND  B.LOCALE = #{lang,jdbcType=VARCHAR}
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
+		order by  A.SEQ_NO 
+	</select>
+	
+	<!-- 결재 유형 정보를 가져온다. -->
+	<select id="selectApprTypeInfo" parameterType="java.util.Map" resultMap="ApprTypeResultMap">
+		select  A.CO_ID as CO_ID, A.APPR_ITEM_ID as APPR_ITEM_ID, B.APPR_ITEM_NAME as APPR_ITEM_NAME,
+				A.SEQ_NO as SEQ_NO, A.CREATE_DATE as CREATE_DATE, A.IMG_URL as IMG_URL
+		from    gw.nw013m A
+		    LEFT JOIN gw.nw014m B
+		        ON  A.CO_ID = B.CO_ID
+			   AND  A.APPR_ITEM_ID = B.APPR_ITEM_ID
+		       AND  B.LOCALE = #{lang,jdbcType=VARCHAR}
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
+		  and  A.APPR_ITEM_ID = #{apprItemId,jdbcType=VARCHAR}
 	</select>
 </mapper>
