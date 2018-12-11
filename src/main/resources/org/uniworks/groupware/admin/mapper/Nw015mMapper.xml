@@ -12,6 +12,10 @@
 	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
 		select  CO_ID, APPR_ITEM_ID, APPR_MST_ID, SEQ_NO
 		from   nw015m
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR}
+		<if test="apprItemId != null">
+		  and	APPR_ITEM_ID	=	#{apprItemId,jdbcType=VARCHAR}
+		</if>
 	</select> 
  
 	<!-- 상세 조회 --> 
@@ -43,8 +47,10 @@
 	<!-- 삭제 --> 
 	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
 		delete	from nw015m 
-		where	APPR_ITEM_ID	=	#{apprItemId,jdbcType=VARCHAR} 
-		  and	APPR_MST_ID	=	#{apprMstId,jdbcType=VARCHAR} 
-		  and	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	APPR_ITEM_ID	=	#{apprItemId,jdbcType=VARCHAR}
+		  <if test="apprMstId != null"> 
+		  and	APPR_MST_ID	=	#{apprMstId,jdbcType=VARCHAR}
+		  </if> 
 	</delete> 
 </mapper>

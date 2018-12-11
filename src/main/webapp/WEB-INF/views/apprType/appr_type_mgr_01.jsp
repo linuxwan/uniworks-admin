@@ -46,19 +46,19 @@
     	var rowData = $("#apprTypeList").datagrid('getSelected');
     	
 		var title = '<spring:message code="resc.label.confirm"/>';
-		var msg = '<spring:message code="resc.msg.selectMajCode"/>';
+		var msg = '<spring:message code="resc.msg.selectApprType"/>';
 		if ($('#mode').val() != '' || rowData == null) {    			    			    			
 			alertMsg(title, msg);
 			return;
 		}
 		
     	var coId = rowData.coId;
-    	var majCode = rowData.majCode;   
-    	var rescKey = rowData.rescKey;
-    	var strUrl = "<c:out value="${contextPath}"/>/rest/mastercode/delete/coId/" + coId + "/majCode/" + majCode + "/rescKey/" + rescKey;
+    	var apprItemId = rowData.apprItemId;    
+    	var apprItemName = rowData.apprItemName;
+    	var strUrl = "<c:out value="${contextPath}"/>/rest/approvalType/delete/coId/" + coId + "/apprItemId/" + apprItemId;
 
     	var title = '<spring:message code="resc.label.confirm"/>';
-    	msg = majCode + " : " + '<spring:message code="resc.msg.confirmDel"/>';    		
+    	msg = apprItemName + "(" + apprItemId + ")" + " : " + '<spring:message code="resc.msg.confirmDel"/>';    		
     	$.messager.confirm(title, msg, function(r) {
 			if (r) {
 				$.ajax({

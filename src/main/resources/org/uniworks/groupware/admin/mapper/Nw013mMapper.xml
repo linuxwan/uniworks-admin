@@ -46,7 +46,7 @@
 	<!-- 삭제 --> 
 	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
 		delete	from nw013m 
-		where	APPR_ITEM_ID	=	#{apprItemId,jdbcType=VARCHAR} 
-		  and	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	APPR_ITEM_ID	=	#{apprItemId,jdbcType=VARCHAR} 
 	</delete> 
 </mapper>

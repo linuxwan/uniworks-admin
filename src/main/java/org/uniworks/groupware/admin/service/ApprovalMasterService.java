@@ -6,6 +6,7 @@
 package org.uniworks.groupware.admin.service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
@@ -42,4 +43,17 @@ public interface ApprovalMasterService {
 	 * @return
 	 */
 	Nw013m getApprTypeInfo(Map<String, Object> map);
+	/**
+	 * 결재 유형 정보를 Update한다.
+	 * @param nw013m
+	 * @param nw014mList
+	 * @return
+	 */
+	int updateApprovalTypeInfo(Nw013m nw013m, List<Nw014m> nw014mList);
+	/**
+	 * 결재 유형 정보 삭제
+	 * @param map
+	 * @return
+	 */
+	String deleteApprovalTypeInfo(Map<String, Object> map, Locale locale);
 }

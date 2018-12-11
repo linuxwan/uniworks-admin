@@ -16,7 +16,7 @@
 	    $('#btnSave').bind('click', function(){
 	    	if($('#apprTypeAddForm').form('enableValidation').form('validate')) {
 	    		var formData = parseFormHelper('apprTypeAddForm');	    		
-	    		var strUrl = '<c:out value="${contextPath}"/>/rest/approvalType/create';	    		    		
+	    		var strUrl = '<c:out value="${contextPath}"/>/rest/approvalType/modify';	    		    		
 	    		
 	    		$.ajax({
 					type: 'POST',

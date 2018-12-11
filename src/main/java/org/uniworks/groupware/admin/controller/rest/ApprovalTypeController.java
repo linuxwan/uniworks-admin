@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
 import org.uniworks.groupware.admin.common.util.ApplicationConfigReader;
 import org.uniworks.groupware.admin.common.util.StringUtil;
+import org.uniworks.groupware.admin.domain.Cm002c;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.Nw013m;
 import org.uniworks.groupware.admin.domain.Nw014m;
@@ -133,6 +135,100 @@ public class ApprovalTypeController {
 		} else {
 			result = messageSource.getMessage("resc.msg.addFail", null, response.getLocale());
 		}
+		
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+	
+	/**
+	 * 결재 유형 정보를 수정한다.
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@PostMapping(value = "/approvalType/modify")
+	public ResponseEntity<String> modifyApprovalType(@RequestBody Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		String result = "";		
+		String coId = (String)model.get("coId");
+		String seqNo = (String)model.get("seqNo");			
+		String apprItemId = (String)model.get("apprItemId");
+		String createDate = StringUtil.delDash((String)model.get("createDate"));
+		String imgUrl = StringUtil.null2void((String)model.get("imgUrl"));
+		
+		Nw013m nw013m = new Nw013m();
+		nw013m.setCoId(coId);
+		nw013m.setSeqNo(Integer.parseInt(seqNo));
+		nw013m.setApprItemId(apprItemId);		
+		nw013m.setCreateDate(createDate);
+		nw013m.setImgUrl(imgUrl);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", nw013m.getCoId());
+		map.put("apprItemId", nw013m.getApprItemId());
+		
+		Map<String, Object> lanMap = new HashMap<String, Object>();
+		lanMap.put("lang", userSession.getLang());
+		lanMap.put("coId", coId);
+		lanMap.put("majCode", "CD001"); //지원언어가 저장되어져 있는 주코드 CD001
+		lanMap.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
+		
+		String defaultLang = ApplicationConfigReader.get("default.language");
+		List<CommonCode> langList = commonService.getCommonSubCodeList(lanMap);
+		ArrayList<Nw014m> arrList = new ArrayList<Nw014m>();
+		
+		for (CommonCode commonCode : langList) {
+			String apprItemNameLang = StringUtil.null2void((String)model.get("apprItemName_" + commonCode.getRescKeyValue()));			
+			
+			if (defaultLang.equalsIgnoreCase(commonCode.getRescKeyValue())) {
+				nw013m.setApprItemName(apprItemNameLang);
+				Nw013m chkNw013m = nw013mService.getNw013m(map);
+				if (chkNw013m == null || !chkNw013m.getApprItemId().equalsIgnoreCase(nw013m.getApprItemId())) {
+					result = messageSource.getMessage("resc.msg.apprTypeNotExist", null, response.getLocale());
+					return new ResponseEntity<String>(result, HttpStatus.OK);
+				}
+			}
+			
+			Nw014m nw014m = new Nw014m();
+			nw014m.setCoId(coId);
+			nw014m.setApprItemId(nw013m.getApprItemId());
+			nw014m.setApprItemName(apprItemNameLang);
+			nw014m.setLocale(commonCode.getRescKeyValue());
+			
+			arrList.add(nw014m);
+		}
+		
+		int cnt = apprMstService.updateApprovalTypeInfo(nw013m, arrList);
+		if (cnt > 0) {
+			result = messageSource.getMessage("resc.msg.modifyOk", null, response.getLocale());			
+		} else {
+			result = messageSource.getMessage("resc.msg.modifyFail", null, response.getLocale());
+		}
+		
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+	
+	/**
+	 * 결재 유형 정보를 삭제한다.
+	 * @param coId
+	 * @param majCode
+	 * @param rescKey
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@DeleteMapping(value = "/approvalType/delete/coId/{coId}/apprItemId/{apprItemId}")
+	public ResponseEntity<String> deleteMasterCode(@PathVariable("coId") String coId, @PathVariable("apprItemId") String apprItemId, 
+			HttpServletRequest request, HttpServletResponse response) {	
+		String result = "";		
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		Map<String, Object> map = new HashMap<String, Object>();		
+		map.put("coId",  coId);
+		map.put("apprItemId", apprItemId);
+		
+		result = apprMstService.deleteApprovalTypeInfo(map, response.getLocale());
 		
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
