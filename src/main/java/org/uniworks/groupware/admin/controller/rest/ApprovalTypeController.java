@@ -30,13 +30,15 @@ import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
 import org.uniworks.groupware.admin.common.util.ApplicationConfigReader;
 import org.uniworks.groupware.admin.common.util.StringUtil;
-import org.uniworks.groupware.admin.domain.Cm002c;
+import org.uniworks.groupware.admin.domain.ApprTypeByApprInfo;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.Nw013m;
 import org.uniworks.groupware.admin.domain.Nw014m;
+import org.uniworks.groupware.admin.domain.Nw015m;
 import org.uniworks.groupware.admin.service.ApprovalMasterService;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.Nw013mService;
+import org.uniworks.groupware.admin.service.Nw015mService;
 
 /**
  * @author Park Chung Wan
@@ -49,6 +51,7 @@ public class ApprovalTypeController {
 	@Autowired ApprovalMasterService apprMstService;
 	@Autowired CommonService commonService;
 	@Autowired Nw013mService nw013mService;
+	@Autowired Nw015mService nw015mService;
 	@Autowired private MessageSource messageSource;
 	
 	/**
@@ -67,6 +70,27 @@ public class ApprovalTypeController {
 		
 		List<Nw013m> apprTypeList = apprMstService.getApprTypeList(map);
 		return new ResponseEntity<List<Nw013m>>(apprTypeList, HttpStatus.OK);
+	}
+	
+	/**
+	 * 결재 유형별 결재 마스터 목록을 가져온다.
+	 * @param request
+	 * @param coId
+	 * @param apprItemId
+	 * @return
+	 */
+	@GetMapping(value = "/apprTypeByApprInfo/coId/{coId}/apprItemId/{apprItemId}")
+	public ResponseEntity<List<ApprTypeByApprInfo>> getApprTypeByApprInfo(HttpServletRequest request, @PathVariable("coId") String coId, 
+					@PathVariable("apprItemId") String apprItemId) {
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", coId);
+		map.put("lang", userSession.getLang());
+		map.put("apprItemId", apprItemId);
+		
+		List<ApprTypeByApprInfo> apprTypeByApprInfo = apprMstService.getApprTypeByApprInfo(map);
+		return new ResponseEntity<List<ApprTypeByApprInfo>>(apprTypeByApprInfo, HttpStatus.OK);
 	}
 	
 	/**
@@ -212,8 +236,7 @@ public class ApprovalTypeController {
 	/**
 	 * 결재 유형 정보를 삭제한다.
 	 * @param coId
-	 * @param majCode
-	 * @param rescKey
+	 * @param apprItemId
 	 * @param request
 	 * @param response
 	 * @return
@@ -232,4 +255,102 @@ public class ApprovalTypeController {
 		
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
+	
+	/**
+	 * 결재 유형별 결재 마스터 정보를 생성한다.
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@PostMapping(value = "/apprMstByApprovalType/create")
+	public ResponseEntity<String> createApprMstByApprovalType(@RequestBody Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
+		String result = "";
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		String coId = (String)model.get("coId");
+		String apprMstId = (String)model.get("apprMstId");			
+		String apprItemId = (String)model.get("apprItemId");
+		int seqNo = Integer.parseInt((String)model.get("seqNo"));
+		
+		Nw015m nw015m = new Nw015m();
+		nw015m.setCoId(coId);
+		nw015m.setApprItemId(apprItemId);
+		nw015m.setApprMstId(apprMstId);
+		nw015m.setSeqNo(seqNo);
+		
+		int cnt = nw015mService.addNw015m(nw015m);
+		
+		if (cnt > 0) {
+			result = messageSource.getMessage("resc.msg.addOk", null, response.getLocale());			
+		} else {
+			result = messageSource.getMessage("resc.msg.addFail", null, response.getLocale());
+		}
+		
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+	
+	/**
+	 * 결재 유형별 결재 마스터 정보를 수정한다.
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@PostMapping(value = "/apprMstByApprovalType/modify")
+	public ResponseEntity<String> modifyApprMstByApprovalType(@RequestBody Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
+		String result = "";
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		String coId = (String)model.get("coId");
+		String apprMstId = (String)model.get("apprMstId");			
+		String apprItemId = (String)model.get("apprItemId");
+		int seqNo = Integer.parseInt((String)model.get("seqNo"));
+		
+		Nw015m nw015m = new Nw015m();
+		nw015m.setCoId(coId);
+		nw015m.setApprItemId(apprItemId);
+		nw015m.setApprMstId(apprMstId);
+		nw015m.setSeqNo(seqNo);
+		
+		int cnt = nw015mService.updateNw015m(nw015m);
+		if (cnt > 0) {
+			result = messageSource.getMessage("resc.msg.modifyOk", null, response.getLocale());			
+		} else {
+			result = messageSource.getMessage("resc.msg.modifyFail", null, response.getLocale());
+		}
+		
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+	
+	/**
+	 * 결재 유형 정보를 삭제한다.
+	 * @param coId
+	 * @param apprItemId
+	 * @param apprMstId
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@DeleteMapping(value = "/apprMstByApprovalType/delete/coId/{coId}/apprItemId/{apprItemId}/apprMstId/{apprMstId}")
+	public ResponseEntity<String> deleteApprMstByApprovalType(@PathVariable("coId") String coId, @PathVariable("apprItemId") String apprItemId, 
+			@PathVariable("apprMstId") String apprMstId, HttpServletRequest request, HttpServletResponse response) {	
+		String result = "";		
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		Map<String, Object> map = new HashMap<String, Object>();		
+		map.put("coId",  coId);
+		map.put("apprItemId", apprItemId);
+		map.put("apprMstId", apprMstId);
+		
+		int cnt = nw015mService.deleteNw015m(map);
+		if (cnt > 0) {
+			result = messageSource.getMessage("resc.msg.deleteOk", null, response.getLocale());			
+		} else {
+			result = messageSource.getMessage("resc.msg.deleteFail", null, response.getLocale());
+		}
+		
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
 }
+	

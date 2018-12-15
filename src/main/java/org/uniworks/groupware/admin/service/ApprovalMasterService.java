@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.uniworks.groupware.admin.domain.ApprTypeByApprInfo;
 import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
 import org.uniworks.groupware.admin.domain.Nw013m;
 import org.uniworks.groupware.admin.domain.Nw014m;
@@ -24,6 +25,12 @@ public interface ApprovalMasterService {
 	 * @return
 	 */
 	List<ApprovalMasterInfo> getApprMasterList(Map<String, Object> map);
+	/**
+	 * 결재 마스터 목록을 가져온다.(전체)
+	 * @param map
+	 * @return
+	 */
+	List<ApprovalMasterInfo> getApprMasterListAll(Map<String, Object> map);
 	/**
 	 * 결재 유형 목록을 가져온다.
 	 * @param map
@@ -56,4 +63,10 @@ public interface ApprovalMasterService {
 	 * @return
 	 */
 	String deleteApprovalTypeInfo(Map<String, Object> map, Locale locale);
+	/**
+	 * 결재 유형별 결재 Master 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	List<ApprTypeByApprInfo> getApprTypeByApprInfo(Map<String, Object> map);
 }

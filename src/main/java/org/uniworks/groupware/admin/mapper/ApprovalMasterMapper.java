@@ -8,6 +8,7 @@ package org.uniworks.groupware.admin.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.uniworks.groupware.admin.domain.ApprTypeByApprInfo;
 import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
 import org.uniworks.groupware.admin.domain.Nw013m;
 
@@ -24,6 +25,13 @@ public interface ApprovalMasterMapper {
 	List<ApprovalMasterInfo> selectApprMasterList(Map<String, Object> map);
 	
 	/**
+	 * 결재 마스터 목록을 가져온다.(전체)
+	 * @param map
+	 * @return
+	 */
+	List<ApprovalMasterInfo> selectApprMasterListAll(Map<String, Object> map);
+	
+	/**
 	 * 결재 유형 목록을 가져온다.
 	 * @param map
 	 * @return
@@ -36,4 +44,11 @@ public interface ApprovalMasterMapper {
 	 * @return
 	 */
 	Nw013m selectApprTypeInfo(Map<String, Object> map);
+	
+	/**
+	 * 결재 유형별 결재 Master 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	List<ApprTypeByApprInfo> selectApprTypeByApprInfo(Map<String, Object> map);
 }

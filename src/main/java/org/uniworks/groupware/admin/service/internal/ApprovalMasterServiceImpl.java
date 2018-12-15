@@ -15,6 +15,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.uniworks.groupware.admin.domain.ApprTypeByApprInfo;
 import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
 import org.uniworks.groupware.admin.domain.Nw013m;
 import org.uniworks.groupware.admin.domain.Nw014m;
@@ -48,6 +49,16 @@ public class ApprovalMasterServiceImpl implements ApprovalMasterService {
 		return apprMaster.selectApprMasterList(map);
 	}
 
+	/**
+	 * 결재 마스터 목록을 가져온다.(전체)
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public List<ApprovalMasterInfo> getApprMasterListAll(Map<String, Object> map) {
+		return apprMaster.selectApprMasterListAll(map);
+	}
+	
 	/**
 	 * 결재 유형 목록을 가져온다.
 	 * @param map
@@ -149,5 +160,15 @@ public class ApprovalMasterServiceImpl implements ApprovalMasterService {
 		}
 		
 		return result;
+	}
+	
+	/**
+	 * 결재 유형별 결재 Master 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public List<ApprTypeByApprInfo> getApprTypeByApprInfo(Map<String, Object> map) {
+		return apprMaster.selectApprTypeByApprInfo(map);
 	}
 }

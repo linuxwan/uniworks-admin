@@ -22,18 +22,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
-import org.uniworks.groupware.admin.common.util.ApplicationConfigReader;
 import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.common.util.SecurityUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
+import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.Hr001m;
 import org.uniworks.groupware.admin.domain.Nw013m;
 import org.uniworks.groupware.admin.domain.Nw014m;
+import org.uniworks.groupware.admin.domain.Nw015m;
 import org.uniworks.groupware.admin.service.ApprovalMasterService;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.Hr001mService;
 import org.uniworks.groupware.admin.service.Nw014mService;
+import org.uniworks.groupware.admin.service.Nw015mService;
 
 /**
  * @author Park Chung Wan
@@ -48,6 +50,7 @@ public class ApprovalTypeMgr {
 	@Autowired Hr001mService hr001mService;
 	@Autowired ApprovalMasterService apprMstService;
 	@Autowired Nw014mService nw014mService;
+	@Autowired Nw015mService nw015mService;
 	
 	/**
 	 * 결재 마스트 목록
@@ -145,6 +148,70 @@ public class ApprovalTypeMgr {
 		
 		mav.addObject("nw013m", nw013m);
 		mav.addObject("nw014mList", arrList);
+		return mav;
+	}
+	
+	/**
+	 * 결재 유형별 결재 마스트 등록화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/apprTypeMgr/apprTypeByApprMstAddForm", method = RequestMethod.GET)
+	public ModelAndView apprTypeByApprMstAddForm(HttpServletRequest request, HttpServletResponse response) {
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String apprItemId = StringUtil.null2void(request.getParameter("apprItemId"));
+		
+		ModelAndView mav = new ModelAndView("apprType/appr_type_by_appr_mst_add_form_01");
+		
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");				
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", coId);
+		map.put("lang", userSession.getLang());
+		map.put("crntDate", DateUtil.getCurrentDateToString());
+		map.put("orderBy", "apprMstId");
+		List<ApprovalMasterInfo> apprList = apprMstService.getApprMasterListAll(map);
+		
+		mav.addObject("coId", coId);
+		mav.addObject("apprItemId", apprItemId);
+		mav.addObject("apprMstList", apprList);
+		return mav;
+	}
+	
+	/**
+	 * 결재 유형별 결재 마스트 수정화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/apprTypeMgr/apprTypeByApprMstModifyForm", method = RequestMethod.GET)
+	public ModelAndView apprTypeByApprMstModifyForm(HttpServletRequest request, HttpServletResponse response) {
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String apprItemId = StringUtil.null2void(request.getParameter("apprItemId"));
+		String apprMstId = StringUtil.null2void(request.getParameter("apprMstId"));
+		
+		ModelAndView mav = new ModelAndView("apprType/appr_type_by_appr_mst_modify_form_01");
+		
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");				
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", coId);
+		map.put("lang", userSession.getLang());
+		map.put("crntDate", DateUtil.getCurrentDateToString());
+		map.put("orderBy", "apprMstId");
+		
+		List<ApprovalMasterInfo> apprList = apprMstService.getApprMasterListAll(map);
+		
+		map.put("apprItemId", apprItemId);
+		map.put("apprMstId", apprMstId);
+		
+		Nw015m nw015m = nw015mService.getNw015m(map);
+		
+		mav.addObject("apprMstList", apprList);
+		mav.addObject("nw015m", nw015m);
 		return mav;
 	}
 }

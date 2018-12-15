@@ -30,6 +30,15 @@
 		<result column="IMG_URL" jdbcType="VARCHAR" property="imgUrl" />
 	</resultMap>
 	
+	<resultMap id="ApprTypeExtResultMap" type="org.uniworks.groupware.admin.domain.ApprTypeByApprInfo">
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="APPR_ITEM_ID" jdbcType="VARCHAR" property="apprItemId" />
+		<result column="APPR_ITEM_NAME" jdbcType="VARCHAR" property="apprItemName" />
+		<result column="APPR_MST_ID" jdbcType="VARCHAR" property="apprMstId" /> 
+		<result column="APPR_DESC" jdbcType="VARCHAR" property="apprDesc" />
+		<result column="SEQ_NO" jdbcType="INTEGER" property="seqNo" />
+	</resultMap>
+	
 	<!-- 결재 마스터 목록을 가져온다. -->
 	<select id="selectApprMasterList" parameterType="java.util.Map" resultMap="ApprMstResultMap">
 		select  A.CO_ID as CO_ID, A.APPR_MST_ID as APPR_MST_ID, B.APPR_DESC as APPR_DESC, A.RCPT_INDC as RCPT_INDC, 
@@ -52,6 +61,34 @@
     			ON  D.CO_ID = E.CO_ID
     			AND D.APPR_ITEM_ID = E.APPR_ITEM_ID
     			AND E.LOCALE = #{lang,jdbcType=VARCHAR}
+		<where>
+			A.CO_ID = #{coId,jdbcType=VARCHAR}
+			<if test="searchKind == 'apprMstId'">	 
+				AND A.APPR_MST_ID LIKE #{searchWord,jdbcType=VARCHAR}
+			</if>
+			<if test="searchKind == 'apprDesc'">	 
+  				AND B.APPR_DESC LIKE #{searchWord,jdbcType=VARCHAR}
+  			</if>
+  		</where>  
+  		<if test="orderBy == 'apprMstId'">
+		order by APPR_MST_ID  
+		</if>
+		<if test="orderBy == 'apprDesc'">
+		order by APPR_DESC
+		</if> 
+	</select>
+	
+	<!-- 결재 마스터 목록을 가져온다.(전체) -->
+	<select id="selectApprMasterListAll" parameterType="java.util.Map" resultMap="ApprMstResultMap">
+		select  A.CO_ID as CO_ID, A.APPR_MST_ID as APPR_MST_ID, B.APPR_DESC as APPR_DESC, A.RCPT_INDC as RCPT_INDC, 
+       			A.RFNC_INDC as RFNC_INDC, A.CPRTN_INDC as CPRTN_INDC, A.CPRTN_TYPE as CPRTN_TYPE, A.CRCLTN_INDC as CRCLTN_INDC,
+       			A.DCSN_RULE_INDC as DCSN_RULE_INDC, A.CRT_ID as CRT_ID, A.CREATE_DATE as CREATE_DATE, A.CHNG_ID as CHNG_ID, 0 as APPR_LEVEL,
+       			A.CHNG_DATE as CHNG_DATE, A.ATND_INDC as ATND_INDC, '' as APPR_TYPE, A.BASE_PRSV_TERM as BASE_PRSV_TERM
+		from 	gw.nw010m A 
+			LEFT JOIN gw.nw011m B 
+    			ON	A.CO_ID = B.CO_ID
+    			AND A.APPR_MST_ID = B.APPR_MST_ID
+    			AND B.LOCALE = #{lang,jdbcType=VARCHAR} 
 		<where>
 			A.CO_ID = #{coId,jdbcType=VARCHAR}
 			<if test="searchKind == 'apprMstId'">	 
@@ -93,5 +130,22 @@
 		       AND  B.LOCALE = #{lang,jdbcType=VARCHAR}
 		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
 		  and  A.APPR_ITEM_ID = #{apprItemId,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 결재유형별 결재목록을 가져온다 -->
+	<select id="selectApprTypeByApprInfo" parameterType="java.util.Map" resultMap="ApprTypeExtResultMap">
+		select  A.CO_ID, A.APPR_ITEM_ID, B.APPR_ITEM_NAME, A.APPR_MST_ID, C.APPR_DESC, A.SEQ_NO
+		  from  gw.nw015m A 
+		     LEFT JOIN gw.nw014m B
+		         ON  A.CO_ID = B.CO_ID
+			     AND A.APPR_ITEM_ID = B.APPR_ITEM_ID
+		         AND B.LOCALE = #{lang,jdbcType=VARCHAR}
+		     LEFT JOIN gw.nw011m C 
+		         ON  A.CO_ID = C.CO_ID
+		         AND A.APPR_MST_ID = C.APPR_MST_ID
+		         AND C.LOCALE = #{lang,jdbcType=VARCHAR}
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
+		  and  A.APPR_ITEM_ID = #{apprItemId,jdbcType=VARCHAR}
+		order by A.SEQ_NO
 	</select>
 </mapper>
