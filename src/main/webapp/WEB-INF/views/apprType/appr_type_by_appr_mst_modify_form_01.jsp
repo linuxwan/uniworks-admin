@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><spring:message code="resc.label.majCodeAddForm"/></title>
+<title><spring:message code="resc.label.apprTypeByApprListModifyForm"/></title>
 	<link rel='shortcut icon' type='image/x-icon' href='<c:out value="${contextPath}"/>/image/testimonials.png' />
     <link rel="stylesheet" type="text/css" href="<c:out value="${contextPath}"/>/easyui/css/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="<c:out value="${contextPath}"/>/easyui/css/themes/icon.css">    
@@ -54,7 +54,7 @@
     </script>
 </head>
 <body>
-	<div class="easyui-panel" title="<spring:message code="resc.label.apprTypeByApprListAddForm"/>" style="width:100%;max-width:100%;padding:10px 10px;">     
+	<div class="easyui-panel" title="<spring:message code="resc.label.apprTypeByApprListModifyForm"/>" style="width:100%;max-width:100%;padding:10px 10px;">     
 	<form id="apprTypeByApprMstAddForm">
 	<jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>
 		<table style="width:100%">

@@ -216,7 +216,7 @@
 			<td style="width:75%">				
 			    <table id="oganMemberList" class="easyui-datagrid" style="width:100%;height:675px" 		        
 		       		title="<spring:message code="resc.label.oganMember"/>" 
-		       		data-options="iconCls:'icon-edit', rownumbers:true, singleSelect:true, toolbar:'#tm', pagination:true, autoRowHeight:false, pageSize:20">
+		       		data-options="rownumbers:true, singleSelect:true, toolbar:'#tm', pagination:true, autoRowHeight:false, pageSize:20">
 			        <thead>
 			            <tr>
 			                <th data-options="field:'coId',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.coId"/></th>

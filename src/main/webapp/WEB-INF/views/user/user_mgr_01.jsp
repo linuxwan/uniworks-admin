@@ -145,7 +145,7 @@
 			<td style="width:100%">				
 			    <table id="userList" class="easyui-datagrid" style="width:100%;height:100%" 		        
 		       		title="<spring:message code="resc.label.userList"/>" 
-		       		data-options="iconCls:'icon-edit', rownumbers:true, singleSelect:true, toolbar:'#tm', pagination:true, autoRowHeight:false, pageSize:20">
+		       		data-options="rownumbers:true, singleSelect:true, toolbar:'#tm', pagination:true, autoRowHeight:false, pageSize:20">
 			        <thead>
 			            <tr>
 			                <th data-options="field:'coId',halign:'center',align:'center',width:'5%'"><spring:message code="resc.label.coId"/></th>

@@ -146,7 +146,7 @@
 			<td style="width:100%">				
 			    <table id="apprMstList" class="easyui-datagrid" style="width:100%;height:100%" 		        
 		       		title="<spring:message code="resc.label.apprMasterList"/>" 
-		       		data-options="iconCls:'icon-edit', rownumbers:true, singleSelect:true, toolbar:'#tm', pagination:true, autoRowHeight:false, pageSize:20">
+		       		data-options="rownumbers:true, singleSelect:true, toolbar:'#tm', pagination:true, autoRowHeight:false, pageSize:20">
 			        <thead>
 			            <tr>
 			            	<th data-options="field:'coId',halign:'center',align:'center',width:'5%'"><spring:message code="resc.label.coId"/></th>
@@ -171,9 +171,11 @@
 			    <script type="text/javascript">
 			    function append() {    	
 			    	var coId = $("#selCoId").combobox('getValue');					    	
-					var url = "<c:out value="${contextPath}"/>/admin/userAddForm?coId=" + coId;
-								
-					$.popupWindow(url, { name: 'addEmpPopup', height: 250, width: 750 });		    	
+					var url = "<c:out value="${contextPath}"/>/admin/apprMasterMgr/apprMasterAddForm?coId=" + coId;
+					var cnt = ${fn:length(langList)};		
+					var formHeight = 340 + (30 * cnt);
+					
+					$.popupWindow(url, { name: 'apprMstAddForm', height: formHeight, width: 800 });		    	
 			    }
 			    
 			    function modify() {

@@ -111,7 +111,7 @@
 	<input type="hidden" id="mode" name="mode" value=""/>		
     <table id="adminList" class="easyui-datagrid" style="width:100%;height:100%" 		        
        		title="<spring:message code="resc.label.adminList"/>" 
-       		data-options="iconCls:'icon-edit', rownumbers:true, singleSelect:true, toolbar:'#tb', pagination:true, autoRowHeight:false, pageSize:20">
+       		data-options="rownumbers:true, singleSelect:true, toolbar:'#tb', pagination:true, autoRowHeight:false, pageSize:20">
         <thead>
             <tr>
                 <th data-options="field:'coId',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.coId"/></th>
