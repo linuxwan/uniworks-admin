@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Nw010mMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Nw010m"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="APPR_MST_ID" jdbcType="VARCHAR" property="apprMstId" /> 
+		<result column="APPR_DESC" jdbcType="VARCHAR" property="apprDesc" /> 
+		<result column="RCPT_INDC" jdbcType="VARCHAR" property="rcptIndc" /> 
+		<result column="RFNC_INDC" jdbcType="VARCHAR" property="rfncIndc" /> 
+		<result column="CPRTN_INDC" jdbcType="VARCHAR" property="cprtnIndc" /> 
+		<result column="CPRTN_TYPE" jdbcType="VARCHAR" property="cprtnType" /> 
+		<result column="CRCLTN_INDC" jdbcType="VARCHAR" property="crcltnIndc" /> 
+		<result column="DCSN_RULE_INDC" jdbcType="VARCHAR" property="dcsnRuleIndc" /> 
+		<result column="CRT_ID" jdbcType="VARCHAR" property="crtId" /> 
+		<result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" /> 
+		<result column="CHNG_ID" jdbcType="VARCHAR" property="chngId" /> 
+		<result column="CHNG_DATE" jdbcType="TIMESTAMP" property="chngDate" /> 
+		<result column="ATND_INDC" jdbcType="VARCHAR" property="atndIndc" /> 
+		<result column="APPR_TMPL_TYPE" jdbcType="VARCHAR" property="apprTmplType" /> 
+		<result column="BASE_PRSV_TERM" jdbcType="VARCHAR" property="basePrsvTerm" /> 
+	</resultMap> 
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, APPR_MST_ID, APPR_DESC, RCPT_INDC, RFNC_INDC, CPRTN_INDC, CPRTN_TYPE, CRCLTN_INDC, DCSN_RULE_INDC, 
+				CRT_ID, CREATE_DATE, CHNG_ID, CHNG_DATE, ATND_INDC, APPR_TMPL_TYPE, BASE_PRSV_TERM
+		from   nw010m
+	</select> 
+ 
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, APPR_MST_ID, APPR_DESC, RCPT_INDC, RFNC_INDC, CPRTN_INDC, CPRTN_TYPE, CRCLTN_INDC, DCSN_RULE_INDC, 
+				CRT_ID, CREATE_DATE, CHNG_ID, CHNG_DATE, ATND_INDC, APPR_TMPL_TYPE, BASE_PRSV_TERM
+		from   nw010m
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  APPR_MST_ID	=	#{apprMstId,jdbcType=VARCHAR} 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw010m"> 
+		insert	into nw010m(CO_ID, APPR_MST_ID, APPR_DESC, RCPT_INDC, RFNC_INDC, CPRTN_INDC, CPRTN_TYPE, CRCLTN_INDC, DCSN_RULE_INDC, 
+				CRT_ID, CREATE_DATE, CHNG_ID, CHNG_DATE, ATND_INDC, APPR_TMPL_TYPE, BASE_PRSV_TERM) 
+		values (#{coId,jdbcType=VARCHAR},#{apprMstId,jdbcType=VARCHAR},#{apprDesc,jdbcType=VARCHAR},#{rcptIndc,jdbcType=VARCHAR},#{rfncIndc,jdbcType=VARCHAR},#{cprtnIndc,jdbcType=VARCHAR},#{cprtnType,jdbcType=VARCHAR} 
+			,#{crcltnIndc,jdbcType=VARCHAR},#{dcsnRuleIndc,jdbcType=VARCHAR},#{crtId,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{chngId,jdbcType=VARCHAR},#{chngDate,jdbcType=TIMESTAMP} 
+			,#{atndIndc,jdbcType=VARCHAR},#{apprTmplType,jdbcType=VARCHAR},#{basePrsvTerm,jdbcType=VARCHAR}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw010m"> 
+		update	nw010m 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="apprDesc != null">APPR_DESC= #{apprDesc,jdbcType=VARCHAR},</if> 
+			<if test="rcptIndc != null">RCPT_INDC= #{rcptIndc,jdbcType=VARCHAR},</if> 
+			<if test="rfncIndc != null">RFNC_INDC= #{rfncIndc,jdbcType=VARCHAR},</if> 
+			<if test="cprtnIndc != null">CPRTN_INDC= #{cprtnIndc,jdbcType=VARCHAR},</if> 
+			<if test="cprtnType != null">CPRTN_TYPE= #{cprtnType,jdbcType=VARCHAR},</if> 
+			<if test="crcltnIndc != null">CRCLTN_INDC= #{crcltnIndc,jdbcType=VARCHAR},</if> 
+			<if test="dcsnRuleIndc != null">DCSN_RULE_INDC= #{dcsnRuleIndc,jdbcType=VARCHAR},</if> 
+			<if test="crtId != null">CRT_ID= #{crtId,jdbcType=VARCHAR},</if> 
+			<if test="createDate != null">CREATE_DATE= #{createDate,jdbcType=TIMESTAMP},</if> 
+			<if test="chngId != null">CHNG_ID= #{chngId,jdbcType=VARCHAR},</if> 
+			<if test="chngDate != null">CHNG_DATE= #{chngDate,jdbcType=TIMESTAMP},</if> 
+			<if test="atndIndc != null">ATND_INDC= #{atndIndc,jdbcType=VARCHAR},</if> 
+			<if test="apprTmplType != null">APPR_TMPL_TYPE= #{apprTmplType,jdbcType=VARCHAR},</if> 
+			<if test="basePrsvTerm != null">BASE_PRSV_TERM= #{basePrsvTerm,jdbcType=VARCHAR},</if> 
+		</trim> 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	APPR_MST_ID	=	#{apprMstId,jdbcType=VARCHAR} 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from nw010m 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	APPR_MST_ID	=	#{apprMstId,jdbcType=VARCHAR} 
+	</delete> 
+</mapper>

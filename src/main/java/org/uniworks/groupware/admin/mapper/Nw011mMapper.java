@@ -8,44 +8,38 @@ package org.uniworks.groupware.admin.mapper;
 import java.util.List; 
 import java.util.Map; 
 
-import org.uniworks.groupware.admin.domain.Nw012m; 
+import org.uniworks.groupware.admin.domain.Nw011m; 
 
 
 /** 
  * @author Park Chungwan 
- * 관련 테이블 : Nw012m
+ * 관련 테이블 : Nw011m
  */ 
-public interface Nw012mMapper { 
+public interface Nw011mMapper { 
 	/** 
 	 * 목록 가져오기 
 	 * @param map 
 	 * @return 
 	 */ 
-	List<Nw012m> select(Map<String, Object> map); 
+	List<Nw011m> select(Map<String, Object> map); 
 	/** 
 	 * 정보 가져오기 
 	 * @param map 
 	 * @return 
 	 */ 
-	Nw012m selectByPrimaryKey(Map<String, Object> map); 
-	/**
-	 * 현재 결재 차수 정보를 가져온다.
-	 * @param map
-	 * @return
-	 */
-	Nw012m selectByCurrentApprLevel(Map<String, Object> map);
+	Nw011m selectByPrimaryKey(Map<String, Object> map); 
 	/** 
 	 * 등록한다 
-	 * @param nw012m 
+	 * @param nw011m 
 	 * @return 
 	 */ 
-	int insert(Nw012m nw012m); 
+	int insert(Nw011m nw011m); 
 	/** 
 	 * 수정한다 
-	 * @param nw012m 
+	 * @param nw011m 
 	 * @return 
 	 */ 
-	int updateByPrimaryKey(Nw012m nw012m); 
+	int updateByPrimaryKey(Nw011m nw011m); 
 	/** 
 	 * 삭제한다 
 	 * @param map 

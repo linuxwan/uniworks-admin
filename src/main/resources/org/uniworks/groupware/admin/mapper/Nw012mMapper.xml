@@ -19,10 +19,19 @@
 	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
 		select  CO_ID, APPR_MST_ID, CRT_DATE, APPR_LEVEL, CLS_DATE
 		from   nw012m
-		where  APPR_MST_ID	=	#{apprMstId,jdbcType=VARCHAR} 
-		  and  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  APPR_MST_ID	=	#{apprMstId,jdbcType=VARCHAR} 
 		  and  CRT_DATE	=	#{crtDate,jdbcType=VARCHAR} 
 	</select> 
+	
+	<!-- 상세 조회 : 현재 일자를 기준으로 가장 최근 결재차수 정보를 가져온다. -->
+	<select id="selectByCurrentApprLevel" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select CO_ID, APPR_MST_ID, CRT_DATE, APPR_LEVEL, CLS_DATE
+		from   nw012m
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  APPR_MST_ID	=	#{apprMstId,jdbcType=VARCHAR} 
+		  and  #{crntDate,jdbcType=VARCHAR} between CRT_DATE and CLS_DATE
+	</select>
  
 	<!-- 등록 --> 
 	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw012m"> 
@@ -47,6 +56,8 @@
 		delete	from nw012m 
 		where	APPR_MST_ID	=	#{apprMstId,jdbcType=VARCHAR} 
 		  and	CO_ID	=	#{coId,jdbcType=VARCHAR} 
-		  and	CRT_DATE	=	#{crtDate,jdbcType=VARCHAR} 
+		  <if test="crtDate != null">
+		  and	CRT_DATE	=	#{crtDate,jdbcType=VARCHAR}
+		  </if> 
 	</delete> 
 </mapper>

@@ -11,6 +11,9 @@ import java.util.Map;
 
 import org.uniworks.groupware.admin.domain.ApprTypeByApprInfo;
 import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
+import org.uniworks.groupware.admin.domain.Nw010m;
+import org.uniworks.groupware.admin.domain.Nw011m;
+import org.uniworks.groupware.admin.domain.Nw012m;
 import org.uniworks.groupware.admin.domain.Nw013m;
 import org.uniworks.groupware.admin.domain.Nw014m;
 
@@ -31,6 +34,26 @@ public interface ApprovalMasterService {
 	 * @return
 	 */
 	List<ApprovalMasterInfo> getApprMasterListAll(Map<String, Object> map);
+	/**
+	 * 결재 마스터 정보를 등록한다.
+	 * @param nw010m
+	 * @param nw011mList
+	 * @return
+	 */
+	int addApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m);
+	/**
+	 * 결재 마스터 정보를 수정한다.
+	 * @param nw010m
+	 * @param nw011mList
+	 * @return
+	 */
+	int modifyApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m);
+	/**
+	 * 결재 마스터 정보를 삭제한다.
+	 * @param map
+	 * @return
+	 */
+	int deleteApprovalMasterInfo(Map<String, Object> map);
 	/**
 	 * 결재 유형 목록을 가져온다.
 	 * @param map
