@@ -27,7 +27,13 @@ public interface Nw015mMapper {
 	 * @param map 
 	 * @return 
 	 */ 
-	Nw015m selectByPrimaryKey(Map<String, Object> map); 
+	Nw015m selectByPrimaryKey(Map<String, Object> map);
+	/**
+	 * Sequence No 가져오기
+	 * @param map
+	 * @return
+	 */
+	int selectSeqNo(Map<String, Object> map);
 	/** 
 	 * 등록한다 
 	 * @param nw015m 

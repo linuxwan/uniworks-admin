@@ -25,6 +25,8 @@ import org.uniworks.groupware.admin.common.util.SecurityUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.Hr001m;
+import org.uniworks.groupware.admin.domain.Nw013m;
+import org.uniworks.groupware.admin.service.ApprovalMasterService;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.Hr001mService;
 
@@ -39,6 +41,8 @@ public class ApprMasterMgrController {
 	private static final Logger logger = LoggerFactory.getLogger(ApprMasterMgrController.class);
 	@Autowired CommonService commonService;
 	@Autowired Hr001mService hr001mService;
+	@Autowired ApprovalMasterService apprMstService;
+	
 	/**
 	 * 결재 마스트 목록
 	 * @param request
@@ -61,11 +65,11 @@ public class ApprMasterMgrController {
 		List<CommonCode> langList = commonService.getCommonSubCodeList(map);		
 		
 		map.put("adminType", adminType);
-		List<Hr001m> coList = hr001mService.getHr001mList(map);
+		List<Hr001m> coList = hr001mService.getHr001mList(map);		
 		
 		mav.addObject("coList", coList);
-		mav.addObject("langList", langList);
-				
+		mav.addObject("langList", langList);		
+		
 		return mav;
 	}
 	
@@ -96,10 +100,14 @@ public class ApprMasterMgrController {
 		map.put("majCode", "CD013");	//협조결재 유형
 		List<CommonCode> cprtnTypeList = commonService.getCommonSubCodeList(map);
 		
+		List<Nw013m> apprItemList = apprMstService.getApprTypeList(map);
+		
 		mav.addObject("coId", coId);
 		mav.addObject("langList", langList);
 		mav.addObject("prsvTermList", prsvTermList);
 		mav.addObject("cprtnTypeList", cprtnTypeList);
+		mav.addObject("apprItemList", apprItemList);
+		
 		return mav;
 	}
 }

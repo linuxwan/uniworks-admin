@@ -23,7 +23,12 @@ public interface Nw015mService {
 	 * @return 
 	 */ 
 	Nw015m getNw015m(java.util.Map<String,Object> map); 
-
+	/**
+	 * Sequence No 가져오기
+	 * @param map
+	 * @return
+	 */
+	int getSeqNo(java.util.Map<String,Object> map);
 	/** 
 	 * 등록한다. 
 	 * 

@@ -5,13 +5,13 @@
  */ 
 package org.uniworks.groupware.admin.domain; 
 
-import java.io.Serializable; 
-import java.sql.Timestamp; 
+import java.io.Serializable;
+import java.util.Date;
 
-import javax.xml.bind.annotation.XmlRootElement; 
-import javax.xml.bind.annotation.XmlType; 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-import org.pojomatic.Pojomatic; 
+import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty; 
 /** 
  * @author Park Chungwan 
@@ -32,9 +32,9 @@ public class Nw010m implements Serializable {
 	private String crcltnIndc; 
 	private String dcsnRuleIndc; 
 	private String crtId; 
-	private Timestamp createDate; 
+	private Date createDate; 
 	private String chngId; 
-	private Timestamp chngDate; 
+	private Date chngDate; 
 	private String atndIndc; 
 	private String apprTmplType; 
 	private String basePrsvTerm; 
@@ -99,10 +99,10 @@ public class Nw010m implements Serializable {
 	public String getCrtId() { 
 		return this.crtId; 
 	} 
-	public void setCreateDate(Timestamp createDate) { 
+	public void setCreateDate(Date createDate) { 
 		this.createDate = createDate; 
 	} 
-	public Timestamp getCreateDate() { 
+	public Date getCreateDate() { 
 		return this.createDate; 
 	} 
 	public void setChngId(String chngId) { 
@@ -111,10 +111,10 @@ public class Nw010m implements Serializable {
 	public String getChngId() { 
 		return this.chngId; 
 	} 
-	public void setChngDate(Timestamp chngDate) { 
+	public void setChngDate(Date chngDate) { 
 		this.chngDate = chngDate; 
 	} 
-	public Timestamp getChngDate() { 
+	public Date getChngDate() { 
 		return this.chngDate; 
 	} 
 	public void setAtndIndc(String atndIndc) { 

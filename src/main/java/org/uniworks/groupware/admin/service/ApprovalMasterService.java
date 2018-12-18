@@ -16,6 +16,7 @@ import org.uniworks.groupware.admin.domain.Nw011m;
 import org.uniworks.groupware.admin.domain.Nw012m;
 import org.uniworks.groupware.admin.domain.Nw013m;
 import org.uniworks.groupware.admin.domain.Nw014m;
+import org.uniworks.groupware.admin.domain.Nw015m;
 
 /**
  * @author Park Chung Wan
@@ -40,14 +41,14 @@ public interface ApprovalMasterService {
 	 * @param nw011mList
 	 * @return
 	 */
-	int addApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m);
+	int addApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m, Nw015m nw015m);
 	/**
 	 * 결재 마스터 정보를 수정한다.
 	 * @param nw010m
 	 * @param nw011mList
 	 * @return
 	 */
-	int modifyApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m);
+	int modifyApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m, Nw015m nw015m);
 	/**
 	 * 결재 마스터 정보를 삭제한다.
 	 * @param map

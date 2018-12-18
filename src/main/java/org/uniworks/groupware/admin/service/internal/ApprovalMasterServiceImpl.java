@@ -77,7 +77,7 @@ public class ApprovalMasterServiceImpl implements ApprovalMasterService {
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED) 
-	public int addApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m) {
+	public int addApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m, Nw015m nw015m) {
 		int cnt = 0;
 		
 		if (nw010m == null || nw011mList.size() < 1 || nw012m == null) return cnt;
@@ -94,6 +94,15 @@ public class ApprovalMasterServiceImpl implements ApprovalMasterService {
 		//결재 마스터 정보의 결재차수 정보를 Insert 한다.
 		cnt = nw012mMapper.insert(nw012m);
 		
+		//결재 유형 시퀀스 번호를 가져온다.
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", nw015m.getCoId());
+		map.put("apprItemId", nw015m.getApprItemId());
+		int seqNo = nw015mMapper.selectSeqNo(map);
+		nw015m.setSeqNo(seqNo);
+		//결재 유형 정보를 Insert 한다.
+		cnt = nw015mMapper.insert(nw015m);
+		
 		return cnt;
 	}
 	
@@ -105,7 +114,7 @@ public class ApprovalMasterServiceImpl implements ApprovalMasterService {
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED) 
-	public int modifyApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m) {
+	public int modifyApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m, Nw015m nw015m) {
 		int cnt = 0;
 		
 		if (nw010m == null || nw011mList.size() < 1 || nw012m == null) return cnt;

@@ -19,7 +19,7 @@
 	    $('#btnSave').bind('click', function(){
 	    	if($('#apprTypeAddForm').form('enableValidation').form('validate')) {
 	    		var formData = parseFormHelper('apprTypeAddForm');	    		
-	    		var strUrl = '<c:out value="${contextPath}"/>/rest/approvalType/create';	    		    		
+	    		var strUrl = '<c:out value="${contextPath}"/>/rest/approvalMaster/create';	    		    		
 	    		
 	    		$.ajax({
 					type: 'POST',
@@ -35,7 +35,7 @@
 					success : function(msg) {
 						var title = '<spring:message code="resc.label.confirm"/>';		    			
 						$.messager.alert(title, msg, "info",  function(){
-							window.opener.approvalTypeReload();
+							window.opener.reload();
 							window.close();
 						});						
 					},
@@ -68,18 +68,27 @@
 		            <div style="margin-bottom:10px">		                
 		                <select class="easyui-combobox" id="basePrsvTerm" name="basePrsvTerm" style="width:100%;" data-options="panelHeight:'auto',label:'<spring:message code="resc.label.prsvTerm"/>:',required:true,labelWidth:120">
 		                <c:forEach items="${prsvTermList}" var="prsvTerm">
-		                	<option value="${prsvTerm.rescKeyValue}">${prsvTerm.rescKeyValue}:${prsvTerm.rescKeyDesc}</option>
+		                	<option value="${prsvTerm.subCode}">${prsvTerm.subCode}:${prsvTerm.rescKeyDesc}</option>
 		                </c:forEach>
 		                </select>		 
 		            </div>
 	            </td>
 	        </tr>
 	        <tr>
-	        	<td style="width:100%;padding:0px 10px;" colspan="2">		        	
+	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
 		                <input class="easyui-textbox" id="apprMstId" name="apprMstId" style="width:100%" data-options="label:'<spring:message code="resc.label.apprMasterId"/>:',required:true,labelWidth:120">
 		            </div>
 	            </td>	           
+	            <td style="width:50%;padding:0px 10px;">		        	
+		            <div style="margin-bottom:10px">
+		                <select class="easyui-combobox" id="apprItemId" name="apprItemId" style="width:100%;" data-options="panelHeight:'auto',label:'<spring:message code="resc.label.apprType"/>:',required:true,labelWidth:120">
+		                <c:forEach items="${apprItemList}" var="apprItem">
+		                	<option value="${apprItem.apprItemId}">${apprItem.apprItemId}:${apprItem.apprItemName}</option>
+		                </c:forEach>
+		                </select>
+		            </div>
+	            </td>
 	        </tr>
 	        <c:forEach items="${langList}" var="lang">	        	       
 	        <tr>	        	

@@ -24,7 +24,7 @@ public class Nw012m implements Serializable {
 	private String coId; 
 	private String apprMstId; 
 	private String crtDate; 
-	private long apprLevel; 
+	private int apprLevel; 
 	private String clsDate; 
 
 	public void setCoId(String coId) { 
@@ -45,10 +45,10 @@ public class Nw012m implements Serializable {
 	public String getCrtDate() { 
 		return this.crtDate; 
 	} 
-	public void setApprLevel(long apprLevel) { 
+	public void setApprLevel(int apprLevel) { 
 		this.apprLevel = apprLevel; 
 	} 
-	public long getApprLevel() { 
+	public int getApprLevel() { 
 		return this.apprLevel; 
 	} 
 	public void setClsDate(String clsDate) { 

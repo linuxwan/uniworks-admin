@@ -40,6 +40,15 @@ public class Nw015mServiceImpl implements Nw015mService {
 	public Nw015m getNw015m(Map<String, Object> map) { 
 		return nw015mMapper.selectByPrimaryKey(map); 
 	} 
+	/**
+	 * Sequence No 가져오기
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public int getSeqNo(java.util.Map<String,Object> map) {
+		return nw015mMapper.selectSeqNo(map);
+	}
 	/** 
 	 * 등록한다. 
 	 * 
