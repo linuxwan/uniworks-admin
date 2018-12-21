@@ -172,7 +172,7 @@ public class ApprovalTypeMgr {
 		map.put("lang", userSession.getLang());
 		map.put("crntDate", DateUtil.getCurrentDateToString());
 		map.put("orderBy", "apprMstId");
-		List<ApprovalMasterInfo> apprList = apprMstService.getApprMasterListAll(map);
+		List<ApprovalMasterInfo> apprList = apprMstService.getApprMasterList(map);
 		
 		mav.addObject("coId", coId);
 		mav.addObject("apprItemId", apprItemId);
@@ -203,7 +203,7 @@ public class ApprovalTypeMgr {
 		map.put("crntDate", DateUtil.getCurrentDateToString());
 		map.put("orderBy", "apprMstId");
 		
-		List<ApprovalMasterInfo> apprList = apprMstService.getApprMasterListAll(map);
+		List<ApprovalMasterInfo> apprList = apprMstService.getApprMasterList(map);
 		
 		map.put("apprItemId", apprItemId);
 		map.put("apprMstId", apprMstId);

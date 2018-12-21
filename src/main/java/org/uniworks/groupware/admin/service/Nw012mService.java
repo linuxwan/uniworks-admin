@@ -23,6 +23,13 @@ public interface Nw012mService {
 	 * @return 
 	 */ 
 	Nw012m getNw012m(java.util.Map<String,Object> map); 
+	
+	/**
+	 * 현재 결재차수 정보를 가져온다.
+	 * @param map
+	 * @return
+	 */
+	Nw012m getByCurrentApprLevel(java.util.Map<String,Object> map);
 
 	/** 
 	 * 등록한다. 

@@ -25,12 +25,11 @@ public interface ApprovalMasterMapper {
 	List<ApprovalMasterInfo> selectApprMasterList(Map<String, Object> map);
 	
 	/**
-	 * 결재 마스터 목록을 가져온다.(전체)
+	 * 결재 마스터 정보를 가져온다.
 	 * @param map
 	 * @return
 	 */
-	List<ApprovalMasterInfo> selectApprMasterListAll(Map<String, Object> map);
-	
+	ApprovalMasterInfo selectApprMasterInfo(Map<String, Object> map);
 	/**
 	 * 결재 유형 목록을 가져온다.
 	 * @param map
@@ -51,4 +50,11 @@ public interface ApprovalMasterMapper {
 	 * @return
 	 */
 	List<ApprTypeByApprInfo> selectApprTypeByApprInfo(Map<String, Object> map);
+	
+	/**
+	 * 결재 마스터를 기반으로 생성된 결재문서가 있는지 체크해서 결재문서 개수를 반환
+	 * @param map
+	 * @return
+	 */
+	int selectApprovalDocCount(Map<String, Object> map);
 }

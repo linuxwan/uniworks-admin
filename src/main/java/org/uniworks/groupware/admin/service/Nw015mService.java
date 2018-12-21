@@ -49,4 +49,11 @@ public interface Nw015mService {
 	 * @return 
 	 */ 
 	int deleteNw015m(java.util.Map<String,Object> map); 
+	
+	/**
+	 * 결재마스터ID로 삭제
+	 * @param map
+	 * @return
+	 */
+	int deleteByApprMstId(java.util.Map<String,Object> map);
 } 

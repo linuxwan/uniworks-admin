@@ -5,6 +5,7 @@
  */
 package org.uniworks.groupware.admin.controller.mvc;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,14 +22,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
+import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.common.util.SecurityUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
+import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.Hr001m;
+import org.uniworks.groupware.admin.domain.Nw011m;
 import org.uniworks.groupware.admin.domain.Nw013m;
 import org.uniworks.groupware.admin.service.ApprovalMasterService;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.Hr001mService;
+import org.uniworks.groupware.admin.service.Nw010mService;
+import org.uniworks.groupware.admin.service.Nw011mService;
+import org.uniworks.groupware.admin.service.Nw012mService;
+import org.uniworks.groupware.admin.service.Nw015mService;
 
 /**
  * @author Park Chung Wan
@@ -42,6 +50,10 @@ public class ApprMasterMgrController {
 	@Autowired CommonService commonService;
 	@Autowired Hr001mService hr001mService;
 	@Autowired ApprovalMasterService apprMstService;
+	@Autowired Nw010mService nw010mService;
+	@Autowired Nw011mService nw011mService;
+	@Autowired Nw012mService nw012mService;
+	@Autowired Nw015mService nw015mService;
 	
 	/**
 	 * 결재 마스트 목록
@@ -107,6 +119,61 @@ public class ApprMasterMgrController {
 		mav.addObject("prsvTermList", prsvTermList);
 		mav.addObject("cprtnTypeList", cprtnTypeList);
 		mav.addObject("apprItemList", apprItemList);
+		
+		return mav;
+	}
+	
+	/**
+	 * 결재 마스터 수정 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/apprMasterMgr/apprMasterModifyForm", method = RequestMethod.GET)
+	public ModelAndView apprMasterModifyForm(HttpServletRequest request, HttpServletResponse response) {
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String apprMstId = StringUtil.null2void(request.getParameter("apprMstId"));
+		ModelAndView mav = new ModelAndView("apprMaster/appr_master_modify_form_01");
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		
+		Map<String, Object> tmpMap = new HashMap<String, Object>();
+		tmpMap.put("coId", coId);
+		tmpMap.put("apprMstId", apprMstId);
+		tmpMap.put("crntDate", DateUtil.getCurrentDateToString());
+		
+		ApprovalMasterInfo apprMstInfo = apprMstService.getApprMasterInfo(tmpMap);		
+		
+		//지원 언어 정보를 일반코드에서 가져온다. MAJ_CODE : CD001
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("lang", userSession.getLang());
+		map.put("coId", coId);
+		map.put("majCode", "CD001"); //지원언어가 저장되어져 있는 주코드 CD001
+		map.put("orderBy", "rescKeyValue");	//코드 정렬 방법 셋팅
+		List<CommonCode> langList = commonService.getCommonSubCodeList(map);
+		
+		ArrayList<Nw011m> arrList = new ArrayList<Nw011m>();
+		for (CommonCode commonCode : langList) {
+			tmpMap.put("locale", commonCode.getRescKeyValue());
+			
+			Nw011m nw011m = nw011mService.getNw011m(tmpMap);			
+			arrList.add(nw011m);
+		}
+		
+		map.put("majCode",  "CD008"); //문서 유효기간을 코드성 정보에서 가져온다.
+		map.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
+		List<CommonCode> prsvTermList = commonService.getCommonSubCodeList(map);
+		
+		map.put("majCode", "CD013");	//협조결재 유형
+		List<CommonCode> cprtnTypeList = commonService.getCommonSubCodeList(map);
+		
+		List<Nw013m> apprItemList = apprMstService.getApprTypeList(map);
+						
+		mav.addObject("prsvTermList", prsvTermList);
+		mav.addObject("cprtnTypeList", cprtnTypeList);
+		mav.addObject("apprItemList", apprItemList);
+		mav.addObject("apprMstInfo", apprMstInfo);
+		mav.addObject("nw011mList", arrList);		
 		
 		return mav;
 	}

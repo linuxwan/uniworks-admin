@@ -40,6 +40,15 @@ public class Nw012mServiceImpl implements Nw012mService {
 	public Nw012m getNw012m(Map<String, Object> map) { 
 		return nw012mMapper.selectByPrimaryKey(map); 
 	} 
+	/**
+	 * 현재 결재차수 정보를 가져온다.
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public Nw012m getByCurrentApprLevel(java.util.Map<String,Object> map) {
+		return nw012mMapper.selectByCurrentApprLevel(map);
+	}
 	/** 
 	 * 등록한다. 
 	 * 

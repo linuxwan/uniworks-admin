@@ -52,4 +52,10 @@ public interface Nw015mMapper {
 	 * @return 
 	 */ 
 	int deleteByPrimaryKey(Map<String, Object> map); 
+	/**
+	 * 결재마스터ID로 결재유형 정보를 삭제한다.
+	 * @param map
+	 * @return
+	 */
+	int deleteByApprMstId(Map<String, Object> map);
 } 

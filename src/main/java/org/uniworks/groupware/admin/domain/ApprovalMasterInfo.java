@@ -19,13 +19,13 @@ import org.pojomatic.annotations.AutoProperty;
  * ApprovalMaster.java 2012. 2. 17.
  */
 @XmlRootElement(name = "ApprovalMasterInfo") 
-@XmlType(propOrder = {"coId", "apprMstId", "apprType", "apprDesc", "rcptIndc", "rfncIndc", "cprtnIndc", "cprtnType", "atndIndc", "crcltnIndc", "dcsnRuleIndc", "crtId", "createDate", "chngId", "chngDate", "basePrsvTerm", "apprLevel"}) 
+@XmlType(propOrder = {"coId", "apprMstId", "apprTmplType", "apprDesc", "rcptIndc", "rfncIndc", "cprtnIndc", "cprtnType", "atndIndc", "crcltnIndc", "dcsnRuleIndc", "crtId", "createDate", "chngId", "chngDate", "basePrsvTerm", "basePrsvTermDesc", "apprLevel"}) 
 @AutoProperty 
 @SuppressWarnings("serial")
 public class ApprovalMasterInfo implements Serializable {
 	private String coId;	//회사구분
 	private String apprMstId;	//결재 Master ID
-	private String apprType;	//결재양식유형
+	private String apprTmplType;	//결재양식유형
 	private String apprDesc;	//결재명칭
 	private String rcptIndc;	//수신처유무
 	private String rfncIndc;	//참조처유무
@@ -38,9 +38,9 @@ public class ApprovalMasterInfo implements Serializable {
 	private Date createDate;	//생성일자
 	private String chngId;	//변경 ID
 	private Date chngDate;	//변경일자
-	private String basePrsvTerm;	//기본 보존연한	
+	private String basePrsvTerm;	//기본 보존연한	코드
+	private String basePrsvTermDesc;	//기본 보존연한 명칭
 	private int apprLevel;	//결재차수정보(ApprovalLevel Class)
-	
 	
 	public String getCoId() {
 		return coId;
@@ -54,11 +54,11 @@ public class ApprovalMasterInfo implements Serializable {
 	public void setApprMstId(String apprMstId) {
 		this.apprMstId = apprMstId;
 	}
-	public String getApprType() {
-		return apprType;
+	public String getApprTmplType() {
+		return apprTmplType;
 	}
-	public void setApprType(String apprType) {
-		this.apprType = apprType;
+	public void setApprTmplType(String apprType) {
+		this.apprTmplType = apprType;
 	}
 	public String getApprDesc() {
 		return apprDesc;
@@ -143,6 +143,12 @@ public class ApprovalMasterInfo implements Serializable {
 	}
 	public void setBasePrsvTerm(String basePrsvTerm) {
 		this.basePrsvTerm = basePrsvTerm;
+	}	
+	public String getBasePrsvTermDesc() {
+		return basePrsvTermDesc;
+	}
+	public void setBasePrsvTermDesc(String basePrsvTermDesc) {
+		this.basePrsvTermDesc = basePrsvTermDesc;
 	}
 	@Override 
 	public boolean equals(Object o) {  

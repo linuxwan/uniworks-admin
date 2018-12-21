@@ -30,31 +30,37 @@ public interface ApprovalMasterService {
 	 */
 	List<ApprovalMasterInfo> getApprMasterList(Map<String, Object> map);
 	/**
-	 * 결재 마스터 목록을 가져온다.(전체)
+	 * 결재 마스터 정보를 가져온다.
 	 * @param map
 	 * @return
 	 */
-	List<ApprovalMasterInfo> getApprMasterListAll(Map<String, Object> map);
+	ApprovalMasterInfo getApprMasterInfo(Map<String, Object> map);
 	/**
 	 * 결재 마스터 정보를 등록한다.
 	 * @param nw010m
 	 * @param nw011mList
 	 * @return
 	 */
-	int addApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m, Nw015m nw015m);
+	int addApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m);
 	/**
 	 * 결재 마스터 정보를 수정한다.
 	 * @param nw010m
 	 * @param nw011mList
 	 * @return
 	 */
-	int modifyApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m, Nw015m nw015m);
+	int modifyApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m);
 	/**
 	 * 결재 마스터 정보를 삭제한다.
 	 * @param map
 	 * @return
 	 */
 	int deleteApprovalMasterInfo(Map<String, Object> map);
+	/**
+	 * 결재 마스터를 기반으로 생성된 결재문서가 있는지 체크해서 결재문서 개수를 반환
+	 * @param map
+	 * @return
+	 */
+	int getApprovalDocCount(Map<String, Object> map);
 	/**
 	 * 결재 유형 목록을 가져온다.
 	 * @param map

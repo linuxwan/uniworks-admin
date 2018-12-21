@@ -79,4 +79,15 @@ public class Nw015mServiceImpl implements Nw015mService {
 	public int deleteNw015m(Map<String, Object> map) { 
 		return nw015mMapper.deleteByPrimaryKey(map); 
 	} 
+	
+	/**
+	 * 결재마스터ID로 삭제
+	 * @param map
+	 * @return
+	 */
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public int deleteByApprMstId(java.util.Map<String,Object> map) {
+		return nw015mMapper.deleteByApprMstId(map);
+	}
 } 

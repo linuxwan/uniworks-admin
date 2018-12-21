@@ -57,16 +57,16 @@ public class ApprovalMasterServiceImpl implements ApprovalMasterService {
 	@Override
 	public List<ApprovalMasterInfo> getApprMasterList(Map<String, Object> map) {		
 		return apprMaster.selectApprMasterList(map);
-	}
-
+	}	
+	
 	/**
-	 * 결재 마스터 목록을 가져온다.(전체)
+	 * 결재 마스터 정보를 가져온다.
 	 * @param map
 	 * @return
 	 */
 	@Override
-	public List<ApprovalMasterInfo> getApprMasterListAll(Map<String, Object> map) {
-		return apprMaster.selectApprMasterListAll(map);
+	public ApprovalMasterInfo getApprMasterInfo(Map<String, Object> map) {
+		return apprMaster.selectApprMasterInfo(map);
 	}
 	
 	/**
@@ -77,7 +77,7 @@ public class ApprovalMasterServiceImpl implements ApprovalMasterService {
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED) 
-	public int addApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m, Nw015m nw015m) {
+	public int addApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m) {
 		int cnt = 0;
 		
 		if (nw010m == null || nw011mList.size() < 1 || nw012m == null) return cnt;
@@ -93,16 +93,7 @@ public class ApprovalMasterServiceImpl implements ApprovalMasterService {
 				
 		//결재 마스터 정보의 결재차수 정보를 Insert 한다.
 		cnt = nw012mMapper.insert(nw012m);
-		
-		//결재 유형 시퀀스 번호를 가져온다.
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("coId", nw015m.getCoId());
-		map.put("apprItemId", nw015m.getApprItemId());
-		int seqNo = nw015mMapper.selectSeqNo(map);
-		nw015m.setSeqNo(seqNo);
-		//결재 유형 정보를 Insert 한다.
-		cnt = nw015mMapper.insert(nw015m);
-		
+						
 		return cnt;
 	}
 	
@@ -114,7 +105,7 @@ public class ApprovalMasterServiceImpl implements ApprovalMasterService {
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED) 
-	public int modifyApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m, Nw015m nw015m) {
+	public int modifyApprovalMasterInfo(Nw010m nw010m, List<Nw011m> nw011mList, Nw012m nw012m) {
 		int cnt = 0;
 		
 		if (nw010m == null || nw011mList.size() < 1 || nw012m == null) return cnt;
@@ -143,12 +134,17 @@ public class ApprovalMasterServiceImpl implements ApprovalMasterService {
 		Nw012m tempNw012m = nw012mMapper.selectByCurrentApprLevel(map);
 		//현재 등록된 결재 차수가 있을 경우, 기존 결재 차수(APPR_LEVEL)가 다를 경우 정보를 업데이트 한다. (CLS_DATE를 99991231에서 현재 일자로)
 		if (tempNw012m != null && tempNw012m.getApprLevel() != nw012m.getApprLevel()) {
-			tempNw012m.setClsDate(crntDate);
-			cnt = nw012mMapper.updateByPrimaryKey(tempNw012m);
-			//결재 마스터 정보의 결재차수 정보를 Insert 한다.
-			cnt = nw012mMapper.insert(nw012m);
+			//최근 결재차수 정보를 가져와서 시작일자가 현재일자와 다를 경우
+			if (!tempNw012m.getCrtDate().equalsIgnoreCase(crntDate)) {
+				tempNw012m.setClsDate(DateUtil.getCurrentDateToString(-1));
+				cnt = nw012mMapper.updateByPrimaryKey(tempNw012m);
+				//결재 마스터 정보의 결재차수 정보를 Insert 한다.
+				cnt = nw012mMapper.insert(nw012m);
+			} else { //최근 결재차수 정보의 시작일자가 현재일자와 동일할 경우 Update
+				cnt = nw012mMapper.updateByPrimaryKey(nw012m);
+			}
 		}		
-		
+			
 		return cnt;
 	}
 	
@@ -162,14 +158,28 @@ public class ApprovalMasterServiceImpl implements ApprovalMasterService {
 	public int deleteApprovalMasterInfo(Map<String, Object> map) {
 		int cnt = 0;
 		
+		//결재 유형 정보 삭제
+		cnt = nw015mMapper.deleteByApprMstId(map);
+		//결재 마스터의 결재 차수 정보 삭제
 		cnt = nw012mMapper.deleteByPrimaryKey(map);
-		
+		//결재 마스터 다국어 명칭 삭제
 		cnt = nw011mMapper.deleteByPrimaryKey(map);
-		
+		//결재 마스터 삭제
 		cnt = nw010mMapper.deleteByPrimaryKey(map);
 		
 		return cnt;
 	}
+	
+	/**
+	 * 결재 마스터를 기반으로 생성된 결재문서가 있는지 체크해서 결재문서 개수를 반환
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public int getApprovalDocCount(Map<String, Object> map) {
+		return apprMaster.selectApprovalDocCount(map);
+	}
+	
 	/**
 	 * 결재 유형 목록을 가져온다.
 	 * @param map

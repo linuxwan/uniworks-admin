@@ -71,7 +71,8 @@
     					atndIndc: entry["atndIndc"],
     					crcltnIndc: entry["crcltnIndc"],
     					apprLevel: entry["apprLevel"],
-    					basePrsvTerm: entry["basePrsvTerm"],
+    					basePrsvTermDesc: entry["basePrsvTermDesc"],
+    					dcsnRuleIndc: entry["dcsnRuleIndc"]
     				});
     			});
     			
@@ -150,16 +151,16 @@
 			        <thead>
 			            <tr>
 			            	<th data-options="field:'coId',halign:'center',align:'center',width:'5%'"><spring:message code="resc.label.coId"/></th>
-			                <th data-options="field:'apprMstId',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.apprMasterId"/></th>
-			                <th data-options="field:'apprType',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.apprType"/></th>
+			                <th data-options="field:'apprMstId',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.apprMasterId"/></th>			                
 			                <th data-options="field:'apprDesc',halign:'center',align:'left',width:'18%'"><spring:message code="resc.label.apprDesc"/></th>
 			                <th data-options="field:'rcptIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.rcptIndc"/></th>
 			                <th data-options="field:'rfncIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.rfncIndc"/></th>
 			                <th data-options="field:'cprtnIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.cprtnIndc"/></th>
 			                <th data-options="field:'atndIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.atndIndc"/></th>
-			                <th data-options="field:'crcltnIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.crcltnIndc"/></th>			                
-			                <th data-options="field:'apprLevel',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.apprLevel"/></th>
-			                <th data-options="field:'basePrsvTerm',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.prsvTerm"/></th>
+			                <th data-options="field:'crcltnIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.crcltnIndc"/></th>			                			                
+			                <th data-options="field:'dcsnRuleIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.regulation"/></th>
+			                <th data-options="field:'basePrsvTermDesc',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.prsvTerm"/></th>			            
+			                <th data-options="field:'apprLevel',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.apprLevel"/></th>    
 			            </tr>
 			        </thead>
 		    	</table>    	
@@ -184,13 +185,17 @@
 			    	
 			    	if (rowData == null) {
 			    		var title = '<spring:message code="resc.label.confirm"/>';
-			    		var msg = '<spring:message code="resc.msg.noSelectEmp"/>';
+			    		var msg = '<spring:message code="resc.msg.noSelectApprMstId"/>';
 			    		alertMsg(title, msg);
 						return;
 			    	}
 			    	
-			    	var url = "<c:out value="${contextPath}"/>/admin/userModifyForm?coId=" + coId + "&userId=" + rowData.userId;
-			    	$.popupWindow(url, { name: 'modifyEmpPopup', height: 250, width: 750 });	
+			    	var url = "<c:out value="${contextPath}"/>/admin/apprMasterMgr/apprMasterModifyForm?coId=" + coId + "&apprMstId=" + rowData.apprMstId;
+			    	
+			    	var cnt = ${fn:length(langList)};		
+					var formHeight = 340 + (30 * cnt);
+					
+			    	$.popupWindow(url, { name: 'modifyApprMstForm', height: formHeight, width: 750 });	
 			    }
 			    
 			    function removeit() {
@@ -199,7 +204,7 @@
 			    	
 			    	if (rowData == null) {
 			    		var title = '<spring:message code="resc.label.confirm"/>';
-			    		var msg = '<spring:message code="resc.msg.noSelectEmp"/>';
+			    		var msg = '<spring:message code="resc.msg.noSelectApprMstId"/>';
 			    		alertMsg(title, msg);
 						return;
 			    	}
@@ -207,16 +212,16 @@
 			    	msg = '<spring:message code="resc.msg.confirmDel"/>';    		
 		    		$.messager.confirm(title, msg, function(r) {
 		    			if (r) {
-		    				deleteUserId();
+		    				deleteApprMstId();
 		    			}
 		    		});
 			    }
 			    
-			    function deleteUserId() {
+			    function deleteApprMstId() {
 			    	var coId = $("#selCoId").combobox('getValue');	
 			    	var rowData = $("#apprMstList").datagrid('getSelected');			    				    	
 			    
-					var strUrl = "<c:out value="${contextPath}"/>/rest/user/delete/coId/" + coId + "/userId/" + rowData.userId;
+					var strUrl = "<c:out value="${contextPath}"/>/rest/approvalMaster/delete/coId/" + coId + "/apprMstId/" + rowData.apprMstId;
 			    	
 			    	$.ajax({
 						type: 'DELETE',
@@ -231,7 +236,7 @@
 						success : function(msg) {
 							var title = '<spring:message code="resc.label.confirm"/>';		    			
 							$.messager.alert(title, msg, "info",  function(){
-								refreshUserList();
+								refreshApprMstList();
 							});						
 						},
 						error : function(xhr, status, error) {
@@ -240,7 +245,7 @@
 		    		});
 			    }
 			    
-			    function refreshUserList() {
+			    function refreshApprMstList() {
 			    	var coId = $("#selCoId").combobox('getValue');			    	
 			    	var searchKind = "apprMstId";
 					var searchWord = "0";

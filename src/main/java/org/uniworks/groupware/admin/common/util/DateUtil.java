@@ -379,6 +379,38 @@ public class DateUtil {
 	}
 	
 	/**
+	 * 현재 시스템 일자에서 특정 일자 만큼 더하거나 뺀 날짜를 String 타입으로 가져온다. (YYYYMMDD)
+	 * @param d
+	 * @return
+	 */
+	public static String getCurrentDateToString(int days) {
+		LocalDate dt = LocalDate.now();
+		if (days > 0) {
+			dt = dt.plusDays(days);
+		} else {
+			dt = dt.minusDays(Math.abs(days));
+		}
+		int year = dt.getYear();
+		int month = dt.getMonth().getValue();
+		int day = dt.getDayOfMonth();
+		String crntDate = String.valueOf(year);
+		
+		if (month < 10) {
+			crntDate += "0" + month;
+		} else {
+			crntDate += month;
+		}
+		
+		if (day < 10) {
+			crntDate += "0" + day;
+		} else {
+			crntDate += day;
+		}
+		
+		return crntDate;
+	}
+	
+	/**
 	 * 특정 일자 만큼 더하거나 뺀다.
 	 * @param field  년: Calendar.YEAR, 월: Calendar.MONTH, 일: Calendar.DAY_OF_MONTH
 	 * @param amount 더하거나 빼고자 하는 
