@@ -12,9 +12,28 @@
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/locale/easyui-lang-${userSession.lang}.js"></script>
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/js/common.js"></script>
     <script type="text/javascript">
-    $(function(){
-    	var crntDate = getCurrentDate('-');
-    	$('#createDate').textbox('setValue', crntDate);
+    $(function(){    	    	    	
+    	$('#cprtnIndc').combobox({
+    		onChange(newValue, oldValue) {
+    			var cprtnType = $("#cprtnType").combobox('getValue');
+    			
+    			if (newValue == "Y") {    				
+    				if (cprtnType == "" || cprtnType == null) {
+    					$("#cprtnType").combobox('options').required = true;
+    					$("#cprtnType").combobox('textbox').validatebox('options').required = true;
+    					$("#cprtnType").combobox('validate');
+	    				var title = '<spring:message code="resc.label.confirm"/>';		
+	    				var msg = '<spring:message code="resc.msg.selectCprtnType"/>';
+	    				$.messager.alert(title, msg, "info");
+    				}
+    			} else if (newValue == "N") {
+    				$("#cprtnType").combobox('options').required = false;
+					$("#cprtnType").combobox('textbox').validatebox('options').required = false;
+					$("#cprtnType").combobox('validate');
+    			}
+    		}
+    	});    	        	
+    	
     	
 	    $('#btnSave').bind('click', function(){
 	    	if($('#apprTypeAddForm').form('enableValidation').form('validate')) {
@@ -47,7 +66,7 @@
 	    	}
 		});
 	    
-	    var coId = window.opener.$('#coId').combobox('getValue'); 
+	    var coId = window.opener.$('#selCoId').combobox('getValue'); 
 	    $('#coId').textbox('setValue', coId);
 	    $('#coId').textbox('readonly', true);	    
     });                   
