@@ -144,7 +144,7 @@
     	var coId = $("#coId").combobox('getValue');
 		var url = "<c:out value="${contextPath}"/>/admin/codeMgr/masterCodeAddForm?coId=" + coId;
 		var cnt = ${fn:length(langList)};		
-		var formHeight = 200 + (30 * cnt);
+		var formHeight = 230 + (30 * cnt);
 		$.popupWindow(url, { name: 'addMasterCode', height: formHeight, width: 800 });
     }
     
@@ -165,7 +165,7 @@
     	var majCode = rowData.majCode;
 		var url = "<c:out value="${contextPath}"/>/admin/codeMgr/masterCodeModifyForm?coId=" + coId + "&majCode=" + majCode;
 		var cnt = ${fn:length(langList)};		
-		var formHeight = 200 + (30 * cnt);
+		var formHeight = 230 + (30 * cnt);
 		$.popupWindow(url, { name: 'modifyMasterCode', height: formHeight, width: 800 });
     }
     
@@ -251,9 +251,10 @@
 			                <th data-options="field:'coId',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.coId"/></th>
 			                <th data-options="field:'majCode',halign:'center',align:'left',width:'10%'"><spring:message code="resc.label.majCode"/></th>
 			                <th data-options="field:'rescKey',halign:'center',align:'left',width:'10%'"><spring:message code="resc.label.rescKey"/></th>
-			                <th data-options="field:'majCodeName',halign:'center',align:'left',width:'30%'"><spring:message code="resc.label.majCodeName"/></th>
-			                <th data-options="field:'majCodeDesc',halign:'center',align:'left',width:'30%'"><spring:message code="resc.label.majCodeDesc"/></th>
+			                <th data-options="field:'majCodeName',halign:'center',align:'left',width:'23%'"><spring:message code="resc.label.majCodeName"/></th>
+			                <th data-options="field:'majCodeDesc',halign:'center',align:'left',width:'23%'"><spring:message code="resc.label.majCodeDesc"/></th>
 			                <th data-options="field:'useIndc',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.useIndc"/></th>
+			                <th data-options="field:'prntMajCode',halign:'center',align:'center',width:'14%'"><spring:message code="resc.label.prntMajCode"/></th>
 			            </tr>
 			        </thead>
 			    </table>    	

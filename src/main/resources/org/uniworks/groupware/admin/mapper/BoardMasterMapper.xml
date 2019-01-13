@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uniworks.groupware.admin.mapper.BoardMasterMapper">
+	<resultMap id="BoardMstResultMap" type="org.uniworks.groupware.admin.domain.BoardMasterInfo">
+		<result property="coId" jdbcType="VARCHAR" column="CO_ID"/>
+		<result property="boardId" jdbcType="VARCHAR" column="BOARD_ID"/>
+		<result property="boardType" jdbcType="VARCHAR" column="BOARD_TYPE"/>
+		<result property="boardTypeName" jdbcType="VARCHAR" column="BOARD_TYPE_NAME"/>
+		<result property="boardName" jdbcType="VARCHAR" column="BOARD_NAME"/>
+		<result property="rplyIndc" jdbcType="VARCHAR" column="RPLY_INDC"/>
+		<result property="cmntIndc" jdbcType="VARCHAR" column="CMNT_INDC"/>
+		<result property="atchIndc" jdbcType="VARCHAR" column="ATCH_INDC"/>
+		<result property="evalIndc" jdbcType="VARCHAR" column="EVAL_INDC"/>
+		<result property="validTermIndc" jdbcType="VARCHAR" column="VALID_TERM_INDC"/>
+		<result property="validTermCode" jdbcType="VARCHAR" column="VALID_TERM_CODE"/>
+		<result property="anonyIndc" jdbcType="VARCHAR" column="ANONY_INDC"/>
+		<result property="anceIndc" jdbcType="VARCHAR" column="ANCE_INDC"/>
+		<result property="apprIndc" jdbcType="VARCHAR" column="APPR_INDC"/>
+		<result property="typeCode1" jdbcType="VARCHAR" column="TYPE_CODE1"/>
+		<result property="typeCode2" jdbcType="VARCHAR" column="TYPE_CODE2"/>
+		<result property="typeCode3" jdbcType="VARCHAR" column="TYPE_CODE3"/>
+		<result property="typeCode4" jdbcType="VARCHAR" column="TYPE_CODE4"/>
+		<result property="useIndc" jdbcType="VARCHAR" column="USE_INDC"/>
+		<result property="entrOpenIndc" jdbcType="VARCHAR" column="ENTR_OPEN_INDC"/>
+		<result property="crtDate" jdbcType="TIMESTAMP" column="CRT_DATE"/>
+		<result property="crtId" jdbcType="VARCHAR" column="CRT_ID"/>
+		<result property="chngDate" jdbcType="TIMESTAMP" column="CHNG_DATE"/>
+		<result property="chngId" jdbcType="VARCHAR" column="CHNG_ID"/>
+	</resultMap>
+	
+	<!-- 게시판 마스터 목록을 가져온다. -->
+	<select id="selectBoardMasterList" parameterType="java.util.Map" resultMap="BoardMstResultMap">
+		select  A.CO_ID as CO_ID, A.BOARD_ID as BOARD_ID, A.BOARD_TYPE as BOARD_TYPE, D.RESC_KEY_VALUE as BOARD_TYPE_NAME, B.BOARD_NAME as BOARD_NAME, A.RPLY_INDC as RPLY_INDC,  
+				A.CMNT_INDC as CMNT_INDC, A.ATCH_INDC as ATCH_INDC, A.EVAL_INDC as EVAL_INDC, A.VALID_TERM_INDC as VALID_TERM_INDC, A.VALID_TERM_CODE as VALID_TERM_CODE, 
+				A.ANONY_INDC as ANONY_INDC, A.ANCE_INDC as ANCE_INDC, A.APPR_INDC as APPR_INDC, A.TYPE_CODE1 as TYPE_CODE1, 
+				A.TYPE_CODE2 as TYPE_CODE2, A.TYPE_CODE3 as TYPE_CODE3, 
+				A.TYPE_CODE4 as TYPE_CODE4, A.USE_INDC as USE_INDC, A.ENTR_OPEN_INDC as ENTR_OPEN_INDC,
+				A.CRT_DATE as CRT_DATE, A.CRT_ID as CRT_ID, A.CHNG_DATE as CHNG_DATE, A.CHNG_ID as CHNG_ID
+	    from	nw001m A, nw002m B, cm002c C, cm003m D
+	    where	A.BOARD_ID = B.BOARD_ID
+	      and	A.ENTR_OPEN_INDC = 'Y'
+	      <if test="searchKind == 'boardName'">
+	      and	B.BOARD_NAME like #{searchWord,jdbcType=VARCHAR}
+	      </if>
+	      <if test="searchKind == 'boardId'">
+	      and	B.BOARD_ID like #{searchWord,jdbcType=VARCHAR}
+	      </if>
+	      and	B.LOCALE = #{lang,jdbcType=VARCHAR} 	
+	      and   A.CO_ID = C.CO_ID
+      	  and   C.MAJ_CODE = 'CD007'
+      	  and   C.SUB_CODE = A.BOARD_TYPE
+      	  and   C.CO_ID = D.CO_ID
+      	  and   C.RESC_KEY = D.RESC_KEY
+      	  and   D.LOCALE = B.LOCALE		
+      	union
+      	select  A.CO_ID as CO_ID, A.BOARD_ID as BOARD_ID, A.BOARD_TYPE as BOARD_TYPE, D.RESC_KEY_VALUE as BOARD_TYPE_NAME, B.BOARD_NAME as BOARD_NAME, A.RPLY_INDC as RPLY_INDC,  
+				A.CMNT_INDC as CMNT_INDC, A.ATCH_INDC as ATCH_INDC, A.EVAL_INDC as EVAL_INDC, A.VALID_TERM_INDC as VALID_TERM_INDC, A.VALID_TERM_CODE as VALID_TERM_CODE, 
+				A.ANONY_INDC as ANONY_INDC, A.ANCE_INDC as ANCE_INDC, A.APPR_INDC as APPR_INDC, A.TYPE_CODE1 as TYPE_CODE1, 
+				A.TYPE_CODE2 as TYPE_CODE2, A.TYPE_CODE3 as TYPE_CODE3, 
+				A.TYPE_CODE4 as TYPE_CODE4, A.USE_INDC as USE_INDC, A.ENTR_OPEN_INDC as ENTR_OPEN_INDC,
+				A.CRT_DATE as CRT_DATE, A.CRT_ID as CRT_ID, A.CHNG_DATE as CHNG_DATE, A.CHNG_ID as CHNG_ID
+	    from	nw001m A, nw002m B, cm002c C, cm003m D
+	    where	A.BOARD_ID = B.BOARD_ID
+	      and	A.ENTR_OPEN_INDC = 'N'
+	      and	A.BOARD_ID IN (SELECT BOARD_ID FROM nw003m WHERE CO_ID = #{coId,jdbcType=VARCHAR})
+	      <if test="searchKind == 'boardName'">
+	      and	B.BOARD_NAME like #{searchWord,jdbcType=VARCHAR}
+	      </if>
+	      <if test="searchKind == 'boardId'">
+	      and	B.BOARD_ID like #{searchWord,jdbcType=VARCHAR}
+	      </if>
+	      and	B.LOCALE = #{lang,jdbcType=VARCHAR} 
+	      and   A.CO_ID = C.CO_ID
+      	  and   C.MAJ_CODE = 'CD007'
+      	  and   C.SUB_CODE = A.BOARD_TYPE
+      	  and   C.CO_ID = D.CO_ID
+      	  and   C.RESC_KEY = D.RESC_KEY
+      	  and   D.LOCALE = B.LOCALE		
+      	<if test="orderBy == 'boardMstId'">
+		order by CRT_DATE DESC, BOARD_ID  
+		</if>
+		<if test="orderBy == 'boardMstName'">
+		order by CRT_DATE DESC, BOARD_NAME
+		</if>  		
+	</select>
+</mapper>

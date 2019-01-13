@@ -689,14 +689,15 @@ function pointparser(s){
  * @returns
  */
 function parseFormHelper (formId) {
-    var serialized = $("#"+formId).serializeArray();
+    var serialized = $("#"+formId).serializeArray();    
     var s = '';
     var data = {};
+    
     for(s in serialized){
         data[serialized[s]['name']] = serialized[s]['value']
     }
     
-    return JSON.stringify(data);    
+    return JSON.stringify(data);
 }
 
 /***
@@ -731,4 +732,71 @@ function getCurrentDate(indc) {
 	today = yyyy + indc + mm + indc + dd;
 	
 	return today;
+}
+
+/***
+ * Radio 버튼을 체크한다.
+ * @param objName
+ * @param value
+ * @returns
+ */
+function fnCheckedRadioButtonById(id) {
+	//$('#' + id).radiobutton({ checked: true});
+	$('#' + id).radiobutton('check');
+}
+
+/***
+ * Radio 버튼을 Disabled 또는 Enabled로 변경(name 뒤에 Y와 N이 붙는 경우)
+ * @param objName
+ * @param boolValue
+ * @returns
+ */
+function fnDisabledRadioButtonById(name, boolValue) {
+	if (boolValue == true) {
+		//$('#' + name + 'Y').radiobutton({ disabled: true });		
+		//$('#' + name + 'N').radiobutton({ disabled: true });
+		$('#' + name + 'Y').radiobutton('disable');
+		$('#' + name + 'N').radiobutton('disable');
+	} else {
+		//$('#' + name + 'Y').radiobutton({ disabled: false });
+		//$('#' + name + 'N').radiobutton({ disabled: false });
+		$('#' + name + 'Y').radiobutton('enable');
+		$('#' + name + 'N').radiobutton('enable');
+	}
+}
+
+/**
+ * CheckBox를 선택(Checked)
+ * @param id
+ * @returns
+ */
+function fnCheckedCheckBoxById(id) {
+	//$('#' + id).checkbox({ checked: true});
+	$('#' + id).checkbox('check');
+}
+
+/**
+ * CheckBox를 선택(Checked)하지 않는다.
+ * @param id
+ * @returns
+ */
+function fnUnCheckedCheckBoxById(id) {
+	//$('#' + id).checkbox({ checked: false});
+	$('#' + id).checkbox('uncheck');
+}
+
+/***
+ * CheckBox를 Disabled 또는 Enabled로 변경
+ * @param objName
+ * @param boolValue
+ * @returns
+ */
+function fnDisabledCheckBoxById(id, boolValue) {
+	if (boolValue == true) {
+		//$('#' + id).checkbox({ disabled: true });
+		$('#' + id).checkbox('disable');
+	} else {
+		//$('#' + id).checkbox({ disabled: false });
+		$('#' + id).checkbox('enable');
+	}
 }

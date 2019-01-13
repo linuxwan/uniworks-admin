@@ -98,6 +98,15 @@
 	            </td>	            
 	        </tr>
 	        </c:forEach>
+	        <tr>	        	
+	            <td style="width:50%;padding:0px 10px;">
+		            <div style="margin-bottom:10px">
+		                <input class="easyui-textbox" id="prntMajCode" name="prntMajCode" style="width:100%" data-options="label:'<spring:message code="resc.label.prntMajCode"/>:',labelWidth:120">
+		            </div>
+	            </td>
+	            <td style="width:50%;padding:0px 10px;">		        			            
+	            </td>	            
+	        </tr>
         </table>
     </form>
     	<div style="text-align:center;padding:5px 0">

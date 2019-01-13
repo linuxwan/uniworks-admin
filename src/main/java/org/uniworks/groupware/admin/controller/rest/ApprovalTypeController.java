@@ -223,7 +223,7 @@ public class ApprovalTypeController {
 			arrList.add(nw014m);
 		}
 		
-		int cnt = apprMstService.updateApprovalTypeInfo(nw013m, arrList);
+		int cnt = apprMstService.modifyApprovalTypeInfo(nw013m, arrList);
 		if (cnt > 0) {
 			result = messageSource.getMessage("resc.msg.modifyOk", null, response.getLocale());			
 		} else {

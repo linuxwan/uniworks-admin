@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Nw003mMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Nw003m"> 
+		<result column="BOARD_ID" jdbcType="VARCHAR" property="boardId" /> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="CRT_DATE" jdbcType="TIMESTAMP" property="crtDate" /> 
+		<result column="CLS_DATE" jdbcType="TIMESTAMP" property="clsDate" /> 
+	</resultMap> 
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  BOARD_ID, CO_ID, CRT_DATE, CLS_DATE
+		from   nw003m
+		where  BOARD_ID	=	#{boardId,jdbcType=VARCHAR} 		   
+	</select> 
+ 
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  BOARD_ID, CO_ID, CRT_DATE, CLS_DATE
+		from   nw003m
+		where  BOARD_ID	=	#{boardId,jdbcType=VARCHAR} 
+		  and  CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  <if test="crtDate != null"> 
+		  and  CRT_DATE	=	#{crtDate,jdbcType=TIMESTAMP}
+		  </if> 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw003m"> 
+		insert	into nw003m(BOARD_ID, CO_ID, CRT_DATE, CLS_DATE) 
+		values (#{boardId,jdbcType=VARCHAR},#{coId,jdbcType=VARCHAR},#{crtDate,jdbcType=TIMESTAMP},#{clsDate,jdbcType=TIMESTAMP}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw003m"> 
+		update	nw003m 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="clsDate != null">CLS_DATE= #{clsDate,jdbcType=TIMESTAMP},</if> 
+		</trim> 
+		where	BOARD_ID	=	#{boardId,jdbcType=VARCHAR} 
+		  and	CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  <if test="crtDate != null"> 
+		  and	CRT_DATE	=	#{crtDate,jdbcType=TIMESTAMP}
+		  </if> 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from nw003m 
+		where	BOARD_ID	=	#{boardId,jdbcType=VARCHAR} 
+		  and	CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  <if test="crtDate != null">  
+		  and	CRT_DATE	=	#{crtDate,jdbcType=TIMESTAMP}
+		  </if> 
+	</delete> 
+	
+	<!-- 삭제 --> 
+	<delete id="deleteByBoardId" parameterType="java.util.Map"> 
+		delete	from nw003m 
+		where	BOARD_ID	=	#{boardId,jdbcType=VARCHAR} 
+	</delete> 
+</mapper>

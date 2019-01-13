@@ -5,50 +5,41 @@
  */ 
 package org.uniworks.groupware.admin.mapper; 
 
-import java.util.List;
-import java.util.Map;
+import java.util.List; 
+import java.util.Map; 
 
-import org.uniworks.groupware.admin.domain.Hr001m; 
+import org.uniworks.groupware.admin.domain.Nw002m; 
 
 
 /** 
  * @author Park Chungwan 
- * 관련 테이블 : Hr001m
+ * 관련 테이블 : Nw002m
  */ 
-public interface Hr001mMapper { 
+public interface Nw002mMapper { 
 	/** 
 	 * 목록 가져오기 
 	 * @param map 
 	 * @return 
 	 */ 
-	List<Hr001m> select(Map<String, Object> map); 
-	
-	/**
-	 * 그룹사 목록 가져오기
-	 * @param map
-	 * @return
-	 */
-	List<Hr001m> selectGroupCompanyListAll(Map<String, Object> map);
-	
+	List<Nw002m> select(Map<String, Object> map); 
 	/** 
 	 * 정보 가져오기 
 	 * @param map 
 	 * @return 
 	 */ 
-	Hr001m selectByPrimaryKey(Map<String, Object> map);
-		
+	Nw002m selectByPrimaryKey(Map<String, Object> map); 
 	/** 
 	 * 등록한다 
-	 * @param hr001m 
+	 * @param nw002m 
 	 * @return 
 	 */ 
-	int insert(Hr001m hr001m); 
+	int insert(Nw002m nw002m); 
 	/** 
 	 * 수정한다 
-	 * @param hr001m 
+	 * @param nw002m 
 	 * @return 
 	 */ 
-	int updateByPrimaryKey(Hr001m hr001m); 
+	int updateByPrimaryKey(Nw002m nw002m); 
 	/** 
 	 * 삭제한다 
 	 * @param map 

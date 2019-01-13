@@ -231,7 +231,7 @@ public class ApprovalMasterServiceImpl implements ApprovalMasterService {
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public int updateApprovalTypeInfo(Nw013m nw013m, List<Nw014m> nw014mList) {
+	public int modifyApprovalTypeInfo(Nw013m nw013m, List<Nw014m> nw014mList) {
 		int cnt = 0;
 		
 		if (nw013m == null || nw014mList.size() < 1) return cnt;

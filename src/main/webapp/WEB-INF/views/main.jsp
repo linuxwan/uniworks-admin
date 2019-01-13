@@ -57,9 +57,9 @@
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.oganMgr"/>','/admin/oganMgr')"><spring:message code="resc.menu.oganMgr"/></div>
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.hrMgr"/>', '/admin/hrMgr')"><spring:message code="resc.menu.hrMgr"/></div>
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.userMgr"/>', '/admin/userMgr')"><spring:message code="resc.menu.userMgr"/></div>
-		            <div onclick="javascript:goPage('<spring:message code="resc.menu.apprTypeMgr"/>', '/admin/apprTypeMgr')"><spring:message code="resc.menu.apprTypeMgr"/></div>		            
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.apprMasterMgr"/>', '/admin/apprMasterMgr')"><spring:message code="resc.menu.apprMasterMgr"/></div>
-		            <div onclick="javascript:goPage('new')">게시판 Master 관리</div>
+		            <div onclick="javascript:goPage('<spring:message code="resc.menu.apprTypeMgr"/>', '/admin/apprTypeMgr')"><spring:message code="resc.menu.apprTypeMgr"/></div>		            		            
+		            <div onclick="javascript:goPage('<spring:message code="resc.menu.boardMasterMgr"/>', '/admin/boardMasterMgr')"><spring:message code="resc.menu.boardMasterMgr"/></div>
 		            <div onclick="javascript:goPage('new')">컨텐츠 관리</div>
 		            <div onclick="javascript:goPage('new')">컨텐츠 권한 관리</div>
 		            <div onclick="javascript:goPage('new')">컨텐츠 담당자 관리</div>
@@ -68,7 +68,7 @@
 		    </div>
         </div>
         <div id="content" data-options="region:'center',fit:true,title:'Main Title',iconCls:'icon-ok'" style="width:100%;">
-        	<div data-options="fit:true,border:false,plain:true">
+        	<div data-options="border:false,plain:true">
 				<iframe id="frmMain" name="frmMain" width="100%" src="" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation allow-pointer-lock" seamless="seamless"></iframe>
 			</div>
         </div>

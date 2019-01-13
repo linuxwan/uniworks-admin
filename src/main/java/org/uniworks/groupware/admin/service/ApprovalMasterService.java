@@ -86,7 +86,7 @@ public interface ApprovalMasterService {
 	 * @param nw014mList
 	 * @return
 	 */
-	int updateApprovalTypeInfo(Nw013m nw013m, List<Nw014m> nw014mList);
+	int modifyApprovalTypeInfo(Nw013m nw013m, List<Nw014m> nw014mList);
 	/**
 	 * 결재 유형 정보 삭제
 	 * @param map

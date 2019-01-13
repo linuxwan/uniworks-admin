@@ -31,6 +31,17 @@ public class Hr001mServiceImpl implements Hr001mService {
 	public List<Hr001m> getHr001mList(Map<String, Object> map) { 
 		return hr001mMapper.select(map);
 	} 
+	
+	/**
+	 * 그룹사 목록을 가져온다. 
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public List<Hr001m> getGroupCompanyListAll(java.util.Map<String,Object> map) {
+		return hr001mMapper.selectGroupCompanyListAll(map);
+	}
+	
 	/** 
 	 * 조회한다. 
 	 * 

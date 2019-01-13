@@ -180,6 +180,7 @@ public class CodeManagerController {
 		cm001c.setMajCode((String)model.get("majCode"));
 		cm001c.setRescKey((String)model.get("rescKey"));
 		cm001c.setUseIndc((String)model.get("useIndc"));
+		cm001c.setPrntMajCode((String)model.get("prntMajCode"));
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("coId", cm001c.getCoId());
