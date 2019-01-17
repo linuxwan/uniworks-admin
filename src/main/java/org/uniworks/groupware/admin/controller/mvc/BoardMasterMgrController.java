@@ -178,4 +178,66 @@ public class BoardMasterMgrController {
 		mav.addObject("nw003ms", nw003ms);
 		return mav;
 	}
+	
+	/**
+	 * 게시판 마스터 조회 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/boardMasterMgr/boardMasterRetrieveForm", method = RequestMethod.GET)
+	public ModelAndView boardMasterRetrieveForm(HttpServletRequest request, HttpServletResponse response) {
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String boardId = StringUtil.null2void(request.getParameter("boardId"));
+		ModelAndView mav = new ModelAndView("boardMaster/board_master_retrieve_form_01");
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		//지원 언어 정보를 일반코드에서 가져온다. MAJ_CODE : CD001
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("lang", userSession.getLang());
+		map.put("coId", coId);
+		map.put("majCode", "CD001"); //지원언어가 저장되어져 있는 주코드 CD001
+		map.put("orderBy", "rescKeyValue");	//코드 정렬 방법 셋팅
+		List<CommonCode> langList = commonService.getCommonSubCodeList(map);
+		
+		ArrayList<Nw002m> nw002mList = new ArrayList<Nw002m>();
+		Map<String, Object> tmpMap = new HashMap<String, Object>();
+		tmpMap.put("coId", coId);
+		tmpMap.put("boardId", boardId);
+		for (CommonCode commonCode : langList) {
+			tmpMap.put("locale", commonCode.getRescKeyValue());
+			
+			Nw002m nw002m = nw002mService.getNw002m(tmpMap);			
+			nw002mList.add(nw002m);
+		}
+		
+		map.put("majCode", "CD007"); //게시판 마스터 타입
+		map.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
+		List<CommonCode> boardTypeList = commonService.getCommonSubCodeList(map);
+		
+		map.put("majCode",  "CD008"); //문서 유효기간을 코드성 정보에서 가져온다.
+		map.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
+		List<CommonCode> prsvTermList = commonService.getCommonSubCodeList(map);
+		
+		List<Hr001m> companyList = hr001mService.getGroupCompanyListAll(map);
+		
+		Nw001m nw001m = nw001mService.getNw001m(tmpMap);
+		List<Nw003m> nw003mList = nw003mService.getNw003mList(tmpMap);
+		String nw003ms = "";
+		int i = 0;
+		for (Nw003m nw003m : nw003mList) {
+			if (i == 0) nw003ms = nw003m.getCoId();
+			else nw003ms += "," + nw003m.getCoId();
+			i++;
+		}
+		
+		mav.addObject("coId", coId);		
+		mav.addObject("prsvTermList", prsvTermList);			
+		mav.addObject("boardTypeList", boardTypeList);
+		mav.addObject("companyList", companyList);
+		mav.addObject("nw002mList", nw002mList);
+		mav.addObject("nw001m", nw001m);
+		mav.addObject("nw003ms", nw003ms);
+		return mav;
+	}
 }

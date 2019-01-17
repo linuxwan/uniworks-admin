@@ -107,7 +107,7 @@
 	}
     </script>
 </head>
-<body style="height:97vh">
+<body style="height:97vh;width:98%;">
 	<input type="hidden" id="mode" name="mode" value=""/>		
     <table id="adminList" class="easyui-datagrid" style="width:100%;height:100%" 		        
        		title="<spring:message code="resc.label.adminList"/>" 

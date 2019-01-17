@@ -12,6 +12,7 @@
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/locale/easyui-lang-${userSession.lang}.js"></script>
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/js/common.js"></script>    
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.serializeObject.js"></script>
+    <script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.popupwindow.js"></script>
     <script type="text/javascript">
     $(function(){    	    	    	
     	$('#boardType').combobox({
@@ -170,6 +171,17 @@
     			fnCheckedRadioButtonById("anonyIndcY"); fnDisabledRadioButtonById('anonyIndc', false);
     			break;    			
     	}
+    }
+    
+    function fnSelectTypeCode(typeCodeName) {
+    	var coId = $("#coId").textbox('getValue');					    	
+		var url = "<c:out value="${contextPath}"/>/admin/codeMgr/majCodeListPopup?coId=" + coId + "&typeCodeName=" + typeCodeName;						
+		
+		$.popupWindow(url, { name: typeCodeName, height: 650, width: 450 });		
+    }        
+    
+    function fnSelectTypeClear(typeCodeName) {
+    	$('#' + typeCodeName).textbox('setValue', '');
     }
     </script>
 </head>
@@ -375,15 +387,15 @@
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
 		                <input class="easyui-textbox" id="typeCode1" name="typeCode1" style="width:60%" data-options="label:'<spring:message code="resc.label.type1"/>:',labelWidth:120">
-		                <a href="javascript:void(0)" id="btnSelTypeCode1" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.type1"/></a>
-		                <a href="javascript:void(0)" id="btnEraseTypeCode1" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>
+		                <a href="javascript:fnSelectTypeCode('typeCode1')" id="btnSelTypeCode1" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.type1"/></a>
+		                <a href="javascript:fnSelectTypeClear('typeCode1')" id="btnEraseTypeCode1" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>
 		            </div>
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">
 	            	<div style="margin-bottom:10px">
 		                <input class="easyui-textbox" id="typeCode2" name="typeCode2" style="width:60%" data-options="label:'<spring:message code="resc.label.type2"/>:',labelWidth:120">
-		                <a href="javascript:void(0)" id="btnSelTypeCode2" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.type2"/></a>
-		                <a href="javascript:void(0)" id="btnEraseTypeCode2" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>
+		                <a href="javascript:fnSelectTypeCode('typeCode2')" id="btnSelTypeCode2" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.type2"/></a>
+		                <a href="javascript:fnSelectTypeClear('typeCode2')" id="btnEraseTypeCode2" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>
 		            </div>		            
 	            </td>	         	            
 	        </tr>
@@ -391,15 +403,15 @@
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
 		                <input class="easyui-textbox" id="typeCode3" name="typeCode3" style="width:60%" data-options="label:'<spring:message code="resc.label.type3"/>:',labelWidth:120">
-		                <a href="javascript:void(0)" id="btnSelTypeCode3" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.type3"/></a>
-		                <a href="javascript:void(0)" id="btnEraseTypeCode3" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>
+		                <a href="javascript:fnSelectTypeCode('typeCode3')" id="btnSelTypeCode3" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.type3"/></a>
+		                <a href="javascript:fnSelectTypeClear('typeCode3')" id="btnEraseTypeCode3" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>
 		            </div>
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">		            
 	            	<div style="margin-bottom:10px">
 		                <input class="easyui-textbox" id="typeCode4" name="typeCode4" style="width:60%" data-options="label:'<spring:message code="resc.label.type4"/>:',labelWidth:120">
-		                <a href="javascript:void(0)" id="btnSelTypeCode4" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.type4"/></a>
-		                <a href="javascript:void(0)" id="btnEraseTypeCode4" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>
+		                <a href="javascript:fnSelectTypeCode('typeCode4')" id="btnSelTypeCode4" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.type4"/></a>
+		                <a href="javascript:fnSelectTypeClear('typeCode4')" id="btnEraseTypeCode4" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>
 		            </div>
 	            </td>	         	            
 	        </tr>

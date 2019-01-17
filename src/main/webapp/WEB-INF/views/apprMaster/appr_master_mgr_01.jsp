@@ -127,7 +127,7 @@
     </script>
 </head>
 <body>
-	<form id="frmHr">
+	<form id="frmHr" style="width:98%;">
 	<input type="hidden" id="mode" name="mode" value=""/>
 	<input type="hidden" id="coId" name="coId" value=""/>	
 	<jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>			

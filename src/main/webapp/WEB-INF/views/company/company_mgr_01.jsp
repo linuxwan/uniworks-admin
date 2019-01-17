@@ -316,6 +316,7 @@
     </script>
 </head>
 <body>
+	<form id="frmHr" style="width:98%;">
 	<input type="hidden" id="mode" name="mode" value=""/>			
 	<table style="width:100%">
 		<tr>
@@ -470,6 +471,7 @@
 			    </div>
 			</td>
 		</tr>
-	</table>	
+	</table>
+	</form>	
 </body>
 </html>

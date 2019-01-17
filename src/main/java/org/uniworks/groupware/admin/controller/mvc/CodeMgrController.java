@@ -196,4 +196,25 @@ public class CodeMgrController {
 		mav.addObject("cm003mList", cm003mList);
 		return mav;
 	}
+	
+	/**
+	 * 주코드 목록을 제공 (주코드 팝업 창에서 사용)	
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/codeMgr/majCodeListPopup", method = RequestMethod.GET)
+	public ModelAndView majCodeListPopup(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("code/maj_code_list_01");
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String typeCodeName = StringUtil.null2void(request.getParameter("typeCodeName"));
+		
+		mav.addObject("coId", coId);
+		mav.addObject("typeCodeName", typeCodeName);
+		
+		return mav;
+	}
 }

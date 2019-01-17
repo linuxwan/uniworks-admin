@@ -127,7 +127,7 @@
     </script>
 </head>
 <body>
-	<form id="frmHr">
+	<form id="frmHr" style="width:98%;">
 	<input type="hidden" id="mode" name="mode" value=""/>
 	<input type="hidden" id="coId" name="coId" value=""/>	
 	<jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>			
@@ -166,11 +166,31 @@
 			        </thead>
 		    	</table>    	
 			    <div id="tm" style="height:auto">    
+			    	<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="retrieve()"><spring:message code="resc.btn.retrieve"/></a>
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()"><spring:message code="resc.btn.add"/></a>
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modify()"><spring:message code="resc.btn.modify"/></a>			        
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()"><spring:message code="resc.btn.delete"/></a>			               
 			    </div>
 			    <script type="text/javascript">
+			    function retrieve() {
+			    	var coId = $("#selCoId").combobox('getValue');	
+			    	var rowData = $("#boardMstList").datagrid('getSelected');			    	
+			    	
+			    	if (rowData == null) {
+			    		var title = '<spring:message code="resc.label.confirm"/>';
+			    		var msg = '<spring:message code="resc.msg.noSelectBoardMstId"/>';
+			    		alertMsg(title, msg);
+						return;
+			    	}
+			    	
+			    	var url = "<c:out value="${contextPath}"/>/admin/boardMasterMgr/boardMasterRetrieveForm?coId=" + coId + "&boardId=" + rowData.boardId;
+			    	
+			    	var cnt = ${fn:length(langList)};		
+					var formHeight = 500 + (30 * cnt);
+					
+			    	$.popupWindow(url, { name: 'retrieveBoardMstForm', height: formHeight, width: 750 });
+			    }
+			    
 			    function append() {    	
 			    	var coId = $("#selCoId").combobox('getValue');					    	
 					var url = "<c:out value="${contextPath}"/>/admin/boardMasterMgr/boardMasterAddForm?coId=" + coId;

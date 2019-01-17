@@ -48,7 +48,7 @@
 				</select>				
 			</div>
         </div>
-        <div data-options="region:'west',split:true" title='<spring:message code="resc.label.adminMenu" />' style="width:12%;">
+        <div data-options="region:'west',split:true" title='<spring:message code="resc.label.adminMenu" />' style="width:11%;">
         		<div class="easyui-panel" title="Menu" style="width:100%;" data-options="border:false">
 		        <div class="easyui-menu" data-options="inline:true,border:false" style="width:100%">
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.companyMgr"/>','/admin/companyMgr')"><spring:message code="resc.menu.companyMgr"/></div>		            
@@ -67,7 +67,7 @@
 		        </div>
 		    </div>
         </div>
-        <div id="content" data-options="region:'center',fit:true,title:'Main Title',iconCls:'icon-ok'" style="width:100%;">
+        <div id="content" data-options="region:'center',fit:true,title:'Main Title',iconCls:'icon-ok'" style="width:79%;">
         	<div data-options="border:false,plain:true">
 				<iframe id="frmMain" name="frmMain" width="100%" src="" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation allow-pointer-lock" seamless="seamless"></iframe>
 			</div>
