@@ -384,7 +384,7 @@
 	<input type="hidden" id="mode" name="mode" value=""/>
 	<input type="hidden" id="coId" name="coId" value=""/>
 	<jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>			
-	<table style="width:99%">
+	<table style="width:98%">
 		<tr>
 			<td colspan="2">
 				<div id="tb" class="easyui-panel" title="" style="width:100%;max-width:100%;padding:5px 5px;"> 

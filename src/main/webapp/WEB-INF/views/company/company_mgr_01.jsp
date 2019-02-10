@@ -356,7 +356,7 @@
 				</div>  			
 			</td>
 			<td style="width:60%">
-				<div class="easyui-panel" title="" style="width:100%;max-width:100%;padding:10px 10px;">
+				<div class="easyui-panel" title="" style="width:98%;max-width:98%;padding:10px 10px;">
 			        <form id="frmCompany">			
 			        <jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>        
 			        <table style="width:100%">
