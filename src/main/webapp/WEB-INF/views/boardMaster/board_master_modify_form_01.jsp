@@ -14,9 +14,7 @@
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.serializeObject.js"></script>
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.popupwindow.js"></script>
     <script type="text/javascript">
-    var registCompany = '${nw003ms}';    
-    
-    console.log("registCompany : " + registCompany);
+    var registCompany = '${nw003ms}';            
     
     $(function(){    	    	    	
     	$('#boardType').combobox({

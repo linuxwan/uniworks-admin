@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Nw033mMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Nw033m"> 
+		<result column="CNTN_ID" jdbcType="VARCHAR" property="cntnId" /> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="USE_AUTH_TYPE" jdbcType="VARCHAR" property="useAuthType" /> 
+		<result column="USE_AUTH_GRP_CODE" jdbcType="VARCHAR" property="useAuthGrpCode" /> 
+		<result column="USE_AUTH" jdbcType="VARCHAR" property="useAuth" /> 
+	</resultMap> 
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CNTN_ID, CO_ID, USE_AUTH_TYPE, USE_AUTH_GRP_CODE, USE_AUTH
+		from   nw033m
+	</select> 
+ 
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CNTN_ID, CO_ID, USE_AUTH_TYPE, USE_AUTH_GRP_CODE, USE_AUTH
+		from   nw033m
+		where  CNTN_ID	=	#{cntnId,jdbcType=VARCHAR} 
+		  and  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  USE_AUTH_GRP_CODE	=	#{useAuthGrpCode,jdbcType=VARCHAR} 
+		  and  USE_AUTH_TYPE	=	#{useAuthType,jdbcType=VARCHAR} 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw033m"> 
+		insert	into nw033m(CNTN_ID, CO_ID, USE_AUTH_TYPE, USE_AUTH_GRP_CODE, USE_AUTH) 
+		values (#{cntnId,jdbcType=VARCHAR},#{coId,jdbcType=VARCHAR},#{useAuthType,jdbcType=VARCHAR},#{useAuthGrpCode,jdbcType=VARCHAR},#{useAuth,jdbcType=VARCHAR}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw033m"> 
+		update	nw033m 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="useAuth != null">USE_AUTH= #{useAuth,jdbcType=VARCHAR},</if> 
+		</trim> 
+		where	CNTN_ID	=	#{cntnId,jdbcType=VARCHAR} 
+		  and	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	USE_AUTH_TYPE	=	#{useAuthType,jdbcType=VARCHAR} 
+		  and	USE_AUTH_GRP_CODE	=	#{useAuthGrpCode,jdbcType=VARCHAR} 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from nw033m 
+		where	CNTN_ID	=	#{cntnId,jdbcType=VARCHAR}
+		<if test="coId != null"> 
+		  and	CO_ID	=	#{coId,jdbcType=VARCHAR}
+		</if> 
+		<if test="useAuthGrpCode != null">
+		  and	USE_AUTH_GRP_CODE	=	#{useAuthGrpCode,jdbcType=VARCHAR}
+		</if>
+		<if test="useAuthType != null"> 
+		  and	USE_AUTH_TYPE	=	#{useAuthType,jdbcType=VARCHAR}
+		</if> 
+	</delete> 
+</mapper>

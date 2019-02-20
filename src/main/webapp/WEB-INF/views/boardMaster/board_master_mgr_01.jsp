@@ -21,7 +21,7 @@
     	url = "<c:out value="${contextPath}"/>/rest/boardMaster/coId/" + coId + "/searchKind/boardName/searchWord/0/orderBy/boardMstName";	
     	$('#boardMstList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
     	
-    	//회사 선택이 변경될 경우 사용자 목록을 새롭게 가져온다.
+    	//회사 선택이 변경될 경우 게시판 마스터 목록을 새롭게 가져온다.
     	$('#selCoId').combobox({
     		onChange(newValue, oldValue) {
     			var coId = $("#selCoId").combobox('getValue');

@@ -16,8 +16,6 @@
     <script type="text/javascript">
     var registCompany = '${nw003ms}';    
     
-    console.log("registCompany : " + registCompany);
-    
     $(function(){    	    	    	
     	$('#boardType').combobox({
     		onChange(newValue, oldValue) {    			

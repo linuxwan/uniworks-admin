@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><spring:message code="resc.label.apprMasterList"/></title>
+<title><spring:message code="resc.label.cntnList"/></title>
 	<link rel='shortcut icon' type='image/x-icon' href='<c:out value="${contextPath}"/>/image/testimonials.png' />
     <link rel="stylesheet" type="text/css" href="<c:out value="${contextPath}"/>/easyui/css/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="<c:out value="${contextPath}"/>/easyui/css/themes/icon.css">    
@@ -18,19 +18,19 @@
     
     $(function(){    	
     	var coId = $("#selCoId").combobox('getValue');
-    	url = "<c:out value="${contextPath}"/>/rest/approvalMaster/coId/" + coId + "/searchKind/apprMstId/searchWord/0/orderBy/apprMstId";	
-    	$('#apprMstList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
+    	url = "<c:out value="${contextPath}"/>/rest/contents/coId/" + coId + "/searchKind/cntnName/searchWord/0/orderBy/cntnId";	
+    	$('#contentList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
     	
-    	//회사 선택이 변경될 경우 결재마스터 목록을 새롭게 가져온다.
+    	//회사 선택이 변경될 경우 컨텐츠 목록을 새롭게 가져온다.
     	$('#selCoId').combobox({
     		onChange(newValue, oldValue) {
     			var coId = $("#selCoId").combobox('getValue');
-				var searchKind = "apprMstId";
+				var searchKind = "cntnName";
 				var searchWord = "0";
-				var orderBy = "apprMstId";
+				var orderBy = "cntnId";
 				
-				url = "<c:out value="${contextPath}"/>/rest/approvalMaster/coId/" + coId + "/searchKind/" + searchKind + "/searchWord/" + searchWord + "/orderBy/" + orderBy;				
-				$('#apprMstList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
+				url = "<c:out value="${contextPath}"/>/rest/contents/coId/" + coId + "/searchKind/" + searchKind + "/searchWord/" + searchWord + "/orderBy/" + orderBy;				
+				$('#contentList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
     		}
     	});    	        	
     });
@@ -39,7 +39,7 @@
      * 팝업창에서 호출하기 위한 함수(refresh)
      */
      function reload() {
-     	$('#apprMstList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
+     	$('#contentList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
      }
     
     /*
@@ -62,17 +62,18 @@
     			$.each(data, function(index, entry) {
     				rows.push({
     					coId: entry["coId"],
-    					apprMstId: entry["apprMstId"],
-    					apprType: entry["apprType"],
-    					apprDesc: entry["apprDesc"],
-    					rcptIndc: entry["rcptIndc"],
-    					rfncIndc: entry["rfncIndc"],
-    					cprtnIndc: entry["cprtnIndc"],
-    					atndIndc: entry["atndIndc"],
-    					crcltnIndc: entry["crcltnIndc"],
-    					apprLevel: entry["apprLevel"],
-    					basePrsvTermDesc: entry["basePrsvTermDesc"],
-    					dcsnRuleIndc: entry["dcsnRuleIndc"]
+    					cntnId: entry["cntnId"],
+    					cntnName: entry["cntnName"],
+    					cntnOfferType: entry["cntnOfferType"],
+    					cntnOfferTypeDesc: entry["cntnOfferTypeDesc"],
+    					linkSysHost: entry["linkSysHost"],
+    					url: entry["url"],
+    					cntnType: entry["cntnType"],
+    					cntnTypeDesc: entry["cntnTypeDesc"],
+    					masterId: entry["masterId"],
+    					cntnJointFlag: entry["cntnJointFlag"],
+    					cntnDesc: entry["cntnDesc"],
+    					portNo: entry["portNo"]
     				});
     			});
     			
@@ -111,8 +112,8 @@
 					pageNumber:pageNum,
 					pageSize:pageSize
 				});
-				$("#apprMstList").datagrid("load", {});
-				$('#apprMstList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
+				$("#contentList").datagrid("load", {});
+				$('#contentList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
 			}
 		});
 		if (!data.originalRows){
@@ -145,66 +146,86 @@
 		</tr>
 		<tr>					
 			<td style="width:100%">				
-			    <table id="apprMstList" class="easyui-datagrid" style="width:100%;height:100%" 		        
-		       		title="<spring:message code="resc.label.apprMasterList"/>" 
+			    <table id="contentList" class="easyui-datagrid" style="width:100%;height:100%" 		        
+		       		title="<spring:message code="resc.label.cntnList"/>" 
 		       		data-options="rownumbers:true, singleSelect:true, toolbar:'#tm', pagination:true, autoRowHeight:false, pageSize:20">
 			        <thead>
 			            <tr>
 			            	<th data-options="field:'coId',halign:'center',align:'center',width:'5%'"><spring:message code="resc.label.coId"/></th>
-			                <th data-options="field:'apprMstId',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.apprMasterId"/></th>			                
-			                <th data-options="field:'apprDesc',halign:'center',align:'left',width:'18%'"><spring:message code="resc.label.apprDesc"/></th>
-			                <th data-options="field:'rcptIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.rcptIndc"/></th>
-			                <th data-options="field:'rfncIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.rfncIndc"/></th>
-			                <th data-options="field:'cprtnIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.cprtnIndc"/></th>
-			                <th data-options="field:'atndIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.atndIndc"/></th>
-			                <th data-options="field:'crcltnIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.crcltnIndc"/></th>			                			                
-			                <th data-options="field:'dcsnRuleIndc',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.regulation"/></th>
-			                <th data-options="field:'basePrsvTermDesc',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.prsvTerm"/></th>			            
-			                <th data-options="field:'apprLevel',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.apprLevel"/></th>    
+			                <th data-options="field:'cntnId',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.cntnId"/></th>			                
+			                <th data-options="field:'cntnName',halign:'center',align:'left',width:'10%'"><spring:message code="resc.label.cntnName"/></th>
+			                <th data-options="field:'cntnOfferTypeDesc',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.cntnOfferType"/></th>
+			                <th data-options="field:'linkSysHost',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.linkSystemHostname"/></th>
+			                <th data-options="field:'url',halign:'center',align:'center',width:'14%'"><spring:message code="resc.label.url"/></th>
+			                <th data-options="field:'cntnTypeDesc',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.cntnType"/></th>
+			                <th data-options="field:'masterId',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.masterId"/></th>			                			                
+			                <th data-options="field:'cntnJointFlag',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.cntnJointFlag"/></th>
+			                <th data-options="field:'cntnDesc',halign:'center',align:'left',width:'12%'"><spring:message code="resc.label.cntnDesc"/></th>			            
+			                <th data-options="field:'portNo',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.portNo"/></th>    			                
 			            </tr>
 			        </thead>
 		    	</table>    	
 			    <div id="tm" style="height:auto">    
+			    	<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="retrieve()"><spring:message code="resc.btn.retrieve"/></a>
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()"><spring:message code="resc.btn.add"/></a>
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modify()"><spring:message code="resc.btn.modify"/></a>			        
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()"><spring:message code="resc.btn.delete"/></a>			               
 			    </div>
 			    <script type="text/javascript">
-			    function append() {    	
-			    	var coId = $("#selCoId").combobox('getValue');					    	
-					var url = "<c:out value="${contextPath}"/>/admin/apprMasterMgr/apprMasterAddForm?coId=" + coId;
-					var cnt = ${fn:length(langList)};		
-					var formHeight = 340 + (30 * cnt);
-					
-					$.popupWindow(url, { name: 'apprMstAddForm', height: formHeight, width: 800 });		    	
-			    }
-			    
-			    function modify() {
+			    function retrieve() {
 			    	var coId = $("#selCoId").combobox('getValue');	
-			    	var rowData = $("#apprMstList").datagrid('getSelected');			    	
+			    	var rowData = $("#contentList").datagrid('getSelected');			    	
 			    	
 			    	if (rowData == null) {
 			    		var title = '<spring:message code="resc.label.confirm"/>';
-			    		var msg = '<spring:message code="resc.msg.noSelectApprMstId"/>';
+			    		var msg = '<spring:message code="resc.msg.noSelectContentId"/>';
 			    		alertMsg(title, msg);
 						return;
 			    	}
 			    	
-			    	var url = "<c:out value="${contextPath}"/>/admin/apprMasterMgr/apprMasterModifyForm?coId=" + coId + "&apprMstId=" + rowData.apprMstId;
+			    	var url = "<c:out value="${contextPath}"/>/admin/contentsMgr/contentRetrieveForm?coId=" + coId + "&cntnId=" + rowData.cntnId;
 			    	
 			    	var cnt = ${fn:length(langList)};		
 					var formHeight = 340 + (30 * cnt);
 					
-			    	$.popupWindow(url, { name: 'modifyApprMstForm', height: formHeight, width: 750 });	
+			    	$.popupWindow(url, { name: 'retrieveContentForm', height: formHeight, width: 750 });
+			    }
+			    
+			    function append() {    	
+			    	var coId = $("#selCoId").combobox('getValue');					    	
+					var url = "<c:out value="${contextPath}"/>/admin/contentsMgr/contentAddForm?coId=" + coId;
+					var cnt = ${fn:length(langList)};		
+					var formHeight = 350 + (30 * cnt);
+					
+					$.popupWindow(url, { name: 'contentAddForm', height: formHeight, width: 750 });		    	
+			    }
+			    
+			    function modify() {
+			    	var coId = $("#selCoId").combobox('getValue');	
+			    	var rowData = $("#contentList").datagrid('getSelected');			    	
+			    	
+			    	if (rowData == null) {
+			    		var title = '<spring:message code="resc.label.confirm"/>';
+			    		var msg = '<spring:message code="resc.msg.noSelectContentId"/>';
+			    		alertMsg(title, msg);
+						return;
+			    	}
+			    	
+			    	var url = "<c:out value="${contextPath}"/>/admin/contentsMgr/contentModifyForm?coId=" + coId + "&cntnId=" + rowData.cntnId;
+			    	
+			    	var cnt = ${fn:length(langList)};		
+					var formHeight = 350 + (30 * cnt);
+					
+			    	$.popupWindow(url, { name: 'contentModifyForm', height: formHeight, width: 750 });	
 			    }
 			    
 			    function removeit() {
 			    	var coId = $("#selCoId").combobox('getValue');	
-			    	var rowData = $("#apprMstList").datagrid('getSelected');		    	
+			    	var rowData = $("#contentList").datagrid('getSelected');		    	
 			    	
 			    	if (rowData == null) {
 			    		var title = '<spring:message code="resc.label.confirm"/>';
-			    		var msg = '<spring:message code="resc.msg.noSelectApprMstId"/>';
+			    		var msg = '<spring:message code="resc.msg.noSelectContentId"/>';
 			    		alertMsg(title, msg);
 						return;
 			    	}
@@ -212,16 +233,16 @@
 			    	msg = '<spring:message code="resc.msg.confirmDel"/>';    		
 		    		$.messager.confirm(title, msg, function(r) {
 		    			if (r) {
-		    				deleteApprMstId();
+		    				deleteBoardMstId();
 		    			}
 		    		});
 			    }
 			    
-			    function deleteApprMstId() {
+			    function deleteBoardMstId() {
 			    	var coId = $("#selCoId").combobox('getValue');	
-			    	var rowData = $("#apprMstList").datagrid('getSelected');			    				    	
+			    	var rowData = $("#contentList").datagrid('getSelected');			    				    	
 			    
-					var strUrl = "<c:out value="${contextPath}"/>/rest/approvalMaster/delete/coId/" + coId + "/apprMstId/" + rowData.apprMstId;
+					var strUrl = "<c:out value="${contextPath}"/>/rest/contents/delete/cntnId/" + rowData.cntnId;
 			    	
 			    	$.ajax({
 						type: 'DELETE',
@@ -236,7 +257,7 @@
 						success : function(msg) {
 							var title = '<spring:message code="resc.label.confirm"/>';		    			
 							$.messager.alert(title, msg, "info",  function(){
-								refreshApprMstList();
+								refreshContentList();
 							});						
 						},
 						error : function(xhr, status, error) {
@@ -245,14 +266,15 @@
 		    		});
 			    }
 			    
-			    function refreshApprMstList() {
+			    function refreshContentList() {
 			    	var coId = $("#selCoId").combobox('getValue');			    	
-			    	var searchKind = "apprMstId";
+			    	var searchKind = "boardName";
 					var searchWord = "0";
-					var orderBy = "apprMstId";
+					var orderBy = "boardMstName";
 					
-					url = "<c:out value="${contextPath}"/>/rest/approvalMaster/coId/" + coId + "/searchKind/" + searchKind + "/searchWord/" + searchWord + "/orderBy/" + orderBy;
-					$('#apprMstList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
+					url = "<c:out value="${contextPath}"/>/rest/contents/coId/" + coId + "/searchKind/" + searchKind + "/searchWord/" + searchWord + "/orderBy/" + orderBy;
+						
+					$('#contentList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
 			    }
 			    </script>
 			</td>
