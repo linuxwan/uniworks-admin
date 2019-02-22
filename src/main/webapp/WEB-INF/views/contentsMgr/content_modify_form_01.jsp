@@ -115,6 +115,18 @@
     	fnDisabledCheckBoxById('company_${company.coId}', false);
     	</c:forEach>
     }       
+    
+    function fnSelectTypeCode(typeCodeName) {
+    	var coId = $("#coId").textbox('getValue');
+    	var cntnType = $("#cntnType").combobox('getValue');
+		var url = "<c:out value="${contextPath}"/>/admin/contentsMgr/masterIdSelectPopup?coId=" + coId + "&cntnType=" + cntnType + "&typeCodeName=" + typeCodeName;						
+		
+		$.popupWindow(url, { name: typeCodeName, height: 450, width: 350 });		
+    }        
+    
+    function fnSelectTypeClear(typeCodeName) {
+    	$('#' + typeCodeName).textbox('setValue', '');
+    }
     </script>
 </head>
 <body>
@@ -147,8 +159,8 @@
 	            <td style="width:50%;padding:0px 10px;">
 	            	<div style="margin-bottom:10px">
 		                <input class="easyui-textbox" id="masterId" name="masterId" style="width:60%" data-options="label:'<spring:message code="resc.label.masterId"/>:',readonly:true,labelWidth:120" value="${contentInfo.masterId}">
-		                <a href="javascript:fnSelectTypeCode('typeCode4')" id="btnSelTypeCode4" class="easyui-linkbutton" style="width:70px"><spring:message code="resc.btn.masterId"/></a>
-		                <a href="javascript:fnSelectTypeClear('typeCode4')" id="btnEraseTypeCode4" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>		                
+		                <a href="javascript:fnSelectTypeCode('masterId')" id="btnSelTypeCode4" class="easyui-linkbutton" style="width:70px"><spring:message code="resc.btn.masterId"/></a>
+		                <a href="javascript:fnSelectTypeClear('masterId')" id="btnEraseTypeCode4" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>		                
 		            </div>		            
 	            </td>	         	            
 	        </tr>

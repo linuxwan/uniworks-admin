@@ -27,19 +27,24 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
 import org.uniworks.groupware.admin.common.util.ApplicationConfigReader;
 import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.common.util.WebUtil;
+import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
+import org.uniworks.groupware.admin.domain.BoardMasterInfo;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.ContentInfo;
 import org.uniworks.groupware.admin.domain.Hr001m;
-import org.uniworks.groupware.admin.domain.Nw003m;
+import org.uniworks.groupware.admin.domain.MasterInfo;
 import org.uniworks.groupware.admin.domain.Nw030m;
 import org.uniworks.groupware.admin.domain.Nw031m;
 import org.uniworks.groupware.admin.domain.Nw032m;
+import org.uniworks.groupware.admin.service.ApprovalMasterService;
+import org.uniworks.groupware.admin.service.BoardMasterService;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.ContentService;
 import org.uniworks.groupware.admin.service.Hr001mService;
@@ -58,6 +63,8 @@ public class ContentsController {
 	@Autowired Hr001mService hr001mService;
 	@Autowired Nw030mService nw030mService;
 	@Autowired private MessageSource messageSource;
+	@Autowired ApprovalMasterService apprMstService;
+	@Autowired BoardMasterService boardMstService;
 	
 	/**
 	 * 컨텐츠 목록 가져오기
@@ -83,6 +90,58 @@ public class ContentsController {
 		
 		List<ContentInfo> contents = cntnService.getContentList(map);
 		return new ResponseEntity<List<ContentInfo>>(contents, HttpStatus.OK);
+	}
+	
+	/**
+	 * 마스터 ID 목록을 가져온다.
+	 * @param request
+	 * @param coId
+	 * @param cntnType
+	 * @return
+	 */
+	@GetMapping(value = "/contents/coId/{coId}/cntnType/{cntnType}")
+	public ResponseEntity<List<MasterInfo>> getMasterIdList(HttpServletRequest request, @PathVariable("coId") String coId,
+				@PathVariable("cntnType") String cntnType) {
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		
+		ModelAndView mav = new ModelAndView("contentsMgr/masterid_select_form_01");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("lang", userSession.getLang());
+		map.put("crntDate", DateUtil.getCurrentDateToString());
+		map.put("coId", coId);		
+		
+		List<MasterInfo> masterInfoList = new ArrayList<MasterInfo>();
+		
+		if (cntnType.equalsIgnoreCase("CT01")) {	//게시판일 경우
+			map.put("searchKind", "boardId");
+			map.put("searchWord", "%");
+			map.put("orderBy", "boardMstId");		
+			List<BoardMasterInfo> boardMstList = boardMstService.getBoardMasterList(map);			
+			for (BoardMasterInfo boardMstInfo : boardMstList) {
+				MasterInfo mstInfo = new MasterInfo();
+				mstInfo.setCoId(boardMstInfo.getCoId());
+				mstInfo.setMasterId(boardMstInfo.getBoardId());
+				mstInfo.setMasterName(boardMstInfo.getBoardName());
+				
+				masterInfoList.add(mstInfo);
+			}
+		} else if (cntnType.equalsIgnoreCase("CT02")) {	//전자결재일 경우
+			map.put("searchKind", "apprMstId");
+			map.put("searchWord", "%");
+			map.put("orderBy", "apprMstId");
+			List<ApprovalMasterInfo> apprMstList = apprMstService.getApprMasterList(map);
+			for (ApprovalMasterInfo apprMstInfo : apprMstList) {
+				MasterInfo mstInfo = new MasterInfo();
+				mstInfo.setCoId(apprMstInfo.getCoId());
+				mstInfo.setMasterId(apprMstInfo.getApprMstId());
+				mstInfo.setMasterName(apprMstInfo.getApprDesc());
+				
+				masterInfoList.add(mstInfo);
+			}
+		}
+		
+		return new ResponseEntity<List<MasterInfo>>(masterInfoList, HttpStatus.OK);
 	}
 	
 	/**

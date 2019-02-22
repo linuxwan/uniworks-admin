@@ -22,14 +22,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
+import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.common.util.SecurityUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
+import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
+import org.uniworks.groupware.admin.domain.BoardMasterInfo;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.ContentInfo;
 import org.uniworks.groupware.admin.domain.Hr001m;
-import org.uniworks.groupware.admin.domain.Nw003m;
+import org.uniworks.groupware.admin.domain.MasterInfo;
 import org.uniworks.groupware.admin.domain.Nw031m;
 import org.uniworks.groupware.admin.domain.Nw032m;
+import org.uniworks.groupware.admin.service.ApprovalMasterService;
+import org.uniworks.groupware.admin.service.BoardMasterService;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.ContentService;
 import org.uniworks.groupware.admin.service.Hr001mService;
@@ -48,7 +53,7 @@ public class ContentsMgrController {
 	@Autowired Hr001mService hr001mService;
 	@Autowired Nw031mService nw031mService;
 	@Autowired Nw032mService nw032mService;
-	@Autowired ContentService contentService;
+	@Autowired ContentService contentService;		
 	
 	/**
 	 * 컨텐츠 관리 목록
@@ -245,6 +250,28 @@ public class ContentsMgrController {
 		mav.addObject("cntnTypeList", cntnTypeList);
 		mav.addObject("companyList", companyList);
 		mav.addObject("nw032ms", nw032ms);
+		return mav;
+	}
+	
+	/**
+	 * 마스터 ID 목록을 가져온다.
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/contentsMgr/masterIdSelectPopup", method = RequestMethod.GET)
+	public ModelAndView masterIdSelectPopup(HttpServletRequest request, HttpServletResponse response) {
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		
+		ModelAndView mav = new ModelAndView("contentsMgr/masterid_select_form_01");
+		String cntnType = StringUtil.null2void(request.getParameter("cntnType"));
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String typeCodeName = StringUtil.null2void(request.getParameter("typeCodeName"));
+		
+		mav.addObject("coId", coId);
+		mav.addObject("cntnType", cntnType);
+		mav.addObject("typeCodeName", typeCodeName);
 		return mav;
 	}
 }
