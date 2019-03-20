@@ -8,44 +8,38 @@ package org.uniworks.groupware.admin.mapper;
 import java.util.List; 
 import java.util.Map; 
 
-import org.uniworks.groupware.admin.domain.Nw105m; 
+import org.uniworks.groupware.admin.domain.Nw106m; 
 
 
 /** 
  * @author Park Chungwan 
- * 관련 테이블 : Nw105m
+ * 관련 테이블 : Nw106m
  */ 
-public interface Nw105mMapper { 
+public interface Nw106mMapper { 
 	/** 
 	 * 목록 가져오기 
 	 * @param map 
 	 * @return 
 	 */ 
-	List<Nw105m> select(Map<String, Object> map);
-	/**
-	 * Role 사용자 수
-	 * @param map
-	 * @return
-	 */
-	int selectRoleUserCount(Map<String, Object> map);
+	List<Nw106m> select(Map<String, Object> map); 
 	/** 
 	 * 정보 가져오기 
 	 * @param map 
 	 * @return 
 	 */ 
-	Nw105m selectByPrimaryKey(Map<String, Object> map); 
+	Nw106m selectByPrimaryKey(Map<String, Object> map); 
 	/** 
 	 * 등록한다 
-	 * @param nw105m 
+	 * @param nw106m 
 	 * @return 
 	 */ 
-	int insert(Nw105m nw105m); 
+	int insert(Nw106m nw106m); 
 	/** 
 	 * 수정한다 
-	 * @param nw105m 
+	 * @param nw106m 
 	 * @return 
 	 */ 
-	int updateByPrimaryKey(Nw105m nw105m); 
+	int updateByPrimaryKey(Nw106m nw106m); 
 	/** 
 	 * 삭제한다 
 	 * @param map 

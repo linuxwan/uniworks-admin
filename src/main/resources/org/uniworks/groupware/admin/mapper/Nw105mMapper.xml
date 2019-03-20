@@ -7,6 +7,11 @@
 		<result column="ROLE" jdbcType="VARCHAR" property="role" /> 
 		<result column="USE_INDC" jdbcType="SMALLINT" property="useIndc" /> 
 	</resultMap> 
+	
+	<!-- Count -->
+	<resultMap type="java.lang.Integer" id="count_Result">
+		<result column="CNT" jdbcType="DECIMAL" />
+	</resultMap>
 
 	<!-- 목록 조회 --> 
 	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
@@ -14,6 +19,14 @@
 		from   nw105m
 	</select> 
  
+    <!-- Role 사용자 수 -->
+    <select id="selectRoleUserCount" parameterType="java.util.Map" resultMap="count_Result">
+		select  COUNT(USER_ID) as CNT
+		from   nw105m
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  ROLE	=	#{role,jdbcType=VARCHAR} 
+	</select>
+	
 	<!-- 상세 조회 --> 
 	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
 		select  CO_ID, USER_ID, ROLE, USE_INDC

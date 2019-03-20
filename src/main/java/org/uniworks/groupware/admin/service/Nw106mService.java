@@ -7,48 +7,41 @@ package org.uniworks.groupware.admin.service;
 
 import java.util.List; 
 
-import org.uniworks.groupware.admin.domain.Nw105m; 
+import org.uniworks.groupware.admin.domain.Nw106m; 
 
-public interface Nw105mService { 
+public interface Nw106mService { 
 	/** 
 	 * 목록을 조회한다. 
 	 * 
 	 * @return 
 	 */ 
-	List<Nw105m> getNw105mList(java.util.Map<String,Object> map);
-	
-	/**
-	 * Role 사용자 수
-	 * @param map
-	 * @return
-	 */
-	int getRoleUserCount(java.util.Map<String,Object> map);
+	List<Nw106m> getNw106mList(java.util.Map<String,Object> map); 
 
 	/** 
 	 * 조회한다. 
 	 * 
 	 * @return 
 	 */ 
-	Nw105m getNw105m(java.util.Map<String,Object> map); 
-	
+	Nw106m getNw106m(java.util.Map<String,Object> map); 
+
 	/** 
 	 * 등록한다. 
 	 * 
 	 * @return 
 	 */ 
-	int addNw105m(Nw105m nw105m); 
+	int addNw106m(Nw106m nw106m); 
 
 	/** 
 	 * 수정한다. 
 	 * 
 	 * @return 
 	 */ 
-	int updateNw105m(Nw105m nw105m); 
+	int updateNw106m(Nw106m nw106m); 
 
 	/** 
 	 * 삭제한다. 
 	 * 
 	 * @return 
 	 */ 
-	int deleteNw105m(java.util.Map<String,Object> map); 
+	int deleteNw106m(java.util.Map<String,Object> map); 
 } 

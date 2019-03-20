@@ -43,7 +43,7 @@
      }
     
     /*
-     * 조직 구성원 정보를 가져온다.
+     * 컨텐츠 정보를 가져온다.
     */
     function getData() {
     	getAjaxData(url);
@@ -51,7 +51,7 @@
     }
     
     /*
-     * 등록된 조직 구성원 목록을 Ajax로 호출
+     * 등록된 컨텐츠 목록을 Ajax로 호출
     */
     function getAjaxData(url) {
     	rows = [];

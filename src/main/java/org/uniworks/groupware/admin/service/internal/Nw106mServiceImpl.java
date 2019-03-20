@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation; 
 import org.springframework.transaction.annotation.Transactional; 
 
-import org.uniworks.groupware.admin.domain.Nw105m; 
-import org.uniworks.groupware.admin.mapper.Nw105mMapper; 
-import org.uniworks.groupware.admin.service.Nw105mService; 
+import org.uniworks.groupware.admin.domain.Nw106m; 
+import org.uniworks.groupware.admin.mapper.Nw106mMapper; 
+import org.uniworks.groupware.admin.service.Nw106mService; 
 
 @Service 
 @Transactional(readOnly = true) 
-public class Nw105mServiceImpl implements Nw105mService { 
-	@Autowired Nw105mMapper nw105mMapper; 
+public class Nw106mServiceImpl implements Nw106mService { 
+	@Autowired Nw106mMapper nw106mMapper; 
 
 	/** 
 	 * 목록을 조회한다. 
@@ -28,26 +28,17 @@ public class Nw105mServiceImpl implements Nw105mService {
 	 * @return 
 	 */ 
 	@Override 
-	public List<Nw105m> getNw105mList(Map<String, Object> map) { 
-		return nw105mMapper.select(map); 
+	public List<Nw106m> getNw106mList(Map<String, Object> map) { 
+		return nw106mMapper.select(map); 
 	} 
-	/**
-	 * Role 사용자 수
-	 * @param map
-	 * @return
-	 */
-	@Override
-	public int getRoleUserCount(java.util.Map<String,Object> map) {
-		return nw105mMapper.selectRoleUserCount(map);
-	}
 	/** 
 	 * 조회한다. 
 	 * 
 	 * @return 
 	 */ 
 	@Override 
-	public Nw105m getNw105m(Map<String, Object> map) { 
-		return nw105mMapper.selectByPrimaryKey(map); 
+	public Nw106m getNw106m(Map<String, Object> map) { 
+		return nw106mMapper.selectByPrimaryKey(map); 
 	} 
 	/** 
 	 * 등록한다. 
@@ -56,8 +47,8 @@ public class Nw105mServiceImpl implements Nw105mService {
 	 */ 
 	@Override 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED) 
-	public int addNw105m(Nw105m nw105m) { 
-		return nw105mMapper.insert(nw105m); 
+	public int addNw106m(Nw106m nw106m) { 
+		return nw106mMapper.insert(nw106m); 
 	} 
 	/** 
 	 * 수정한다. 
@@ -66,8 +57,8 @@ public class Nw105mServiceImpl implements Nw105mService {
 	 */ 
 	@Override 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED) 
-	public int updateNw105m(Nw105m nw105m) { 
-		return nw105mMapper.updateByPrimaryKey(nw105m); 
+	public int updateNw106m(Nw106m nw106m) { 
+		return nw106mMapper.updateByPrimaryKey(nw106m); 
 	} 
 	/** 
 	 * 삭제한다. 
@@ -76,7 +67,7 @@ public class Nw105mServiceImpl implements Nw105mService {
 	 */ 
 	@Override 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED) 
-	public int deleteNw105m(Map<String, Object> map) { 
-		return nw105mMapper.deleteByPrimaryKey(map); 
+	public int deleteNw106m(Map<String, Object> map) { 
+		return nw106mMapper.deleteByPrimaryKey(map); 
 	} 
 } 
