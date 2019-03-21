@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -89,6 +90,34 @@ public class RoleManagerController {
 		}
 		
 		return new ResponseEntity<String>(result, HttpStatus.OK); 
+	}
+	
+	/**
+	 * Role 수정
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@PutMapping(value = "/role/modify")
+	public ResponseEntity<String> modifyContent(@RequestBody Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
+		String result = "";
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		Nw106m nw106m = new Nw106m();
+		WebUtil.bind(model, nw106m);
+		
+		nw106m.setChngId(userSession.getAdminId());
+		nw106m.setChngDate(DateUtil.getCurrentDate());
+		
+		int rtn = nw106mService.updateNw106m(nw106m);
+		if (rtn > 0) {
+			result = messageSource.getMessage("resc.msg.modifyOk", null, response.getLocale());			
+		} else {
+			result = messageSource.getMessage("resc.msg.modifyFail", null, response.getLocale());
+		}
+		
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	
 	/**

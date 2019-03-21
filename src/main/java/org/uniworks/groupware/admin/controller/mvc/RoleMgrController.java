@@ -25,8 +25,10 @@ import org.uniworks.groupware.admin.common.util.SecurityUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.Hr001m;
+import org.uniworks.groupware.admin.domain.Nw106m;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.Hr001mService;
+import org.uniworks.groupware.admin.service.Nw106mService;
 
 /**
  * @author Park Chung Wan
@@ -38,6 +40,7 @@ public class RoleMgrController {
 	private static final Logger logger = LoggerFactory.getLogger(RoleMgrController.class);
 	@Autowired CommonService commonService;
 	@Autowired Hr001mService hr001mService;
+	@Autowired Nw106mService nw106mService;
 	
 	/**
 	 * Role 목록 화면
@@ -82,6 +85,28 @@ public class RoleMgrController {
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		
 		mav.addObject("coId", coId);
+		return mav;
+	}
+	
+	/**
+	 * Role 수정화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/roleMgr/roleModifyForm", method = RequestMethod.GET)
+	public ModelAndView roleModifyForm(HttpServletRequest request, HttpServletResponse response) {
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String role = StringUtil.null2void(request.getParameter("role"));
+		ModelAndView mav = new ModelAndView("roleMgr/role_modify_form_01");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", coId);
+		map.put("role", role);
+		
+		Nw106m nw106m = nw106mService.getNw106m(map);
+		
+		mav.addObject("nw106m", nw106m);
 		return mav;
 	}
 }

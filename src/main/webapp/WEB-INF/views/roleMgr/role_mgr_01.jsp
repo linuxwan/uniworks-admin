@@ -175,12 +175,12 @@
 			    	
 			    	if (rowData == null) {
 			    		var title = '<spring:message code="resc.label.confirm"/>';
-			    		var msg = '<spring:message code="resc.msg.noSelectContentId"/>';
+			    		var msg = '<spring:message code="resc.msg.noSelectRole"/>';
 			    		alertMsg(title, msg);
 						return;
 			    	}
 			    	
-			    	var url = "<c:out value="${contextPath}"/>/admin/contentsMgr/contentModifyForm?coId=" + coId + "&cntnId=" + rowData.cntnId;
+			    	var url = "<c:out value="${contextPath}"/>/admin/roleMgr/roleModifyForm?coId=" + coId + "&role=" + rowData.role;
 			    			
 					var formHeight = 220;
 					
