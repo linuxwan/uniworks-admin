@@ -31,8 +31,10 @@ import org.uniworks.groupware.admin.common.UserSession;
 import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.common.util.WebUtil;
 import org.uniworks.groupware.admin.domain.Nw106m;
+import org.uniworks.groupware.admin.domain.UserRole;
 import org.uniworks.groupware.admin.service.Nw105mService;
 import org.uniworks.groupware.admin.service.Nw106mService;
+import org.uniworks.groupware.admin.service.UserService;
 
 /**
  * @author Park Chung Wan
@@ -44,6 +46,7 @@ public class RoleManagerController {
 	private static final Logger logger = LoggerFactory.getLogger(RoleManagerController.class);
 	@Autowired Nw105mService nw105mService;
 	@Autowired Nw106mService nw106mService;
+	@Autowired UserService userService;
 	@Autowired private MessageSource messageSource;
 	
 	/**
@@ -153,5 +156,25 @@ public class RoleManagerController {
 		}
 		
 		return new ResponseEntity<String>(result, HttpStatus.OK); 
+	}
+	
+	/**
+	 * Role별 사용자 목록을 가져온다.
+	 * @param request
+	 * @param coId
+	 * @param role
+	 * @return
+	 */
+	@GetMapping(value = "/userListByRole/coId/{coId}/role/{role}")
+	public ResponseEntity<List<UserRole>> userListByRole(HttpServletRequest request, @PathVariable("coId") String coId, @PathVariable("role") String role) {
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", coId);
+		map.put("role", role);
+		map.put("lang", userSession.getLang());
+		
+		List<UserRole> userByRoleList = userService.getUserListByRole(map);
+		return new ResponseEntity<List<UserRole>>(userByRoleList, HttpStatus.OK);
 	}
 }

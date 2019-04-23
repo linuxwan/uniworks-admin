@@ -28,9 +28,16 @@
 				url = "<c:out value="${contextPath}"/>/rest/role/coId/" + coId;				
 				$('#roleList').datagrid({loadFilter:pagerFilter}).datagrid('loadData', getData());
     		}
-    	});    	        	
+    	});
+    	
+    	//Role별 사용자 현황
+		addTabLayer("001", "<spring:message code='resc.label.roleUserMgr'/>", "<c:out value="${contextPath}"/>/admin/roleMgr/roleUserManagerForm");
+		//사용자별 Role 현황
+		//addTabLayer("002", "Google", "<c:out value="${contextPath}"/>/admin/contentsMgr");
+		
+		$("#tabsLayer").tabs("select", '<spring:message code="resc.label.roleMgr"/>');
     });
-    
+        
     /**
      * 팝업창에서 호출하기 위한 함수(refresh)
      */
@@ -117,6 +124,26 @@
 		
 		return data;
 	}
+    
+    function addTabLayer(tabId, tabName, src) {
+    	var frameId = "listTabsFrame-" + tabId;
+    	
+    	if ($("#tabsLayer").tabs("exists", tabId)) {
+    		$("#tabsLayer").tabs("close", tabId);
+    	}
+    	
+    	var securityParam = "?_csrf=" + $('#_csrf').val();
+    	if (src.indexOf('?') > -1) securityParam = "&_csrf=" + $('#_csrf').val();
+    	var src = src + securityParam;    	
+    	
+    	var content = "<iframe name='" + frameId + "' src='" + src + "' id='" + frameId + "' frameborder='0' style='border:0;width:100%;height:98%;padding:10px 10px 0 0;' sandbox='allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation allow-pointer-lock' seamless='seamless'></iframe>";
+    	
+    	$("#tabsLayer").tabs("add", {
+    		title: tabName,
+    		content: content,    		
+    		closable: false
+    	});	
+    }
     </script>
 </head>
 <body>

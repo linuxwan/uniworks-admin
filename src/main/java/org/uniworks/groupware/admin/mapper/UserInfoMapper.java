@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.uniworks.groupware.admin.domain.User;
 import org.uniworks.groupware.admin.domain.UserInfo;
+import org.uniworks.groupware.admin.domain.UserRole;
 
 /**
  * @author Park Chungwan
@@ -40,4 +41,10 @@ public interface UserInfoMapper {
 	 * @return
 	 */
 	public User getUser(Map<String, Object> map);
+	/**
+	 * Role별 사용자 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	public List<UserRole> getUserListByRole(Map<String, Object> map);
 }

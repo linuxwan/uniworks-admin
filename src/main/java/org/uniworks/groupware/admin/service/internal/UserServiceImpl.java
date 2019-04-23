@@ -17,6 +17,7 @@ import org.uniworks.groupware.admin.domain.Nw100m;
 import org.uniworks.groupware.admin.domain.Nw101m;
 import org.uniworks.groupware.admin.domain.Nw105m;
 import org.uniworks.groupware.admin.domain.User;
+import org.uniworks.groupware.admin.domain.UserRole;
 import org.uniworks.groupware.admin.mapper.Nw100mMapper;
 import org.uniworks.groupware.admin.mapper.Nw101mMapper;
 import org.uniworks.groupware.admin.mapper.Nw105mMapper;
@@ -123,6 +124,16 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	/**
+	 * Role별 사용자 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public List<UserRole> getUserListByRole(Map<String, Object> map) {
+		return userInfoMapper.getUserListByRole(map);
+	}
+	
+	/**
 	 * 비밀번호 변경 시 로그인 비밀번호/이중 비밀번호 변경 이력을 남긴다.
 	 * @param nw100m
 	 * @return
@@ -142,5 +153,5 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return nw101m;
-	}
+	}		
 }

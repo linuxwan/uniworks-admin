@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.uniworks.groupware.admin.domain.Nw100m;
-import org.uniworks.groupware.admin.domain.Nw101m;
 import org.uniworks.groupware.admin.domain.User;
+import org.uniworks.groupware.admin.domain.UserRole;
 
 /**
  * @author Park Chung Wan
@@ -48,4 +48,10 @@ public interface UserService {
 	 * @return
 	 */
 	int deleteUser(Map<String, Object> map);
+	/**
+	 * Role별 사용자 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	List<UserRole> getUserListByRole(Map<String, Object> map);
 }

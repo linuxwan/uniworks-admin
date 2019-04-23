@@ -109,4 +109,33 @@ public class RoleMgrController {
 		mav.addObject("nw106m", nw106m);
 		return mav;
 	}
+	
+	/**
+	 * Role별 사용자 관리
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/roleMgr/roleUserManagerForm", method = RequestMethod.GET)
+	public ModelAndView roleUserMangerForm(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("roleMgr/role_user_mgr_form_01");
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		String adminType = SecurityUtil.getAuthority();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		//지원 언어 목록 체크
+		map.put("coId", userSession.getCoId());
+		map.put("lang", userSession.getLang());
+		map.put("majCode", "CD001"); //지원언어가 저장되어져 있는 주코드 CD001
+		map.put("orderBy", "rescKeyValue");	//코드 정렬 방법 셋팅
+		List<CommonCode> langList = commonService.getCommonSubCodeList(map);		
+		
+		map.put("adminType", adminType);
+		List<Hr001m> coList = hr001mService.getHr001mList(map);
+		
+		mav.addObject("coList", coList);
+		mav.addObject("langList", langList);
+		return mav;
+	}
 }
