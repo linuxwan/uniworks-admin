@@ -111,4 +111,16 @@ public class UserMgrController {
 		return mav;
 	}
 	
+	/**
+	 * 사용자 검색 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/userSearchForm", method = RequestMethod.GET)
+	public ModelAndView userSearchForm(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("user/user_search_form_01");
+		
+		return mav;
+	}
 }

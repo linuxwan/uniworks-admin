@@ -99,7 +99,7 @@
     					userId : entry["userId"],
     					empName : entry["empName"],
     					deptDesc: entry["deptDesc"],
-    					duthDesc: entry["duthDesc"],
+    					dutyDesc: entry["dutyDesc"],
     					pstnDesc: entry["pstnDesc"],
     					role: entry["role"],
     					useIndc: entry["useIndc"]
@@ -115,7 +115,8 @@
     </script>
 </head>
 <body>
-	<form id="roleUserManagerForm">
+	<form id="roleUserManagerForm">	
+	<div style="width:100%">
 	<table style="width:100%">
 		<tr>
 			<td colspan="2" style="width:100%">
@@ -129,7 +130,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td style="width:50%">				
+			<td style="width:50%">	
+			<div>
        			<table id="roleList" class="easyui-datagrid" style="width:100%;height:590px;"		        
 			       		title="<spring:message code="resc.label.roleList"/>" 
 			       		data-options="rownumbers:true,singleSelect:true,collapsible:false,pagination:false,autoRowHeight:false">
@@ -142,9 +144,11 @@
 			        		<th data-options="field:'useIndc',width:'10%',halign:'center',align:'center'"><spring:message code="resc.label.useIndc"/></th>			        		
 			        	</tr>  
 			        </thead>
-			    </table>    				    	
+			    </table>
+			</div>    				    	
 			</td>
-			<td style="width:50%">
+			<td style="width:50%">	
+			<div>		
 				<table id="roleUserList" class="easyui-datagrid" style="width:100%;height:590px"		        
 			       		title="<spring:message code="resc.label.roleUserList"/>" 
 			       		data-options="rownumbers:true,singleSelect:true,collapsible:false,toolbar:'#subCodeTb',pagination:false,autoRowHeight:false">
@@ -154,21 +158,23 @@
 			                <th data-options="field:'userId',halign:'center',align:'left',width:'13%'"><spring:message code="resc.label.userId"/></th>
 			                <th data-options="field:'empName',halign:'center',align:'left',width:'12%'"><spring:message code="resc.label.empName"/></th>
 			                <th data-options="field:'deptDesc',halign:'center',align:'left',width:'20%'"><spring:message code="resc.label.deptDesc"/></th>
-			                <th data-options="field:'duthDesc',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.dutyDesc"/></th>
+			                <th data-options="field:'dutyDesc',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.dutyDesc"/></th>
 			                <th data-options="field:'pstnDesc',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.pstnDesc"/></th>
 			                <th data-options="field:'role',halign:'center',align:'left',width:'15%'"><spring:message code="resc.label.role"/></th>
 			                <th data-options="field:'useIndc',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.useIndc"/></th>			                			                
 			            </tr>
 			        </thead>
-			    </table>    	
+			    </table> 
+			</div>   	
 			    <div id="subCodeTb" style="height:auto">    
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendSubCode()"><spring:message code="resc.btn.add"/></a>
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitSubCode()"><spring:message code="resc.btn.delete"/></a>
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifySubCode()"><spring:message code="resc.btn.modify"/></a>        
-			    </div> 			    
+			    </div>						   
 			</td>
 		</tr>
 	</table>	
+	</div>	
 	</form>
 </body>
 </html>
