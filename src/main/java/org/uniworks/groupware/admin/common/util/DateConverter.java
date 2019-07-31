@@ -21,8 +21,12 @@ public class DateConverter implements Converter {
 		if (value == null) {
 			return null;
 		} else {
-			if (value instanceof String) {				
-				chkFlag = dt.parseDate((String)value);
+			if (value instanceof String) {	
+				String strDate = (String) value;
+				strDate = StringUtil.delDash(strDate);
+				strDate = StringUtil.delDot(strDate);
+				
+				chkFlag = dt.parseDate(strDate);
 			}
 		}
 		return chkFlag ? dt.getDate() : null;

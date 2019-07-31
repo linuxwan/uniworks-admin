@@ -5,7 +5,12 @@
  */
 package org.uniworks.groupware.admin.mapper;
 
+import java.util.List;
+import java.util.Map;
+
+import org.uniworks.groupware.admin.domain.User;
 import org.uniworks.groupware.admin.domain.UserInfo;
+import org.uniworks.groupware.admin.domain.UserRole;
 
 /**
  * @author Park Chungwan
@@ -18,4 +23,28 @@ public interface UserInfoMapper {
 	 * @return
 	 */
 	public UserInfo getUserInfo(String username);
+	/**
+	 * 사용자 Role을 여러개 가질 경우 사용자 정보가 Role별 List로 제공. 
+	 * @param username
+	 * @return
+	 */
+	public List<UserInfo> getUserInfoList(String username);
+	/**
+	 * 등록된 사용자 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	public List<User> getUserList(Map<String, Object> map);
+	/**
+	 * 등록된 사용자 정보를 가져온다.
+	 * @param map
+	 * @return
+	 */
+	public User getUser(Map<String, Object> map);
+	/**
+	 * Role별 사용자 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	public List<UserRole> getUserListByRole(Map<String, Object> map);
 }

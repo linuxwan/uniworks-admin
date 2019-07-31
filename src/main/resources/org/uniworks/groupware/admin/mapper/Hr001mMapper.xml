@@ -26,12 +26,29 @@
 				ZIP_CODE, CO_ADDR, CO_PHON_NO, CO_FAX_NO, HOME_PAGE_URL, BASE_OGAN_LEV, SPRT_LANG
 		from    hr001m
 		<where>
+			<if test="adminType == 'CNT_ADM'">
+				CO_ID	=	#{coId,jdbcType=VARCHAR}
+			</if>
+			<if test="adminType == 'GRP_ADM'">
+				CO_ID	IN (select  CO_ID  from    hr001m where CO_ID =  #{coId,jdbcType=VARCHAR}  or  PRNT_CO_CODE = #{coId,jdbcType=VARCHAR})		
+			</if>
 			<if test="prntCoCode != null">
 				PRNT_CO_CODE= #{prntCoCode,jdbcType=VARCHAR}
 			</if>
 		</where>
 	</select> 
- 
+	
+	<!-- 그룹사 모두 가져오기 -->
+	<select id="selectGroupCompanyListAll" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, CO_NAME, ST_DATE, FIN_DATE, PRNT_CO_CLSF, PRNT_CO_CODE, USE_INDC, BIZ_RGSR_NO, RPRSNT_NAME, 
+				ZIP_CODE, CO_ADDR, CO_PHON_NO, CO_FAX_NO, HOME_PAGE_URL, BASE_OGAN_LEV, SPRT_LANG
+		from    hr001m
+		where	(co_id	= #{coId,jdbcType=VARCHAR}
+		   or	prnt_co_code = #{coId,jdbcType=VARCHAR})
+		  and  CURDATE()+0 BETWEEN ST_DATE AND FIN_DATE		
+		order by co_id, prnt_co_clsf desc
+ 	</select>
+ 	
 	<!-- 상세 조회 --> 
 	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
 		select  CO_ID, CO_NAME, ST_DATE, FIN_DATE, PRNT_CO_CLSF, PRNT_CO_CODE, USE_INDC, BIZ_RGSR_NO, RPRSNT_NAME, 

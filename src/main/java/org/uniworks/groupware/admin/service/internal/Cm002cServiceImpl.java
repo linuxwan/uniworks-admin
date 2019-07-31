@@ -12,14 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.uniworks.groupware.admin.domain.Cm001c;
 import org.uniworks.groupware.admin.domain.Cm002c;
+import org.uniworks.groupware.admin.domain.Cm003m;
 import org.uniworks.groupware.admin.mapper.Cm002cMapper;
+import org.uniworks.groupware.admin.mapper.Cm003mMapper;
 import org.uniworks.groupware.admin.service.Cm002cService; 
 
 @Service 
 @Transactional(readOnly = true) 
 public class Cm002cServiceImpl implements Cm002cService { 
-	@Autowired Cm002cMapper cm002cMapper; 
+	@Autowired Cm002cMapper cm002cMapper;
+	@Autowired Cm003mMapper cm003mMapper;
 
 	/** 
 	 * 목록을 조회한다. 
@@ -68,5 +72,55 @@ public class Cm002cServiceImpl implements Cm002cService {
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED) 
 	public int deleteCm002c(Map<String, Object> map) { 
 		return cm002cMapper.deleteByPrimaryKey(map); 
-	} 
+	}
+	
+	/**
+	 * 부코드와 다국어 명칭을 등록한다.
+	 * @param cm002c
+	 * @param cm003m
+	 * @return
+	 */
+	@Override 
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public int addSubCodeInfo(Cm002c cm002c, List<Cm003m> cm003mList) {
+		int cnt = cm002cMapper.insert(cm002c);		
+		
+		for (Cm003m cm003m : cm003mList) {
+			cm003mMapper.insert(cm003m);
+		}
+		
+		return cnt;
+	}
+	
+	/**
+	 * 부코드와 다국어 명칭을 수정한다.
+	 * @param cm002c
+	 * @param cm003mList
+	 * @return
+	 */
+	@Override 
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public int updateSubCodeInfo(Cm002c cm002c, List<Cm003m> cm003mList) {
+		int cnt = cm002cMapper.updateByPrimaryKey(cm002c);
+		
+		for (Cm003m cm003m : cm003mList) {
+			cm003mMapper.updateByPrimaryKey(cm003m);
+		}
+		
+		return cnt;
+	}
+	
+	/**
+	 * 부코드와 다국어 명칭을 모두 삭제한다.
+	 * @param map
+	 * @return
+	 */
+	@Override 
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public int deleteSubCodeAndMultiLanguage(Map<String, Object> map) {
+		int cnt = 0;
+		cnt = cm003mMapper.deleteByPrimaryKey(map);
+		cnt = cm002cMapper.deleteByPrimaryKey(map);
+		return cnt;
+	}
 } 

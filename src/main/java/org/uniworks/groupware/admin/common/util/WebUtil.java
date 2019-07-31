@@ -6,8 +6,12 @@
 package org.uniworks.groupware.admin.common.util;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.PropertyUtilsBean;
+import org.apache.commons.beanutils.converters.DateConverter;
+import org.apache.commons.beanutils.converters.DateTimeConverter;
 
 /**
  * @author Chungwan Park
@@ -73,9 +79,16 @@ public class WebUtil {
 					//BeanUtils는 기본적으로 ConvertUtilsBean에서 설정된 default값을 가지고 변환이 이루어진다.
 					//변환 과정이 구현에 따라 바뀔 필요가 있을 경우, ConvertUtilsBean에서 구현이 바뀌어야 할 type을 deregister함수로 빼고
 					//난 뒤에 새롭게 정의한 Converter를 해당 type으로 register함수를 이용해서 등록.
+					/*
 					ConvertUtilsBean cub = new ConvertUtilsBean();
 					cub.deregister(Date.class);
 					cub.register(new DateConverter(), Date.class);
+					*/
+					DateTimeConverter dtConverter = new DateConverter();
+					dtConverter.setPattern("yyyyMMdd");
+					ConvertUtilsBean cub = new ConvertUtilsBean();
+					cub.deregister(Date.class);
+					cub.register(dtConverter, Date.class);
 					
 					BeanUtilsBean bub = new BeanUtilsBean(cub, new PropertyUtilsBean());
 					bub.setProperty(obj, name, value);
@@ -87,6 +100,27 @@ public class WebUtil {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param map
+	 * @param obj
+	 */
+	public static void bind(Map<String, Object> map, Object obj) {
+		DateTimeConverter dtConverter = new DateConverter();
+		dtConverter.setPattern("yyyyMMdd");
+		ConvertUtilsBean cub = new ConvertUtilsBean();
+		cub.deregister(Date.class);
+		cub.register(dtConverter, Date.class);
+		
+		BeanUtilsBean bub = new BeanUtilsBean(cub);
+		try {
+			bub.populate(obj, map);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

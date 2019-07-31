@@ -5,13 +5,13 @@
  */ 
 package org.uniworks.groupware.admin.domain; 
 
-import java.io.Serializable; 
-import java.sql.Timestamp; 
+import java.io.Serializable;
+import java.util.Date;
 
-import javax.xml.bind.annotation.XmlRootElement; 
-import javax.xml.bind.annotation.XmlType; 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-import org.pojomatic.Pojomatic; 
+import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty; 
 /** 
  * @author Park Chungwan 
@@ -26,9 +26,9 @@ public class Cm010c implements Serializable {
 	private String coId; 
 	private String empNo; 
 	private String pswd; 
-	private Timestamp pswdChngDate; 
-	private Timestamp useStDate; 
-	private Timestamp useFinDate; 
+	private Date pswdChngDate; 
+	private Date useStDate; 
+	private Date useFinDate; 
 	private String adminType; 
 
 	public void setAdminId(String adminId) { 
@@ -55,22 +55,22 @@ public class Cm010c implements Serializable {
 	public String getPswd() { 
 		return this.pswd; 
 	} 
-	public void setPswdChngDate(Timestamp pswdChngDate) { 
+	public void setPswdChngDate(Date pswdChngDate) { 
 		this.pswdChngDate = pswdChngDate; 
 	} 
-	public Timestamp getPswdChngDate() { 
+	public Date getPswdChngDate() { 
 		return this.pswdChngDate; 
 	} 
-	public void setUseStDate(Timestamp useStDate) { 
+	public void setUseStDate(Date useStDate) { 
 		this.useStDate = useStDate; 
 	} 
-	public Timestamp getUseStDate() { 
+	public Date getUseStDate() { 
 		return this.useStDate; 
 	} 
-	public void setUseFinDate(Timestamp useFinDate) { 
+	public void setUseFinDate(Date useFinDate) { 
 		this.useFinDate = useFinDate; 
 	} 
-	public Timestamp getUseFinDate() { 
+	public Date getUseFinDate() { 
 		return this.useFinDate; 
 	} 
 	public void setAdminType(String adminType) { 

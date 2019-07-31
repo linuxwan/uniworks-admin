@@ -18,6 +18,7 @@ public class UserSession {
 	private String pswd;	//로그인 패스워드
 	private String locale;	//로케일
 	private String lowCaseLocale;	//소문자 로케일 정보
+	private String baseOganLev;	//회사별 기준이 되는 조직 레벨
 	
 	public String getCoId() {
 		return coId;
@@ -66,5 +67,11 @@ public class UserSession {
 	}
 	public void setLowCaseLocale(String lowCaseLocale) {
 		this.lowCaseLocale = lowCaseLocale;
+	}
+	public String getBaseOganLev() {
+		return baseOganLev;
+	}
+	public void setBaseOganLev(String baseOganLev) {
+		this.baseOganLev = baseOganLev;
 	}
 }

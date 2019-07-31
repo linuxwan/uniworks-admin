@@ -22,13 +22,21 @@ public interface Hr001mMapper {
 	 * @return 
 	 */ 
 	List<Hr001m> select(Map<String, Object> map); 
-		
+	
+	/**
+	 * 그룹사 목록 가져오기
+	 * @param map
+	 * @return
+	 */
+	List<Hr001m> selectGroupCompanyListAll(Map<String, Object> map);
+	
 	/** 
 	 * 정보 가져오기 
 	 * @param map 
 	 * @return 
 	 */ 
-	Hr001m selectByPrimaryKey(Map<String, Object> map); 
+	Hr001m selectByPrimaryKey(Map<String, Object> map);
+		
 	/** 
 	 * 등록한다 
 	 * @param hr001m 

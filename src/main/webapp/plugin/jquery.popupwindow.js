@@ -6,7 +6,7 @@
 (function($) {
   var defaults = {
     center:      "screen", //true, screen || parent || undefined, null, "", false
-    createNew:   true,
+    createNew:   false,
     height:      500,
     left:        0,
     location:    false,

@@ -36,9 +36,9 @@ import org.uniworks.groupware.admin.config.SecurityConfig;
  * Application 설정 Class.
  */
 @Configuration
+@ComponentScan(basePackages = {"org.uniworks.groupware.admin.service"}, useDefaultFilters = false, includeFilters = {@Filter(Service.class)})
 @EnableTransactionManagement
 @MapperScan("org.uniworks.groupware.admin.mapper")
-@ComponentScan(basePackages = {"org.uniworks.groupware.admin.service"}, useDefaultFilters = false, includeFilters = {@Filter(Service.class)})
 @PropertySource(value = "classpath:application.properties")
 @Import({SecurityConfig.class})
 public class AppConfig implements TransactionManagementConfigurer {	
@@ -50,7 +50,7 @@ public class AppConfig implements TransactionManagementConfigurer {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
 	
-	@Bean
+	@Bean(destroyMethod = "close")
 	public DataSource dataSource() {
 		BoneCPConfig boneCP = new BoneCPConfig();
 		return boneCP.dataSource();
@@ -58,7 +58,9 @@ public class AppConfig implements TransactionManagementConfigurer {
 
 	@Bean
 	public PlatformTransactionManager transactionManager() {
-		return new DataSourceTransactionManager(dataSource());
+		DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(dataSource());
+		return transactionManager;
+		//return new DataSourceTransactionManager(dataSource());
 	}
 
 	@Bean

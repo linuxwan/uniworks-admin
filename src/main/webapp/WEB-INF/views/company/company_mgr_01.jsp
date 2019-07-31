@@ -29,7 +29,26 @@
     	$('#btnAdd').bind('click', function(){
     		formReset();
     		setReadOnly(false);
-    		$('#finDate').textbox('setValue', "9999.12.31");
+    		
+    		var rowData = $("#coTree").treegrid('getSelected');
+    		
+    		if (rowData != null && rowData.prntCoCode != 'root') {
+    			var title = '<spring:message code="resc.label.confirm"/>';
+    			var msg = '<spring:message code="resc.msg.childCoNotMake"/>';
+    			
+    			alertMsg(title, msg);
+    			return;
+    		}
+    		
+    		if ($('#mode').val() == 'ADD' || rowData == null) {    			    			    			
+    			$('#prntCoCode').textbox('setValue', "root");
+        		$('#prntCoCode').textbox('readonly', true);
+    		} else {
+    			$('#prntCoCode').textbox('setValue', rowData.coId);
+        		$('#prntCoCode').textbox('readonly', true);
+    		}
+    		    		
+    		$('#finDate').textbox('setValue', "9999-12-31");
     		$('#finDate').textbox('readonly', true);
     		$('#mode').val('ADD');    	
     		$('#btnSave').linkbutton({
@@ -122,8 +141,9 @@
             var row = rows[i];
             if (!exists(rows, row._parentId)){
                 nodes.push({
-                    coId:row.coId,
-                    coName:row.coName,
+                    coId: row.coId,
+                    coName: row.coName,
+                    prntCoCode: row.prntCoCode,
                     stDate: row.stDate,
                     finDate: row.finDate
                 });
@@ -296,22 +316,17 @@
     </script>
 </head>
 <body>
-	<input type="hidden" id="mode" name="mode" value=""/>		
+	<form id="frmHr" style="width:98%;">
+	<input type="hidden" id="mode" name="mode" value=""/>			
 	<table style="width:100%">
 		<tr>
-			<td colspan="2">
-				<a href="#" id="btnAdd" class="easyui-linkbutton" data-options="iconCls:'icon-add'"><spring:message code="resc.btn.enrollment"/></a>
-				<a href="#" id="btnModify" class="easyui-linkbutton" data-options="iconCls:'icon-edit'"><spring:message code="resc.btn.modify"/></a>
-        		<a href="#" id="btnDelete" class="easyui-linkbutton" data-options="iconCls:'icon-remove'"><spring:message code="resc.btn.delete"/></a>
-			</td>
-		</tr>
-		<tr>
 			<td style="width:40%">				
-       			<table id="coTree" title="" class="easyui-treegrid" style="width:100%;height:100%"
+       			<table id="coTree" title="<spring:message code="resc.label.companyMgr"/>" class="easyui-treegrid" style="width:100%;height:100%"
 			            data-options="			                
 			                lines: false,
 			                rownumbers: true,
 			                fitColumns: true,
+			                toolbar:'#tb',
 			                url: '<c:out value="${contextPath}"/>/rest/company',
 			                method: 'get',
 			                idField: 'coId',
@@ -324,14 +339,24 @@
 			            <tr>
 			                <th data-options="field:'coId',halign:'center',align:'center',width:100"><spring:message code="resc.label.coId"/></th>
 			                <th data-options="field:'coName',halign:'center',align:'center',width:150"><spring:message code="resc.label.coName"/></th>
+			                <th data-options="field:'prntCoCode',halign:'center',align:'center',width:0"><spring:message code="resc.label.coName"/></th>
 			                <th data-options="field:'stDate',halign:'center',align:'center',width:80,formatter:formatDateYYYYMMDD"><spring:message code="resc.label.stDate"/></th>
 			                <th data-options="field:'finDate',halign:'center',align:'center',width:80,formatter:formatDateYYYYMMDD"><spring:message code="resc.label.finDate"/></th>
 			            </tr>
 			        </thead>
-			    </table>    			
+			    </table>  
+			    <div id="tb" style="height:auto">    
+					<sec:authorize access="hasAuthority('SYS_ADM')">
+						<a href="#" id="btnAdd" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"><spring:message code="resc.btn.enrollment"/></a>
+					</sec:authorize>
+						<a href="#" id="btnModify" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"><spring:message code="resc.btn.modify"/></a>
+					<sec:authorize access="hasAuthority('SYS_ADM')">				
+		        		<a href="#" id="btnDelete" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"><spring:message code="resc.btn.delete"/></a>
+		        	</sec:authorize>
+				</div>  			
 			</td>
 			<td style="width:60%">
-				<div class="easyui-panel" title="" style="width:100%;max-width:100%;padding:10px 10px;">
+				<div class="easyui-panel" title="" style="width:98%;max-width:98%;padding:10px 10px;">
 			        <form id="frmCompany">			
 			        <jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>        
 			        <table style="width:100%">
@@ -357,12 +382,12 @@
 			        <tr>
 			            <td style="width:50%;padding:0px 10px;">
 				            <div style="margin-bottom:10px">
-				                <input class="easyui-datebox" id="stDate" name="stDate" style="width:100%" data-options="label:'<spring:message code="resc.label.stDate"/>:',required:true,formatter:pointformatter,parser:pointparser,labelWidth:100">
+				                <input class="easyui-datebox" id="stDate" name="stDate" style="width:100%" data-options="label:'<spring:message code="resc.label.stDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
 				            </div>
 			            </td>
 			            <td style="width:50%;padding:0px 10px;">
 				            <div style="margin-bottom:10px">
-				                <input class="easyui-datebox" id="finDate" name="finDate" style="width:100%" data-options="label:'<spring:message code="resc.label.finDate"/>:',required:true,formatter:pointformatter,parser:pointparser,labelWidth:100">
+				                <input class="easyui-datebox" id="finDate" name="finDate" style="width:100%" data-options="label:'<spring:message code="resc.label.finDate"/>:',required:true,formatter:dashformatter,parser:dashparser,labelWidth:100">
 				            </div>
 			            </td>
 			        </tr>
@@ -447,5 +472,6 @@
 			</td>
 		</tr>
 	</table>
+	</form>	
 </body>
 </html>

@@ -44,4 +44,12 @@ public interface Cm010cService {
 	 * @return 
 	 */ 
 	int deleteCm010c(java.util.Map<String,Object> map); 
+	
+	/**
+	 * 등록된 관리자가 있는지 체크한다. 있으면 true, 없으면 false 리턴
+	 * @param coId
+	 * @param adminId
+	 * @return
+	 */
+	boolean isAdminExist(String coId, String adminId);
 } 

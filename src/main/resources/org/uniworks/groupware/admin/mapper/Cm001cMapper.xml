@@ -2,30 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="org.uniworks.groupware.admin.mapper.Cm001cMapper"> 
 	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Cm001c"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
 		<result column="MAJ_CODE" jdbcType="VARCHAR" property="majCode" /> 
 		<result column="RESC_KEY" jdbcType="VARCHAR" property="rescKey" /> 
 		<result column="MAJ_CODE_NAME" jdbcType="VARCHAR" property="majCodeName" /> 
 		<result column="MAJ_CODE_DESC" jdbcType="VARCHAR" property="majCodeDesc" /> 
 		<result column="USE_INDC" jdbcType="VARCHAR" property="useIndc" /> 
+		<result column="PRNT_MAJ_CODE" jdbcType="VARCHAR" property="prntMajCode" /> 
 	</resultMap> 
 
 	<!-- 목록 조회 --> 
-	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
-		select  MAJ_CODE, RESC_KEY, MAJ_CODE_NAME, MAJ_CODE_DESC, USE_INDC
-		from   cm001c
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 			
+		select  A.CO_ID as CO_ID, A.MAJ_CODE as MAJ_CODE, A.RESC_KEY as RESC_KEY, B.RESC_KEY_VALUE as MAJ_CODE_NAME, 
+		B.RESC_KEY_DESC as MAJ_CODE_DESC, A.USE_INDC as USE_INDC, A.PRNT_MAJ_CODE as PRNT_MAJ_CODE
+		from   cm001c A 
+		INNER JOIN cm003m B on (
+		  	   A.CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and  A.CO_ID	=	B.CO_ID
+		  and  A.RESC_KEY = B.RESC_KEY
+		  and  B.LOCALE = #{lang,jdbcType=VARCHAR}
+		  <if test="useIndc != null">
+		  and  A.USE_INDC= #{useIndc,jdbcType=VARCHAR}
+		  </if>
+		)
+		order by A.CO_ID, A.MAJ_CODE    
 	</select> 
  
 	<!-- 상세 조회 --> 
-	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
-		select  MAJ_CODE, RESC_KEY, MAJ_CODE_NAME, MAJ_CODE_DESC, USE_INDC
-		from   cm001c
-		where  MAJ_CODE	=	#{majCode,jdbcType=VARCHAR} 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap">   
+		select  A.CO_ID as CO_ID, A.MAJ_CODE as MAJ_CODE, A.RESC_KEY as RESC_KEY, B.RESC_KEY_VALUE as MAJ_CODE_NAME, 
+		B.RESC_KEY_DESC as MAJ_CODE_DESC, A.USE_INDC as USE_INDC, A.PRNT_MAJ_CODE as PRNT_MAJ_CODE
+		from   cm001c A 
+		INNER JOIN cm003m B on (
+		  	   A.CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and  A.CO_ID	=	B.CO_ID
+		  and  A.MAJ_CODE	=	#{majCode,jdbcType=VARCHAR}
+		  and  A.RESC_KEY = B.RESC_KEY
+		  and  B.LOCALE = #{lang,jdbcType=VARCHAR}		  
+		)		 
 	</select> 
  
 	<!-- 등록 --> 
 	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Cm001c"> 
-		insert	into cm001c(MAJ_CODE, RESC_KEY, MAJ_CODE_NAME, MAJ_CODE_DESC, USE_INDC) 
-		values (#{majCode,jdbcType=VARCHAR},#{rescKey,jdbcType=VARCHAR},#{majCodeName,jdbcType=VARCHAR},#{majCodeDesc,jdbcType=VARCHAR},#{useIndc,jdbcType=VARCHAR}) 
+		insert	into cm001c(CO_ID, MAJ_CODE, RESC_KEY, MAJ_CODE_NAME, MAJ_CODE_DESC, USE_INDC, PRNT_MAJ_CODE) 
+		values (#{coId,jdbcType=VARCHAR},#{majCode,jdbcType=VARCHAR},#{rescKey,jdbcType=VARCHAR},#{majCodeName,jdbcType=VARCHAR},#{majCodeDesc,jdbcType=VARCHAR},#{useIndc,jdbcType=VARCHAR},#{prntMajCode,jdbcType=VARCHAR}) 
 	</insert> 
  
 	<!-- 수정 --> 
@@ -36,13 +56,16 @@
 			<if test="majCodeName != null">MAJ_CODE_NAME= #{majCodeName,jdbcType=VARCHAR},</if> 
 			<if test="majCodeDesc != null">MAJ_CODE_DESC= #{majCodeDesc,jdbcType=VARCHAR},</if> 
 			<if test="useIndc != null">USE_INDC= #{useIndc,jdbcType=VARCHAR},</if> 
+			<if test="prntMajCode != null">PRNT_MAJ_CODE= #{prntMajCode,jdbcType=VARCHAR},</if> 
 		</trim> 
-		where	MAJ_CODE	=	#{majCode,jdbcType=VARCHAR} 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and   MAJ_CODE	=	#{majCode,jdbcType=VARCHAR} 
 	</update> 
  
 	<!-- 삭제 --> 
 	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
 		delete	from cm001c 
-		where	MAJ_CODE	=	#{majCode,jdbcType=VARCHAR} 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR}
+		  and   MAJ_CODE	=	#{majCode,jdbcType=VARCHAR} 
 	</delete> 
 </mapper>

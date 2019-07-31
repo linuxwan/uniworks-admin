@@ -34,6 +34,7 @@ public class UserSessionCreator {
 			userSession.setCoId(cm010c.getCoId());	//회사 구분
 			userSession.setAdminId(cm010c.getAdminId());//사용자 ID
 			userSession.setPswd(cm010c.getPswd());	//로그인 비밀번호
+			userSession.setAdminType(cm010c.getAdminType()); //관리자 유형
 			userSession.setLang(request.getLocale().getLanguage());
 			
 			if (request.getLocale().getCountry() == null || request.getLocale().getCountry() == "") {

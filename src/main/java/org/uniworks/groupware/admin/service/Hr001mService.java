@@ -17,6 +17,13 @@ public interface Hr001mService {
 	 */ 
 	List<Hr001m> getHr001mList(java.util.Map<String,Object> map); 
 
+	/**
+	 * 그룹사 목록을 가져온다. 
+	 * @param map
+	 * @return
+	 */
+	List<Hr001m> getGroupCompanyListAll(java.util.Map<String,Object> map);
+	
 	/** 
 	 * 조회한다. 
 	 * 

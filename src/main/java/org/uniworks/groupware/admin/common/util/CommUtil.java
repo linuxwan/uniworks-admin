@@ -17,6 +17,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.crypto.codec.Base64;
+
 /**
  * @author chungwan
  *
@@ -501,4 +503,47 @@ public class CommUtil {
        tmpString = tmpString.replaceAll("\r" , "");
        return tmpString;
    }    
+   
+   /**
+    * Base64로 encode
+    * @param str
+    * @return
+    */
+   public static byte[] encodeBase64(String str) {
+	  if (str == null) return null;
+	  byte[] encode = Base64.encode(str.getBytes());
+	  return encode;
+   }   
+   
+   /**
+    * Base64로 encode해서 String으로 반환
+    * @param str
+    * @return
+    */
+   public static String encodeBase64String(String str) {
+	  if (str == null) return null;
+	  byte[] encode = Base64.encode(str.getBytes());
+	  return new String(encode);
+   }   
+   /**
+    * Base64로 decode
+    * @param str
+    * @return
+    */
+   public static byte[] decodeBase64(String str) {
+	  if (str == null) return null;
+	  byte[] decode = Base64.decode(str.getBytes());
+	  return decode;
+   }
+   
+   /**
+    * Base64로 decode해서 String으로 반환
+    * @param str
+    * @return
+    */
+   public static String decodeBase64String(String str) {
+	  if (str == null) return null;
+	  byte[] decode = Base64.decode(str.getBytes());
+	  return new String(decode);
+   }
 }

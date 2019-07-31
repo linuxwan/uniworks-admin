@@ -7,10 +7,210 @@
 		<result column="PASSWORD" jdbcType="VARCHAR" property="password" /> 
 		<result column="ROLE" jdbcType="VARCHAR" property="role" /> 
 	</resultMap>
-		
+	
+	<resultMap id="UserResultMap" type="org.uniworks.groupware.admin.domain.User"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+		<result column="EMP_NAME" jdbcType="VARCHAR" property="empName" /> 
+		<result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+		<result column="DEPT_DESC" jdbcType="VARCHAR" property="deptDesc" />
+		<result column="DUTY_CODE" jdbcType="VARCHAR" property="dutyCode" /> 
+		<result column="DUTY_DESC" jdbcType="VARCHAR" property="dutyDesc" /> 
+		<result column="PSTN_CODE" jdbcType="VARCHAR" property="pstnCode" /> 
+		<result column="PSTN_DESC" jdbcType="VARCHAR" property="pstnDesc" />  
+		<result column="PSWD" jdbcType="VARCHAR" property="pswd" /> 
+		<result column="PSWD_CHNG_DATE" jdbcType="TIMESTAMP" property="pswdChngDate" /> 
+		<result column="PSWD_INIT_INDC" jdbcType="VARCHAR" property="pswdInitIndc" /> 
+		<result column="INTERNAL_MAIL_ADDR" jdbcType="VARCHAR" property="internalMailAddr" /> 
+		<result column="OUTSIDE_MAIL_ADDR" jdbcType="VARCHAR" property="outsideMailAddr" /> 
+		<result column="CNFM_PSWD" jdbcType="VARCHAR" property="cnfmPswd" /> 
+		<result column="CNFM_PSWD_CHNG_DATE" jdbcType="TIMESTAMP" property="cnfmPswdChngDate" /> 
+		<result column="USER_RGSR_DATE" jdbcType="TIMESTAMP" property="userRgsrDate" /> 
+		<result column="USE_INDC" jdbcType="CHAR" property="useIndc" /> 
+	</resultMap>
+	
+	<resultMap id="UserRoleResultMap" type="org.uniworks.groupware.admin.domain.UserRole"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+		<result column="EMP_NAME" jdbcType="VARCHAR" property="empName" /> 
+		<result column="ROLE" jdbcType="VARCHAR" property="role" />		
+		<result column="USE_INDC" jdbcType="CHAR" property="useIndc" />
+		<result column="DUTY_CODE" jdbcType="VARCHAR" property="dutyCode" /> 
+		<result column="DUTY_DESC" jdbcType="VARCHAR" property="dutyDesc" /> 
+		<result column="PSTN_CODE" jdbcType="VARCHAR" property="pstnCode" /> 
+		<result column="PSTN_DESC" jdbcType="VARCHAR" property="pstnDesc" />  		 		
+		<result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+		<result column="DEPT_DESC" jdbcType="VARCHAR" property="deptDesc" /> 
+	</resultMap>  
+	
+	<!-- 관리자 정보를 가져온다 -->	
  	<select id="getUserInfo" parameterType="java.lang.String" resultMap="BaseResultMap"> 
  		SELECT A.CO_ID as CO_ID, A.ADMIN_ID as USER_ID, A.PSWD as PASSWORD, A.ADMIN_TYPE as ROLE
  		FROM   CM010C A  		
  		WHERE  A.ADMIN_ID	=	#{username,jdbcType=VARCHAR}
+ 	</select>
+ 	
+ 	<!-- 등록된 관리자 목록을 가져온다 -->
+ 	<select id="getUserInfoList" parameterType="java.lang.String" resultMap="BaseResultMap"> 
+ 		SELECT A.CO_ID as CO_ID, A.ADMIN_ID as USER_ID, A.PSWD as PASSWORD, A.ADMIN_TYPE as ROLE
+ 		FROM   CM010C A  		
+ 		WHERE  A.ADMIN_ID	=	#{username,jdbcType=VARCHAR}
+ 	</select>
+ 	
+ 	<!-- 사용자 목록을 가져온다 -->
+ 	<select id="getUserList" parameterType="java.util.Map" resultMap="UserResultMap">
+ 		select  A.CO_ID as CO_ID, A.USER_ID as USER_ID, B.EMP_NAME as EMP_NAME, C.DUTY_CODE as DUTY_CODE, E.RESC_KEY_VALUE as DUTY_DESC, C.PSTN_CODE as PSTN_CODE, 
+ 				G.RESC_KEY_VALUE as PSTN_DESC, A.PSWD as PSWD, A.PSWD_CHNG_DATE as PSWD_CHNG_DATE, A.PSWD_INIT_INDC as PSWD_INIT_INDC, A.INTERNAL_MAIL_ADDR as INTERNAL_MAIL_ADDR, 
+        		A.OUTSIDE_MAIL_ADDR as OUTSIDE_MAIL_ADDR, A.CNFM_PSWD as CNFM_PSWD, A.CNFM_PSWD_CHNG_DATE as CNFM_PSWD_CHNG_DATE, A.USER_RGSR_DATE as USER_RGSR_DATE, A.USE_INDC as USE_INDC,
+        		CASE C.BASE_ASGN_OGAN_LEV WHEN '1' THEN C.ASGN_OGAN_CODE_1
+	                                WHEN '2' THEN C.ASGN_OGAN_CODE_2
+	                                WHEN '3' THEN C.ASGN_OGAN_CODE_3
+	                                WHEN '4' THEN C.ASGN_OGAN_CODE_4
+	                                WHEN '5' THEN C.ASGN_OGAN_CODE_5
+	                                WHEN '6' THEN C.ASGN_OGAN_CODE_6
+	                                WHEN '7' THEN C.ASGN_OGAN_CODE_7
+	                                WHEN '8' THEN C.ASGN_OGAN_CODE_8
+	                                WHEN '9' THEN C.ASGN_OGAN_CODE_9
+	                                WHEN '10' THEN C.ASGN_OGAN_CODE_10
+	                                WHEN '11' THEN C.ASGN_OGAN_CODE_11
+	                                WHEN '12' THEN C.ASGN_OGAN_CODE_12 END DEPT_CODE,
+				CASE C.BASE_ASGN_OGAN_LEV WHEN '1' THEN ASGN_OGAN_DESC_1
+	                                WHEN '2' THEN C.ASGN_OGAN_DESC_2
+	                                WHEN '3' THEN C.ASGN_OGAN_DESC_3
+	                                WHEN '4' THEN C.ASGN_OGAN_DESC_4
+	                                WHEN '5' THEN C.ASGN_OGAN_DESC_5
+	                                WHEN '6' THEN C.ASGN_OGAN_DESC_6
+	                                WHEN '7' THEN C.ASGN_OGAN_DESC_7
+	                                WHEN '8' THEN C.ASGN_OGAN_DESC_8
+	                                WHEN '9' THEN C.ASGN_OGAN_DESC_9
+	                                WHEN '10' THEN C.ASGN_OGAN_DESC_10
+	                                WHEN '11' THEN C.ASGN_OGAN_DESC_11
+	                                WHEN '12' THEN C.ASGN_OGAN_DESC_12 END DEPT_DESC
+		  from  nw100m A
+			left join hr011m B 
+     			on A.CO_ID = B.CO_ID     
+     		   AND A.USER_ID = B.EMP_NO
+     		   AND B.LOCALE = #{lang,jdbcType=VARCHAR}        		   
+			left join HR010M C
+     		    on A.CO_ID = C.CO_ID  
+     		   AND A.USER_ID = C.EMP_NO 
+			LEFT OUTER JOIN cm002c as D on D.CO_ID = C.CO_ID and D.SUB_CODE = C.DUTY_CODE and D.MAJ_CODE = 'CD004'   
+			LEFT OUTER JOIN cm003m as E on E.CO_ID = A.CO_ID and E.RESC_KEY = D.RESC_KEY and E.LOCALE =  #{lang,jdbcType=VARCHAR}
+			LEFT OUTER JOIN cm002c as F on F.CO_ID = C.CO_ID and F.SUB_CODE = C.PSTN_CODE and F.MAJ_CODE = 'CD006'   
+			LEFT OUTER JOIN cm003m as G on G.CO_ID = A.CO_ID and G.RESC_KEY = F.RESC_KEY and G.LOCALE =  #{lang,jdbcType=VARCHAR}
+			where  A.CO_ID	=	#{coId,jdbcType=VARCHAR}
+		<if test="searchKind == 'empNo'">
+			  and  A.USER_ID LIKE concat(#{searchWord,jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="searchKind == 'empName'">
+			  and  B.EMP_NAME LIKE concat(#{searchWord,jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="orderBy == 'empNo'">
+		order by USER_ID  
+		</if>
+		<if test="orderBy == 'empName'">
+		order by EMP_NAME
+		</if>
+ 	</select>
+ 	
+ 	<!-- 사용자정보 가져오기 -->
+ 	<select id="getUser" parameterType="java.util.Map" resultMap="UserResultMap">
+ 		select  A.CO_ID as CO_ID, A.USER_ID as USER_ID, B.EMP_NAME as EMP_NAME, C.DUTY_CODE as DUTY_CODE, E.RESC_KEY_VALUE as DUTY_DESC, C.PSTN_CODE as PSTN_CODE, 
+ 				G.RESC_KEY_VALUE as PSTN_DESC, A.PSWD as PSWD, A.PSWD_CHNG_DATE as PSWD_CHNG_DATE, A.PSWD_INIT_INDC as PSWD_INIT_INDC, A.INTERNAL_MAIL_ADDR as INTERNAL_MAIL_ADDR, 
+        		A.OUTSIDE_MAIL_ADDR as OUTSIDE_MAIL_ADDR, A.CNFM_PSWD as CNFM_PSWD, A.CNFM_PSWD_CHNG_DATE as CNFM_PSWD_CHNG_DATE, A.USER_RGSR_DATE as USER_RGSR_DATE, A.USE_INDC as USE_INDC,
+        		CASE C.BASE_ASGN_OGAN_LEV WHEN '1' THEN C.ASGN_OGAN_CODE_1
+	                                WHEN '2' THEN C.ASGN_OGAN_CODE_2
+	                                WHEN '3' THEN C.ASGN_OGAN_CODE_3
+	                                WHEN '4' THEN C.ASGN_OGAN_CODE_4
+	                                WHEN '5' THEN C.ASGN_OGAN_CODE_5
+	                                WHEN '6' THEN C.ASGN_OGAN_CODE_6
+	                                WHEN '7' THEN C.ASGN_OGAN_CODE_7
+	                                WHEN '8' THEN C.ASGN_OGAN_CODE_8
+	                                WHEN '9' THEN C.ASGN_OGAN_CODE_9
+	                                WHEN '10' THEN C.ASGN_OGAN_CODE_10
+	                                WHEN '11' THEN C.ASGN_OGAN_CODE_11
+	                                WHEN '12' THEN C.ASGN_OGAN_CODE_12 END DEPT_CODE,
+				CASE C.BASE_ASGN_OGAN_LEV WHEN '1' THEN ASGN_OGAN_DESC_1
+	                                WHEN '2' THEN C.ASGN_OGAN_DESC_2
+	                                WHEN '3' THEN C.ASGN_OGAN_DESC_3
+	                                WHEN '4' THEN C.ASGN_OGAN_DESC_4
+	                                WHEN '5' THEN C.ASGN_OGAN_DESC_5
+	                                WHEN '6' THEN C.ASGN_OGAN_DESC_6
+	                                WHEN '7' THEN C.ASGN_OGAN_DESC_7
+	                                WHEN '8' THEN C.ASGN_OGAN_DESC_8
+	                                WHEN '9' THEN C.ASGN_OGAN_DESC_9
+	                                WHEN '10' THEN C.ASGN_OGAN_DESC_10
+	                                WHEN '11' THEN C.ASGN_OGAN_DESC_11
+	                                WHEN '12' THEN C.ASGN_OGAN_DESC_12 END DEPT_DESC
+		  from  nw100m A
+			left join hr011m B 
+     			on A.CO_ID = B.CO_ID     
+     		   AND A.USER_ID = B.EMP_NO
+     		   AND B.LOCALE = #{lang,jdbcType=VARCHAR}        		   
+			left join HR010M C
+     		    on A.CO_ID = C.CO_ID  
+     		   AND A.USER_ID = C.EMP_NO 
+			LEFT OUTER JOIN cm002c as D on D.CO_ID = C.CO_ID and D.SUB_CODE = C.DUTY_CODE and D.MAJ_CODE = 'CD004'   
+			LEFT OUTER JOIN cm003m as E on E.CO_ID = A.CO_ID and E.RESC_KEY = D.RESC_KEY and E.LOCALE =  #{lang,jdbcType=VARCHAR}
+			LEFT OUTER JOIN cm002c as F on F.CO_ID = C.CO_ID and F.SUB_CODE = C.PSTN_CODE and F.MAJ_CODE = 'CD006'   
+			LEFT OUTER JOIN cm003m as G on G.CO_ID = A.CO_ID and G.RESC_KEY = F.RESC_KEY and G.LOCALE =  #{lang,jdbcType=VARCHAR}
+			where  A.CO_ID		=	#{coId,jdbcType=VARCHAR}
+			  and  A.USER_ID 	=	#{userId,jdbcType=VARCHAR}
+ 	</select>
+ 	
+ 	<!-- Role별 사용자 목록을 가져온다. -->
+ 	<select id="getUserListByRole" parameterType="java.util.Map" resultMap="UserRoleResultMap">
+	 	select  A.CO_ID, A.USER_ID, C.EMP_NAME, A.ROLE, A.USE_INDC, B.DUTY_CODE, E.RESC_KEY_VALUE as DUTY_DESC, 
+       			B.PSTN_CODE, G.RESC_KEY_VALUE as PSTN_DESC,
+		      CASE B.BASE_ASGN_OGAN_LEV WHEN '1' THEN B.ASGN_OGAN_CODE_1
+		                                WHEN '2' THEN B.ASGN_OGAN_CODE_2
+		                                WHEN '3' THEN B.ASGN_OGAN_CODE_3
+		                                WHEN '4' THEN B.ASGN_OGAN_CODE_4
+		                                WHEN '5' THEN B.ASGN_OGAN_CODE_5
+		                                WHEN '6' THEN B.ASGN_OGAN_CODE_6
+		                                WHEN '7' THEN B.ASGN_OGAN_CODE_7
+		                                WHEN '8' THEN B.ASGN_OGAN_CODE_8
+		                                WHEN '9' THEN B.ASGN_OGAN_CODE_9
+		                                WHEN '10' THEN B.ASGN_OGAN_CODE_10
+		                                WHEN '11' THEN B.ASGN_OGAN_CODE_11
+		                                WHEN '12' THEN B.ASGN_OGAN_CODE_12 END DEPT_CODE,
+			  CASE B.BASE_ASGN_OGAN_LEV WHEN '1' THEN B.ASGN_OGAN_DESC_1
+		                                WHEN '2' THEN B.ASGN_OGAN_DESC_2
+		                                WHEN '3' THEN B.ASGN_OGAN_DESC_3
+		                                WHEN '4' THEN B.ASGN_OGAN_DESC_4
+		                                WHEN '5' THEN B.ASGN_OGAN_DESC_5
+		                                WHEN '6' THEN B.ASGN_OGAN_DESC_6
+		                                WHEN '7' THEN B.ASGN_OGAN_DESC_7
+		                                WHEN '8' THEN B.ASGN_OGAN_DESC_8
+		                                WHEN '9' THEN B.ASGN_OGAN_DESC_9
+		                                WHEN '10' THEN B.ASGN_OGAN_DESC_10
+		                                WHEN '11' THEN B.ASGN_OGAN_DESC_11
+		                                WHEN '12' THEN B.ASGN_OGAN_DESC_12 END DEPT_DESC
+		  from nw105m A
+		  inner join hr010m B
+		     on A.CO_ID = B.CO_ID
+			and A.USER_ID = B.EMP_NO
+		  inner join hr011m C 
+			 on B.CO_ID = C.CO_ID
+			and B.EMP_NO = C.EMP_NO
+		    and C.LOCALE = #{lang,jdbcType=VARCHAR}
+		  inner join cm002c D
+		     on A.CO_ID = D.CO_ID
+			and D.MAJ_CODE = 'CD004'
+		    and B.DUTY_CODE = D.SUB_CODE
+		  inner join cm003m E
+		     on D.CO_ID = E.CO_ID
+			and D.RESC_KEY = E.RESC_KEY
+			and E.LOCALE = #{lang,jdbcType=VARCHAR}
+		   left outer join cm002c F 
+		     on B.CO_ID = F.CO_ID
+			and B.PSTN_CODE = F.SUB_CODE
+		    and F.MAJ_CODE = 'CD006'
+		   left outer join cm003m G
+		     on F.CO_ID = G.CO_ID
+			and F.RESC_KEY = G.RESC_KEY
+		    and G.LOCALE = #{lang,jdbcType=VARCHAR}
+		where A.CO_ID = #{coId,jdbcType=VARCHAR}
+		  and A.ROLE  = #{role,jdbcType=VARCHAR}
  	</select>
 </mapper>

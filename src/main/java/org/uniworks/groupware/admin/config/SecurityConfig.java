@@ -9,9 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -24,6 +24,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.uniworks.groupware.admin.common.util.ApplicationConfigReader;
 import org.uniworks.groupware.admin.service.AuthenticationService;
+import org.uniworks.groupware.admin.service.CustomAuthenticationProvider;
 
 /**
  * @author Park Chungwan
@@ -32,19 +33,22 @@ import org.uniworks.groupware.admin.service.AuthenticationService;
 @Configuration
 @EnableWebSecurity
 @PropertySource(value = "classpath:application.properties")
+@ComponentScan("org.uniworks.groupware.admin.service")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final Logger logger = LoggerFactory.getLogger("SecurityConfig");
 	
 	@Autowired AuthenticationService authenticationService;
-	
+	@Autowired CustomAuthenticationProvider customAuthenticationProvider;	
 	@Autowired
-	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {	
+	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {		
 		auth.userDetailsService(authenticationService).passwordEncoder(passwordencoder());
+		auth.authenticationProvider(customAuthenticationProvider);
 	}
    
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 	    auth.userDetailsService(authenticationService).passwordEncoder(passwordencoder());
+	    auth.authenticationProvider(customAuthenticationProvider);
 	}	
 	
 	@Override
@@ -64,12 +68,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	http    
     		.csrf()
     		.and()
-    			.headers().frameOptions().disable() //iframe 사용을 허용하도록 변경.
+    			.headers().frameOptions().sameOrigin() //iframe 사용을 허용하도록 변경.
     		.and()    		
-    		.authorizeRequests()    			
+    		.authorizeRequests()    			 
     			.antMatchers("/loginForm").access("permitAll")
     			.antMatchers("/resources/**").permitAll().anyRequest().permitAll()
-    			.antMatchers("/**").access("hasAnyRole('SYS_ADM', 'CNT_ADM')")    	
+    			.antMatchers("/**").access("hasAnyRole('SYS_ADM', 'CNT_ADM')")
+    			.anyRequest().authenticated()
     		.and()    		
     			.formLogin().loginPage("/loginForm").loginProcessingUrl("/loginForm")    			
     			.defaultSuccessUrl("/main", true).failureUrl("/loginForm?error")
@@ -86,5 +91,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean(name="passwordEncoder")
     public PasswordEncoder passwordencoder(){
     	return new BCryptPasswordEncoder();
-    }    
+    }
 }

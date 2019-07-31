@@ -6,6 +6,7 @@ package org.uniworks.groupware.admin.common.util;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -103,6 +104,7 @@ public class DateUtil {
 	 */
 	public boolean parseDate(String dt) {
 	    boolean flag = false;
+	    
 	    if(dt.length() == 8) {
 	    	Calendar calendar = Calendar.getInstance();
 	    	try {
@@ -348,6 +350,64 @@ public class DateUtil {
 	 */
 	public static Date getCurrentDate() {		
 		return Calendar.getInstance().getTime();
+	}
+	
+	/**
+	 * 현재 시스템 일자를 String 타입으로 가져온다. (YYYYMMDD)
+	 * @return
+	 */
+	public static String getCurrentDateToString() {
+		LocalDate dt = LocalDate.now();
+		int year = dt.getYear();
+		int month = dt.getMonth().getValue();
+		int day = dt.getDayOfMonth();
+		String crntDate = String.valueOf(year);
+		
+		if (month < 10) {
+			crntDate += "0" + month;
+		} else {
+			crntDate += month;
+		}
+		
+		if (day < 10) {
+			crntDate += "0" + day;
+		} else {
+			crntDate += day;
+		}
+		
+		return crntDate;
+	}
+	
+	/**
+	 * 현재 시스템 일자에서 특정 일자 만큼 더하거나 뺀 날짜를 String 타입으로 가져온다. (YYYYMMDD)
+	 * @param d
+	 * @return
+	 */
+	public static String getCurrentDateToString(int days) {
+		LocalDate dt = LocalDate.now();
+		if (days > 0) {
+			dt = dt.plusDays(days);
+		} else {
+			dt = dt.minusDays(Math.abs(days));
+		}
+		int year = dt.getYear();
+		int month = dt.getMonth().getValue();
+		int day = dt.getDayOfMonth();
+		String crntDate = String.valueOf(year);
+		
+		if (month < 10) {
+			crntDate += "0" + month;
+		} else {
+			crntDate += month;
+		}
+		
+		if (day < 10) {
+			crntDate += "0" + day;
+		} else {
+			crntDate += day;
+		}
+		
+		return crntDate;
 	}
 	
 	/**

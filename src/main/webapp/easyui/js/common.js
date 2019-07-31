@@ -255,11 +255,11 @@ function formatDate(val, row) {
 	} else {
 		strMonth = (date.getMonth() + 1);
 	}
-	var strDate = '';
+	var strDay = '';
 	if (date.getDate() < 10) {
-		strDate = '0' + date.getDate();
+		strDay = '0' + date.getDate();
 	} else {
-		strDate = date.getDate();
+		strDay = date.getDate();
 	}
 	
 	var strHours = '';
@@ -283,8 +283,111 @@ function formatDate(val, row) {
 		strSeconds = date.getSeconds();
 	}
 	
-	var strDate = date.getFullYear() + '.' + strMonth + '.' + strDate + ' ' + strHours + ':' + strMinutes + ':' + strSeconds; 
+	var strDate = date.getFullYear() + '.' + strMonth + '.' + strDay + ' ' + strHours + ':' + strMinutes + ':' + strSeconds; 
 	return strDate;
+}
+
+/**
+ * DataGrid에서 날짜 포맷에 맞게 변환하는 함수
+ * @param val
+ * @param row
+ * @returns {String}
+ */
+function formatDateDash(val, row) {
+	if (val == null || val == "") return "";
+	var date = new Date(Number(val));		
+					
+	var strMonth = '';
+	if (date.getMonth() + 1 < 10) {
+		strMonth = '0' + (date.getMonth() + 1);
+	} else {
+		strMonth = (date.getMonth() + 1);
+	}
+	var strDay = '';
+	if (date.getDate() < 10) {
+		strDay = '0' + date.getDate();
+	} else {
+		strDay = date.getDate();
+	}
+	
+	var strHours = '';
+	if (date.getHours() < 10) {
+		strHours = '0' + date.getHours();
+	} else {
+		strHours = date.getHours();
+	}
+	
+	var strMinutes = '';
+	if (date.getMinutes() < 10) {
+		strMinutes = '0' + date.getMinutes();
+	} else {
+		strMinutes = date.getMinutes();
+	}
+	
+	var strSeconds = '';
+	if (date.getSeconds() < 10) {
+		strSeconds = '0' + date.getSeconds();
+	} else {
+		strSeconds = date.getSeconds();
+	}
+	
+	var strDate = date.getFullYear() + '-' + strMonth + '-' + strDay; // + ' ' + strHours + ':' + strMinutes + ':' + strSeconds; 
+	return strDate;
+}
+
+/**
+ * databox에서 날짜 포맷에 맞게 변환하는 함수
+ * @param val
+ * @param row
+ * @returns {String}
+ */
+function dateBoxformatDate(val) {
+	if (val == null || val == "") return "";
+	var date = new Date(Number(val));
+	
+	var strMonth = '';
+	if (date.getMonth() + 1 < 10) {
+		strMonth = '0' + (date.getMonth() + 1);
+	} else {
+		strMonth = (date.getMonth() + 1);
+	}
+	var strDay = '';
+	if (date.getDate() < 10) {
+		strDay = '0' + date.getDate();
+	} else {
+		strDay = date.getDate();
+	}
+	    	    	
+	var strDate = date.getFullYear() + '-' + strMonth + '-' + strDay;  
+	return strDate;
+}
+
+/**
+ * datebox에서 날짜 포맷에 맞게 변환하는 함수
+ * @param val
+ * @param row
+ * @returns {String}
+ */
+function dateBoxformatDateDash(val) {
+	if (val == null || val == "") return "";
+	var date = new Date(Number(val));		
+					
+	var strMonth = '';
+	if (date.getMonth() + 1 < 10) {
+		strMonth = '0' + (date.getMonth() + 1);
+	} else {
+		strMonth = (date.getMonth() + 1);
+	}
+	var strDay = '';
+	if (date.getDate() < 10) {
+		strDay = '0' + date.getDate();
+	} else {
+		strDay = date.getDate();
+	}    	    	
+	
+	if (!isNaN(date.getFullYear()) && !isNaN(strMonth) && !isNaN(strDay)) {
+		return new Date(date.getFullYear, Number(strMonth) - 1, strDay);
+	}    	
 }
 
 /***
@@ -304,6 +407,24 @@ function formatDateYYYYMMDD(val, row)  {
 	}
 	return strDate;
 }
+
+/***
+ * 8자리의 날짜정보에 "."를 추가해서 반환. (grid에서 날짜타입으로 변환하기 위한 용도)
+ * @param val
+ * @param row
+ * @returns
+ */
+function formatDateDashYYYYMMDD(val, row)  {
+	if (val == null || val == "") return "";
+	var strDate = "";
+	
+	if (val.length == 8) {
+		strDate = val.substring(0,4) + '-' + val.substring(4,6) + '-' + val.substring(6,8);
+	} else {
+		return "";		
+	}
+	return strDate;
+}
 /***
  * 
  * @param val
@@ -315,7 +436,7 @@ function stringFormatDate(strDate, sign)  {
 	
 	
 	if (strDate.length == 8) {
-		strDate = strDate.substring(0,4) + '.' + strDate.substring(4,6) + '.' + strDate.substring(6,8);
+		strDate = strDate.substring(0,4) + sign + strDate.substring(4,6) + sign + strDate.substring(6,8);
 	} else {
 		return "";		
 	}
@@ -536,7 +657,7 @@ function dashparser(s){
  * @param date
  * @returns
  */
-function pointformatter(date){
+function pointformatter(date){	
     var y = date.getFullYear();
     var m = date.getMonth()+1;
     var d = date.getDate();
@@ -568,14 +689,15 @@ function pointparser(s){
  * @returns
  */
 function parseFormHelper (formId) {
-    var serialized = $("#"+formId).serializeArray();
+    var serialized = $("#"+formId).serializeArray();    
     var s = '';
     var data = {};
+    
     for(s in serialized){
         data[serialized[s]['name']] = serialized[s]['value']
     }
     
-    return JSON.stringify(data);    
+    return JSON.stringify(data);
 }
 
 /***
@@ -587,4 +709,94 @@ function parseFormHelper (formId) {
  */
 function replaceAll(str, orgn, dest) {
 	return str.split(orgn).join(dest);
+}
+
+/***
+ * 현재일자를 가져온다. 입력한 문자를 구분자로 해서 가져온다.
+ * @returns
+ */
+function getCurrentDate(indc) {
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1;
+	var yyyy = today.getFullYear();
+	
+	if (dd < 10) {
+		dd = '0' + dd;		
+	}
+	
+	if (mm < 10) {
+		mm = '0' + mm;
+	}
+	
+	today = yyyy + indc + mm + indc + dd;
+	
+	return today;
+}
+
+/***
+ * Radio 버튼을 체크한다.
+ * @param objName
+ * @param value
+ * @returns
+ */
+function fnCheckedRadioButtonById(id) {
+	//$('#' + id).radiobutton({ checked: true});
+	$('#' + id).radiobutton('check');
+}
+
+/***
+ * Radio 버튼을 Disabled 또는 Enabled로 변경(name 뒤에 Y와 N이 붙는 경우)
+ * @param objName
+ * @param boolValue
+ * @returns
+ */
+function fnDisabledRadioButtonById(name, boolValue) {
+	if (boolValue == true) {
+		//$('#' + name + 'Y').radiobutton({ disabled: true });		
+		//$('#' + name + 'N').radiobutton({ disabled: true });
+		$('#' + name + 'Y').radiobutton('disable');
+		$('#' + name + 'N').radiobutton('disable');
+	} else {
+		//$('#' + name + 'Y').radiobutton({ disabled: false });
+		//$('#' + name + 'N').radiobutton({ disabled: false });
+		$('#' + name + 'Y').radiobutton('enable');
+		$('#' + name + 'N').radiobutton('enable');
+	}
+}
+
+/**
+ * CheckBox를 선택(Checked)
+ * @param id
+ * @returns
+ */
+function fnCheckedCheckBoxById(id) {
+	//$('#' + id).checkbox({ checked: true});
+	$('#' + id).checkbox('check');
+}
+
+/**
+ * CheckBox를 선택(Checked)하지 않는다.
+ * @param id
+ * @returns
+ */
+function fnUnCheckedCheckBoxById(id) {
+	//$('#' + id).checkbox({ checked: false});
+	$('#' + id).checkbox('uncheck');
+}
+
+/***
+ * CheckBox를 Disabled 또는 Enabled로 변경
+ * @param objName
+ * @param boolValue
+ * @returns
+ */
+function fnDisabledCheckBoxById(id, boolValue) {
+	if (boolValue == true) {
+		//$('#' + id).checkbox({ disabled: true });
+		$('#' + id).checkbox('disable');
+	} else {
+		//$('#' + id).checkbox({ disabled: false });
+		$('#' + id).checkbox('enable');
+	}
 }
