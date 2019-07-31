@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Nw105mMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Nw105m"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="USER_ID" jdbcType="VARCHAR" property="userId" /> 
+		<result column="ROLE" jdbcType="VARCHAR" property="role" /> 
+		<result column="USE_INDC" jdbcType="SMALLINT" property="useIndc" /> 
+	</resultMap> 
+	
+	<!-- Count -->
+	<resultMap type="java.lang.Integer" id="count_Result">
+		<result column="CNT" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, USER_ID, ROLE, USE_INDC
+		from   nw105m
+	</select> 
+ 
+    <!-- Role 사용자 수 -->
+    <select id="selectRoleUserCount" parameterType="java.util.Map" resultMap="count_Result">
+		select  COUNT(USER_ID) as CNT
+		from   nw105m
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  ROLE	=	#{role,jdbcType=VARCHAR} 
+	</select>
+	
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, USER_ID, ROLE, USE_INDC
+		from   nw105m
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  ROLE	=	#{role,jdbcType=VARCHAR} 
+		  and  USER_ID	=	#{userId,jdbcType=VARCHAR} 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw105m"> 
+		insert	into nw105m(CO_ID, USER_ID, ROLE, USE_INDC) 
+		values (#{coId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{role,jdbcType=VARCHAR},#{useIndc,jdbcType=SMALLINT}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw105m"> 
+		update	nw105m 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="useIndc != null">USE_INDC= #{useIndc,jdbcType=SMALLINT},</if> 
+		</trim> 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	USER_ID	=	#{userId,jdbcType=VARCHAR} 
+		  and	ROLE	=	#{role,jdbcType=VARCHAR} 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from nw105m 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	ROLE	=	#{role,jdbcType=VARCHAR} 
+		  and	USER_ID	=	#{userId,jdbcType=VARCHAR} 
+	</delete> 
+</mapper>

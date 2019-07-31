@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Nw100mMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Nw100m"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="USER_ID" jdbcType="VARCHAR" property="userId" /> 
+		<result column="PSWD" jdbcType="VARCHAR" property="pswd" /> 
+		<result column="PSWD_CHNG_DATE" jdbcType="TIMESTAMP" property="pswdChngDate" /> 
+		<result column="PSWD_INIT_INDC" jdbcType="VARCHAR" property="pswdInitIndc" /> 
+		<result column="INTERNAL_MAIL_ADDR" jdbcType="VARCHAR" property="internalMailAddr" /> 
+		<result column="OUTSIDE_MAIL_ADDR" jdbcType="VARCHAR" property="outsideMailAddr" /> 
+		<result column="CNFM_PSWD" jdbcType="VARCHAR" property="cnfmPswd" /> 
+		<result column="CNFM_PSWD_CHNG_DATE" jdbcType="TIMESTAMP" property="cnfmPswdChngDate" /> 
+		<result column="USER_RGSR_DATE" jdbcType="TIMESTAMP" property="userRgsrDate" /> 
+		<result column="USE_INDC" jdbcType="CHAR" property="useIndc" /> 
+	</resultMap> 
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, USER_ID, PSWD, PSWD_CHNG_DATE, PSWD_INIT_INDC, INTERNAL_MAIL_ADDR, OUTSIDE_MAIL_ADDR, CNFM_PSWD, CNFM_PSWD_CHNG_DATE, 
+				USER_RGSR_DATE, USE_INDC
+		from   nw100m
+	</select> 
+ 
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, USER_ID, PSWD, PSWD_CHNG_DATE, PSWD_INIT_INDC, INTERNAL_MAIL_ADDR, OUTSIDE_MAIL_ADDR, CNFM_PSWD, CNFM_PSWD_CHNG_DATE, 
+				USER_RGSR_DATE, USE_INDC
+		from   nw100m
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  USER_ID	=	#{userId,jdbcType=VARCHAR} 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw100m"> 
+		insert	into nw100m(CO_ID, USER_ID, PSWD, PSWD_CHNG_DATE, PSWD_INIT_INDC, INTERNAL_MAIL_ADDR, OUTSIDE_MAIL_ADDR, CNFM_PSWD, CNFM_PSWD_CHNG_DATE, 
+				USER_RGSR_DATE, USE_INDC) 
+		values (#{coId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{pswd,jdbcType=VARCHAR},#{pswdChngDate,jdbcType=TIMESTAMP},#{pswdInitIndc,jdbcType=VARCHAR},#{internalMailAddr,jdbcType=VARCHAR},#{outsideMailAddr,jdbcType=VARCHAR} 
+			,#{cnfmPswd,jdbcType=VARCHAR},#{cnfmPswdChngDate,jdbcType=TIMESTAMP},now(),#{useIndc,jdbcType=CHAR}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw100m"> 
+		update	nw100m 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="pswd != null and pswd != ''">PSWD= #{pswd,jdbcType=VARCHAR},</if> 
+			<if test="pswd != null and pswd != ''">PSWD_CHNG_DATE= now(),</if> 
+			<if test="pswdInitIndc != null">PSWD_INIT_INDC= #{pswdInitIndc,jdbcType=VARCHAR},</if> 
+			<if test="internalMailAddr != null">INTERNAL_MAIL_ADDR= #{internalMailAddr,jdbcType=VARCHAR},</if> 
+			<if test="outsideMailAddr != null">OUTSIDE_MAIL_ADDR= #{outsideMailAddr,jdbcType=VARCHAR},</if> 
+			<if test="cnfmPswd != null and cnfmPswd != ''">CNFM_PSWD= #{cnfmPswd,jdbcType=VARCHAR},</if> 
+			<if test="cnfmPswd != null and cnfmPswd != ''">CNFM_PSWD_CHNG_DATE= now(),</if> 
+			<if test="userRgsrDate != null">USER_RGSR_DATE= #{userRgsrDate,jdbcType=TIMESTAMP},</if> 
+			<if test="useIndc != null">USE_INDC= #{useIndc,jdbcType=CHAR},</if> 
+		</trim> 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	USER_ID	=	#{userId,jdbcType=VARCHAR} 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from nw100m 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	USER_ID	=	#{userId,jdbcType=VARCHAR} 
+	</delete> 
+</mapper>

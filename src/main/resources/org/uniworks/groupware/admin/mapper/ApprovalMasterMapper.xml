@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uniworks.groupware.admin.mapper.ApprovalMasterMapper">
+	<resultMap id="ApprMstResultMap" type="org.uniworks.groupware.admin.domain.ApprovalMasterInfo"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="APPR_MST_ID" jdbcType="VARCHAR" property="apprMstId" /> 
+		<result column="APPR_DESC" jdbcType="VARCHAR" property="apprDesc" /> 
+		<result column="RCPT_INDC" jdbcType="VARCHAR" property="rcptIndc" /> 
+		<result column="RFNC_INDC" jdbcType="VARCHAR" property="rfncIndc" /> 
+		<result column="CPRTN_INDC" jdbcType="VARCHAR" property="cprtnIndc" /> 
+		<result column="CPRTN_TYPE" jdbcType="VARCHAR" property="cprtnType" /> 
+		<result column="CRCLTN_INDC" jdbcType="VARCHAR" property="crcltnIndc" /> 
+		<result column="DCSN_RULE_INDC" jdbcType="VARCHAR" property="dcsnRuleIndc" /> 
+		<result column="CRT_ID" jdbcType="VARCHAR" property="crtId" /> 
+		<result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" /> 
+		<result column="CHNG_ID" jdbcType="VARCHAR" property="chngId" /> 
+		<result column="CHNG_DATE" jdbcType="TIMESTAMP" property="chngDate" /> 
+		<result column="ATND_INDC" jdbcType="VARCHAR" property="atndIndc" /> 
+		<result column="APPR_TMPL_TYPE" jdbcType="VARCHAR" property="apprTmplType" /> 
+		<result column="BASE_PRSV_TERM" jdbcType="VARCHAR" property="basePrsvTerm" />
+		<result column="BASE_PRSV_TERM_DESC" jdbcType="VARCHAR" property="basePrsvTermDesc" /> 
+		<result column="APPR_LEVEL" jdbcType="INTEGER" property="apprLevel" />		
+	</resultMap>
+
+	<resultMap id="ApprTypeResultMap" type="org.uniworks.groupware.admin.domain.Nw013m"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="APPR_ITEM_ID" jdbcType="VARCHAR" property="apprItemId" />
+		<result column="APPR_ITEM_NAME" jdbcType="VARCHAR" property="apprItemName" />
+		<result column="SEQ_NO" jdbcType="INTEGER" property="seqNo" />
+		<result column="CREATE_DATE" jdbcType="VARCHAR" property="createDate" />
+		<result column="IMG_URL" jdbcType="VARCHAR" property="imgUrl" />
+	</resultMap>
+	
+	<resultMap id="ApprTypeExtResultMap" type="org.uniworks.groupware.admin.domain.ApprTypeByApprInfo">
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="APPR_ITEM_ID" jdbcType="VARCHAR" property="apprItemId" />
+		<result column="APPR_ITEM_NAME" jdbcType="VARCHAR" property="apprItemName" />
+		<result column="APPR_MST_ID" jdbcType="VARCHAR" property="apprMstId" /> 
+		<result column="APPR_DESC" jdbcType="VARCHAR" property="apprDesc" />
+		<result column="SEQ_NO" jdbcType="INTEGER" property="seqNo" />
+	</resultMap>
+	
+	<resultMap id="CountResult" type="java.lang.Integer">
+		<result column="CNT" jdbcType="DECIMAL" />
+	</resultMap>
+	
+	<!-- 결재 마스터 목록을 가져온다. -->
+	<select id="selectApprMasterList" parameterType="java.util.Map" resultMap="ApprMstResultMap">
+		select  A.CO_ID as CO_ID, A.APPR_MST_ID as APPR_MST_ID, B.APPR_DESC as APPR_DESC, A.RCPT_INDC as RCPT_INDC, 
+       			A.RFNC_INDC as RFNC_INDC, A.CPRTN_INDC as CPRTN_INDC, A.CPRTN_TYPE as CPRTN_TYPE, A.CRCLTN_INDC as CRCLTN_INDC,
+       			A.DCSN_RULE_INDC as DCSN_RULE_INDC, A.CRT_ID as CRT_ID, A.CREATE_DATE as CREATE_DATE, A.CHNG_ID as CHNG_ID, C.APPR_LEVEL as APPR_LEVEL,
+       			A.CHNG_DATE as CHNG_DATE, A.ATND_INDC as ATND_INDC, APPR_TMPL_TYPE as APPR_TMPL_TYPE, A.BASE_PRSV_TERM as BASE_PRSV_TERM,
+       			E.RESC_KEY_DESC as BASE_PRSV_TERM_DESC       			
+		from 	gw.nw010m A 
+			LEFT JOIN gw.nw011m B 
+    			ON	A.CO_ID = B.CO_ID
+    			AND A.APPR_MST_ID = B.APPR_MST_ID
+    			AND B.LOCALE = #{lang,jdbcType=VARCHAR} 
+    		LEFT JOIN gw.nw012m C
+    			ON  C.CO_ID = A.CO_ID
+    			AND C.APPR_MST_ID = A.APPR_MST_ID
+    			AND #{crntDate,jdbcType=VARCHAR} BETWEEN C.CRT_DATE AND C.CLS_DATE
+    		LEFT JOIN gw.cm002c D
+				ON  A.CO_ID = D.CO_ID
+                AND D.MAJ_CODE = 'CD008'
+            LEFT JOIN gw.cm003m E
+				ON  A.CO_ID = E.CO_ID
+                AND E.RESC_KEY = D.RESC_KEY
+                AND E.LOCALE = #{lang,jdbcType=VARCHAR} 
+		<where>
+			    A.CO_ID = #{coId,jdbcType=VARCHAR}
+			AND A.APPR_MST_ID = B.APPR_MST_ID			     
+            AND A.APPR_MST_ID = C.APPR_MST_ID   
+            AND A.BASE_PRSV_TERM = D.SUB_CODE         
+			<if test="searchKind == 'apprMstId'">	 
+			AND A.APPR_MST_ID LIKE #{searchWord,jdbcType=VARCHAR}
+			</if>
+			<if test="searchKind == 'apprDesc'">	 
+  			AND B.APPR_DESC LIKE #{searchWord,jdbcType=VARCHAR}
+  			</if>
+  		</where>  
+  		<if test="orderBy == 'apprMstId'">
+		order by APPR_MST_ID  
+		</if>
+		<if test="orderBy == 'apprDesc'">
+		order by APPR_DESC
+		</if> 
+	</select>		
+	
+	<!-- 결재 마스터 정보를 가져온다. -->
+	<select id="selectApprMasterInfo" parameterType="java.util.Map" resultMap="ApprMstResultMap">
+		select  A.CO_ID as CO_ID, A.APPR_MST_ID as APPR_MST_ID, B.APPR_DESC as APPR_DESC, A.RCPT_INDC as RCPT_INDC, 
+       			A.RFNC_INDC as RFNC_INDC, A.CPRTN_INDC as CPRTN_INDC, A.CPRTN_TYPE as CPRTN_TYPE, A.CRCLTN_INDC as CRCLTN_INDC,
+       			A.DCSN_RULE_INDC as DCSN_RULE_INDC, A.CRT_ID as CRT_ID, A.CREATE_DATE as CREATE_DATE, A.CHNG_ID as CHNG_ID, C.APPR_LEVEL as APPR_LEVEL,
+       			A.CHNG_DATE as CHNG_DATE, A.ATND_INDC as ATND_INDC, E.APPR_ITEM_NAME as APPR_TYPE, A.BASE_PRSV_TERM as BASE_PRSV_TERM,
+       			D.APPR_ITEM_ID as APPR_ITEM_ID
+		from 	gw.nw010m A 
+			LEFT JOIN gw.nw011m B 
+    			ON	A.CO_ID = B.CO_ID
+    			AND A.APPR_MST_ID = B.APPR_MST_ID
+    			AND B.LOCALE = #{lang,jdbcType=VARCHAR} 
+    		LEFT JOIN gw.nw012m C
+    			ON  A.CO_ID = C.CO_ID
+    			AND A.APPR_MST_ID = C.APPR_MST_ID
+    			AND #{crntDate,jdbcType=VARCHAR} BETWEEN C.CRT_DATE AND C.CLS_DATE
+    		LEFT JOIN gw.nw015m D
+    			ON  A.CO_ID = D.CO_ID
+    			AND A.APPR_MST_ID = D.APPR_MST_ID
+    		LEFT JOIN gw.nw014m E
+    			ON  D.CO_ID = E.CO_ID
+    			AND D.APPR_ITEM_ID = E.APPR_ITEM_ID
+    			AND E.LOCALE = #{lang,jdbcType=VARCHAR}		
+		where	A.CO_ID = #{coId,jdbcType=VARCHAR}				 
+		  AND   A.APPR_MST_ID LIKE #{apprMstId,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 결재 유형 목록을 가져온다. -->
+	<select id="selectApprTypeList" parameterType="java.util.Map" resultMap="ApprTypeResultMap">
+		select  A.CO_ID as CO_ID, A.APPR_ITEM_ID as APPR_ITEM_ID, B.APPR_ITEM_NAME as APPR_ITEM_NAME,
+				A.SEQ_NO as SEQ_NO, A.CREATE_DATE as CREATE_DATE, A.IMG_URL as IMG_URL
+		from    gw.nw013m A
+		    LEFT JOIN gw.nw014m B
+		        ON  A.CO_ID = B.CO_ID
+			   AND  A.APPR_ITEM_ID = B.APPR_ITEM_ID
+		       AND  B.LOCALE = #{lang,jdbcType=VARCHAR}
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
+		order by  A.SEQ_NO 
+	</select>
+	
+	<!-- 결재 유형 정보를 가져온다. -->
+	<select id="selectApprTypeInfo" parameterType="java.util.Map" resultMap="ApprTypeResultMap">
+		select  A.CO_ID as CO_ID, A.APPR_ITEM_ID as APPR_ITEM_ID, B.APPR_ITEM_NAME as APPR_ITEM_NAME,
+				A.SEQ_NO as SEQ_NO, A.CREATE_DATE as CREATE_DATE, A.IMG_URL as IMG_URL
+		from    gw.nw013m A
+		    LEFT JOIN gw.nw014m B
+		        ON  A.CO_ID = B.CO_ID
+			   AND  A.APPR_ITEM_ID = B.APPR_ITEM_ID
+		       AND  B.LOCALE = #{lang,jdbcType=VARCHAR}
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
+		  and  A.APPR_ITEM_ID = #{apprItemId,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 결재유형별 결재목록을 가져온다 -->
+	<select id="selectApprTypeByApprInfo" parameterType="java.util.Map" resultMap="ApprTypeExtResultMap">
+		select  A.CO_ID, A.APPR_ITEM_ID, B.APPR_ITEM_NAME, A.APPR_MST_ID, C.APPR_DESC, A.SEQ_NO
+		  from  gw.nw015m A 
+		     LEFT JOIN gw.nw014m B
+		         ON  A.CO_ID = B.CO_ID
+			     AND A.APPR_ITEM_ID = B.APPR_ITEM_ID
+		         AND B.LOCALE = #{lang,jdbcType=VARCHAR}
+		     LEFT JOIN gw.nw011m C 
+		         ON  A.CO_ID = C.CO_ID
+		         AND A.APPR_MST_ID = C.APPR_MST_ID
+		         AND C.LOCALE = #{lang,jdbcType=VARCHAR}
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
+		  and  A.APPR_ITEM_ID = #{apprItemId,jdbcType=VARCHAR}
+		order by A.SEQ_NO
+	</select>
+	
+	<!-- 결재 마스터 기반의 결재문서가 있는지 카운트 -->
+	<select id="selectApprovalDocCount" parameterType="java.util.Map" resultMap="CountResult">
+		select COUNT(APPR_MST_ID) as CNT
+		  from gw.nw110m
+		where  CO_ID = #{coId,jdbcType=VARCHAR}
+		  and  APPR_MST_ID = #{apprMstId,jdbcType=VARCHAR}
+	</select>
+</mapper>

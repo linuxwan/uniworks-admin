@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Nw013mMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Nw013m"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="APPR_ITEM_ID" jdbcType="VARCHAR" property="apprItemId" /> 
+		<result column="APPR_ITEM_NAME" jdbcType="VARCHAR" property="apprItemName" /> 
+		<result column="SEQ_NO" jdbcType="INTEGER" property="seqNo" /> 
+		<result column="CREATE_DATE" jdbcType="VARCHAR" property="createDate" /> 
+		<result column="IMG_URL" jdbcType="VARCHAR" property="imgUrl" /> 
+	</resultMap> 
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, APPR_ITEM_ID, APPR_ITEM_NAME, SEQ_NO, CREATE_DATE, IMG_URL
+		from   nw013m
+	</select> 
+ 
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, APPR_ITEM_ID, APPR_ITEM_NAME, SEQ_NO, CREATE_DATE, IMG_URL
+		from   nw013m
+		where  APPR_ITEM_ID	=	#{apprItemId,jdbcType=VARCHAR} 
+		  and  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw013m"> 
+		insert	into nw013m(CO_ID, APPR_ITEM_ID, APPR_ITEM_NAME, SEQ_NO, CREATE_DATE, IMG_URL) 
+		values (#{coId,jdbcType=VARCHAR},#{apprItemId,jdbcType=VARCHAR},#{apprItemName,jdbcType=VARCHAR},#{seqNo,jdbcType=INTEGER},#{createDate,jdbcType=VARCHAR},#{imgUrl,jdbcType=VARCHAR}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw013m"> 
+		update	nw013m 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="apprItemName != null">APPR_ITEM_NAME= #{apprItemName,jdbcType=VARCHAR},</if> 
+			<if test="seqNo != null">SEQ_NO= #{seqNo,jdbcType=INTEGER},</if> 
+			<if test="createDate != null">CREATE_DATE= #{createDate,jdbcType=VARCHAR},</if> 
+			<if test="imgUrl != null">IMG_URL= #{imgUrl,jdbcType=VARCHAR},</if> 
+		</trim> 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	APPR_ITEM_ID	=	#{apprItemId,jdbcType=VARCHAR} 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from nw013m 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	APPR_ITEM_ID	=	#{apprItemId,jdbcType=VARCHAR} 
+	</delete> 
+</mapper>

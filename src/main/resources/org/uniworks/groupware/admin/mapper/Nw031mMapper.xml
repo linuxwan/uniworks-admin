@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Nw031mMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Nw031m"> 
+		<result column="CNTN_ID" jdbcType="VARCHAR" property="cntnId" /> 
+		<result column="LOCALE" jdbcType="VARCHAR" property="locale" /> 
+		<result column="CNTN_NAME" jdbcType="VARCHAR" property="cntnName" /> 
+	</resultMap> 
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CNTN_ID, LOCALE, CNTN_NAME
+		from   nw031m
+	</select> 
+ 
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CNTN_ID, LOCALE, CNTN_NAME
+		from   nw031m
+		where  CNTN_ID	=	#{cntnId,jdbcType=VARCHAR} 
+		  and  LOCALE	=	#{locale,jdbcType=VARCHAR} 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw031m"> 
+		insert	into nw031m(CNTN_ID, LOCALE, CNTN_NAME) 
+		values (#{cntnId,jdbcType=VARCHAR},#{locale,jdbcType=VARCHAR},#{cntnName,jdbcType=VARCHAR}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw031m"> 
+		update	nw031m 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="cntnName != null">CNTN_NAME= #{cntnName,jdbcType=VARCHAR},</if> 
+		</trim> 
+		where	CNTN_ID	=	#{cntnId,jdbcType=VARCHAR} 
+		  and	LOCALE	=	#{locale,jdbcType=VARCHAR} 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from nw031m 
+		where	CNTN_ID	=	#{cntnId,jdbcType=VARCHAR}
+		<if test="locale != null"> 
+		  and	LOCALE	=	#{locale,jdbcType=VARCHAR}
+		</if> 
+	</delete> 
+</mapper>

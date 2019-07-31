@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Nw030mMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Nw030m"> 
+		<result column="CNTN_ID" jdbcType="VARCHAR" property="cntnId" /> 
+		<result column="CNTN_OFFER_TYPE" jdbcType="VARCHAR" property="cntnOfferType" /> 
+		<result column="LINK_SYS_HOST" jdbcType="VARCHAR" property="linkSysHost" /> 
+		<result column="URL" jdbcType="VARCHAR" property="url" /> 
+		<result column="CNTN_TYPE" jdbcType="VARCHAR" property="cntnType" /> 
+		<result column="MASTER_ID" jdbcType="VARCHAR" property="masterId" /> 
+		<result column="CNTN_JOINT_FLAG" jdbcType="VARCHAR" property="cntnJointFlag" /> 
+		<result column="CNTN_DESC" jdbcType="VARCHAR" property="cntnDesc" /> 
+		<result column="CNTN_RGSR_DATE" jdbcType="TIMESTAMP" property="cntnRgsrDate" /> 
+		<result column="CNTN_RGSR_ID" jdbcType="VARCHAR" property="cntnRgsrId" /> 
+		<result column="CNTN_CHNG_DATE" jdbcType="TIMESTAMP" property="cntnChngDate" /> 
+		<result column="CNTN_CHNG_ID" jdbcType="VARCHAR" property="cntnChngId" /> 
+		<result column="PORT_NO" jdbcType="INTEGER" property="portNo" /> 
+	</resultMap> 
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CNTN_ID, CNTN_OFFER_TYPE, LINK_SYS_HOST, URL, CNTN_TYPE, MASTER_ID, CNTN_JOINT_FLAG, CNTN_DESC, CNTN_RGSR_DATE, 
+				CNTN_RGSR_ID, CNTN_CHNG_DATE, CNTN_CHNG_ID, PORT_NO
+		from   nw030m
+	</select> 
+ 
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CNTN_ID, CNTN_OFFER_TYPE, LINK_SYS_HOST, URL, CNTN_TYPE, MASTER_ID, CNTN_JOINT_FLAG, CNTN_DESC, CNTN_RGSR_DATE, 
+				CNTN_RGSR_ID, CNTN_CHNG_DATE, CNTN_CHNG_ID, PORT_NO
+		from   nw030m
+		where  CNTN_ID	=	#{cntnId,jdbcType=VARCHAR} 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw030m"> 
+		insert	into nw030m(CNTN_ID, CNTN_OFFER_TYPE, LINK_SYS_HOST, URL, CNTN_TYPE, MASTER_ID, CNTN_JOINT_FLAG, CNTN_DESC, CNTN_RGSR_DATE, 
+				CNTN_RGSR_ID, CNTN_CHNG_DATE, CNTN_CHNG_ID, PORT_NO) 
+		values (#{cntnId,jdbcType=VARCHAR},#{cntnOfferType,jdbcType=VARCHAR},#{linkSysHost,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},#{cntnType,jdbcType=VARCHAR},#{masterId,jdbcType=VARCHAR},#{cntnJointFlag,jdbcType=VARCHAR} 
+			,#{cntnDesc,jdbcType=VARCHAR},#{cntnRgsrDate,jdbcType=TIMESTAMP},#{cntnRgsrId,jdbcType=VARCHAR},#{cntnChngDate,jdbcType=TIMESTAMP},#{cntnChngId,jdbcType=VARCHAR},#{portNo,jdbcType=INTEGER}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw030m"> 
+		update	nw030m 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="cntnOfferType != null">CNTN_OFFER_TYPE= #{cntnOfferType,jdbcType=VARCHAR},</if> 
+			<if test="linkSysHost != null">LINK_SYS_HOST= #{linkSysHost,jdbcType=VARCHAR},</if> 
+			<if test="url != null">URL= #{url,jdbcType=VARCHAR},</if> 
+			<if test="cntnType != null">CNTN_TYPE= #{cntnType,jdbcType=VARCHAR},</if> 
+			<if test="masterId != null">MASTER_ID= #{masterId,jdbcType=VARCHAR},</if> 
+			<if test="cntnJointFlag != null">CNTN_JOINT_FLAG= #{cntnJointFlag,jdbcType=VARCHAR},</if> 
+			<if test="cntnDesc != null">CNTN_DESC= #{cntnDesc,jdbcType=VARCHAR},</if> 
+			<if test="cntnRgsrDate != null">CNTN_RGSR_DATE= #{cntnRgsrDate,jdbcType=TIMESTAMP},</if> 
+			<if test="cntnRgsrId != null">CNTN_RGSR_ID= #{cntnRgsrId,jdbcType=VARCHAR},</if> 
+			<if test="cntnChngDate != null">CNTN_CHNG_DATE= #{cntnChngDate,jdbcType=TIMESTAMP},</if> 
+			<if test="cntnChngId != null">CNTN_CHNG_ID= #{cntnChngId,jdbcType=VARCHAR},</if> 
+			<if test="portNo != null">PORT_NO= #{portNo,jdbcType=INTEGER},</if> 
+		</trim> 
+		where	CNTN_ID	=	#{cntnId,jdbcType=VARCHAR} 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from nw030m 
+		where	CNTN_ID	=	#{cntnId,jdbcType=VARCHAR} 
+	</delete> 
+</mapper>
