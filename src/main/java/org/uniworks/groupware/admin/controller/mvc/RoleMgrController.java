@@ -138,4 +138,27 @@ public class RoleMgrController {
 		mav.addObject("langList", langList);
 		return mav;
 	}
+	
+	/**
+	 * 사용자 Role 등록 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/roleMgr/userRoleRegistrationForm", method = RequestMethod.GET)
+	public ModelAndView userRoleRegistrationForm(HttpServletRequest request, HttpServletResponse response) {
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String role = StringUtil.null2void(request.getParameter("role"));
+		String roleName = StringUtil.null2void(request.getParameter("roleName"));
+		
+		ModelAndView mav = new ModelAndView("roleMgr/user_role_add_form_01");
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		
+		mav.addObject("coId", coId);
+		mav.addObject("role", role);
+		mav.addObject("roleName", roleName);
+		return mav;
+	}
+	
 }

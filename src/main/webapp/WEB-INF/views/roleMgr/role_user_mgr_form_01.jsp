@@ -15,6 +15,8 @@
 
     <script type="text/javascript">
 	var url = "";
+	var role = "";
+    var roleName = "";
     
     $(function(){    	
     	var coId = $("#selCoId").combobox('getValue');
@@ -24,6 +26,9 @@
     		onClickRow: function(rowIndex, rowData) {
     			var coId = $("#selCoId").combobox('getValue');
     			var userListByRolUrl = "<c:out value="${contextPath}"/>/rest/userListByRole/coId/" + coId + "/role/" + rowData.role;
+    			role = rowData.role;
+    			roleName = rowData.roleName;
+    			
     			$('#roleUserList').datagrid('loadData', getUserListByRole(userListByRolUrl));    			
     		}
     	});
@@ -75,6 +80,7 @@
     				});
     			});
     			
+    			if (rows.length == 0) $('#roleUserList').datagrid('loadData', []);
     			return rows;
     		} else {
     			return;
@@ -111,6 +117,20 @@
     			return;
     		}
     	});
+    }
+    
+    function appendUserRole() {
+    	if (role == "") {
+    		var msg = '<spring:message code="resc.msg.selectRole"/>';
+    		var title = '<spring:message code="resc.label.confirm"/>';		    			
+    		alertMsg(title, msg);			
+    		return;
+    	}
+    	var coId = $("#selCoId").combobox('getValue');					    	
+		url = "<c:out value="${contextPath}"/>/admin/roleMgr/userRoleRegistrationForm?coId=" + coId + "&role=" + role + "&roleName=" + roleName;		
+		var formHeight = 220;
+		
+		$.popupWindow(url, { name: 'userRoleAddForm', height: formHeight, width: 900 });		    
     }
     </script>
 </head>
@@ -167,9 +187,9 @@
 			    </table> 
 			</div>   	
 			    <div id="subCodeTb" style="height:auto">    
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendSubCode()"><spring:message code="resc.btn.add"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitSubCode()"><spring:message code="resc.btn.delete"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifySubCode()"><spring:message code="resc.btn.modify"/></a>        
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendUserRole()"><spring:message code="resc.btn.add"/></a>
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitUserRole()"><spring:message code="resc.btn.delete"/></a>
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifyUserRole()"><spring:message code="resc.btn.modify"/></a>        
 			    </div>						   
 			</td>
 		</tr>
