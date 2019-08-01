@@ -22,7 +22,7 @@ public interface UserInfoMapper {
 	 * @param username
 	 * @return
 	 */
-	public UserInfo getUserInfo(String username);
+	public UserInfo getUserInfo(String username);	
 	/**
 	 * 사용자 Role을 여러개 가질 경우 사용자 정보가 Role별 List로 제공. 
 	 * @param username
@@ -47,4 +47,10 @@ public interface UserInfoMapper {
 	 * @return
 	 */
 	public List<UserRole> getUserListByRole(Map<String, Object> map);
+	/**
+	 * Role 등록을 위한 사용자를 검색한다.
+	 * @param map
+	 * @return
+	 */
+	public List<UserRole> getUserListBySearch(Map<String, Object> map);
 }

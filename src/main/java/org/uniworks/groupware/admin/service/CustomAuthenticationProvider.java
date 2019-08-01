@@ -6,6 +6,8 @@
 package org.uniworks.groupware.admin.service;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,13 +43,21 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String password = (String) authentication.getCredentials();
 		
 		UserInfo user;
-		Collection<? extends GrantedAuthority> authorities = null;
+		Collection<? extends GrantedAuthority> authorities = null;			
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("username", username);
+		map.put("password", password);
 		
 		try {
 			user = authenticationService.loadUserByUsername(username);						
 			
 			if (user != null) {				
-				authorities = user.getAuthorities();				
+				if (passwordEncoder.matches(password, user.getPassword())) {
+					authorities = user.getAuthorities();				
+				} else {
+					return null;
+				}
 			}
 		} catch (UsernameNotFoundException e) {
 			logger.info(e.toString());

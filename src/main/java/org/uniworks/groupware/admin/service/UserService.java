@@ -54,4 +54,10 @@ public interface UserService {
 	 * @return
 	 */
 	List<UserRole> getUserListByRole(Map<String, Object> map);
+	/**
+	 * 사용자 검색 결과 목록 가져오기
+	 * @param map
+	 * @return
+	 */
+	List<UserRole> getUserListBySearch(Map<String, Object> map);
 }

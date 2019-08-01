@@ -120,7 +120,18 @@ public class UserMgrController {
 	@RequestMapping(value = "/userSearchForm", method = RequestMethod.GET)
 	public ModelAndView userSearchForm(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("user/user_search_form_01");
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+				
+		Map<String, Object> map = new HashMap<String, Object>();
+		//지원 언어 목록 체크
+		map.put("coId", userSession.getCoId());
+		map.put("lang", userSession.getLang());
+		map.put("majCode", "CD019"); //지원언어가 저장되어져 있는 주코드 CD001
+		map.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
+		List<CommonCode> sortTypeList = commonService.getCommonSubCodeList(map);	
 		
+		mav.addObject("searchTypeList", sortTypeList);
 		return mav;
 	}
 }

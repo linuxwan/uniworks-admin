@@ -402,12 +402,12 @@
 		</tr>
 		<tr>		
 			<td style="width:40%">									      		
-				<div class="easyui-panel" title="<spring:message code="resc.label.oganChart"/>" style="padding:10px;height:675px" data-options="toolbor:'#tb'">		
+				<div class="easyui-panel" title="<spring:message code="resc.label.oganChart"/>" style="padding:10px;height:655px" data-options="toolbor:'#tb'">		
 					<ul id="oganTree" class="easyui-tree" style="width:100%;"></ul>
        			</div>
 			</td>
 			<td style="width:60%">
-				<div class="easyui-panel" title='<spring:message code="resc.label.oganDesc"/>' style="padding:10px;height:675px">			        						               
+				<div class="easyui-panel" title='<spring:message code="resc.label.oganDesc"/>' style="padding:10px;height:655px">			        						               
 			        <table style="width:100%">			        			        		       
 			        <tr>
 			        	<td style="width:50%;padding:0px 10px;">			        	

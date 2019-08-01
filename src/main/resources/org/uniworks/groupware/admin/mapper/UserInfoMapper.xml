@@ -48,7 +48,7 @@
  		SELECT A.CO_ID as CO_ID, A.ADMIN_ID as USER_ID, A.PSWD as PASSWORD, A.ADMIN_TYPE as ROLE
  		FROM   CM010C A  		
  		WHERE  A.ADMIN_ID	=	#{username,jdbcType=VARCHAR}
- 	</select>
+ 	</select> 	 	
  	
  	<!-- 등록된 관리자 목록을 가져온다 -->
  	<select id="getUserInfoList" parameterType="java.lang.String" resultMap="BaseResultMap"> 
@@ -212,5 +212,53 @@
 		    and G.LOCALE = #{lang,jdbcType=VARCHAR}
 		where A.CO_ID = #{coId,jdbcType=VARCHAR}
 		  and A.ROLE  = #{role,jdbcType=VARCHAR}
+ 	</select>
+ 	
+ 	<!-- 사용자 검색 -->
+ 	<select id="getUserListBySearch" parameterType="java.util.Map" resultMap="UserRoleResultMap">
+ 	<![CDATA[
+ 		select A.CO_ID, B.USER_ID, A.EMP_NAME_KOR as EMP_NAME, '' as ROLE, A.DUTY_CODE, gw.FN_GetCodeName(A.CO_ID, 'CD004', A.DUTY_CODE, #{lang,jdbcType=VARCHAR}) as DUTY_DESC,
+		       A.PSTN_CODE, gw.FN_GetCodeName(B.CO_ID, 'CD006', A.PSTN_CODE, #{lang,jdbcType=VARCHAR}) as PSTN_DESC, 
+		       IF(C.USE_INDC <> null && LENGTH(C.USE_INDC) > 0, C.USE_INDC, 'N') as USE_INDC, 
+		       CASE A.BASE_ASGN_OGAN_LEV WHEN '1' THEN A.ASGN_OGAN_CODE_1
+			                             WHEN '2' THEN A.ASGN_OGAN_CODE_2
+			                             WHEN '3' THEN A.ASGN_OGAN_CODE_3
+			                             WHEN '4' THEN A.ASGN_OGAN_CODE_4
+			                             WHEN '5' THEN A.ASGN_OGAN_CODE_5
+			                             WHEN '6' THEN A.ASGN_OGAN_CODE_6
+			                             WHEN '7' THEN A.ASGN_OGAN_CODE_7
+			                             WHEN '8' THEN A.ASGN_OGAN_CODE_8
+			                             WHEN '9' THEN A.ASGN_OGAN_CODE_9
+			                             WHEN '10' THEN A.ASGN_OGAN_CODE_10
+			                             WHEN '11' THEN A.ASGN_OGAN_CODE_11
+			                             WHEN '12' THEN A.ASGN_OGAN_CODE_12 END DEPT_CODE,
+				CASE A.BASE_ASGN_OGAN_LEV WHEN '1' THEN A.ASGN_OGAN_DESC_1
+			                              WHEN '2' THEN A.ASGN_OGAN_DESC_2
+			                              WHEN '3' THEN A.ASGN_OGAN_DESC_3
+			                              WHEN '4' THEN A.ASGN_OGAN_DESC_4
+			                              WHEN '5' THEN A.ASGN_OGAN_DESC_5
+			                              WHEN '6' THEN A.ASGN_OGAN_DESC_6
+			                              WHEN '7' THEN A.ASGN_OGAN_DESC_7
+			                              WHEN '8' THEN A.ASGN_OGAN_DESC_8
+			                              WHEN '9' THEN A.ASGN_OGAN_DESC_9
+			                              WHEN '10' THEN A.ASGN_OGAN_DESC_10
+			                              WHEN '11' THEN A.ASGN_OGAN_DESC_11
+			                              WHEN '12' THEN A.ASGN_OGAN_DESC_12 END DEPT_DESC
+		from  gw.hr010m  as A 
+			LEFT OUTER JOIN gw.nw100m as B
+		    ON  B.CO_ID = A.CO_ID
+		    AND A.EMP_NO = B.USER_ID
+		    LEFT OUTER JOIN gw.nw105m as C
+		    ON  C.CO_ID = A.CO_ID
+		    AND C.USER_ID = A.EMP_NO
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
+		<if test="searchKind == 'EMPNO'">
+			AND A.EMP_NO = searchWord,jdbcType=VARCHAR}
+		</if>
+		<if test="searchKind == 'NAME'">
+			AND A.EMP_NAME_KOR LIKE concat(#{searchWord,jdbcType=VARCHAR}, '%');
+		</if>
+		order by A.CO_ID, A.EMP_NAME_KOR
+	]]>
  	</select>
 </mapper>

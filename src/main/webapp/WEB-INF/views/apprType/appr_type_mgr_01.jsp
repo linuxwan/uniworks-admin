@@ -243,7 +243,7 @@
 		</tr>
 		<tr>
 			<td style="width:50%">				
-       			<table id="apprTypeList" class="easyui-datagrid" style="width:100%;height:685px;"		        
+       			<table id="apprTypeList" class="easyui-datagrid" style="width:100%;height:660px;"		        
 			       		title="<spring:message code="resc.label.apprTypeMgr"/>" 
 			       		data-options="rownumbers:true, singleSelect:true, collapsible:false,url:'<c:out value="${contextPath}"/>/rest/approvalType/coId/${userSession.coId}', method:'get', toolbar:'#masterCodeTb', pagination:false, autoRowHeight:false">
 			        <thead>
@@ -264,7 +264,7 @@
 			    </div>  			
 			</td>
 			<td style="width:50%">
-				<table id="apprTypeByApprList" class="easyui-datagrid" style="width:100%;height:685px"		        
+				<table id="apprTypeByApprList" class="easyui-datagrid" style="width:100%;height:660px"		        
 			       		title="<spring:message code="resc.label.apprTypeByApprList"/>" 
 			       		data-options="rownumbers:true, singleSelect:true, collapsible:false, toolbar:'#subCodeTb', pagination:false, autoRowHeight:false">
 			        <thead>

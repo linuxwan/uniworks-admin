@@ -80,7 +80,7 @@
     				});
     			});
     			
-    			if (rows.length == 0) $('#roleUserList').datagrid('loadData', []);
+    			$('#roleUserList').datagrid('loadData', []);
     			return rows;
     		} else {
     			return;
@@ -152,7 +152,7 @@
 		<tr>
 			<td style="width:50%">	
 			<div>
-       			<table id="roleList" class="easyui-datagrid" style="width:100%;height:590px;"		        
+       			<table id="roleList" class="easyui-datagrid" style="width:100%;height:580px;"		        
 			       		title="<spring:message code="resc.label.roleList"/>" 
 			       		data-options="rownumbers:true,singleSelect:true,collapsible:false,pagination:false,autoRowHeight:false">
 			        <thead>
@@ -169,7 +169,7 @@
 			</td>
 			<td style="width:50%">	
 			<div>		
-				<table id="roleUserList" class="easyui-datagrid" style="width:100%;height:590px"		        
+				<table id="roleUserList" class="easyui-datagrid" style="width:100%;height:580px"		        
 			       		title="<spring:message code="resc.label.roleUserList"/>" 
 			       		data-options="rownumbers:true,singleSelect:true,collapsible:false,toolbar:'#subCodeTb',pagination:false,autoRowHeight:false">
 			        <thead>

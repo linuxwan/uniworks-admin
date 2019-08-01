@@ -209,12 +209,12 @@
 		</tr>
 		<tr>		
 			<td style="width:25%">									      		
-				<div class="easyui-panel" title="<spring:message code="resc.label.oganChart"/>" style="padding:10px;height:675px">		
+				<div class="easyui-panel" title="<spring:message code="resc.label.oganChart"/>" style="padding:10px;height:650px">		
 					<ul id="oganTree" class="easyui-tree" style="width:100%;"></ul>
        			</div>
 			</td>
 			<td style="width:75%">				
-			    <table id="oganMemberList" class="easyui-datagrid" style="width:100%;height:675px" 		        
+			    <table id="oganMemberList" class="easyui-datagrid" style="width:100%;height:650px" 		        
 		       		title="<spring:message code="resc.label.oganMember"/>" 
 		       		data-options="rownumbers:true, singleSelect:true, toolbar:'#tm', pagination:true, autoRowHeight:false, pageSize:20">
 			        <thead>

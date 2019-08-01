@@ -14,7 +14,17 @@
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.serializeObject.js"></script>
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.popupwindow.js"></script>
 	<script type="text/javascript">
-	
+	$(function(){    	
+		$("#searchKind").combobox('select', '<spring:message code="resc.label.empName"/>');
+		//검색버튼 클릭
+		$('#btnSearchUser').bind('click', function(){
+			console.log('aaaaaa');
+		});
+		//선택버튼 클릭
+		$('#btnSelect').bind('click', function(){
+			console.log('bbbb');
+		});
+    });
 	</script>
 </head>
 <body>	
@@ -26,13 +36,13 @@
 		<tr>
 			<td colspan="2" style="width:100%">
 				<div class="easyui-panel" title="" style="width:100%;max-width:100%;padding:5px 5px;">   
-			    <select class="easyui-combobox" id="selCoId" name="coId" style="width:20%;" data-options="panelHeight:'auto'">
-			    	<c:forEach items="${coList}" var="opt" varStatus="st">
-		            <option value="${opt.coId}" <c:if test="${opt.coId == userSession.coId}">selected="selected"</c:if> >${opt.coId}: ${opt.coName}</option>
+			    <select class="easyui-combobox" id="searchKind" name="searchKind" style="width:20%;" data-options="panelHeight:'auto'">
+			    	<c:forEach items="${searchTypeList}" var="searchType" varStatus="st">
+		            <option value="${searchType.subCode}" <c:if test="${searchType.subCode == searchType}">selected="selected"</c:if> >${searchType.rescKeyValue}</option>
 		            </c:forEach>		            	
 		        </select>
-		        <input class="easyui-textbox" id="coId" name="coId" style="width:30%" value="${coId}" data-options="label:'<spring:message code="resc.label.coId"/>:',readonly:true,required:true,labelWidth:50">
-		        <a href="javascript:fnSearchUser()" id="btnSearchUser" class="easyui-linkbutton" style="width:80px"><spring:message code="resc.btn.userSearch"/></a>
+		        <input class="easyui-textbox" id="coId" name="coId" style="width:40%" value="${coId}" data-options="label:'<spring:message code="resc.label.searchWord"/>:',readonly:true,required:true,labelWidth:50">
+		        <a href="javascript:void(0)" id="btnSearchUser" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.search"/></a>
 		        </div>
 			</td>
 		</tr>		

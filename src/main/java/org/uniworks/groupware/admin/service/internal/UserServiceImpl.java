@@ -134,6 +134,14 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	/**
+	 * 사용자 검색 결과 목록 가져오기
+	 */
+	@Override
+	public List<UserRole> getUserListBySearch(Map<String, Object> map) {
+		return userInfoMapper.getUserListBySearch(map);
+	}
+	
+	/**
 	 * 비밀번호 변경 시 로그인 비밀번호/이중 비밀번호 변경 이력을 남긴다.
 	 * @param nw100m
 	 * @return

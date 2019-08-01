@@ -244,7 +244,7 @@
 		</tr>
 		<tr>
 			<td style="width:50%">				
-       			<table id="masterCodeList" class="easyui-datagrid" style="width:100%;height:685px;"		        
+       			<table id="masterCodeList" class="easyui-datagrid" style="width:100%;height:660px;"		        
 			       		title="<spring:message code="resc.label.mainCodeList"/>" 
 			       		data-options="rownumbers:true, singleSelect:true, collapsible:false,url:'<c:out value="${contextPath}"/>/rest/mastercode/coId/${userSession.coId}', method:'get', toolbar:'#masterCodeTb', pagination:false, autoRowHeight:false">
 			        <thead>
@@ -266,7 +266,7 @@
 			    </div>  			
 			</td>
 			<td style="width:50%">
-				<table id="subCodeList" class="easyui-datagrid" style="width:100%;height:685px"		        
+				<table id="subCodeList" class="easyui-datagrid" style="width:100%;height:660px"		        
 			       		title="<spring:message code="resc.label.subCodeList"/>" 
 			       		data-options="rownumbers:true, singleSelect:true, collapsible:false, toolbar:'#subCodeTb', pagination:false, autoRowHeight:false">
 			        <thead>

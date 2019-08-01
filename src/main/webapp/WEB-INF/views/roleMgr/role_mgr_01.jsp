@@ -149,7 +149,7 @@
 <body>
 	<form id="roleMgrTabForm" method="post" action="">
 	<jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>		
-	<div id="tabsLayer" class="easyui-tabs" style="width:100%;height:730px;">
+	<div id="tabsLayer" class="easyui-tabs" style="width:100%;height:710px;">
 		<div class="noscroll" title="<spring:message code="resc.label.roleMgr"/>" style="padding:20px;display:none;">
 			<table style="width:99%;height:80vh">
 			<tr>
