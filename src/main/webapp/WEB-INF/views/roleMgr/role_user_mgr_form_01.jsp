@@ -46,10 +46,21 @@
     	});     	    	    	   
     });
     
+    function refreshRoleUserList() {
+    	var rowData = $("#roleList").datagrid('getSelected');
+    	var coId = $("#selCoId").combobox('getValue');
+		var userListByRolUrl = "<c:out value="${contextPath}"/>/rest/userListByRole/coId/" + coId + "/role/" + rowData.role;
+		
+		$('#roleUserList').datagrid('loadData', getUserListByRole(userListByRolUrl));    			
+    }
+    
     /**
      * 팝업창에서 호출하기 위한 함수(refresh)
      */
      function reload() {
+    	var coId = $("#selCoId").combobox('getValue');
+     	url = "<c:out value="${contextPath}"/>/rest/role/coId/" + coId;
+     	
      	$('#roleList').datagrid('loadData', getData());
      }
     
@@ -120,17 +131,80 @@
     }
     
     function appendUserRole() {
-    	if (role == "") {
+    	if (role == "" || role == null) {
     		var msg = '<spring:message code="resc.msg.selectRole"/>';
     		var title = '<spring:message code="resc.label.confirm"/>';		    			
     		alertMsg(title, msg);			
     		return;
     	}
     	var coId = $("#selCoId").combobox('getValue');					    	
-		url = "<c:out value="${contextPath}"/>/admin/roleMgr/userRoleRegistrationForm?coId=" + coId + "&role=" + role + "&roleName=" + roleName;		
+		url = "<c:out value="${contextPath}"/>/admin/roleMgr/roleUserRegistrationForm?coId=" + coId + "&role=" + role + "&roleName=" + roleName;		
 		var formHeight = 220;
 		
-		$.popupWindow(url, { name: 'userRoleAddForm', height: formHeight, width: 900 });		    
+		$.popupWindow(url, { name: 'userRoleUserAddForm', height: formHeight, width: 900 });		    
+    }
+    
+    function modifyUserRole() {    	
+    	var coId = $("#selCoId").combobox('getValue');
+    	var rowData = $("#roleUserList").datagrid('getSelected');	
+    	if (rowData == null) {
+    		var title = '<spring:message code="resc.label.confirm"/>';
+    		var msg = '<spring:message code="resc.msg.noSelectRoleUser"/>';
+    		alertMsg(title, msg);
+			return;
+    	}
+    	
+		url = "<c:out value="${contextPath}"/>/admin/roleMgr/roleUserModifyForm?coId=" + coId + "&role=" + rowData.role + "&userId=" + rowData.userId + "&roleName=" + roleName + "&empName=" + rowData.empName;		
+		var formHeight = 220;
+		
+		$.popupWindow(url, { name: 'userRoleUserModifyForm', height: formHeight, width: 900 });		    
+    }
+    
+    function removeitRoleUser() {
+    	var coId = $("#selCoId").combobox('getValue');	
+    	var rowData = $("#roleUserList").datagrid('getSelected');	
+    	
+    	if (rowData == null) {
+    		var title = '<spring:message code="resc.label.confirm"/>';
+    		var msg = '<spring:message code="resc.msg.noSelectRoleUser"/>';
+    		alertMsg(title, msg);
+			return;
+    	}
+    	
+    	msg = '<spring:message code="resc.msg.confirmDel"/>';    		
+		$.messager.confirm(title, msg, function(r) {
+			if (r) {
+				deleteRoleUser();
+			}
+		});
+    }
+            
+    function deleteRoleUser() {
+    	var coId = $("#selCoId").combobox('getValue');	
+    	var rowData = $("#roleUserList").datagrid('getSelected');			    				    	
+    
+		var strUrl = "<c:out value="${contextPath}"/>/rest/roleUser/delete/coId/" + coId + "/role/" + rowData.role + "/userId/" + rowData.userId;
+    	
+    	$.ajax({
+			type: 'DELETE',
+			url: strUrl,						 				
+			dataType: 'json',						
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+		        xhr.setRequestHeader("Content-Type", "application/json");
+				//데이터를 전송하기 전에 헤더에 csrf값을 설정한다.					
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},  				
+			success : function(msg) {
+				var title = '<spring:message code="resc.label.confirm"/>';		    			
+				$.messager.alert(title, msg, "info",  function(){
+					refreshRoleUserList();
+				});						
+			},
+			error : function(xhr, status, error) {
+				console.log("error: " + status);
+			}
+		});
     }
     </script>
 </head>
@@ -188,7 +262,7 @@
 			</div>   	
 			    <div id="subCodeTb" style="height:auto">    
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendUserRole()"><spring:message code="resc.btn.add"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitUserRole()"><spring:message code="resc.btn.delete"/></a>
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitRoleUser()"><spring:message code="resc.btn.delete"/></a>
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifyUserRole()"><spring:message code="resc.btn.modify"/></a>        
 			    </div>						   
 			</td>

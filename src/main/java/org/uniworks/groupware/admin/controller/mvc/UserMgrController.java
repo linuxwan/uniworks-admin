@@ -119,7 +119,10 @@ public class UserMgrController {
 	 */
 	@RequestMapping(value = "/userSearchForm", method = RequestMethod.GET)
 	public ModelAndView userSearchForm(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("user/user_search_form_01");
+		ModelAndView mav = new ModelAndView("user/user_search_form_01");		
+		String userId = StringUtil.null2void(request.getParameter("userId"));
+		String userName = StringUtil.null2void(request.getParameter("userName"));
+		
 		//Session 정보를 가져온다.		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 				
@@ -132,6 +135,9 @@ public class UserMgrController {
 		List<CommonCode> sortTypeList = commonService.getCommonSubCodeList(map);	
 		
 		mav.addObject("searchTypeList", sortTypeList);
+		mav.addObject("userSession", userSession);
+		mav.addObject("userId", userId);
+		mav.addObject("userName", userName);
 		return mav;
 	}
 }

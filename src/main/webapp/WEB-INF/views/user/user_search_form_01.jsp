@@ -14,17 +14,97 @@
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.serializeObject.js"></script>
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.popupwindow.js"></script>
 	<script type="text/javascript">
+	var url = "";
+	var userId = "${userId}";
+	var userName = "${userName}";
+	
 	$(function(){    	
-		$("#searchKind").combobox('select', '<spring:message code="resc.label.empName"/>');
+		$("#searchKind").combobox('select', 'NAME');
 		//검색버튼 클릭
-		$('#btnSearchUser').bind('click', function(){
-			console.log('aaaaaa');
+		$('#btnSearchUser').bind('click', function(){	
+			var searchWord = $("#searchWord").textbox('getValue');
+			if (searchWord == "" || searchWord.length < 1) {
+				var msg = '<spring:message code="resc.msg.enterSearchQuery"/>';
+	    		var title = '<spring:message code="resc.label.confirm"/>';		    			
+	    		alertMsg(title, msg);	
+	    		return;
+			}
+			$('#userList').datagrid('loadData', getData());
+		});				
+		
+		//datagrid 더블 클릭 시
+		$('#userList').datagrid({
+			onDblClickRow : function() {
+				selectUser();
+			}
 		});
+		
 		//선택버튼 클릭
 		$('#btnSelect').bind('click', function(){
-			console.log('bbbb');
+			selectUser();
 		});
     });
+	
+	function selectUser() {
+		var rowData = $("#userList").datagrid('getSelected');
+		
+		if (rowData == null) {
+			var msg = '<spring:message code="resc.msg.noSelectUser"/>';
+    		var title = '<spring:message code="resc.label.confirm"/>';		    			
+    		alertMsg(title, msg);	
+    		return;
+		} else {
+			//Opener에서 object 명칭을 지정하지 않았을 때와 지정했을 때 처리
+			if ((userId == "" || userId.length < 1) && (userName == "" || userName.length < 1)) {
+				window.opener.$("#userId").val(rowData.userId);
+				window.opener.$("#userName").textbox('setValue', rowData.empName);
+				window.close();
+			} else {
+				window.opener.$("#" + userId).val(rowData.userId);
+				window.opener.$("#" + userName).textbox('setValue', rowData.empName);
+				window.close();
+			}			
+		}
+	}
+	
+	/*
+     * Role 목록 정보를 가져온다.
+    */
+    function getData() {
+		var coId = '${userSession.coId}';
+    	var searchKind = $("#searchKind").combobox('getValue');
+		var searchWord = $("#searchWord").textbox('getValue');
+		url = "<c:out value="${contextPath}"/>/rest/user/search/coId/" + coId + "/searchKind/" + searchKind + "/searchWord/" + searchWord;
+		
+    	getAjaxData(url);
+    	return rows; 
+    }
+    
+    /*
+     * 등록된 컨텐츠 목록을 Ajax로 호출
+    */
+    function getAjaxData(url) {
+    	rows = [];
+   	    	
+    	$.ajaxSetup({async: false});    	 
+    	$.getJSON(url, function (data, status){
+    		if (status == 'success') {    			 
+    			$.each(data, function(index, entry) {
+    				rows.push({
+    					userId: entry["userId"],
+    					empName: entry["empName"],
+    					deptDesc: entry["deptDesc"],
+    					dutyDesc: entry["dutyDesc"],
+    					pstnDesc: entry["pstnDesc"]
+    				});
+    			});
+    			    			
+    			return rows;
+    		} else {
+    			return;
+    		}
+    	});
+    }
 	</script>
 </head>
 <body>	
@@ -41,7 +121,7 @@
 		            <option value="${searchType.subCode}" <c:if test="${searchType.subCode == searchType}">selected="selected"</c:if> >${searchType.rescKeyValue}</option>
 		            </c:forEach>		            	
 		        </select>
-		        <input class="easyui-textbox" id="coId" name="coId" style="width:40%" value="${coId}" data-options="label:'<spring:message code="resc.label.searchWord"/>:',readonly:true,required:true,labelWidth:50">
+		        <input class="easyui-textbox" id="searchWord" name="searchWord" style="width:40%" value="${coId}" data-options="label:'<spring:message code="resc.label.searchWord"/>:',required:true,labelWidth:50">
 		        <a href="javascript:void(0)" id="btnSearchUser" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.search"/></a>
 		        </div>
 			</td>
@@ -49,16 +129,16 @@
 		<tr>
 			<td colspan="2" style="width:100%">
 			<div>
-	      		<table id="roleList" class="easyui-datagrid" style="width:100%;height:490px;"		        
+	      		<table id="userList" class="easyui-datagrid" style="width:100%;height:340px;"		        
 			       		title="<spring:message code="resc.label.userList"/>" 
 			       		data-options="rownumbers:true,singleSelect:true,collapsible:false,pagination:false,autoRowHeight:false">
 			        <thead>
-			        	<tr>
-			           		<th data-options="field:'coId',width:'10%',halign:'center',align:'center'"><spring:message code="resc.label.coId"/></th>
-			        		<th data-options="field:'role',width:'15%',halign:'center',align:'left'"><spring:message code="resc.label.role"/></th>
-			        		<th data-options="field:'roleName',width:'25%',halign:'center',align:'left'"><spring:message code="resc.label.roleName"/></th>			        		
-			        		<th data-options="field:'roleDetl',width:'40%',halign:'center',align:'left'"><spring:message code="resc.label.roleDetl"/></th>
-			        		<th data-options="field:'useIndc',width:'10%',halign:'center',align:'center'"><spring:message code="resc.label.useIndc"/></th>			        		
+			        	<tr>			           					        		
+			        		<th data-options="field:'empName',width:'20%',halign:'center',align:'left'"><spring:message code="resc.label.empName"/></th>
+			        		<th data-options="field:'userId',width:1,hidden:true"><spring:message code="resc.label.userId"/></th>
+			        		<th data-options="field:'deptDesc',width:'40%',halign:'center',align:'left'"><spring:message code="resc.label.dept"/></th>
+			        		<th data-options="field:'dutyDesc',width:'20%',halign:'center',align:'left'"><spring:message code="resc.label.dutyDesc"/></th>			        		
+			        		<th data-options="field:'pstnDesc',width:'20%',halign:'center',align:'left'"><spring:message code="resc.label.pstnDesc"/></th>			        					        	
 			        	</tr>  
 			        </thead>
 			    </table>

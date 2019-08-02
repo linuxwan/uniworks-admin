@@ -25,9 +25,11 @@ import org.uniworks.groupware.admin.common.util.SecurityUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.Hr001m;
+import org.uniworks.groupware.admin.domain.Nw105m;
 import org.uniworks.groupware.admin.domain.Nw106m;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.Hr001mService;
+import org.uniworks.groupware.admin.service.Nw105mService;
 import org.uniworks.groupware.admin.service.Nw106mService;
 
 /**
@@ -41,6 +43,7 @@ public class RoleMgrController {
 	@Autowired CommonService commonService;
 	@Autowired Hr001mService hr001mService;
 	@Autowired Nw106mService nw106mService;
+	@Autowired Nw105mService nw105mService;
 	
 	/**
 	 * Role 목록 화면
@@ -145,7 +148,7 @@ public class RoleMgrController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/roleMgr/userRoleRegistrationForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/roleMgr/roleUserRegistrationForm", method = RequestMethod.GET)
 	public ModelAndView userRoleRegistrationForm(HttpServletRequest request, HttpServletResponse response) {
 		String coId = StringUtil.null2void(request.getParameter("coId"));
 		String role = StringUtil.null2void(request.getParameter("role"));
@@ -161,4 +164,35 @@ public class RoleMgrController {
 		return mav;
 	}
 	
+	/**
+	 * 사용자 Role 수정 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/roleMgr/roleUserModifyForm", method = RequestMethod.GET)
+	public ModelAndView userRoleModifyForm(HttpServletRequest request, HttpServletResponse response) {
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String role = StringUtil.null2void(request.getParameter("role"));
+		String userId = StringUtil.null2void(request.getParameter("userId"));
+		String roleName = StringUtil.null2void(request.getParameter("roleName"));
+		String empName = StringUtil.null2void(request.getParameter("empName"));
+		
+		ModelAndView mav = new ModelAndView("roleMgr/user_role_modify_form_01");
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", coId);
+		map.put("role", role);
+		map.put("userId", userId);
+		
+		Nw105m nw105m = nw105mService.getNw105m(map);
+		
+		mav.addObject("coId", coId);
+		mav.addObject("roleName", roleName);
+		mav.addObject("userName", empName);
+		if (nw105m != null) mav.addObject("nw105m", nw105m);
+		return mav;
+	}
 }

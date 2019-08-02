@@ -28,10 +28,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
-import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.domain.HumanResource;
 import org.uniworks.groupware.admin.domain.Nw100m;
 import org.uniworks.groupware.admin.domain.User;
+import org.uniworks.groupware.admin.domain.UserRole;
 import org.uniworks.groupware.admin.service.HumanResourceService;
 import org.uniworks.groupware.admin.service.Nw100mService;
 import org.uniworks.groupware.admin.service.UserService;
@@ -76,6 +76,31 @@ public class UserController {
 		List<User> userList = userService.getUserList(map);
 		
 		return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
+	}
+	
+	/**
+	 * 사용자 검색 결과를 가져온다.
+	 * @param request
+	 * @param coId
+	 * @param searchKind
+	 * @param searchWord
+	 * @return
+	 */
+	@GetMapping(value = "/user/search/coId/{coId}/searchKind/{searchKind}/searchWord/{searchWord}")
+	public ResponseEntity<List<UserRole>> getUserSearchList(HttpServletRequest request, @PathVariable("coId") String coId,
+			@PathVariable("searchKind") String searchKind, @PathVariable("searchWord") String searchWord) {
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");		
+
+		Map<String, Object> map = new HashMap<String, Object>();	
+		map.put("coId", coId);
+		map.put("lang", userSession.getLang());
+		map.put("searchKind", searchKind);
+		map.put("searchWord", searchWord);
+		
+		List<UserRole> userList = userService.getUserListBySearch(map);
+		
+		return new ResponseEntity<List<UserRole>>(userList, HttpStatus.OK);
 	}
 	
 	/**

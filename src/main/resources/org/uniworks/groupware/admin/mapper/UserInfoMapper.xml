@@ -215,11 +215,12 @@
  	</select>
  	
  	<!-- 사용자 검색 -->
- 	<select id="getUserListBySearch" parameterType="java.util.Map" resultMap="UserRoleResultMap">
- 	<![CDATA[
+ 	<select id="getUserListBySearch" parameterType="java.util.Map" resultMap="UserRoleResultMap"> 	
  		select A.CO_ID, B.USER_ID, A.EMP_NAME_KOR as EMP_NAME, '' as ROLE, A.DUTY_CODE, gw.FN_GetCodeName(A.CO_ID, 'CD004', A.DUTY_CODE, #{lang,jdbcType=VARCHAR}) as DUTY_DESC,
-		       A.PSTN_CODE, gw.FN_GetCodeName(B.CO_ID, 'CD006', A.PSTN_CODE, #{lang,jdbcType=VARCHAR}) as PSTN_DESC, 
-		       IF(C.USE_INDC <> null && LENGTH(C.USE_INDC) > 0, C.USE_INDC, 'N') as USE_INDC, 
+		       A.PSTN_CODE, gw.FN_GetCodeName(B.CO_ID, 'CD006', A.PSTN_CODE, #{lang,jdbcType=VARCHAR}) as PSTN_DESC,
+	<![CDATA[		        
+		       IF(C.USE_INDC <> null && LENGTH(C.USE_INDC) > 0, C.USE_INDC, 'N') as USE_INDC,
+	]]> 
 		       CASE A.BASE_ASGN_OGAN_LEV WHEN '1' THEN A.ASGN_OGAN_CODE_1
 			                             WHEN '2' THEN A.ASGN_OGAN_CODE_2
 			                             WHEN '3' THEN A.ASGN_OGAN_CODE_3
@@ -253,12 +254,11 @@
 		    AND C.USER_ID = A.EMP_NO
 		where  A.CO_ID = #{coId,jdbcType=VARCHAR}
 		<if test="searchKind == 'EMPNO'">
-			AND A.EMP_NO = searchWord,jdbcType=VARCHAR}
+			AND A.EMP_NO LIKE concat('%', #{searchWord,jdbcType=VARCHAR}, '%')
 		</if>
 		<if test="searchKind == 'NAME'">
-			AND A.EMP_NAME_KOR LIKE concat(#{searchWord,jdbcType=VARCHAR}, '%');
+			AND A.EMP_NAME_KOR LIKE concat('%', #{searchWord,jdbcType=VARCHAR}, '%')
 		</if>
-		order by A.CO_ID, A.EMP_NAME_KOR
-	]]>
+		order by A.CO_ID, A.EMP_NAME_KOR	
  	</select>
 </mapper>

@@ -5,7 +5,7 @@
 		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
 		<result column="USER_ID" jdbcType="VARCHAR" property="userId" /> 
 		<result column="ROLE" jdbcType="VARCHAR" property="role" /> 
-		<result column="USE_INDC" jdbcType="SMALLINT" property="useIndc" /> 
+		<result column="USE_INDC" jdbcType="VARCHAR" property="useIndc" /> 
 	</resultMap> 
 	
 	<!-- Count -->
@@ -39,14 +39,14 @@
 	<!-- 등록 --> 
 	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw105m"> 
 		insert	into nw105m(CO_ID, USER_ID, ROLE, USE_INDC) 
-		values (#{coId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{role,jdbcType=VARCHAR},#{useIndc,jdbcType=SMALLINT}) 
+		values (#{coId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{role,jdbcType=VARCHAR},#{useIndc,jdbcType=VARCHAR}) 
 	</insert> 
  
 	<!-- 수정 --> 
 	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw105m"> 
 		update	nw105m 
 		<trim prefix="SET" suffixOverrides=","> 
-			<if test="useIndc != null">USE_INDC= #{useIndc,jdbcType=SMALLINT},</if> 
+			<if test="useIndc != null">USE_INDC= #{useIndc,jdbcType=VARCHAR},</if> 
 		</trim> 
 		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
 		  and	USER_ID	=	#{userId,jdbcType=VARCHAR} 

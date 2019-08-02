@@ -14,15 +14,20 @@
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.popupwindow.js"></script>
     <script type="text/javascript">
     $(function(){    	
-    	fnCheckedRadioButtonById("useIndcY");
+    	var useIndc = '${nw105m.useIndc}';
+    	if (useIndc == 'Y') {
+    		fnCheckedRadioButtonById("useIndcY");
+    	} else {
+    		fnCheckedRadioButtonById("useIndcN");
+    	}
     	
     	$('#btnSave').bind('click', function(){
 	    	if($('#userRoleAddForm').form('enableValidation').form('validate')) {  
 	    		var formData = parseFormHelper('userRoleAddForm');
-	    		var strUrl = '<c:out value="${contextPath}"/>/rest/roleUser/create';
+	    		var strUrl = '<c:out value="${contextPath}"/>/rest/roleUser/update';
 	    		
 	    		$.ajax({
-					type: 'POST',
+					type: 'PUT',
 					url: strUrl,
 					data: formData, 
 					dataType: 'json',						
@@ -46,18 +51,7 @@
 	    		return false;
 	    	}
 		});   
-    });
-    
-    function fnSelectUser() {
-    	var coId = $("#coId").textbox('getValue');					    	
-		var url = "<c:out value="${contextPath}"/>/admin/userSearchForm";						
-		
-		$.popupWindow(url, { name: "userId", height: 500, width: 450 });		
-    }        
-    
-    function fnSelectUserClear(userId) {
-    	$('#userName').textbox('setValue', '');
-    }
+    });        
     </script>
 </head>
 <body>
@@ -73,17 +67,15 @@
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="userName" name="userName" style="width:60%" data-options="label:'<spring:message code="resc.label.userId"/>:',readonly:true,required:true,labelWidth:120">
-		                <input type="hidden" id="userId" name="userId"/>		                
-		                <a href="javascript:fnSelectUser()" id="btnSelectUser" class="easyui-linkbutton" style="width:80px"><spring:message code="resc.btn.userSearch"/></a>
-		                <a href="javascript:fnSelectUserClear()" id="btnEraseSelectUser" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>
+		                <input class="easyui-textbox" id="userName" name="userName" value="${userName}" style="width:100%" data-options="label:'<spring:message code="resc.label.userId"/>:',readonly:true,required:true,labelWidth:120">
+		                <input type="hidden" id="userId" name="userId" value="${nw105m.userId}" />		                
 		            </div>
 	            </td>	            	            	          
 	        </tr>	        
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="role" name="role" style="width:100%" value="${role}" data-options="label:'<spring:message code="resc.label.role"/>:',readonly:true,required:true,labelWidth:120">
+		                <input class="easyui-textbox" id="role" name="role" style="width:100%" value="${nw105m.role}" data-options="label:'<spring:message code="resc.label.role"/>:',readonly:true,required:true,labelWidth:120">
 		            </div>
 	            </td>	            	            	        
 	        	<td style="width:50%;padding:0px 10px;">			        	

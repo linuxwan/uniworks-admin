@@ -28,13 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
-import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.common.util.WebUtil;
 import org.uniworks.groupware.admin.domain.Nw105m;
-import org.uniworks.groupware.admin.domain.Nw106m;
 import org.uniworks.groupware.admin.domain.UserRole;
 import org.uniworks.groupware.admin.service.Nw105mService;
-import org.uniworks.groupware.admin.service.Nw106mService;
 import org.uniworks.groupware.admin.service.UserService;
 
 /**
@@ -43,49 +40,60 @@ import org.uniworks.groupware.admin.service.UserService;
  */
 @RestController
 @RequestMapping(value = "/rest")
-public class RoleManagerController {
-	private static final Logger logger = LoggerFactory.getLogger(RoleManagerController.class);
+public class UserRoleController {
+	private static final Logger logger = LoggerFactory.getLogger(UserRoleController.class);
 	@Autowired Nw105mService nw105mService;
-	@Autowired Nw106mService nw106mService;
 	@Autowired UserService userService;
 	@Autowired private MessageSource messageSource;
 	
 	/**
-	 * Role 목록
+	 * Role별 사용자 목록을 가져온다.
 	 * @param request
 	 * @param coId
+	 * @param role
 	 * @return
 	 */
-	@GetMapping(value = "/role/coId/{coId}")
-	public ResponseEntity<List<Nw106m>> roleList(HttpServletRequest request, @PathVariable("coId") String coId) {
+	@GetMapping(value = "/userListByRole/coId/{coId}/role/{role}")
+	public ResponseEntity<List<UserRole>> userListByRole(HttpServletRequest request, @PathVariable("coId") String coId, @PathVariable("role") String role) {
 		//Session 정보를 가져온다.		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("coId", coId);
+		map.put("role", role);
+		map.put("lang", userSession.getLang());
 		
-		List<Nw106m> roleList = nw106mService.getNw106mList(map);
-		return new ResponseEntity<List<Nw106m>>(roleList, HttpStatus.OK);
-	}
+		List<UserRole> userByRoleList = userService.getUserListByRole(map);
+		return new ResponseEntity<List<UserRole>>(userByRoleList, HttpStatus.OK);
+	}		
 	
 	/**
-	 * Role 등록
+	 * 사용자 Role 등록
 	 * @param model
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	@PostMapping(value = "/role/create")
-	public ResponseEntity<String> createRole(@RequestBody Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
+	@PostMapping(value = "/roleUser/create")
+	public ResponseEntity<String> createRoleUser(@RequestBody Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
 		String result = "";
 		//Session 정보를 가져온다.		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
-		Nw106m nw106m = new Nw106m();
-		WebUtil.bind(model, nw106m);
+		Nw105m nw105m = new Nw105m();
+		WebUtil.bind(model, nw105m);
+				
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", nw105m.getCoId());
+		map.put("role", nw105m.getRole());
+		map.put("userId", nw105m.getUserId());		
 		
-		nw106m.setCrtId(userSession.getAdminId());
-		nw106m.setCrtDate(DateUtil.getCurrentDate());
+		Nw105m existUserRole = nw105mService.getNw105m(map);
+		if (existUserRole != null && existUserRole.getUserId().equalsIgnoreCase(nw105m.getUserId()) 
+				&& existUserRole.getRole().equalsIgnoreCase(nw105m.getRole())) {
+			result = messageSource.getMessage("resc.msg.userRoleExist", null, response.getLocale());	
+			return new ResponseEntity<String>(result, HttpStatus.OK); 			
+		}
 		
-		int rtn = nw106mService.addNw106m(nw106m);
+		int rtn = nw105mService.addNw105m(nw105m);
 		
 		if (rtn > 0) {
 			result = messageSource.getMessage("resc.msg.addOk", null, response.getLocale());			
@@ -97,58 +105,68 @@ public class RoleManagerController {
 	}
 	
 	/**
-	 * Role 수정
+	 * 사용자 Role 등록
 	 * @param model
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	@PutMapping(value = "/role/modify")
-	public ResponseEntity<String> modifyRole(@RequestBody Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
+	@PutMapping(value = "/roleUser/update")
+	public ResponseEntity<String> updateRoleUser(@RequestBody Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
 		String result = "";
 		//Session 정보를 가져온다.		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
-		Nw106m nw106m = new Nw106m();
-		WebUtil.bind(model, nw106m);
+		Nw105m nw105m = new Nw105m();
+		WebUtil.bind(model, nw105m);
+				
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", nw105m.getCoId());
+		map.put("role", nw105m.getRole());
+		map.put("userId", nw105m.getUserId());		
 		
-		nw106m.setChngId(userSession.getAdminId());
-		nw106m.setChngDate(DateUtil.getCurrentDate());
+		Nw105m existUserRole = nw105mService.getNw105m(map);
+		if (existUserRole == null) {
+			result = messageSource.getMessage("resc.msg.notExistRoleUser", null, response.getLocale());	
+			return new ResponseEntity<String>(result, HttpStatus.OK); 			
+		}
 		
-		int rtn = nw106mService.updateNw106m(nw106m);
+		int rtn = nw105mService.updateNw105m(nw105m);
+		
 		if (rtn > 0) {
 			result = messageSource.getMessage("resc.msg.modifyOk", null, response.getLocale());			
 		} else {
 			result = messageSource.getMessage("resc.msg.modifyFail", null, response.getLocale());
 		}
 		
-		return new ResponseEntity<String>(result, HttpStatus.OK);
+		return new ResponseEntity<String>(result, HttpStatus.OK); 
 	}
 	
 	/**
-	 * Role 삭제
+	 * 사용자별 Role 삭제
 	 * @param coId
 	 * @param boardId
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	@DeleteMapping(value = "/role/delete/coId/{coId}/role/{role}")
-	public ResponseEntity<String> deleteRole(@PathVariable("coId") String coId, @PathVariable("role") String role, 
-			HttpServletRequest request, HttpServletResponse response) {	
+	@DeleteMapping(value = "/roleUser/delete/coId/{coId}/role/{role}/userId/{userId}")
+	public ResponseEntity<String> deleteRoleUser(@PathVariable("coId") String coId, @PathVariable("role") String role, 
+			@PathVariable("userId") String userId, HttpServletRequest request, HttpServletResponse response) {	
 		String result = "";		
 		//Session 정보를 가져온다.		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("coId", coId);
 		map.put("role", role);
+		map.put("userId", userId);
 		
-		int checkRoleCnt = nw105mService.getRoleUserCount(map);
-		if (checkRoleCnt > 0) {
-			result = messageSource.getMessage("resc.msg.notDeleteRole", null, response.getLocale());	
+		Nw105m checkRoleUser = nw105mService.getNw105m(map);
+		if (checkRoleUser == null) {
+			result = messageSource.getMessage("resc.msg.notExistRoleUser", null, response.getLocale());	
 			return new ResponseEntity<String>(result, HttpStatus.OK); 
 		}
 		
-		int cnt = nw106mService.deleteNw106m(map);
+		int cnt = nw105mService.deleteNw105m(map);
 		
 		if (cnt > 0) {
 			result = messageSource.getMessage("resc.msg.deleteOk", null, response.getLocale());			

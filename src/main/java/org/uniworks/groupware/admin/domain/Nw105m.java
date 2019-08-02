@@ -24,7 +24,7 @@ public class Nw105m implements Serializable {
 	private String coId; 
 	private String userId; 
 	private String role; 
-	private short useIndc; 
+	private String useIndc; 
 
 	public void setCoId(String coId) { 
 		this.coId = coId; 
@@ -44,10 +44,10 @@ public class Nw105m implements Serializable {
 	public String getRole() { 
 		return this.role; 
 	} 
-	public void setUseIndc(short useIndc) { 
+	public void setUseIndc(String useIndc) { 
 		this.useIndc = useIndc; 
 	} 
-	public short getUseIndc() { 
+	public String getUseIndc() { 
 		return this.useIndc; 
 	} 
 	@Override 
