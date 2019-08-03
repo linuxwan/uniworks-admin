@@ -31,9 +31,7 @@
     	});
     	
     	//Role별 사용자 현황
-		addTabLayer("001", "<spring:message code='resc.label.roleUserMgr'/>", "<c:out value="${contextPath}"/>/admin/roleMgr/roleUserManagerForm");
-		//사용자별 Role 현황
-		//addTabLayer("002", "Google", "<c:out value="${contextPath}"/>/admin/contentsMgr");
+		addTabLayer("001", "<spring:message code='resc.label.roleUserMgr'/>", "<c:out value="${contextPath}"/>/admin/roleMgr/roleUserManagerForm");		
 		
 		$("#tabsLayer").tabs("select", '<spring:message code="resc.label.roleMgr"/>');
     });
@@ -150,7 +148,7 @@
 	<form id="roleMgrTabForm" method="post" action="">
 	<jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>		
 	<div id="tabsLayer" class="easyui-tabs" style="width:100%;height:710px;">
-		<div class="noscroll" title="<spring:message code="resc.label.roleMgr"/>" style="padding:20px;display:none;">
+		<div class="noscroll" title="<spring:message code="resc.label.roleMgr"/>" style="padding:10px;display:none;">
 			<table style="width:99%;height:80vh">
 			<tr>
 				<td colspan="2">

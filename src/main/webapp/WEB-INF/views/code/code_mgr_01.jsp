@@ -260,9 +260,9 @@
 			        </thead>
 			    </table>    	
 			    <div id="masterCodeTb" style="height:auto">			    	    
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendMasterCode()"><spring:message code="resc.btn.add"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeMasterCode()"><spring:message code="resc.btn.delete"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifyMasterCode()"><spring:message code="resc.btn.modify"/></a>        
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendMasterCode()"><spring:message code="resc.btn.add"/></a>			        
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifyMasterCode()"><spring:message code="resc.btn.modify"/></a>
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeMasterCode()"><spring:message code="resc.btn.delete"/></a>        
 			    </div>  			
 			</td>
 			<td style="width:50%">
@@ -282,9 +282,9 @@
 			        </thead>
 			    </table>    	
 			    <div id="subCodeTb" style="height:auto">    
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendSubCode()"><spring:message code="resc.btn.add"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitSubCode()"><spring:message code="resc.btn.delete"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifySubCode()"><spring:message code="resc.btn.modify"/></a>        
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendSubCode()"><spring:message code="resc.btn.add"/></a>			        
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifySubCode()"><spring:message code="resc.btn.modify"/></a>
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitSubCode()"><spring:message code="resc.btn.delete"/></a>        
 			    </div> 			    
 			</td>
 		</tr>

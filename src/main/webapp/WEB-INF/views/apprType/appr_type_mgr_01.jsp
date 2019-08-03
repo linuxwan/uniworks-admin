@@ -258,9 +258,9 @@
 			        </thead>
 			    </table>    	
 			    <div id="masterCodeTb" style="height:auto">			    	    
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendApprovalType()"><spring:message code="resc.btn.add"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeMasterCode()"><spring:message code="resc.btn.delete"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifyApprovalType()"><spring:message code="resc.btn.modify"/></a>        
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendApprovalType()"><spring:message code="resc.btn.add"/></a>			        
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifyApprovalType()"><spring:message code="resc.btn.modify"/></a>
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeMasterCode()"><spring:message code="resc.btn.delete"/></a>        
 			    </div>  			
 			</td>
 			<td style="width:50%">
@@ -279,9 +279,9 @@
 			        </thead>
 			    </table>    	
 			    <div id="subCodeTb" style="height:auto">    
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendApprMstIdByApprType()"><spring:message code="resc.btn.add"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitApprMstIdByApprType()"><spring:message code="resc.btn.delete"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifyApprMstIdByApprType()"><spring:message code="resc.btn.modify"/></a>        
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendApprMstIdByApprType()"><spring:message code="resc.btn.add"/></a>			        
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifyApprMstIdByApprType()"><spring:message code="resc.btn.modify"/></a>
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitApprMstIdByApprType()"><spring:message code="resc.btn.delete"/></a>        
 			    </div> 			    
 			</td>
 		</tr>

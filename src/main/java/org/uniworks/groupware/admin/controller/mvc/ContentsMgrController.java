@@ -274,4 +274,28 @@ public class ContentsMgrController {
 		mav.addObject("typeCodeName", typeCodeName);
 		return mav;
 	}
+	
+	/**
+	 * 컨텐츠 권한 관리 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/contentsMgr/contentRightsMgr", method = RequestMethod.GET)
+	public ModelAndView contentRightsMgr(HttpServletRequest request, HttpServletResponse response) {
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		String adminType = SecurityUtil.getAuthority();
+		
+		ModelAndView mav = new ModelAndView("contentsMgr/content_auth_mgr_form_01");
+		
+		Map<String, Object> map = new HashMap<String, Object>();		
+		map.put("coId", userSession.getCoId());
+		map.put("adminType", adminType);
+		
+		List<Hr001m> coList = hr001mService.getHr001mList(map);		
+		
+		mav.addObject("coList", coList);
+		return mav;
+	}
 }

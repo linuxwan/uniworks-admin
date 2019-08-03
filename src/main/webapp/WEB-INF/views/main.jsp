@@ -61,8 +61,7 @@
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.apprTypeMgr"/>', '/admin/apprTypeMgr')"><spring:message code="resc.menu.apprTypeMgr"/></div>		            		            
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.boardMasterMgr"/>', '/admin/boardMasterMgr')"><spring:message code="resc.menu.boardMasterMgr"/></div>
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.contentsMgr"/>', '/admin/contentsMgr')"><spring:message code="resc.menu.contentsMgr"/></div>
-		            <div onclick="javascript:goPage('<spring:message code="resc.menu.roleMgr"/>', '/admin/roleMgr')"><spring:message code="resc.menu.roleMgr"/></div>
-		            <div onclick="javascript:goPage('new')">컨텐츠 권한 관리</div>
+		            <div onclick="javascript:goPage('<spring:message code="resc.menu.roleMgr"/>', '/admin/roleMgr')"><spring:message code="resc.menu.roleMgr"/></div>		            
 		            <div onclick="javascript:goPage('new')">컨텐츠 담당자 관리</div>
 		            <div onclick="javascript:goPage('new')">메뉴 관리</div>
 		        </div>
