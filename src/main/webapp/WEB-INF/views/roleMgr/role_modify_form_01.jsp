@@ -75,19 +75,21 @@
 		                <input class="easyui-textbox" id="role" name="role" style="width:100%" value="${nw106m.role}" data-options="label:'<spring:message code="resc.label.role"/>:',required:true,labelWidth:120">
 		            </div>
 	            </td>	            	            	          
-	        </tr>	        
+	        </tr>
+	        <c:forEach items="${nw107mList}" var="nw107m">	 	        
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">			        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="roleName" name="roleName" style="width:100%" value="${nw106m.roleName}" data-options="label:'<spring:message code="resc.label.roleName"/>:',required:true,labelWidth:120">
+		                <input class="easyui-textbox" id='roleName_<c:out value="${nw107m.locale}"/>' name='roleName_<c:out value="${nw107m.locale}"/>' style="width:100%" value="${nw107m.roleName}" data-options="label:'<spring:message code="resc.label.roleName"/>(<c:out value="${nw107m.locale}"/>):',required:true,labelWidth:120">
 		            </div>
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">
-		                <input class="easyui-textbox" id="roleDetl" name="roleDetl" style="width:100%" value="${nw106m.roleDetl}" data-options="label:'<spring:message code="resc.label.roleDetl"/>:',labelWidth:120">
+		                <input class="easyui-textbox" id='roleDetl_<c:out value="${nw107m.locale}"/>' name='roleDetl_<c:out value="${nw107m.locale}"/>' style="width:100%" value="${nw107m.roleDetl}" data-options="label:'<spring:message code="resc.label.roleDetl"/>(<c:out value="${nw107m.locale}"/>):',labelWidth:120">
 		            </div>
 	            </td>	            	            	          
 	        </tr>	        	        
+	        </c:forEach>
 	        <tr>
 	        	<td style="width:50%;padding:0px 10px;">			        	
 		            <div style="margin-bottom:10px">	

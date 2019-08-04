@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
 		Nw105m nw105m = new Nw105m();
 		nw105m.setCoId(nw100m.getCoId());
 		nw105m.setUserId(nw100m.getUserId());
-		short useIndc = 1;
+		String useIndc = "Y";
 		nw105m.setUseIndc(useIndc);
 		nw105m.setRole("ROLE_USER");
 		

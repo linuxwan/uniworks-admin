@@ -27,10 +27,12 @@ import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.Hr001m;
 import org.uniworks.groupware.admin.domain.Nw105m;
 import org.uniworks.groupware.admin.domain.Nw106m;
+import org.uniworks.groupware.admin.domain.Nw107m;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.Hr001mService;
 import org.uniworks.groupware.admin.service.Nw105mService;
 import org.uniworks.groupware.admin.service.Nw106mService;
+import org.uniworks.groupware.admin.service.Nw107mService;
 
 /**
  * @author Park Chung Wan
@@ -43,6 +45,7 @@ public class RoleMgrController {
 	@Autowired CommonService commonService;
 	@Autowired Hr001mService hr001mService;
 	@Autowired Nw106mService nw106mService;
+	@Autowired Nw107mService nw107mService;
 	@Autowired Nw105mService nw105mService;
 	
 	/**
@@ -87,7 +90,16 @@ public class RoleMgrController {
 		//Session 정보를 가져온다.		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
 		
+		//지원 언어 정보를 일반코드에서 가져온다. MAJ_CODE : CD001
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("lang", userSession.getLang());
+		map.put("coId", coId);
+		map.put("majCode", "CD001"); //지원언어가 저장되어져 있는 주코드 CD001
+		map.put("orderBy", "rescKeyValue");	//코드 정렬 방법 셋팅
+		List<CommonCode> langList = commonService.getCommonSubCodeList(map);	
+				
 		mav.addObject("coId", coId);
+		mav.addObject("langList", langList);
 		return mav;
 	}
 	
@@ -102,14 +114,18 @@ public class RoleMgrController {
 		String coId = StringUtil.null2void(request.getParameter("coId"));
 		String role = StringUtil.null2void(request.getParameter("role"));
 		ModelAndView mav = new ModelAndView("roleMgr/role_modify_form_01");
-		
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+				
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("coId", coId);
 		map.put("role", role);
 		
 		Nw106m nw106m = nw106mService.getNw106m(map);
-		
+		List<Nw107m> nw107mList = nw107mService.getNw107mList(map);			
+				
 		mav.addObject("nw106m", nw106m);
+		mav.addObject("nw107mList", nw107mList);
 		return mav;
 	}
 	

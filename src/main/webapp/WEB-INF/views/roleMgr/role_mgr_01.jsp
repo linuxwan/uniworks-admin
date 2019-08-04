@@ -188,10 +188,11 @@
 			<script type="text/javascript">			    			    
 			    function append() {    	
 			    	var coId = $("#selCoId").combobox('getValue');					    	
-					var url = "<c:out value="${contextPath}"/>/admin/roleMgr/roleAddForm?coId=" + coId;		
-					var formHeight = 220;
+					var url = "<c:out value="${contextPath}"/>/admin/roleMgr/roleAddForm?coId=" + coId;
+					var cnt = ${fn:length(langList)};	
+					var formHeight = 200 + (30 * cnt);
 					
-					$.popupWindow(url, { name: 'roleAddForm', height: formHeight, width: 750 });		    	
+					$.popupWindow(url, { name: 'roleAddForm', height: formHeight, width: 750 });	
 			    }
 			    
 			    function modify() {
@@ -207,7 +208,8 @@
 			    	
 			    	var url = "<c:out value="${contextPath}"/>/admin/roleMgr/roleModifyForm?coId=" + coId + "&role=" + rowData.role;
 			    			
-					var formHeight = 220;
+			    	var cnt = ${fn:length(langList)};	
+					var formHeight = 200 + (30 * cnt);
 					
 			    	$.popupWindow(url, { name: 'contentModifyForm', height: formHeight, width: 750 });	
 			    }

@@ -5,6 +5,7 @@
  */
 package org.uniworks.groupware.admin.controller.rest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,13 +29,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
+import org.uniworks.groupware.admin.common.util.ApplicationConfigReader;
 import org.uniworks.groupware.admin.common.util.DateUtil;
+import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.common.util.WebUtil;
-import org.uniworks.groupware.admin.domain.Nw105m;
+import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.Nw106m;
-import org.uniworks.groupware.admin.domain.UserRole;
+import org.uniworks.groupware.admin.domain.Nw107m;
+import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.Nw105mService;
 import org.uniworks.groupware.admin.service.Nw106mService;
+import org.uniworks.groupware.admin.service.Nw107mService;
+import org.uniworks.groupware.admin.service.RoleService;
 import org.uniworks.groupware.admin.service.UserService;
 
 /**
@@ -47,7 +53,10 @@ public class RoleManagerController {
 	private static final Logger logger = LoggerFactory.getLogger(RoleManagerController.class);
 	@Autowired Nw105mService nw105mService;
 	@Autowired Nw106mService nw106mService;
+	@Autowired Nw107mService nw107mService;
 	@Autowired UserService userService;
+	@Autowired CommonService commonService;
+	@Autowired RoleService roleService;
 	@Autowired private MessageSource messageSource;
 	
 	/**
@@ -82,10 +91,47 @@ public class RoleManagerController {
 		Nw106m nw106m = new Nw106m();
 		WebUtil.bind(model, nw106m);
 		
+		Map<String, Object> lanMap = new HashMap<String, Object>();
+		lanMap.put("lang", userSession.getLang());
+		lanMap.put("coId", model.get("coId"));
+		lanMap.put("majCode", "CD001"); //지원언어가 저장되어져 있는 주코드 CD001
+		lanMap.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
+		
+		String defaultLang = ApplicationConfigReader.get("default.language");
+		List<CommonCode> langList = commonService.getCommonSubCodeList(lanMap);
+		ArrayList<Nw107m> nw107mList = new ArrayList<Nw107m>();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", model.get("coId"));
+		map.put("role", model.get("role"));
+		
+		for (CommonCode commonCode : langList) {
+			String roleName = StringUtil.null2void((String)model.get("roleName_" + commonCode.getRescKeyValue()));	
+			String roleDetl = StringUtil.null2void((String)model.get("roleDetl_" + commonCode.getRescKeyValue()));	
+			if (defaultLang.equalsIgnoreCase(commonCode.getRescKeyValue())) {
+				nw106m.setRoleName(roleName);
+				nw106m.setRoleDetl(roleDetl);
+				Nw107m tempNw107m = nw107mService.getNw107m(map);
+				if (tempNw107m != null && tempNw107m.getRole().equalsIgnoreCase(nw106m.getRole())) {
+					result = messageSource.getMessage("resc.msg.roleExist", null, response.getLocale());
+					return new ResponseEntity<String>(result, HttpStatus.OK);
+				}
+			}
+			
+			Nw107m nw107m = new Nw107m();
+			nw107m.setCoId(nw106m.getCoId());
+			nw107m.setLocale(commonCode.getRescKeyValue());
+			nw107m.setRole(nw106m.getRole());
+			nw107m.setRoleName(roleName);
+			nw107m.setRoleDetl(roleDetl);
+			
+			nw107mList.add(nw107m);
+		}		
+		
 		nw106m.setCrtId(userSession.getAdminId());
 		nw106m.setCrtDate(DateUtil.getCurrentDate());
 		
-		int rtn = nw106mService.addNw106m(nw106m);
+		int rtn = roleService.addRole(nw106m, nw107mList);
 		
 		if (rtn > 0) {
 			result = messageSource.getMessage("resc.msg.addOk", null, response.getLocale());			
@@ -111,10 +157,47 @@ public class RoleManagerController {
 		Nw106m nw106m = new Nw106m();
 		WebUtil.bind(model, nw106m);
 		
+		Map<String, Object> lanMap = new HashMap<String, Object>();
+		lanMap.put("lang", userSession.getLang());
+		lanMap.put("coId", model.get("coId"));
+		lanMap.put("majCode", "CD001"); //지원언어가 저장되어져 있는 주코드 CD001
+		lanMap.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
+		
+		String defaultLang = ApplicationConfigReader.get("default.language");
+		List<CommonCode> langList = commonService.getCommonSubCodeList(lanMap);
+		ArrayList<Nw107m> nw107mList = new ArrayList<Nw107m>();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", model.get("coId"));
+		map.put("role", model.get("role"));
+		
+		for (CommonCode commonCode : langList) {
+			String roleName = StringUtil.null2void((String)model.get("roleName_" + commonCode.getRescKeyValue()));	
+			String roleDetl = StringUtil.null2void((String)model.get("roleDetl_" + commonCode.getRescKeyValue()));	
+			if (defaultLang.equalsIgnoreCase(commonCode.getRescKeyValue())) {
+				nw106m.setRoleName(roleName);
+				nw106m.setRoleDetl(roleDetl);
+				Nw107m tempNw107m = nw107mService.getNw107m(map);
+				if (tempNw107m != null && tempNw107m.getRole().equalsIgnoreCase(nw106m.getRole())) {
+					result = messageSource.getMessage("resc.msg.roleExist", null, response.getLocale());
+					return new ResponseEntity<String>(result, HttpStatus.OK);
+				}
+			}
+			
+			Nw107m nw107m = new Nw107m();
+			nw107m.setCoId(nw106m.getCoId());
+			nw107m.setLocale(commonCode.getRescKeyValue());
+			nw107m.setRole(nw106m.getRole());
+			nw107m.setRoleName(roleName);
+			nw107m.setRoleDetl(roleDetl);
+			
+			nw107mList.add(nw107m);
+		}		
+		
 		nw106m.setChngId(userSession.getAdminId());
 		nw106m.setChngDate(DateUtil.getCurrentDate());
 		
-		int rtn = nw106mService.updateNw106m(nw106m);
+		int rtn = roleService.modifyRole(nw106m, nw107mList);
 		if (rtn > 0) {
 			result = messageSource.getMessage("resc.msg.modifyOk", null, response.getLocale());			
 		} else {
@@ -148,7 +231,7 @@ public class RoleManagerController {
 			return new ResponseEntity<String>(result, HttpStatus.OK); 
 		}
 		
-		int cnt = nw106mService.deleteNw106m(map);
+		int cnt = roleService.removeRole(map);
 		
 		if (cnt > 0) {
 			result = messageSource.getMessage("resc.msg.deleteOk", null, response.getLocale());			

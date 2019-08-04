@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Nw107mMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Nw107m"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="ROLE" jdbcType="VARCHAR" property="role" /> 
+		<result column="LOCALE" jdbcType="VARCHAR" property="locale" /> 
+		<result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName" /> 
+		<result column="ROLE_DETL" jdbcType="VARCHAR" property="roleDetl" /> 
+	</resultMap> 
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, ROLE, LOCALE, ROLE_NAME, ROLE_DETL
+		from   nw107m
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR}  
+		  and  ROLE	=	#{role,jdbcType=VARCHAR} 
+	</select> 
+ 
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  CO_ID, ROLE, LOCALE, ROLE_NAME, ROLE_DETL
+		from   nw107m
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  LOCALE	=	#{locale,jdbcType=VARCHAR} 
+		  and  ROLE	=	#{role,jdbcType=VARCHAR} 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw107m"> 
+		insert	into nw107m(CO_ID, ROLE, LOCALE, ROLE_NAME, ROLE_DETL) 
+		values (#{coId,jdbcType=VARCHAR},#{role,jdbcType=VARCHAR},#{locale,jdbcType=VARCHAR},#{roleName,jdbcType=VARCHAR},#{roleDetl,jdbcType=VARCHAR}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw107m"> 
+		update	nw107m 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="roleName != null">ROLE_NAME= #{roleName,jdbcType=VARCHAR},</if> 
+			<if test="roleDetl != null">ROLE_DETL= #{roleDetl,jdbcType=VARCHAR},</if> 
+		</trim> 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	ROLE	=	#{role,jdbcType=VARCHAR} 
+		  and	LOCALE	=	#{locale,jdbcType=VARCHAR} 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from nw107m 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 		  
+		  and	ROLE	=	#{role,jdbcType=VARCHAR} 
+		  <if test="lang != null">
+		  and	LOCALE	=	#{lang,jdbcType=VARCHAR}
+		  </if>
+	</delete> 
+</mapper>
