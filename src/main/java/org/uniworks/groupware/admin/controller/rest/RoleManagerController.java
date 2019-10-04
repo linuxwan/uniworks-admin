@@ -34,6 +34,7 @@ import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.common.util.WebUtil;
 import org.uniworks.groupware.admin.domain.CommonCode;
+import org.uniworks.groupware.admin.domain.GroupInfo;
 import org.uniworks.groupware.admin.domain.Nw106m;
 import org.uniworks.groupware.admin.domain.Nw107m;
 import org.uniworks.groupware.admin.service.CommonService;
@@ -241,4 +242,30 @@ public class RoleManagerController {
 		
 		return new ResponseEntity<String>(result, HttpStatus.OK); 
 	}	
+	
+	/**
+	 * Role 검색
+	 * @param request
+	 * @param coId
+	 * @param searchKind
+	 * @param searchWord
+	 * @param orderBy
+	 * @return
+	 */
+	@GetMapping(value = "/role/search/coId/{coId}/searchKind/{searchKind}/searchWord/{searchWord}")
+	public ResponseEntity<List<Nw106m>> getSearchGroupList(HttpServletRequest request, @PathVariable("coId") String coId, 
+				@PathVariable("searchKind") String searchKind, @PathVariable("searchWord") String searchWord) {		
+		
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("lang", userSession.getLang());		
+		map.put("coId", coId);
+		map.put("searchKind", searchKind);
+		if (searchWord.equals("0")) searchWord = "%";
+		map.put("searchWord", searchWord);
+		
+		List<Nw106m> grpList = commonService.getRoleListBySearch(map);
+		return new ResponseEntity<List<Nw106m>>(grpList, HttpStatus.OK);
+	}
 }

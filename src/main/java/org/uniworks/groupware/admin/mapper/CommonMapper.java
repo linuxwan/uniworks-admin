@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.uniworks.groupware.admin.domain.CommonCode;
+import org.uniworks.groupware.admin.domain.GroupInfo;
+import org.uniworks.groupware.admin.domain.Nw106m;
 
 /**
  * @author Park Chungwan
@@ -21,4 +23,16 @@ public interface CommonMapper {
 	 * @return
 	 */
 	List<CommonCode> selectByCommonSubCodeList(Map<String, Object> map);	
+	/**
+	 * 사용자 그룹에 대한 검색 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	List<GroupInfo> getGroupListBySearch(Map<String, Object> map);
+	/**
+	 * Role에 대한 검색 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	List<Nw106m> getRoleListBySearch(Map<String, Object> map);
 }

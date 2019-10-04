@@ -122,6 +122,7 @@ public class UserMgrController {
 		ModelAndView mav = new ModelAndView("user/user_search_form_01");		
 		String userId = StringUtil.null2void(request.getParameter("userId"));
 		String userName = StringUtil.null2void(request.getParameter("userName"));
+		String targetObj = StringUtil.null2void(request.getParameter("targetObj"));
 		
 		//Session 정보를 가져온다.		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
@@ -138,6 +139,7 @@ public class UserMgrController {
 		mav.addObject("userSession", userSession);
 		mav.addObject("userId", userId);
 		mav.addObject("userName", userName);
+		mav.addObject("targetObj", targetObj);
 		return mav;
 	}
 }

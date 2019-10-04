@@ -187,7 +187,7 @@
     	var apprItemId = rowData.apprItemId;
 		var url = "<c:out value="${contextPath}"/>/admin/apprTypeMgr/apprTypeByApprMstAddForm?coId=" + coId + "&apprItemId=" + apprItemId;
 		var formHeight = 180;
-		$.popupWindow(url, { name: 'addApprMstByApprType', height: formHeight, width: 600 });
+		$.popupWindow(url, { name: 'addApprMstByApprType', height: formHeight, width: 700 });
     }
     
     /*
@@ -208,7 +208,7 @@
     	var apprMstId = rowData.apprMstId;
 		var url = "<c:out value="${contextPath}"/>/admin/apprTypeMgr/apprTypeByApprMstModifyForm?coId=" + coId + "&apprItemId=" + apprItemId + "&apprMstId=" + apprMstId;			
 		var formHeight = 180;
-		$.popupWindow(url, { name: 'modifyApprMstByApprType', height: formHeight, width: 600 });
+		$.popupWindow(url, { name: 'modifyApprMstByApprType', height: formHeight, width: 700 });
     }
     
     /**

@@ -262,8 +262,8 @@
 			</div>   	
 			    <div id="subCodeTb" style="height:auto">    
 			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendUserRole()"><spring:message code="resc.btn.add"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitRoleUser()"><spring:message code="resc.btn.delete"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifyUserRole()"><spring:message code="resc.btn.modify"/></a>        
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifyUserRole()"><spring:message code="resc.btn.modify"/></a>
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitRoleUser()"><spring:message code="resc.btn.delete"/></a>			                
 			    </div>						   
 			</td>
 		</tr>

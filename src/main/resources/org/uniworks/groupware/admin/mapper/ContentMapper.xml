@@ -21,6 +21,22 @@
 		<result column="PORT_NO" jdbcType="INTEGER" property="portNo" /> 
 	</resultMap> 	
 	
+	<resultMap id="contentAuthMap" type="org.uniworks.groupware.admin.domain.ContentAuth"> 
+		<result column="CNTN_ID" jdbcType="VARCHAR" property="cntnId" /> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="USE_AUTH_TYPE" jdbcType="VARCHAR" property="useAuthType" />
+		<result column="USE_AUTH_TYPE_DESC" jdbcType="VARCHAR" property="useAuthTypeDesc" />  
+		<result column="USE_AUTH_GRP_CODE" jdbcType="VARCHAR" property="useAuthGrpCode" /> 
+		<result column="USE_AUTH_GRP_DESC" jdbcType="VARCHAR" property="useAuthGrpDesc" />
+		<result column="CRT_AUTH" jdbcType="VARCHAR" property="crtAuth" /> 
+		<result column="RD_AUTH" jdbcType="VARCHAR" property="rdAuth" /> 
+		<result column="UPDT_AUTH" jdbcType="VARCHAR" property="updtAuth" /> 
+		<result column="DEL_AUTH" jdbcType="VARCHAR" property="delAuth" /> 
+		<result column="PRNT_AUTH" jdbcType="VARCHAR" property="prntAuth" /> 
+		<result column="UPLD_AUTH" jdbcType="VARCHAR" property="upldAuth" /> 
+		<result column="DNLD_AUTH" jdbcType="VARCHAR" property="dnldAuth" /> 
+	</resultMap> 
+	
 	<!-- 목록 조회 --> 
 	<select id="selectContentList" parameterType="java.util.Map" resultMap="BaseResultMap"> 
 		select c.CO_ID, a.CNTN_ID, b.CNTN_NAME, a.CNTN_OFFER_TYPE, e.RESC_KEY_VALUE CNTN_OFFER_TYPE_DESC, a.LINK_SYS_HOST, a.URL, 
@@ -107,5 +123,15 @@
 		  	<foreach collection="coId" item="type" open="(" close=")"	separator=",">
 		  		#{type}
 		  	</foreach>		  		 
-	</update> 
+	</update>
+	
+	<select id="selectContentAuthList" parameterType="java.util.Map" resultMap="contentAuthMap"> 
+		select a.CNTN_ID, a.CO_ID, a.USE_AUTH_TYPE, gw.FN_GetCodeName(#{coId,jdbcType=VARCHAR}, 'CD018', a.USE_AUTH_TYPE, #{lang,jdbcType=VARCHAR}) as USE_AUTH_TYPE_DESC,
+		       a.USE_AUTH_GRP_CODE, gw.FN_GetUseAuthDesc(#{coId,jdbcType=VARCHAR}, a.USE_AUTH_TYPE, a.USE_AUTH_GRP_CODE, #{lang,jdbcType=VARCHAR}) as USE_AUTH_GRP_DESC,
+		       a.CRT_AUTH, a.RD_AUTH, a.UPDT_AUTH, a.DEL_AUTH, a.PRNT_AUTH, a.UPLD_AUTH, a.DNLD_AUTH
+		  from gw.nw033m a
+		 where a.CO_ID = #{coId,jdbcType=VARCHAR}
+		   and a.CNTN_ID = #{cntnId,jdbcType=VARCHAR}
+	    order by a.CO_ID, a.CNTN_ID
+	</select>
 </mapper>

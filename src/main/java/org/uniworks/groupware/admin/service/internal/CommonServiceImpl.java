@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.uniworks.groupware.admin.domain.CommonCode;
+import org.uniworks.groupware.admin.domain.GroupInfo;
+import org.uniworks.groupware.admin.domain.Nw106m;
 import org.uniworks.groupware.admin.mapper.CommonMapper;
 import org.uniworks.groupware.admin.service.CommonService;
 
@@ -33,5 +35,26 @@ public class CommonServiceImpl implements CommonService {
 		// TODO Auto-generated method stub
 		List<CommonCode> codeList = cmmMapper.selectByCommonSubCodeList(map);
 		return codeList;
+	}
+	
+	/**
+	 * 사용자 그룹에 대한 검색 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public List<GroupInfo> getGroupListBySearch(Map<String, Object> map) {
+		List<GroupInfo> groupList = cmmMapper.getGroupListBySearch(map);
+		return groupList;
+	}
+	
+	/**
+	 * Role에 대한 검색 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	public List<Nw106m> getRoleListBySearch(Map<String, Object> map) {
+		List<Nw106m> roleList = cmmMapper.getRoleListBySearch(map);
+		return roleList;
 	}
 }

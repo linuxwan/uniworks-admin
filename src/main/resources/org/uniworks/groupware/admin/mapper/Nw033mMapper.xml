@@ -6,18 +6,26 @@
 		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
 		<result column="USE_AUTH_TYPE" jdbcType="VARCHAR" property="useAuthType" /> 
 		<result column="USE_AUTH_GRP_CODE" jdbcType="VARCHAR" property="useAuthGrpCode" /> 
-		<result column="USE_AUTH" jdbcType="VARCHAR" property="useAuth" /> 
+		<result column="CRT_AUTH" jdbcType="VARCHAR" property="crtAuth" /> 
+		<result column="RD_AUTH" jdbcType="VARCHAR" property="rdAuth" /> 
+		<result column="UPDT_AUTH" jdbcType="VARCHAR" property="updtAuth" /> 
+		<result column="DEL_AUTH" jdbcType="VARCHAR" property="delAuth" /> 
+		<result column="PRNT_AUTH" jdbcType="VARCHAR" property="prntAuth" /> 
+		<result column="UPLD_AUTH" jdbcType="VARCHAR" property="upldAuth" /> 
+		<result column="DNLD_AUTH" jdbcType="VARCHAR" property="dnldAuth" /> 
 	</resultMap> 
 
 	<!-- 목록 조회 --> 
 	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
-		select  CNTN_ID, CO_ID, USE_AUTH_TYPE, USE_AUTH_GRP_CODE, USE_AUTH
+		select  CNTN_ID, CO_ID, USE_AUTH_TYPE, USE_AUTH_GRP_CODE, CRT_AUTH, RD_AUTH, UPDT_AUTH, DEL_AUTH, PRNT_AUTH, 
+				UPLD_AUTH, DNLD_AUTH
 		from   nw033m
 	</select> 
  
 	<!-- 상세 조회 --> 
 	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
-		select  CNTN_ID, CO_ID, USE_AUTH_TYPE, USE_AUTH_GRP_CODE, USE_AUTH
+		select  CNTN_ID, CO_ID, USE_AUTH_TYPE, USE_AUTH_GRP_CODE, CRT_AUTH, RD_AUTH, UPDT_AUTH, DEL_AUTH, PRNT_AUTH, 
+				UPLD_AUTH, DNLD_AUTH
 		from   nw033m
 		where  CNTN_ID	=	#{cntnId,jdbcType=VARCHAR} 
 		  and  CO_ID	=	#{coId,jdbcType=VARCHAR} 
@@ -27,15 +35,23 @@
  
 	<!-- 등록 --> 
 	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw033m"> 
-		insert	into nw033m(CNTN_ID, CO_ID, USE_AUTH_TYPE, USE_AUTH_GRP_CODE, USE_AUTH) 
-		values (#{cntnId,jdbcType=VARCHAR},#{coId,jdbcType=VARCHAR},#{useAuthType,jdbcType=VARCHAR},#{useAuthGrpCode,jdbcType=VARCHAR},#{useAuth,jdbcType=VARCHAR}) 
+		insert	into nw033m(CNTN_ID, CO_ID, USE_AUTH_TYPE, USE_AUTH_GRP_CODE, CRT_AUTH, RD_AUTH, UPDT_AUTH, DEL_AUTH, PRNT_AUTH, 
+				UPLD_AUTH, DNLD_AUTH) 
+		values (#{cntnId,jdbcType=VARCHAR},#{coId,jdbcType=VARCHAR},#{useAuthType,jdbcType=VARCHAR},#{useAuthGrpCode,jdbcType=VARCHAR},#{crtAuth,jdbcType=VARCHAR},#{rdAuth,jdbcType=VARCHAR},#{updtAuth,jdbcType=VARCHAR} 
+			,#{delAuth,jdbcType=VARCHAR},#{prntAuth,jdbcType=VARCHAR},#{upldAuth,jdbcType=VARCHAR},#{dnldAuth,jdbcType=VARCHAR}) 
 	</insert> 
  
 	<!-- 수정 --> 
 	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw033m"> 
 		update	nw033m 
 		<trim prefix="SET" suffixOverrides=","> 
-			<if test="useAuth != null">USE_AUTH= #{useAuth,jdbcType=VARCHAR},</if> 
+			<if test="crtAuth != null">CRT_AUTH= #{crtAuth,jdbcType=VARCHAR},</if> 
+			<if test="rdAuth != null">RD_AUTH= #{rdAuth,jdbcType=VARCHAR},</if> 
+			<if test="updtAuth != null">UPDT_AUTH= #{updtAuth,jdbcType=VARCHAR},</if> 
+			<if test="delAuth != null">DEL_AUTH= #{delAuth,jdbcType=VARCHAR},</if> 
+			<if test="prntAuth != null">PRNT_AUTH= #{prntAuth,jdbcType=VARCHAR},</if> 
+			<if test="upldAuth != null">UPLD_AUTH= #{upldAuth,jdbcType=VARCHAR},</if> 
+			<if test="dnldAuth != null">DNLD_AUTH= #{dnldAuth,jdbcType=VARCHAR},</if> 
 		</trim> 
 		where	CNTN_ID	=	#{cntnId,jdbcType=VARCHAR} 
 		  and	CO_ID	=	#{coId,jdbcType=VARCHAR} 
@@ -46,15 +62,9 @@
 	<!-- 삭제 --> 
 	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
 		delete	from nw033m 
-		where	CNTN_ID	=	#{cntnId,jdbcType=VARCHAR}
-		<if test="coId != null"> 
-		  and	CO_ID	=	#{coId,jdbcType=VARCHAR}
-		</if> 
-		<if test="useAuthGrpCode != null">
-		  and	USE_AUTH_GRP_CODE	=	#{useAuthGrpCode,jdbcType=VARCHAR}
-		</if>
-		<if test="useAuthType != null"> 
-		  and	USE_AUTH_TYPE	=	#{useAuthType,jdbcType=VARCHAR}
-		</if> 
+		where	CNTN_ID	=	#{cntnId,jdbcType=VARCHAR} 
+		  and	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	USE_AUTH_GRP_CODE	=	#{useAuthGrpCode,jdbcType=VARCHAR} 
+		  and	USE_AUTH_TYPE	=	#{useAuthType,jdbcType=VARCHAR} 
 	</delete> 
 </mapper>

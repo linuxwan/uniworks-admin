@@ -10,7 +10,28 @@
 		<result column="RESC_KEY_VALUE" jdbcType="VARCHAR" property="rescKeyValue" />
 		<result column="RESC_KEY_DESC" jdbcType="VARCHAR" property="rescKeyDesc" />
 	</resultMap>
-		
+	
+	<resultMap id="GrpResultMap" type="org.uniworks.groupware.admin.domain.GroupInfo"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="GRP_CODE" jdbcType="VARCHAR" property="grpCode" /> 
+		<result column="GRP_NAME" jdbcType="VARCHAR" property="grpName" />
+		<result column="GRP_INDC" jdbcType="VARCHAR" property="grpIndc" /> 
+		<result column="ST_DATE" jdbcType="DATE" property="stDate" /> 
+		<result column="CLS_DATE" jdbcType="DATE" property="clsDate" /> 
+	</resultMap> 
+
+	<resultMap id="Nw106mResultMap" type="org.uniworks.groupware.admin.domain.Nw106m"> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="ROLE" jdbcType="VARCHAR" property="role" /> 
+		<result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName" /> 
+		<result column="USE_INDC" jdbcType="VARCHAR" property="useIndc" /> 
+		<result column="ROLE_DETL" jdbcType="VARCHAR" property="roleDetl" /> 
+		<result column="CRT_ID" jdbcType="VARCHAR" property="crtId" /> 
+		<result column="CRT_DATE" jdbcType="TIMESTAMP" property="crtDate" /> 
+		<result column="CHNG_ID" jdbcType="VARCHAR" property="chngId" /> 
+		<result column="CHNG_DATE" jdbcType="TIMESTAMP" property="chngDate" /> 
+	</resultMap> 
+			
 	<!-- 주코드에 해당하는 하위 코드 목록을 가져온다. -->
 	<select id="selectByCommonSubCodeList" parameterType="java.util.Map" resultMap="BaseResultMap">
 		select A.CO_ID as CO_ID, A.MAJ_CODE as MAJ_CODE, A.SUB_CODE as SUB_CODE, A.RESC_KEY as RESC_KEY, A.USE_INDC as USE_INDC,  
@@ -27,5 +48,38 @@
 		<if test="orderBy == 'rescKeyValue'">
 		order  by B.RESC_KEY_VALUE
 		</if>
+	</select>
+	
+	<!-- 그룹 검색 -->
+	<select id="getGroupListBySearch" parameterType="java.util.Map" resultMap="GrpResultMap">
+		select  A.CO_ID, A.GRP_CODE, B.GRP_NAME, A.GRP_INDC, A.ST_DATE, A.CLS_DATE
+		from    nw102m A
+		LEFT JOIN GW.NW103M B
+            ON A.CO_ID = B.CO_ID
+ 		   AND A.GRP_CODE = B.GRP_CODE
+ 		   AND B.LOCALE = #{lang,jdbcType=VARCHAR}
+ 		   AND SYSDATE() between A.ST_DATE and A.CLS_DATE
+ 		<if test="searchKind == 'GRP_CODE'">
+		   AND A.GRP_CODE LIKE concat('%', #{searchWord,jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="searchKind == 'GRP_NAME'">
+		   AND B.GRP_NAME LIKE concat('%', #{searchWord,jdbcType=VARCHAR}, '%')
+		</if>		
+	</select>
+	
+	<!-- Role 검색 -->
+	<select id="getRoleListBySearch" parameterType="java.util.Map" resultMap="Nw106mResultMap">
+		select A.CO_ID, A.ROLE, B.ROLE_NAME, A.USE_INDC, A.ROLE_DETL, A.CRT_ID, A.CRT_DATE, A.CHNG_ID, A.CHNG_DATE
+        from   GW.NW106M A
+        LEFT JOIN GW.NW107M B
+            ON A.CO_ID = B.CO_ID
+           AND A.ROLE = B.ROLE
+           AND B.LOCALE = #{lang,jdbcType=VARCHAR}
+        <if test="searchKind == 'ROLE'">
+		   AND A.ROLE LIKE concat('%', #{searchWord,jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="searchKind == 'ROLE_NAME'">
+		   AND B.ROLE_NAME LIKE concat('%', #{searchWord,jdbcType=VARCHAR}, '%')
+		</if>		
 	</select>
 </mapper>

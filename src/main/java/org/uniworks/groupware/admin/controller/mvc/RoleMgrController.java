@@ -211,4 +211,31 @@ public class RoleMgrController {
 		if (nw105m != null) mav.addObject("nw105m", nw105m);
 		return mav;
 	}
+	
+	/**
+	 * Role 검색 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/roleMgr/roleSearchForm", method = RequestMethod.GET)
+	public ModelAndView roleSearchForm(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("roleMgr/role_search_form_01");
+		String targetObj = StringUtil.null2void(request.getParameter("targetObj"));
+		
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+				
+		Map<String, Object> map = new HashMap<String, Object>();
+		//지원 언어 목록 체크
+		map.put("coId", userSession.getCoId());
+		map.put("lang", userSession.getLang());
+		map.put("majCode", "CD021"); //그룹 검색 항목(CD020)
+		map.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
+		List<CommonCode> searchTypeList = commonService.getCommonSubCodeList(map);	
+		
+		mav.addObject("searchTypeList", searchTypeList);
+		mav.addObject("targetObj", targetObj);
+		return mav;
+	}
 }

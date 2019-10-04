@@ -22,24 +22,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 import org.uniworks.groupware.admin.common.UserSession;
-import org.uniworks.groupware.admin.common.util.DateUtil;
 import org.uniworks.groupware.admin.common.util.SecurityUtil;
 import org.uniworks.groupware.admin.common.util.StringUtil;
-import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
-import org.uniworks.groupware.admin.domain.BoardMasterInfo;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.ContentInfo;
 import org.uniworks.groupware.admin.domain.Hr001m;
-import org.uniworks.groupware.admin.domain.MasterInfo;
 import org.uniworks.groupware.admin.domain.Nw031m;
 import org.uniworks.groupware.admin.domain.Nw032m;
-import org.uniworks.groupware.admin.service.ApprovalMasterService;
-import org.uniworks.groupware.admin.service.BoardMasterService;
+import org.uniworks.groupware.admin.domain.Nw033m;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.ContentService;
 import org.uniworks.groupware.admin.service.Hr001mService;
 import org.uniworks.groupware.admin.service.Nw031mService;
 import org.uniworks.groupware.admin.service.Nw032mService;
+import org.uniworks.groupware.admin.service.Nw033mService;
 
 /**
  * @author Park Chung Wan
@@ -53,6 +49,7 @@ public class ContentsMgrController {
 	@Autowired Hr001mService hr001mService;
 	@Autowired Nw031mService nw031mService;
 	@Autowired Nw032mService nw032mService;
+	@Autowired Nw033mService nw033mService;
 	@Autowired ContentService contentService;		
 	
 	/**
@@ -296,6 +293,70 @@ public class ContentsMgrController {
 		List<Hr001m> coList = hr001mService.getHr001mList(map);		
 		
 		mav.addObject("coList", coList);
+		return mav;
+	}
+	
+	/**
+	 * 컨텐츠 권한 등록 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/contentsMgr/contentRightsAddForm", method = RequestMethod.GET)
+	public ModelAndView contentRightsAddForm(HttpServletRequest request, HttpServletResponse response) {
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String cntnId = StringUtil.null2void(request.getParameter("cntnId"));
+		
+		ModelAndView mav = new ModelAndView("contentsMgr/content_auth_add_form_01");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", coId);
+		map.put("lang", userSession.getLang());
+		map.put("majCode", "CD018"); //컨텐츠 유형
+		map.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
+		List<CommonCode> useAuthTypeList = commonService.getCommonSubCodeList(map);
+		
+		mav.addObject("useAuthTypeList", useAuthTypeList);
+		mav.addObject("coId", coId);
+		mav.addObject("cntnId", cntnId);
+		return mav;
+	}		
+	
+	/**
+	 * 컨텐츠 권한 수정 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/contentsMgr/contentRightsModifyForm", method = RequestMethod.GET)
+	public ModelAndView contentRightsModifyForm(HttpServletRequest request, HttpServletResponse response) {
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String cntnId = StringUtil.null2void(request.getParameter("cntnId"));
+		String useAuthType = StringUtil.null2void(request.getParameter("useAuthType"));
+		String useAuthGrpCode = StringUtil.null2void(request.getParameter("useAuthGrpCode"));
+		
+		ModelAndView mav = new ModelAndView("contentsMgr/content_auth_modify_form_01");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", coId);
+		map.put("lang", userSession.getLang());
+		map.put("majCode", "CD018"); //컨텐츠 유형
+		map.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
+		List<CommonCode> useAuthTypeList = commonService.getCommonSubCodeList(map);
+		
+		map.put("cntnId", cntnId);
+		map.put("useAuthType", useAuthType);
+		map.put("useAuthGrpCode", useAuthGrpCode);
+		Nw033m nw033m = nw033mService.getNw033m(map);
+		
+		mav.addObject("useAuthTypeList", useAuthTypeList);
+		mav.addObject("coId", coId);
+		mav.addObject("cntnId", cntnId);
+		mav.addObject("nw033m", nw033m);
 		return mav;
 	}
 }

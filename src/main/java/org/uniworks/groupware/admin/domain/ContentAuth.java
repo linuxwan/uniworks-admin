@@ -16,22 +16,24 @@ import org.pojomatic.annotations.AutoProperty;
  * @author Park Chungwan 
  * 관련 테이블 : Nw033m
  */ 
-@XmlRootElement(name = "nw033m") 
-@XmlType(propOrder = {"cntnId", "coId", "useAuthType", "useAuthGrpCode", "crtAuth", "rdAuth", "updtAuth", "delAuth", "prntAuth", "upldAuth", "dnldAuth"}) 
+@XmlRootElement(name = "contentAuth") 
+@XmlType(propOrder = {"cntnId", "coId", "useAuthType", "useAuthTypeDesc", "useAuthGrpCode", "useAuthGrpDesc", "crtAuth", "rdAuth", "updtAuth", "delAuth", "prntAuth", "upldAuth", "dnldAuth"}) 
 @AutoProperty 
 @SuppressWarnings("serial") 
-public class Nw033m implements Serializable {  
+public class ContentAuth implements Serializable {  
 	private String cntnId; 
 	private String coId; 
 	private String useAuthType; 
-	private String useAuthGrpCode; 
-	private String crtAuth = "N"; 
-	private String rdAuth = "N"; 
-	private String updtAuth = "N"; 
-	private String delAuth = "N"; 
-	private String prntAuth = "N"; 
-	private String upldAuth = "N"; 
-	private String dnldAuth = "N"; 
+	private String useAuthTypeDesc;
+	private String useAuthGrpCode;
+	private String useAuthGrpDesc; 
+	private String crtAuth; 
+	private String rdAuth; 
+	private String updtAuth; 
+	private String delAuth; 
+	private String prntAuth; 
+	private String upldAuth; 
+	private String dnldAuth; 
 
 	public void setCntnId(String cntnId) { 
 		this.cntnId = cntnId; 
@@ -51,12 +53,24 @@ public class Nw033m implements Serializable {
 	public String getUseAuthType() { 
 		return this.useAuthType; 
 	} 
+	public void setUseAuthTypeDesc(String useAuthTypeDesc) {
+		this.useAuthTypeDesc = useAuthTypeDesc;
+	}
+	public String getUseAuthTypeDesc() {
+		return this.useAuthTypeDesc;
+	}
 	public void setUseAuthGrpCode(String useAuthGrpCode) { 
 		this.useAuthGrpCode = useAuthGrpCode; 
 	} 
 	public String getUseAuthGrpCode() { 
 		return this.useAuthGrpCode; 
 	} 
+	public void setUseAuthGrpDesc(String useAuthGrpDesc) {
+		this.useAuthGrpDesc = useAuthGrpDesc;
+	}
+	public String getUseAuthGrpDesc() {
+		return this.useAuthGrpDesc;
+	}
 	public void setCrtAuth(String crtAuth) { 
 		this.crtAuth = crtAuth; 
 	} 

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.uniworks.groupware.admin.domain.ContentAuth;
 import org.uniworks.groupware.admin.domain.ContentInfo;
 import org.uniworks.groupware.admin.domain.Nw030m;
 import org.uniworks.groupware.admin.domain.Nw031m;
@@ -152,5 +153,15 @@ public class ContentServiceImpl implements ContentService {
 	public int modifyContentUseIndc(Map<String, Object> map) {
 		int cnt = contentMapper.updateUseIndc(map);
 		return cnt;
+	}
+	
+	/**
+	 * 컨텐츠 권한 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public List<ContentAuth> getContentAuthList(Map<String, Object> map) {
+		return contentMapper.selectContentAuthList(map);
 	}
 }

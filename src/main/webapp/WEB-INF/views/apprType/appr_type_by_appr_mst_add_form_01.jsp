@@ -66,7 +66,7 @@
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">		        	
 		            <div style="margin-bottom:10px">		            	
-		                <select class="easyui-combobox" id="apprMstId" name="apprMstId" style="width:100%;" data-options="panelHeight:'auto',label:'<spring:message code="resc.label.apprMasterId"/>:',required:true,labelWidth:120">
+		                <select class="easyui-combobox" id="apprMstId" name="apprMstId" style="width:100%;" data-options="panelHeight:100,label:'<spring:message code="resc.label.apprMasterId"/>:',required:true,labelWidth:120">
 		                <c:forEach items="${apprMstList}" var="apprMst">
 		                	<option value="${apprMst.apprMstId}">${apprMst.apprMstId}:${apprMst.apprDesc}</option>
 		                </c:forEach>

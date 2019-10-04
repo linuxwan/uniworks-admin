@@ -8,6 +8,7 @@ package org.uniworks.groupware.admin.service;
 import java.util.List;
 import java.util.Map;
 
+import org.uniworks.groupware.admin.domain.ContentAuth;
 import org.uniworks.groupware.admin.domain.ContentInfo;
 import org.uniworks.groupware.admin.domain.Nw030m;
 import org.uniworks.groupware.admin.domain.Nw031m;
@@ -58,4 +59,10 @@ public interface ContentService {
 	 * @return
 	 */
 	int modifyContentUseIndc(Map<String, Object> map);
+	/**
+	 * 컨텐츠 권한 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	List<ContentAuth> getContentAuthList(Map<String, Object> map);
 }

@@ -37,18 +37,21 @@ import org.uniworks.groupware.admin.common.util.WebUtil;
 import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
 import org.uniworks.groupware.admin.domain.BoardMasterInfo;
 import org.uniworks.groupware.admin.domain.CommonCode;
+import org.uniworks.groupware.admin.domain.ContentAuth;
 import org.uniworks.groupware.admin.domain.ContentInfo;
 import org.uniworks.groupware.admin.domain.Hr001m;
 import org.uniworks.groupware.admin.domain.MasterInfo;
 import org.uniworks.groupware.admin.domain.Nw030m;
 import org.uniworks.groupware.admin.domain.Nw031m;
 import org.uniworks.groupware.admin.domain.Nw032m;
+import org.uniworks.groupware.admin.domain.Nw033m;
 import org.uniworks.groupware.admin.service.ApprovalMasterService;
 import org.uniworks.groupware.admin.service.BoardMasterService;
 import org.uniworks.groupware.admin.service.CommonService;
 import org.uniworks.groupware.admin.service.ContentService;
 import org.uniworks.groupware.admin.service.Hr001mService;
 import org.uniworks.groupware.admin.service.Nw030mService;
+import org.uniworks.groupware.admin.service.Nw033mService;
 
 /**
  * @author Park Chung Wan
@@ -62,6 +65,7 @@ public class ContentsController {
 	@Autowired CommonService commonService;
 	@Autowired Hr001mService hr001mService;
 	@Autowired Nw030mService nw030mService;
+	@Autowired Nw033mService nw033mService;
 	@Autowired private MessageSource messageSource;
 	@Autowired ApprovalMasterService apprMstService;
 	@Autowired BoardMasterService boardMstService;
@@ -361,7 +365,7 @@ public class ContentsController {
 	 * @return
 	 */
 	@DeleteMapping(value = "/contents/delete/cntnId/{cntnId}")
-	public ResponseEntity<String> deleteBoardMaster(@PathVariable("cntnId") String cntnId, 
+	public ResponseEntity<String> deleteContent(@PathVariable("cntnId") String cntnId, 
 			HttpServletRequest request, HttpServletResponse response) {	
 		String result = "";		
 		//Session 정보를 가져온다.		
@@ -370,6 +374,137 @@ public class ContentsController {
 		map.put("cntnId", cntnId);
 		
 		int cnt = cntnService.removeContentInfo(map);
+		
+		if (cnt > 0) {
+			result = messageSource.getMessage("resc.msg.deleteOk", null, response.getLocale());			
+		} else {
+			result = messageSource.getMessage("resc.msg.deleteFail", null, response.getLocale());
+		}
+		
+		return new ResponseEntity<String>(result, HttpStatus.OK); 
+	}
+	
+	/**
+	 * 컨텐츠 권한 목록을 가져온다.
+	 * @param coId
+	 * @param cntnId
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@GetMapping(value = "/contentAuth/coId/{coId}/cntnId/{cntnId}")
+	public ResponseEntity<List<ContentAuth>> getContentAuthList(@PathVariable("coId") String coId, @PathVariable("cntnId") String cntnId,
+			HttpServletRequest request, HttpServletResponse response) {
+		String result = "";		
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", coId);
+		map.put("cntnId", cntnId);
+		map.put("lang", userSession.getLang());
+		
+		List<ContentAuth> contentAuthList = cntnService.getContentAuthList(map);
+		
+		return new ResponseEntity<List<ContentAuth>>(contentAuthList, HttpStatus.OK);
+	}
+	
+	/**
+	 * 컨텐츠 권한을 생성한다.
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@PostMapping(value = "/contentAuth/create")
+	public ResponseEntity<String> createContentAuth(@RequestBody Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
+		String result = "";
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		Nw033m nw033m = new Nw033m();
+		WebUtil.bind(model, nw033m);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", userSession.getCoId());
+		map.put("cntnId", nw033m.getCntnId());
+		map.put("useAuthType", nw033m.getUseAuthType());
+		map.put("useAuthGrpCode", nw033m.getUseAuthGrpCode());
+		Nw033m tempNw033m = nw033mService.getNw033m(map);
+		
+		if (tempNw033m != null && tempNw033m.getCntnId().equalsIgnoreCase(nw033m.getCntnId())) {
+			result = messageSource.getMessage("resc.msg.cntnAuthExist", null, response.getLocale());
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		}
+		
+		int cnt = nw033mService.addNw033m(nw033m); 
+		if (cnt > 0) {
+			result = messageSource.getMessage("resc.msg.addOk", null, response.getLocale());			
+		} else {
+			result = messageSource.getMessage("resc.msg.addFail", null, response.getLocale());
+		}
+		
+		return new ResponseEntity<String>(result, HttpStatus.OK); 
+	}
+	
+	/**
+	 * 컨텐츠 권한을 수정한다.
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@PutMapping(value = "/contentAuth/modify")
+	public ResponseEntity<String> modifyContentAuth(@RequestBody Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
+		String result = "";
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		Nw033m nw033m = new Nw033m();
+		WebUtil.bind(model, nw033m);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", userSession.getCoId());
+		map.put("cntnId", nw033m.getCntnId());
+		map.put("useAuthType", nw033m.getUseAuthType());
+		map.put("useAuthGrpCode", nw033m.getUseAuthGrpCode());
+		Nw033m tempNw033m = nw033mService.getNw033m(map);
+		
+		if (tempNw033m == null) {
+			result = messageSource.getMessage("resc.msg.notExistCntnAuth", null, response.getLocale());
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		}
+		
+		int cnt = nw033mService.updateNw033m(nw033m); 
+		if (cnt > 0) {
+			result = messageSource.getMessage("resc.msg.modifyOk", null, response.getLocale());			
+		} else {
+			result = messageSource.getMessage("resc.msg.modifyFail", null, response.getLocale());
+		}
+		
+		return new ResponseEntity<String>(result, HttpStatus.OK); 
+	}
+	
+	/**
+	 * 컨텐츠 권한 삭제
+	 * @param coId
+	 * @param cntnId
+	 * @param useAuthType
+	 * @param useAuthGrpCode
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@DeleteMapping(value = "/contentAuth/delete/cntnId/{cntnId}/useAuthType/{useAuthType}/useAuthGrpCode/{useAuthGrpCode}")
+	public ResponseEntity<String> deleteContent(@PathVariable("cntnId") String cntnId, @PathVariable("useAuthType") String useAuthType,
+			@PathVariable("useAuthGrpCode") String useAuthGrpCode, HttpServletRequest request, HttpServletResponse response) {	
+		String result = "";		
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", userSession.getCoId());
+		map.put("cntnId", cntnId);
+		map.put("useAuthType", useAuthType);
+		map.put("useAuthGrpCode", useAuthGrpCode);
+		
+		int cnt = nw033mService.deleteNw033m(map);
 		
 		if (cnt > 0) {
 			result = messageSource.getMessage("resc.msg.deleteOk", null, response.getLocale());			

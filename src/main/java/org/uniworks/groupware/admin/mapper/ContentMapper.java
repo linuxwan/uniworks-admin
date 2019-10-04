@@ -8,8 +8,8 @@ package org.uniworks.groupware.admin.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.uniworks.groupware.admin.domain.ContentAuth;
 import org.uniworks.groupware.admin.domain.ContentInfo;
-import org.uniworks.groupware.admin.domain.Nw032m;
 
 /**
  * @author Park Chung Wan
@@ -33,5 +33,11 @@ public interface ContentMapper {
 	 * @param nw032m
 	 * @return
 	 */
-	int updateUseIndc(Map<String, Object> map);
+	int updateUseIndc(Map<String, Object> map);	
+	/**
+	 * 컨텐트 권한 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	List<ContentAuth> selectContentAuthList(Map<String, Object> map);
 }

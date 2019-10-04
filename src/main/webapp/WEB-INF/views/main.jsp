@@ -64,6 +64,7 @@
 		            <div onclick="javascript:goPage('<spring:message code="resc.menu.roleMgr"/>', '/admin/roleMgr')"><spring:message code="resc.menu.roleMgr"/></div>		            
 		            <div onclick="javascript:goPage('new')">컨텐츠 담당자 관리</div>
 		            <div onclick="javascript:goPage('new')">메뉴 관리</div>
+		            <div onclick="javascript:goPage('new')">양식함 관리</div>
 		        </div>
 		    </div>
         </div>
