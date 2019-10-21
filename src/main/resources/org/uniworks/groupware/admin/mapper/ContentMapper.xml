@@ -37,6 +37,20 @@
 		<result column="DNLD_AUTH" jdbcType="VARCHAR" property="dnldAuth" /> 
 	</resultMap> 
 	
+	<resultMap id="contentChargeMap" type="org.uniworks.groupware.admin.domain.ChargeUser">
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" />
+		<result column="CNTN_ID" jdbcType="VARCHAR" property="cntnId" />  
+		<result column="CNTN_NAME" jdbcType="VARCHAR" property="cntnName"/>
+		<result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+		<result column="EMP_NAME" jdbcType="VARCHAR" property="empName" /> 
+		<result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+		<result column="DEPT_DESC" jdbcType="VARCHAR" property="deptDesc" />
+		<result column="DUTY_CODE" jdbcType="VARCHAR" property="dutyCode" /> 
+		<result column="DUTY_DESC" jdbcType="VARCHAR" property="dutyDesc" /> 
+		<result column="PSTN_CODE" jdbcType="VARCHAR" property="pstnCode" /> 
+		<result column="PSTN_DESC" jdbcType="VARCHAR" property="pstnDesc" />  
+	</resultMap>
+	
 	<!-- 목록 조회 --> 
 	<select id="selectContentList" parameterType="java.util.Map" resultMap="BaseResultMap"> 
 		select c.CO_ID, a.CNTN_ID, b.CNTN_NAME, a.CNTN_OFFER_TYPE, e.RESC_KEY_VALUE CNTN_OFFER_TYPE_DESC, a.LINK_SYS_HOST, a.URL, 
@@ -133,5 +147,59 @@
 		 where a.CO_ID = #{coId,jdbcType=VARCHAR}
 		   and a.CNTN_ID = #{cntnId,jdbcType=VARCHAR}
 	    order by a.CO_ID, a.CNTN_ID
+	</select>
+	
+	<select id="selectContentChargeList" parameterType="java.util.Map" resultMap="contentChargeMap">
+		select A.CNTN_ID, A.CO_ID, B.CNTN_NAME, A.EMP_NO as USER_ID, H.EMP_NAME, C.DUTY_CODE, G.RESC_KEY_VALUE as DUTY_DESC, C.PSTN_CODE, E.RESC_KEY_VALUE as PSTN_DESC,
+		       CASE C.BASE_ASGN_OGAN_LEV WHEN '1' THEN C.ASGN_OGAN_CODE_1
+	                                WHEN '2' THEN C.ASGN_OGAN_CODE_2
+	                                WHEN '3' THEN C.ASGN_OGAN_CODE_3
+	                                WHEN '4' THEN C.ASGN_OGAN_CODE_4
+	                                WHEN '5' THEN C.ASGN_OGAN_CODE_5
+	                                WHEN '6' THEN C.ASGN_OGAN_CODE_6
+	                                WHEN '7' THEN C.ASGN_OGAN_CODE_7
+	                                WHEN '8' THEN C.ASGN_OGAN_CODE_8
+	                                WHEN '9' THEN C.ASGN_OGAN_CODE_9
+	                                WHEN '10' THEN C.ASGN_OGAN_CODE_10
+	                                WHEN '11' THEN C.ASGN_OGAN_CODE_11
+	                                WHEN '12' THEN C.ASGN_OGAN_CODE_12 END DEPT_CODE,
+		       CASE C.BASE_ASGN_OGAN_LEV WHEN '1' THEN C.ASGN_OGAN_DESC_1
+	                                WHEN '2' THEN C.ASGN_OGAN_DESC_2
+	                                WHEN '3' THEN C.ASGN_OGAN_DESC_3
+	                                WHEN '4' THEN C.ASGN_OGAN_DESC_4
+	                                WHEN '5' THEN C.ASGN_OGAN_DESC_5
+	                                WHEN '6' THEN C.ASGN_OGAN_DESC_6
+	                                WHEN '7' THEN C.ASGN_OGAN_DESC_7
+	                                WHEN '8' THEN C.ASGN_OGAN_DESC_8
+	                                WHEN '9' THEN C.ASGN_OGAN_DESC_9
+	                                WHEN '10' THEN C.ASGN_OGAN_DESC_10
+	                                WHEN '11' THEN C.ASGN_OGAN_DESC_11
+	                                WHEN '12' THEN C.ASGN_OGAN_DESC_12 END DEPT_DESC
+		  from gw.nw034m A 
+		  join gw.hr011m H 
+            on H.EMP_NO = A.EMP_NO
+           and H.LOCALE = #{lang,jdbcType=VARCHAR} 
+		  join gw.nw031m B 
+		    on B.CNTN_ID = A.CNTN_ID
+		   and B.LOCALE = #{lang,jdbcType=VARCHAR} 
+		  join gw.hr010m C 
+		    on C.CO_ID = A.CO_ID
+		   and C.EMP_NO = A.EMP_NO
+		  left outer join gw.cm002c D
+		    on D.CO_ID = A.CO_ID and D.SUB_CODE = C.PSTN_CODE and D.MAJ_CODE = 'CD006'
+		  left outer join gw.cm003m E
+		    on E.CO_ID = A.CO_ID and E.RESC_KEY = D.RESC_KEY and E.LOCALE = #{lang,jdbcType=VARCHAR} 
+		  left outer join gw.cm002c F
+		    on F.CO_ID = A.CO_ID and F.SUB_CODE = C.DUTY_CODE and F.MAJ_CODE = 'CD004'
+		  left outer join gw.cm003m G
+		    on G.CO_ID = A.CO_ID and G.RESC_KEY = F.RESC_KEY and G.LOCALE = #{lang,jdbcType=VARCHAR}
+		where  A.CNTN_ID = #{cntnId,jdbcType=VARCHAR}
+		  and  A.CO_ID = #{coId,jdbcType=VARCHAR}
+		<if test="orderBy == 'userId'">
+		order by A.EMP_NO 
+		</if>
+		<if test="orderBy == 'empName'">
+		order by B.CNTN_NAME
+		</if>  	 
 	</select>
 </mapper>

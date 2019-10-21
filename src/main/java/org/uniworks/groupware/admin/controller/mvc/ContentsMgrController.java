@@ -359,4 +359,47 @@ public class ContentsMgrController {
 		mav.addObject("nw033m", nw033m);
 		return mav;
 	}
+	
+	/**
+	 * 컨텐츠 담당자 관리 화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/contentsMgr/contentChargeMgr", method = RequestMethod.GET)
+	public ModelAndView contentChargeMgr(HttpServletRequest request, HttpServletResponse response) {
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		String adminType = SecurityUtil.getAuthority();
+		
+		ModelAndView mav = new ModelAndView("contentsMgr/content_charge_mgr_form_01");
+		
+		Map<String, Object> map = new HashMap<String, Object>();		
+		map.put("coId", userSession.getCoId());
+		map.put("adminType", adminType);
+		
+		List<Hr001m> coList = hr001mService.getHr001mList(map);		
+		
+		mav.addObject("coList", coList);
+		return mav;
+	}
+	
+	/**
+	 * 컨텐츠 담당자 등록화면
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/contentsMgr/contentChargeAddForm", method = RequestMethod.GET) 
+	public ModelAndView contentChargeAddForm(HttpServletRequest request, HttpServletResponse response) {
+		String coId = StringUtil.null2void(request.getParameter("coId"));
+		String cntnId = StringUtil.null2void(request.getParameter("cntnId"));
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		
+		ModelAndView mav = new ModelAndView("contentsMgr/content_charge_add_form_01");
+		mav.addObject("coId", coId);
+		mav.addObject("cntnId", cntnId);
+		return mav;
+	}
 }

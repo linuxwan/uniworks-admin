@@ -36,6 +36,9 @@
     	    	
     	//Role별 사용자 현황
 		addTabLayer("001", "<spring:message code='resc.label.contentsRightsMgr'/>", "<c:out value="${contextPath}"/>/admin/contentsMgr/contentRightsMgr");
+		
+		//컨텐츠 담당자 관리
+		addTabLayer("002", "<spring:message code='resc.label.contentsChargeMgr'/>", "<c:out value="${contextPath}"/>/admin/contentsMgr/contentChargeMgr");
 		$("#tabsLayer").tabs("select", '<spring:message code="resc.label.contentsMgr"/>');
     });
 

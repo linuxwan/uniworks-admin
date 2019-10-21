@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.uniworks.groupware.admin.domain.ChargeUser;
 import org.uniworks.groupware.admin.domain.ContentAuth;
 import org.uniworks.groupware.admin.domain.ContentInfo;
 import org.uniworks.groupware.admin.domain.Nw030m;
@@ -163,5 +164,15 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public List<ContentAuth> getContentAuthList(Map<String, Object> map) {
 		return contentMapper.selectContentAuthList(map);
+	}
+	
+	/**
+	 * 컨텐츠 담당자 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public List<ChargeUser> getContentChargeList(Map<String, Object> map) {
+		return contentMapper.selectContentChargeList(map);
 	}
 }

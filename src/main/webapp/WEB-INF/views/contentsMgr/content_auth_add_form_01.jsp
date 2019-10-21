@@ -67,6 +67,12 @@
     	}
     }
     
+    function fnSelectUseAuthGrpCodeClear(targetObj) {
+    	$("#" + targetObj).textbox('setValue', '');
+    	$('#' + targetObj + "Code").val("");
+    	$('#' + targetObj + "Lev").val("");
+    }
+    
     //그룹 선택 PopUp 창에서 호출되는 Function
     function callBackGroupInfo(targetObj, grpCode, grpName) {
     	$('#' + targetObj).textbox('setValue', grpName + "(" + grpCode + ")");
@@ -126,7 +132,7 @@
 	            	<div style="margin-bottom:10px">
 		                <input class="easyui-textbox" id="useAuthGrp" name="useAuthGrp" style="width:60%" data-options="label:'<spring:message code="resc.label.useAuthGrpCode"/>:',readonly:true,labelWidth:100">
 		                <a href="javascript:fnSelectUseAuthGrpCode('useAuthGrp')" id="btnSelUseAuthGrpCode" class="easyui-linkbutton" style="width:70px"><spring:message code="resc.btn.selectGrp"/></a>
-		                <a href="javascript:fnSelectUseAuthGrpCodeClear('useAuthGrpCode')" id="btnEraseUseAuthGrpCode" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>
+		                <a href="javascript:fnSelectUseAuthGrpCodeClear('useAuthGrp')" id="btnEraseUseAuthGrpCode" class="easyui-linkbutton" style="width:50px"><spring:message code="resc.btn.erase"/></a>
 		            </div>		            
 	            </td>	         	            
 	        </tr>	        	        

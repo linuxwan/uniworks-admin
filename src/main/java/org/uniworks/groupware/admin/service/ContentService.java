@@ -8,6 +8,7 @@ package org.uniworks.groupware.admin.service;
 import java.util.List;
 import java.util.Map;
 
+import org.uniworks.groupware.admin.domain.ChargeUser;
 import org.uniworks.groupware.admin.domain.ContentAuth;
 import org.uniworks.groupware.admin.domain.ContentInfo;
 import org.uniworks.groupware.admin.domain.Nw030m;
@@ -65,4 +66,10 @@ public interface ContentService {
 	 * @return
 	 */
 	List<ContentAuth> getContentAuthList(Map<String, Object> map);
+	/**
+	 * 컨텐츠 담당자 목록을 가져온다.
+	 * @param map
+	 * @return
+	 */
+	List<ChargeUser> getContentChargeList(Map<String, Object> map);
 }

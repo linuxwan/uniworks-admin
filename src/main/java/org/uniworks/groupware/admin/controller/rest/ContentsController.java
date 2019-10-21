@@ -36,6 +36,7 @@ import org.uniworks.groupware.admin.common.util.StringUtil;
 import org.uniworks.groupware.admin.common.util.WebUtil;
 import org.uniworks.groupware.admin.domain.ApprovalMasterInfo;
 import org.uniworks.groupware.admin.domain.BoardMasterInfo;
+import org.uniworks.groupware.admin.domain.ChargeUser;
 import org.uniworks.groupware.admin.domain.CommonCode;
 import org.uniworks.groupware.admin.domain.ContentAuth;
 import org.uniworks.groupware.admin.domain.ContentInfo;
@@ -45,6 +46,7 @@ import org.uniworks.groupware.admin.domain.Nw030m;
 import org.uniworks.groupware.admin.domain.Nw031m;
 import org.uniworks.groupware.admin.domain.Nw032m;
 import org.uniworks.groupware.admin.domain.Nw033m;
+import org.uniworks.groupware.admin.domain.Nw034m;
 import org.uniworks.groupware.admin.service.ApprovalMasterService;
 import org.uniworks.groupware.admin.service.BoardMasterService;
 import org.uniworks.groupware.admin.service.CommonService;
@@ -52,6 +54,7 @@ import org.uniworks.groupware.admin.service.ContentService;
 import org.uniworks.groupware.admin.service.Hr001mService;
 import org.uniworks.groupware.admin.service.Nw030mService;
 import org.uniworks.groupware.admin.service.Nw033mService;
+import org.uniworks.groupware.admin.service.Nw034mService;
 
 /**
  * @author Park Chung Wan
@@ -66,6 +69,7 @@ public class ContentsController {
 	@Autowired Hr001mService hr001mService;
 	@Autowired Nw030mService nw030mService;
 	@Autowired Nw033mService nw033mService;
+	@Autowired Nw034mService nw034mService;
 	@Autowired private MessageSource messageSource;
 	@Autowired ApprovalMasterService apprMstService;
 	@Autowired BoardMasterService boardMstService;
@@ -505,6 +509,98 @@ public class ContentsController {
 		map.put("useAuthGrpCode", useAuthGrpCode);
 		
 		int cnt = nw033mService.deleteNw033m(map);
+		
+		if (cnt > 0) {
+			result = messageSource.getMessage("resc.msg.deleteOk", null, response.getLocale());			
+		} else {
+			result = messageSource.getMessage("resc.msg.deleteFail", null, response.getLocale());
+		}
+		
+		return new ResponseEntity<String>(result, HttpStatus.OK); 
+	}
+	
+	/**
+	 * 컨텐츠 담당자 목록을 가져온다.
+	 * @param coId
+	 * @param cntnId
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@GetMapping(value = "/contentCharge/coId/{coId}/cntnId/{cntnId}")
+	public ResponseEntity<List<ChargeUser>> getContentChargeList(@PathVariable("coId") String coId, @PathVariable("cntnId") String cntnId,
+			HttpServletRequest request, HttpServletResponse response) {
+		String result = "";		
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", coId);
+		map.put("cntnId", cntnId);
+		map.put("lang", userSession.getLang());
+		
+		List<ChargeUser> contentChargeList = cntnService.getContentChargeList(map);
+		
+		return new ResponseEntity<List<ChargeUser>>(contentChargeList, HttpStatus.OK);
+	}
+	
+	/**
+	 * 컨텐츠 담당자 등록
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@PostMapping(value = "/contentCharge/create")
+	public ResponseEntity<String> createContentCharge(@RequestBody Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
+		String result = "";
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		Nw034m nw034m = new Nw034m();
+		WebUtil.bind(model, nw034m);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", userSession.getCoId());
+		map.put("cntnId", nw034m.getCntnId());
+		map.put("empNo", nw034m.getEmpNo());
+		
+		Nw034m tempNw034m = nw034mService.getNw034m(map);
+		
+		if (tempNw034m != null && tempNw034m.getCoId().equalsIgnoreCase(nw034m.getCoId()) &&
+				tempNw034m.getEmpNo().equalsIgnoreCase(nw034m.getEmpNo()) && tempNw034m.getCntnId().equalsIgnoreCase(nw034m.getCntnId()) ) {
+			result = messageSource.getMessage("resc.msg.empNoExist", new String[] {nw034m.getEmpNo()}, response.getLocale());
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		}
+		
+		int cnt = nw034mService.addNw034m(nw034m); 
+		if (cnt > 0) {
+			result = messageSource.getMessage("resc.msg.addOk", null, response.getLocale());			
+		} else {
+			result = messageSource.getMessage("resc.msg.addFail", null, response.getLocale());
+		}
+		
+		return new ResponseEntity<String>(result, HttpStatus.OK); 
+	}
+	
+	/**
+	 * 컨텐츠 담당자 삭제
+	 * @param cntnId
+	 * @param empNo
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@DeleteMapping(value = "/contentCharge/delete/cntnId/{cntnId}/empNo/{empNo}")
+	public ResponseEntity<String> deleteContentCharge(@PathVariable("cntnId") String cntnId, 
+			@PathVariable("empNo") String empNo, HttpServletRequest request, HttpServletResponse response) {	
+		String result = "";		
+		//Session 정보를 가져온다.		
+		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coId", userSession.getCoId());
+		map.put("cntnId", cntnId);
+		map.put("empNo", empNo);
+		
+		int cnt = nw034mService.deleteNw034m(map);
 		
 		if (cnt > 0) {
 			result = messageSource.getMessage("resc.msg.deleteOk", null, response.getLocale());			

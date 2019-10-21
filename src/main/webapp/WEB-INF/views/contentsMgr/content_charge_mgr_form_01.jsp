@@ -24,10 +24,10 @@
     	$("#contentList").datagrid({
     		onClickRow: function(rowIndex, rowData) {
     			var coId = $("#selCoId").combobox('getValue');
-    			var contentAuthList = "<c:out value="${contextPath}"/>/rest/contentAuth/coId/" + coId + "/cntnId/" + rowData.cntnId;
+    			var contentChargeList = "<c:out value="${contextPath}"/>/rest/contentCharge/coId/" + coId + "/cntnId/" + rowData.cntnId;
     			cntnId = rowData.cntnId;
     			
-    			$('#contentAuthList').datagrid('loadData', getContentAuthList(contentAuthList));    			
+    			$('#contentChargeList').datagrid('loadData', getContentAuthList(contentChargeList));    			
     		}
     	});
     	
@@ -49,9 +49,9 @@
      */
      function reload() {
     	var coId = $("#selCoId").combobox('getValue');
-    	var contentAuthList = "<c:out value="${contextPath}"/>/rest/contentAuth/coId/" + coId + "/cntnId/" + cntnId;
+    	var contentChargeList = "<c:out value="${contextPath}"/>/rest/contentCharge/coId/" + coId + "/cntnId/" + cntnId;
      	
-     	$('#contentAuthList').datagrid('loadData', getContentAuthList(contentAuthList));
+     	$('#contentChargeList').datagrid('loadData', getContentAuthList(contentChargeList));
      }
     
     /*
@@ -79,7 +79,7 @@
     				});
     			});
     			
-    			$('#contentAuthList').datagrid('loadData', []);
+    			$('#contentChargeList').datagrid('loadData', []);
     			return rows;
     		} else {
     			return;
@@ -87,32 +87,27 @@
     	});
     }
     
-    function getContentAuthList(contentAuthList) {
-    	getAjaxContentAuthList(contentAuthList);
+    function getContentAuthList(contentChargeList) {
+    	getAjaxContentAuthList(contentChargeList);
     	return rows; 
     }
     
-    function getAjaxContentAuthList(contentAuthList) {
+    function getAjaxContentAuthList(contentChargeList) {
     	rows = [];
 	    	
     	$.ajaxSetup({async: false});    	 
-    	$.getJSON(contentAuthList, function (data, status){
+    	$.getJSON(contentChargeList, function (data, status){
     		if (status == 'success') {    			 
     			$.each(data, function(index, entry) {
     				rows.push({
     					coId: entry["coId"],
     					cntnId : entry["cntnId"],
-    					useAuthType : entry["useAuthType"],
-    					useAuthTypeDesc: entry["useAuthTypeDesc"],
-    					useAuthGrpCode: entry["useAuthGrpCode"],
-    					useAuthGrpDesc: entry["useAuthGrpDesc"],
-    					crtAuth: entry["crtAuth"],
-    					rdAuth: entry["rdAuth"],
-    					updtAuth: entry["updtAuth"],
-    					delAuth: entry["delAuth"],
-    					prntAuth: entry["prntAuth"],
-    					upldAuth: entry["upldAuth"],
-    					dnldAuth: entry["dnldAuth"]
+    					cntnName : entry["cntnName"],
+    					userId: entry["userId"],
+    					empName: entry["empName"],
+    					deptDesc: entry["deptDesc"],
+    					dutyDesc: entry["dutyDesc"],
+    					pstnDesc: entry["pstnDesc"]
     				});
     			});
     			
@@ -123,44 +118,28 @@
     	});
     }
     
-    function appendContentAuth() {
+    function appendContentCharge() {
     	if (cntnId == "" || cntnId == null) {
-    		var msg = '<spring:message code="resc.msg.noSelectContentId"/>';
+    		var msg = '<spring:message code="resc.msg.noSelectContentOwner"/>';
     		var title = '<spring:message code="resc.label.confirm"/>';		    			
     		alertMsg(title, msg);			
     		return;
     	}
     	var coId = $("#selCoId").combobox('getValue');					    	
-		url = "<c:out value="${contextPath}"/>/admin/contentsMgr/contentRightsAddForm?coId=" + coId + "&cntnId=" + cntnId;		
-		var formHeight = 250;
+		url = "<c:out value="${contextPath}"/>/admin/contentsMgr/contentChargeAddForm?coId=" + coId + "&cntnId=" + cntnId;		
+		var formHeight = 190;
 		
-		$.popupWindow(url, { name: 'useAuthAddForm', height: formHeight, width: 800 });
+		$.popupWindow(url, { name: 'chargeAddForm', height: formHeight, width: 800 });
 		
-    }
+    }        
     
-    function modifyContentAuth() {    	
-    	var coId = $("#selCoId").combobox('getValue');
-    	var rowData = $("#contentAuthList").datagrid('getSelected');	
-    	if (rowData == null) {
-    		var title = '<spring:message code="resc.label.confirm"/>';
-    		var msg = '<spring:message code="resc.msg.noSelectAuth"/>';
-    		alertMsg(title, msg);
-			return;
-    	}
-    	
-		url = "<c:out value="${contextPath}"/>/admin/contentsMgr/contentRightsModifyForm?coId=" + coId + "&cntnId=" + rowData.cntnId + "&useAuthType=" + rowData.useAuthType + "&useAuthGrpCode=" + rowData.useAuthGrpCode;		
-		var formHeight = 250;
-		
-		$.popupWindow(url, { name: 'useAuthModifyForm', height: formHeight, width: 800 });		    
-    }
-    
-    function removeitContentAuth() {
+    function removeitContentCharge() {
     	var coId = $("#selCoId").combobox('getValue');	
-    	var rowData = $("#contentAuthList").datagrid('getSelected');	
+    	var rowData = $("#contentChargeList").datagrid('getSelected');	
     	
     	if (rowData == null) {
     		var title = '<spring:message code="resc.label.confirm"/>';
-    		var msg = '<spring:message code="resc.msg.noSelectAuth"/>';
+    		var msg = '<spring:message code="resc.msg.noSelectCharge"/>';
     		alertMsg(title, msg);
 			return;
     	}
@@ -168,16 +147,16 @@
     	msg = '<spring:message code="resc.msg.confirmDel"/>';    		
 		$.messager.confirm(title, msg, function(r) {
 			if (r) {
-				deleteContentAuth();
+				deleteContentCharge();
 			}
 		});
     }
             
-    function deleteContentAuth() {
+    function deleteContentCharge() {
     	var coId = $("#selCoId").combobox('getValue');	
-    	var rowData = $("#contentAuthList").datagrid('getSelected');			    				    	
+    	var rowData = $("#contentChargeList").datagrid('getSelected');			    				    	
     
-		var strUrl = "<c:out value="${contextPath}"/>/rest/contentAuth/delete/cntnId/" + cntnId + "/useAuthType/" + rowData.useAuthType + "/useAuthGrpCode/" + rowData.useAuthGrpCode;
+		var strUrl = "<c:out value="${contextPath}"/>/rest/contentCharge/delete/cntnId/" + cntnId + "/empNo/" + rowData.userId;
     	
     	$.ajax({
 			type: 'DELETE',
@@ -234,32 +213,26 @@
 			</td>
 			<td style="width:75%;">	
 			<div>		
-				<table id="contentAuthList" class="easyui-datagrid" style="width:100%;height:580px"		        
-			       		title="<spring:message code="resc.label.contentAuthList"/>" 
+				<table id="contentChargeList" class="easyui-datagrid" style="width:100%;height:580px"		        
+			       		title="<spring:message code="resc.label.contentChargeList"/>" 
 			       		data-options="rownumbers:true,singleSelect:true,collapsible:false,toolbar:'#subCodeTb',pagination:false,autoRowHeight:false">
 			        <thead>
 			            <tr>
 			                <th data-options="field:'coId',halign:'center',align:'center',width:'8%'"><spring:message code="resc.label.coId"/></th>
-			                <th data-options="field:'cntnId',halign:'center',align:'center',width:'12%'"><spring:message code="resc.label.cntnId"/></th>
-			                <th data-options="field:'useAuthType',halign:'center',align:'center',width:1,hidden:true"><spring:message code="resc.label.useAuthType"/></th>
-			                <th data-options="field:'useAuthTypeDesc',halign:'center',align:'center',width:'15%'"><spring:message code="resc.label.useAuthType"/></th>
-			                <th data-options="field:'useAuthGrpCode',halign:'center',align:'center',width:1,hidden:true"><spring:message code="resc.label.useAuthGrpCode"/></th>
-			                <th data-options="field:'useAuthGrpDesc',halign:'center',align:'center',width:'15%'"><spring:message code="resc.label.useAuthGrpCode"/></th>
-			                <th data-options="field:'crtAuth',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.crt"/></th>
-			                <th data-options="field:'rdAuth',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.read"/></th>			                			                
-			                <th data-options="field:'updtAuth',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.updt"/></th>
-			                <th data-options="field:'delAuth',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.del"/></th>
-			                <th data-options="field:'prntAuth',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.prnt"/></th>
-			                <th data-options="field:'upldAuth',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.upload"/></th>
-			                <th data-options="field:'dnldAuth',halign:'center',align:'center',width:'7%'"><spring:message code="resc.label.download"/></th>
+			                <th data-options="field:'cntnId',halign:'center',align:'center',width:'12%'"><spring:message code="resc.label.cntnId"/></th>			                
+			                <th data-options="field:'cntnName',halign:'center',align:'left',width:'15%'"><spring:message code="resc.label.cntnName"/></th>
+			                <th data-options="field:'userId',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.userId"/></th>
+			                <th data-options="field:'empName',halign:'center',align:'center',width:'15%'"><spring:message code="resc.label.empName"/></th>
+			                <th data-options="field:'deptDesc',halign:'center',align:'left',width:'20%'"><spring:message code="resc.label.dept"/></th>
+			                <th data-options="field:'dutyDesc',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.dutyDesc"/></th>			                			                
+			                <th data-options="field:'pstnDesc',halign:'center',align:'center',width:'10%'"><spring:message code="resc.label.pstnDesc"/></th>			                
 			            </tr>
 			        </thead>
 			    </table> 
 			</div>   	
 			    <div id="subCodeTb" style="height:auto">    
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendContentAuth()"><spring:message code="resc.btn.add"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modifyContentAuth()"><spring:message code="resc.btn.modify"/></a>
-			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitContentAuth()"><spring:message code="resc.btn.delete"/></a>			                
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="appendContentCharge()"><spring:message code="resc.btn.add"/></a>			        
+			        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeitContentCharge()"><spring:message code="resc.btn.delete"/></a>			                
 			    </div>						   
 			</td>
 		</tr>
