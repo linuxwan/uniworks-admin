@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.MenuMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.MenuInfo"> 
+		<result column="MENU_ID" jdbcType="VARCHAR" property="menuId" /> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="HIGH_MENU_ID" jdbcType="VARCHAR" property="highMenuId" /> 
+		<result column="MENU_DSPL_NAME" jdbcType="VARCHAR" property="menuDsplName" /> 
+		<result column="MENU_LEVEL" jdbcType="INTEGER" property="menuLevel" /> 
+		<result column="MENU_ORD" jdbcType="INTEGER" property="menuOrd" /> 
+		<result column="TOP_URL" jdbcType="VARCHAR" property="topUrl" /> 
+		<result column="LEFT_URL" jdbcType="VARCHAR" property="leftUrl" /> 
+		<result column="BODY_URL" jdbcType="VARCHAR" property="bodyUrl" /> 
+		<result column="CNTN_ID" jdbcType="VARCHAR" property="cntnId" /> 
+		<result column="MENU_DSPL_INDC" jdbcType="VARCHAR" property="menuDsplIndc" /> 
+		<result column="CNTN_LINK_INDC" jdbcType="VARCHAR" property="cntnLinkIndc" /> 
+		<result column="LINK_TYPE" jdbcType="VARCHAR" property="linkType" /> 
+		<result column="LINK_TYPE_NAME" jdbcType="VARCHAR" property="linkTypeName" />
+		<result column="MENU_DESC" jdbcType="VARCHAR" property="menuDesc" /> 
+		<result column="DFLT_MENU_INDC" jdbcType="VARCHAR" property="dfltMenuIndc" /> 
+		<result column="DLGT_MENU_INDC" jdbcType="VARCHAR" property="dlgtMenuIndc" /> 
+		<result column="MY_MENU_SET_INDC" jdbcType="VARCHAR" property="myMenuSetIndc" /> 
+		<result column="ICON_FILE_URL" jdbcType="VARCHAR" property="iconFileUrl" /> 
+		<result column="CRT_DATE" jdbcType="TIMESTAMP" property="crtDate" /> 
+		<result column="CRT_ID" jdbcType="VARCHAR" property="crtId" /> 
+		<result column="CHNG_DATE" jdbcType="TIMESTAMP" property="chngDate" /> 
+		<result column="CHNG_ID" jdbcType="VARCHAR" property="chngId" /> 
+	</resultMap> 
+	
+	<!-- 메뉴 목록을 가져온다. -->
+	<select id="selectByMenuAllList" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select A.MENU_ID, A.CO_ID, A.HIGH_MENU_ID, B.MENU_DSPL_NAME, A.MENU_LEVEL, A.MENU_ORD, A.TOP_URL, A.LEFT_URL, A.BODY_URL,
+		       A.CNTN_ID, A.MENU_DSPL_INDC, A.CNTN_LINK_INDC, A.LINK_TYPE, D.RESC_KEY_VALUE as LINK_TYPE_NAME, A.MENU_DESC, 
+		       A.DFLT_MENU_INDC, A.DLGT_MENU_INDC, A.MY_MENU_SET_INDC, A.ICON_FILE_URL, A.CRT_DATE, A.CRT_ID, A.CHNG_DATE, A.CHNG_ID
+		from   gw.nw020m a 
+			left join gw.nw021m B
+				on B.MENU_ID = A.MENU_ID
+			   and B.CO_ID = A.CO_ID
+		       and B.LOCALE = #{lang,jdbcType=VARCHAR}
+			left join gw.cm002c C 
+		        on C.CO_ID = A.CO_ID
+			   and C.MAJ_CODE = 'CD014'
+		       and C.SUB_CODE = A.LINK_TYPE
+			left join gw.cm003m D
+		        on D.CO_ID = A.CO_ID
+			   and D.RESC_KEy = C.RESC_KEY
+		       and D.LOCALE = #{lang,jdbcType=VARCHAR}
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR} 
+		order by A.MENU_LEVEL, A.HIGH_MENU_ID, A.MENU_ORD   
+	</select>
+</mapper>

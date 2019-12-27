@@ -386,7 +386,7 @@
 	<jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>			
 	<table style="width:98%">
 		<tr>
-			<td colspan="2">
+			<td colspan="2" style="width:100%">
 				<div id="tb" class="easyui-panel" title="" style="width:100%;max-width:100%;padding:5px 5px;"> 
 					<select class="easyui-combobox" id="selCoId" name="selCoId" style="width:20%;" data-options="panelHeight:'auto',label:'<spring:message code="resc.label.coId"/>:',labelWidth:50">
 			    	<c:forEach items="${coList}" var="opt" varStatus="st">
@@ -401,12 +401,12 @@
 			</td>
 		</tr>
 		<tr>		
-			<td style="width:40%">									      		
-				<div class="easyui-panel" title="<spring:message code="resc.label.oganChart"/>" style="padding:10px;height:655px" data-options="toolbor:'#tb'">		
+			<td style="width:30%">									      		
+				<div class="easyui-panel" title="<spring:message code="resc.label.oganChart"/>" style="padding:10px;height:655px;width:100%" data-options="toolbor:'#tb'">		
 					<ul id="oganTree" class="easyui-tree" style="width:100%;"></ul>
        			</div>
 			</td>
-			<td style="width:60%">
+			<td style="width:68%">
 				<div class="easyui-panel" title='<spring:message code="resc.label.oganDesc"/>' style="padding:10px;height:655px">			        						               
 			        <table style="width:100%">			        			        		       
 			        <tr>

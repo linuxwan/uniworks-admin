@@ -11,7 +11,7 @@
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/js/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/locale/easyui-lang-${userSession.lang}.js"></script>
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/js/common.js"></script>
-
+	<script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.serializeObject.js"></script>
     <script type="text/javascript">	
     $(function(){
     	$("#coTree").treegrid({
@@ -139,7 +139,7 @@
         // get the top level nodes
         for(var i=0; i<rows.length; i++){
             var row = rows[i];
-            if (!exists(rows, row._parentId)){
+            if (!exists(rows, row.prntCoCode)){
                 nodes.push({
                     coId: row.coId,
                     coName: row.coName,
@@ -159,8 +159,8 @@
             // get the children nodes
             for(var i=0; i<rows.length; i++){
                 var row = rows[i];
-                if (row._parentId == node.coId){
-                    var child = {coId:row.coId,coName:row.coName,stDate:row.stDate,finDate:row.finDate};
+                if (row.prntCoCode == node.coId){
+                    var child = {coId:row.coId,coName:row.coName,prntCoCode:row.prntCoCode,stDate:row.stDate,finDate:row.finDate};
                     if (node.children){
                         node.children.push(child);
                     } else {
@@ -284,7 +284,8 @@
     	}    	        	
     	
     	if($('#frmCompany').form('enableValidation').form('validate')) {    		
-    		var formData = parseFormHelper('frmCompany');
+    		//var formData = parseFormHelper('frmCompany');
+    		var formData = JSON.stringify($('#frmCompany').serializeObject());
     		
     		$.ajax({
 				type: strMethod,
@@ -316,7 +317,6 @@
     </script>
 </head>
 <body>
-	<form id="frmHr" style="width:98%;">
 	<input type="hidden" id="mode" name="mode" value=""/>			
 	<table style="width:100%">
 		<tr>
@@ -338,8 +338,8 @@
 			        <thead>
 			            <tr>
 			                <th data-options="field:'coId',halign:'center',align:'center',width:100"><spring:message code="resc.label.coId"/></th>
-			                <th data-options="field:'coName',halign:'center',align:'center',width:150"><spring:message code="resc.label.coName"/></th>
-			                <th data-options="field:'prntCoCode',halign:'center',align:'center',width:0"><spring:message code="resc.label.coName"/></th>
+			                <th data-options="field:'coName',halign:'center',align:'left',width:150"><spring:message code="resc.label.coName"/></th>
+			                <th data-options="field:'prntCoCode',halign:'center',align:'center',width:0,hidden:true"><spring:message code="resc.label.parentCompany"/></th>
 			                <th data-options="field:'stDate',halign:'center',align:'center',width:80,formatter:formatDateYYYYMMDD"><spring:message code="resc.label.stDate"/></th>
 			                <th data-options="field:'finDate',halign:'center',align:'center',width:80,formatter:formatDateYYYYMMDD"><spring:message code="resc.label.finDate"/></th>
 			            </tr>
@@ -471,7 +471,6 @@
 			    </div>
 			</td>
 		</tr>
-	</table>
-	</form>	
+	</table>	
 </body>
 </html>

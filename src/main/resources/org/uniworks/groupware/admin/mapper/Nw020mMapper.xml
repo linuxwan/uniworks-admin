@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="org.uniworks.groupware.admin.mapper.Nw020mMapper"> 
+	<resultMap id="BaseResultMap" type="org.uniworks.groupware.admin.domain.Nw020m"> 
+		<result column="MENU_ID" jdbcType="VARCHAR" property="menuId" /> 
+		<result column="CO_ID" jdbcType="VARCHAR" property="coId" /> 
+		<result column="HIGH_MENU_ID" jdbcType="VARCHAR" property="highMenuId" /> 
+		<result column="MENU_DSPL_NAME" jdbcType="VARCHAR" property="menuDsplName" /> 
+		<result column="MENU_LEVEL" jdbcType="INTEGER" property="menuLevel" /> 
+		<result column="MENU_ORD" jdbcType="INTEGER" property="menuOrd" /> 
+		<result column="TOP_URL" jdbcType="VARCHAR" property="topUrl" /> 
+		<result column="LEFT_URL" jdbcType="VARCHAR" property="leftUrl" /> 
+		<result column="BODY_URL" jdbcType="VARCHAR" property="bodyUrl" /> 
+		<result column="CNTN_ID" jdbcType="VARCHAR" property="cntnId" /> 
+		<result column="MENU_DSPL_INDC" jdbcType="VARCHAR" property="menuDsplIndc" /> 
+		<result column="CNTN_LINK_INDC" jdbcType="VARCHAR" property="cntnLinkIndc" /> 
+		<result column="LINK_TYPE" jdbcType="VARCHAR" property="linkType" /> 
+		<result column="MENU_DESC" jdbcType="VARCHAR" property="menuDesc" /> 
+		<result column="DFLT_MENU_INDC" jdbcType="VARCHAR" property="dfltMenuIndc" /> 
+		<result column="DLGT_MENU_INDC" jdbcType="VARCHAR" property="dlgtMenuIndc" /> 
+		<result column="MY_MENU_SET_INDC" jdbcType="VARCHAR" property="myMenuSetIndc" /> 
+		<result column="ICON_FILE_URL" jdbcType="VARCHAR" property="iconFileUrl" /> 
+		<result column="CRT_DATE" jdbcType="TIMESTAMP" property="crtDate" /> 
+		<result column="CRT_ID" jdbcType="VARCHAR" property="crtId" /> 
+		<result column="CHNG_DATE" jdbcType="TIMESTAMP" property="chngDate" /> 
+		<result column="CHNG_ID" jdbcType="VARCHAR" property="chngId" /> 
+	</resultMap> 
+
+	<!-- 목록 조회 --> 
+	<select id="select" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  MENU_ID, CO_ID, HIGH_MENU_ID, MENU_DSPL_NAME, MENU_LEVEL, MENU_ORD, TOP_URL, LEFT_URL, BODY_URL, 
+				CNTN_ID, MENU_DSPL_INDC, CNTN_LINK_INDC, LINK_TYPE, MENU_DESC, DFLT_MENU_INDC, DLGT_MENU_INDC, MY_MENU_SET_INDC, 
+				ICON_FILE_URL, CRT_DATE, CRT_ID, CHNG_DATE, CHNG_ID
+		from   nw020m
+	</select> 
+ 
+	<!-- 상세 조회 --> 
+	<select id="selectByPrimaryKey" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+		select  MENU_ID, CO_ID, HIGH_MENU_ID, MENU_DSPL_NAME, MENU_LEVEL, MENU_ORD, TOP_URL, LEFT_URL, BODY_URL, 
+				CNTN_ID, MENU_DSPL_INDC, CNTN_LINK_INDC, LINK_TYPE, MENU_DESC, DFLT_MENU_INDC, DLGT_MENU_INDC, MY_MENU_SET_INDC, 
+				ICON_FILE_URL, CRT_DATE, CRT_ID, CHNG_DATE, CHNG_ID
+		from   nw020m
+		where  CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and  MENU_ID	=	#{menuId,jdbcType=VARCHAR} 
+	</select> 
+ 
+	<!-- 등록 --> 
+	<insert id="insert" parameterType="org.uniworks.groupware.admin.domain.Nw020m"> 
+		insert	into nw020m(MENU_ID, CO_ID, HIGH_MENU_ID, MENU_DSPL_NAME, MENU_LEVEL, MENU_ORD, TOP_URL, LEFT_URL, BODY_URL, 
+				CNTN_ID, MENU_DSPL_INDC, CNTN_LINK_INDC, LINK_TYPE, MENU_DESC, DFLT_MENU_INDC, DLGT_MENU_INDC, MY_MENU_SET_INDC, 
+				ICON_FILE_URL, CRT_DATE, CRT_ID, CHNG_DATE, CHNG_ID) 
+		values (#{menuId,jdbcType=VARCHAR},#{coId,jdbcType=VARCHAR},#{highMenuId,jdbcType=VARCHAR},#{menuDsplName,jdbcType=VARCHAR},#{menuLevel,jdbcType=INTEGER},#{menuOrd,jdbcType=INTEGER},#{topUrl,jdbcType=VARCHAR} 
+			,#{leftUrl,jdbcType=VARCHAR},#{bodyUrl,jdbcType=VARCHAR},#{cntnId,jdbcType=VARCHAR},#{menuDsplIndc,jdbcType=VARCHAR},#{cntnLinkIndc,jdbcType=VARCHAR},#{linkType,jdbcType=VARCHAR} 
+			,#{menuDesc,jdbcType=VARCHAR},#{dfltMenuIndc,jdbcType=VARCHAR},#{dlgtMenuIndc,jdbcType=VARCHAR},#{myMenuSetIndc,jdbcType=VARCHAR},#{iconFileUrl,jdbcType=VARCHAR},#{crtDate,jdbcType=TIMESTAMP} 
+			,#{crtId,jdbcType=VARCHAR},#{chngDate,jdbcType=TIMESTAMP},#{chngId,jdbcType=VARCHAR}) 
+	</insert> 
+ 
+	<!-- 수정 --> 
+	<update id="updateByPrimaryKey" parameterType="org.uniworks.groupware.admin.domain.Nw020m"> 
+		update	nw020m 
+		<trim prefix="SET" suffixOverrides=","> 
+			<if test="highMenuId != null">HIGH_MENU_ID= #{highMenuId,jdbcType=VARCHAR},</if> 
+			<if test="menuDsplName != null">MENU_DSPL_NAME= #{menuDsplName,jdbcType=VARCHAR},</if> 
+			<if test="menuLevel != null">MENU_LEVEL= #{menuLevel,jdbcType=INTEGER},</if> 
+			<if test="menuOrd != null">MENU_ORD= #{menuOrd,jdbcType=INTEGER},</if> 
+			<if test="topUrl != null">TOP_URL= #{topUrl,jdbcType=VARCHAR},</if> 
+			<if test="leftUrl != null">LEFT_URL= #{leftUrl,jdbcType=VARCHAR},</if> 
+			<if test="bodyUrl != null">BODY_URL= #{bodyUrl,jdbcType=VARCHAR},</if> 
+			<if test="cntnId != null">CNTN_ID= #{cntnId,jdbcType=VARCHAR},</if> 
+			<if test="menuDsplIndc != null">MENU_DSPL_INDC= #{menuDsplIndc,jdbcType=VARCHAR},</if> 
+			<if test="cntnLinkIndc != null">CNTN_LINK_INDC= #{cntnLinkIndc,jdbcType=VARCHAR},</if> 
+			<if test="linkType != null">LINK_TYPE= #{linkType,jdbcType=VARCHAR},</if> 
+			<if test="menuDesc != null">MENU_DESC= #{menuDesc,jdbcType=VARCHAR},</if> 
+			<if test="dfltMenuIndc != null">DFLT_MENU_INDC= #{dfltMenuIndc,jdbcType=VARCHAR},</if> 
+			<if test="dlgtMenuIndc != null">DLGT_MENU_INDC= #{dlgtMenuIndc,jdbcType=VARCHAR},</if> 
+			<if test="myMenuSetIndc != null">MY_MENU_SET_INDC= #{myMenuSetIndc,jdbcType=VARCHAR},</if> 
+			<if test="iconFileUrl != null">ICON_FILE_URL= #{iconFileUrl,jdbcType=VARCHAR},</if> 
+			<if test="crtDate != null">CRT_DATE= #{crtDate,jdbcType=TIMESTAMP},</if> 
+			<if test="crtId != null">CRT_ID= #{crtId,jdbcType=VARCHAR},</if> 
+			<if test="chngDate != null">CHNG_DATE= #{chngDate,jdbcType=TIMESTAMP},</if> 
+			<if test="chngId != null">CHNG_ID= #{chngId,jdbcType=VARCHAR},</if> 
+		</trim> 
+		where	MENU_ID	=	#{menuId,jdbcType=VARCHAR} 
+		  and	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+	</update> 
+ 
+	<!-- 삭제 --> 
+	<delete id="deleteByPrimaryKey" parameterType="java.util.Map"> 
+		delete	from nw020m 
+		where	CO_ID	=	#{coId,jdbcType=VARCHAR} 
+		  and	MENU_ID	=	#{menuId,jdbcType=VARCHAR} 
+	</delete> 
+</mapper>

@@ -59,21 +59,8 @@ public class CompanyController {
 		map.put("adminType", adminType);
 		map.put("coId",  coId);
 		
-		List<Hr001m> list = hr001mService.getHr001mList(map);
-		List<Hr001m> returnList = new ArrayList<Hr001m>();
-		
-		for(Hr001m hr001m : list) {
-			if (!hr001m.getPrntCoCode().equalsIgnoreCase("root")) {
-				Hr001mExtend hr001mExtend = new Hr001mExtend();
-				BeanUtils.copyProperties(hr001m, hr001mExtend);
-				hr001mExtend.set_parentId(hr001m.getPrntCoCode());
-				returnList.add(hr001mExtend);
-			} else {
-				returnList.add(hr001m);
-			}
-		}
-		
-		return new ResponseEntity<List<Hr001m>>(returnList, HttpStatus.OK);
+		List<Hr001m> list = hr001mService.getHr001mList(map);		
+		return new ResponseEntity<List<Hr001m>>(list, HttpStatus.OK);
 	}
 	
 	/**
