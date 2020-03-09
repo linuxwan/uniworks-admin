@@ -46,4 +46,10 @@ public interface Nw021mMapper {
 	 * @return 
 	 */ 
 	int deleteByPrimaryKey(Map<String, Object> map); 
+	/**
+	 * Menu Id에 해당하는 다국어 메뉴정보를 모두 삭제한다.
+	 * @param map
+	 * @return
+	 */
+	int delete(Map<String, Object> map);
 } 

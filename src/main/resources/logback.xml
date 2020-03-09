@@ -30,7 +30,7 @@
     </appender>
  
     <logger name="org.springframework" level="debug" />
-    <logger name="org.apache.ibatis" level="debug"/>
+    <logger name="org.mybatis" level="debug"/>
     <logger name="org.uniworks.groupware.admin" level="debug"/>
     
     <!-- Query Loggers -->

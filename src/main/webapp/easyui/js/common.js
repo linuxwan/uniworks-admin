@@ -741,7 +741,6 @@ function getCurrentDate(indc) {
  * @returns
  */
 function fnCheckedRadioButtonById(id) {
-	//$('#' + id).radiobutton({ checked: true});
 	$('#' + id).radiobutton('check');
 }
 

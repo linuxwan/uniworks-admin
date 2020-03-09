@@ -5,7 +5,8 @@
  */ 
 package org.uniworks.groupware.admin.service; 
 
-import java.util.List; 
+import java.util.List;
+import java.util.Map;
 
 import org.uniworks.groupware.admin.domain.Nw021m; 
 
@@ -43,5 +44,12 @@ public interface Nw021mService {
 	 * 
 	 * @return 
 	 */ 
-	int deleteNw021m(java.util.Map<String,Object> map); 
+	int deleteNw021mByPrimary(java.util.Map<String,Object> map); 
+	
+	/**
+	 * Menu Id에 해당하는 다국어 메뉴정보를 모두 삭제한다.
+	 * @param map
+	 * @return
+	 */
+	int deleteNw020m(Map<String, Object> map);
 } 

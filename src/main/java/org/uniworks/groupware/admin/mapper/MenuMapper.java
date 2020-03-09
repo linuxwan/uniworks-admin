@@ -21,4 +21,10 @@ public interface MenuMapper {
 	 * @return
 	 */
 	List<MenuInfo> selectByMenuAllList(Map<String, Object> map);
+	/**
+	 * 메뉴 정보를 가져온다.
+	 * @param map
+	 * @return
+	 */
+	MenuInfo selectByMenuId(Map<String, Object> map);
 }

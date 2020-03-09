@@ -5,16 +5,15 @@
  */ 
 package org.uniworks.groupware.admin.service.internal; 
 
-import java.util.List; 
-import java.util.Map; 
+import java.util.List;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired; 
-import org.springframework.stereotype.Service; 
-import org.springframework.transaction.annotation.Propagation; 
-import org.springframework.transaction.annotation.Transactional; 
-
-import org.uniworks.groupware.admin.domain.Nw021m; 
-import org.uniworks.groupware.admin.mapper.Nw021mMapper; 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.uniworks.groupware.admin.domain.Nw021m;
+import org.uniworks.groupware.admin.mapper.Nw021mMapper;
 import org.uniworks.groupware.admin.service.Nw021mService; 
 
 @Service 
@@ -67,7 +66,18 @@ public class Nw021mServiceImpl implements Nw021mService {
 	 */ 
 	@Override 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED) 
-	public int deleteNw021m(Map<String, Object> map) { 
+	public int deleteNw021mByPrimary(Map<String, Object> map) { 
 		return nw021mMapper.deleteByPrimaryKey(map); 
 	} 
+	
+	/**
+	 * Menu Id에 해당하는 다국어 메뉴정보를 모두 삭제한다.
+	 * @param map
+	 * @return
+	 */
+	@Override 
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public int deleteNw020m(Map<String, Object> map) {
+		return nw021mMapper.delete(map);
+	}
 } 

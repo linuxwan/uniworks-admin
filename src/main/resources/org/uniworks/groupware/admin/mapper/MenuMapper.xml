@@ -12,6 +12,7 @@
 		<result column="LEFT_URL" jdbcType="VARCHAR" property="leftUrl" /> 
 		<result column="BODY_URL" jdbcType="VARCHAR" property="bodyUrl" /> 
 		<result column="CNTN_ID" jdbcType="VARCHAR" property="cntnId" /> 
+		<result column="CNTN_NAME" jdbcType="VARCHAR" property="cntnName" />
 		<result column="MENU_DSPL_INDC" jdbcType="VARCHAR" property="menuDsplIndc" /> 
 		<result column="CNTN_LINK_INDC" jdbcType="VARCHAR" property="cntnLinkIndc" /> 
 		<result column="LINK_TYPE" jdbcType="VARCHAR" property="linkType" /> 
@@ -30,7 +31,7 @@
 	<!-- 메뉴 목록을 가져온다. -->
 	<select id="selectByMenuAllList" parameterType="java.util.Map" resultMap="BaseResultMap">
 		select A.MENU_ID, A.CO_ID, A.HIGH_MENU_ID, B.MENU_DSPL_NAME, A.MENU_LEVEL, A.MENU_ORD, A.TOP_URL, A.LEFT_URL, A.BODY_URL,
-		       A.CNTN_ID, A.MENU_DSPL_INDC, A.CNTN_LINK_INDC, A.LINK_TYPE, D.RESC_KEY_VALUE as LINK_TYPE_NAME, A.MENU_DESC, 
+		       A.CNTN_ID, E.CNTN_NAME, A.MENU_DSPL_INDC, A.CNTN_LINK_INDC, A.LINK_TYPE, D.RESC_KEY_VALUE as LINK_TYPE_NAME, A.MENU_DESC, 
 		       A.DFLT_MENU_INDC, A.DLGT_MENU_INDC, A.MY_MENU_SET_INDC, A.ICON_FILE_URL, A.CRT_DATE, A.CRT_ID, A.CHNG_DATE, A.CHNG_ID
 		from   gw.nw020m a 
 			left join gw.nw021m B
@@ -45,7 +46,36 @@
 		        on D.CO_ID = A.CO_ID
 			   and D.RESC_KEy = C.RESC_KEY
 		       and D.LOCALE = #{lang,jdbcType=VARCHAR}
+		    left outer join gw.nw031m E
+                on A.CNTN_ID = E.CNTN_ID
+			   and E.LOCALE = #{lang,jdbcType=VARCHAR}
 		where  A.CO_ID = #{coId,jdbcType=VARCHAR} 
 		order by A.MENU_LEVEL, A.HIGH_MENU_ID, A.MENU_ORD   
+	</select>
+	
+	<!-- 메뉴 정보를 가져온다. -->
+	<select id="selectByMenuId" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select A.MENU_ID, A.CO_ID, A.HIGH_MENU_ID, B.MENU_DSPL_NAME, A.MENU_LEVEL, A.MENU_ORD, A.TOP_URL, A.LEFT_URL, A.BODY_URL,
+		       A.CNTN_ID, E.CNTN_NAME, A.MENU_DSPL_INDC, A.CNTN_LINK_INDC, A.LINK_TYPE, D.RESC_KEY_VALUE as LINK_TYPE_NAME, A.MENU_DESC, 
+		       A.DFLT_MENU_INDC, A.DLGT_MENU_INDC, A.MY_MENU_SET_INDC, A.ICON_FILE_URL, A.CRT_DATE, A.CRT_ID, A.CHNG_DATE, A.CHNG_ID
+		from   gw.nw020m a 
+			left join gw.nw021m B
+				on B.MENU_ID = A.MENU_ID
+			   and B.CO_ID = A.CO_ID
+		       and B.LOCALE = #{lang,jdbcType=VARCHAR}
+			left join gw.cm002c C 
+		        on C.CO_ID = A.CO_ID
+			   and C.MAJ_CODE = 'CD014'
+		       and C.SUB_CODE = A.LINK_TYPE
+			left join gw.cm003m D
+		        on D.CO_ID = A.CO_ID
+			   and D.RESC_KEy = C.RESC_KEY
+		       and D.LOCALE = #{lang,jdbcType=VARCHAR}
+		    left outer join gw.nw031m E
+                on A.CNTN_ID = E.CNTN_ID
+			   and E.LOCALE = #{lang,jdbcType=VARCHAR}
+		where  A.CO_ID = #{coId,jdbcType=VARCHAR} 
+          and  A.MENU_ID = #{menuId,jdbcType=VARCHAR} 
+		order by A.MENU_LEVEL, A.HIGH_MENU_ID, A.MENU_ORD     ;	
 	</select>
 </mapper>

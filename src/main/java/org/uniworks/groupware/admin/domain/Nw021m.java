@@ -17,7 +17,7 @@ import org.pojomatic.annotations.AutoProperty;
  * 관련 테이블 : Nw021m
  */ 
 @XmlRootElement(name = "nw021m") 
-@XmlType(propOrder = {"menuId", "coId", "locale", "menuDsplName"}) 
+@XmlType(propOrder = {"menuId", "coId", "locale", "menuDsplName", "menuDesc"}) 
 @AutoProperty 
 @SuppressWarnings("serial") 
 public class Nw021m implements Serializable {  
@@ -25,6 +25,7 @@ public class Nw021m implements Serializable {
 	private String coId; 
 	private String locale; 
 	private String menuDsplName; 
+	private String menuDesc;
 
 	public void setMenuId(String menuId) { 
 		this.menuId = menuId; 
@@ -50,6 +51,12 @@ public class Nw021m implements Serializable {
 	public String getMenuDsplName() { 
 		return this.menuDsplName; 
 	} 
+	public String getMenuDesc() {
+		return menuDesc;
+	}
+	public void setMenuDesc(String menuDesc) {
+		this.menuDesc = menuDesc;
+	}
 	@Override 
 	public boolean equals(Object o) {  
 		return Pojomatic.equals(this, o); 

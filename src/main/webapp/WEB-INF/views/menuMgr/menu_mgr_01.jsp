@@ -12,6 +12,7 @@
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/locale/easyui-lang-${userSession.lang}.js"></script>
     <script type="text/javascript" src="<c:out value="${contextPath}"/>/easyui/js/common.js"></script>
 	<script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.serializeObject.js"></script>
+	<script type="text/javascript" src="<c:out value="${contextPath}"/>/plugin/jquery.popupwindow.js"></script>
     <script type="text/javascript">
     var coId = '';
     $(function(){    	
@@ -36,6 +37,13 @@
     		}
     	});  
     });
+    
+    /**
+     * 팝업창에서 호출하기 위한 함수(refresh)
+     */
+     function reload() {
+     	$('#menuTree').treegrid('reload');
+     }
     
     function convert(rows){
         function exists(rows, _parentId){        	
@@ -133,10 +141,95 @@
 		            </c:forEach>		            	
 		        	</select>		        			           
 										
-					<a href="#" id="btnAdd" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"><spring:message code="resc.btn.enrollment"/></a>
-					<a href="#" id="btnModify" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"><spring:message code="resc.btn.modify"/></a>		
-	        		<a href="#" id="btnDelete" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"><spring:message code="resc.btn.delete"/></a>
-				</div>  			
+					<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()"><spring:message code="resc.btn.add"/></a>
+					<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="modify()"><spring:message code="resc.btn.modify"/></a>			        
+				    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()"><spring:message code="resc.btn.delete"/></a>				
+				</div>  
+				<script type="text/javascript">			    			    
+			    function append() {    	
+			    	var coId = $("#selCoId").combobox('getValue');
+			    	var rowData = $('#menuTree').treegrid('getSelected');			    	
+			    	if (rowData == null) {
+			    		var title = '<spring:message code="resc.label.confirm"/>';
+			    		var msg = '<spring:message code="resc.msg.noSelectPrntMenu"/>';
+			    		alertMsg(title, msg);
+						return;
+			    	}
+			    	
+			    	var menuLevel = rowData.menuLevel + 1;
+					var url = "<c:out value="${contextPath}"/>/admin/menuMgr/menuAddForm?coId=" + coId + "&highMenuId=" + rowData.menuId + "&menuLevel=" + menuLevel; 						
+					
+					var cnt = ${fn:length(langList)};	
+					var formHeight = 420 + (30 * cnt);
+					
+					$.popupWindow(url, { name: 'menuAddForm', height: formHeight, width: 750 });	
+			    }
+			    
+			    function modify() {
+			    	var coId = $("#selCoId").combobox('getValue');
+			    	var rowData = $('#menuTree').treegrid('getSelected');
+			    	if (rowData == null) {
+			    		var title = '<spring:message code="resc.label.confirm"/>';
+			    		var msg = '<spring:message code="resc.msg.noSelectMenu"/>';
+			    		alertMsg(title, msg);
+						return;
+			    	}
+			    	
+			    	var url = "<c:out value="${contextPath}"/>/admin/menuMgr/menuModifyForm?coId=" + coId + "&menuId=" + rowData.menuId;
+			    	
+			    	var cnt = ${fn:length(langList)};	
+					var formHeight = 420 + (30 * cnt);
+					
+					$.popupWindow(url, { name: 'menuModifyForm', height: formHeight, width: 750 });	
+			    }
+			    
+			    function removeit() {
+			    	var coId = $("#selCoId").combobox('getValue');	
+			    	var rowData = $('#menuTree').treegrid('getSelected');	    	
+			    	
+			    	if (rowData == null) {
+			    		var title = '<spring:message code="resc.label.confirm"/>';
+			    		var msg = '<spring:message code="resc.msg.noSelectMenu"/>';
+			    		alertMsg(title, msg);
+						return;
+			    	}
+			    	
+			    	msg = '<spring:message code="resc.msg.confirmDel"/>';    		
+		    		$.messager.confirm(title, msg, function(r) {
+		    			if (r) {
+		    				deleteMenu();
+		    			}
+		    		});
+			    }
+			    
+			    function deleteMenu() {
+			    	var coId = $("#selCoId").combobox('getValue');	
+			    	var rowData = $('#menuTree').treegrid('getSelected');		    				    	
+			    
+					var strUrl = "<c:out value="${contextPath}"/>/rest/menu/delete/coId/" + coId + "/menuId/" + rowData.menuId;
+			    	
+			    	$.ajax({
+						type: 'DELETE',
+						url: strUrl,						 				
+						dataType: 'json',						
+						beforeSend: function(xhr) {
+							xhr.setRequestHeader("Accept", "application/json");
+					        xhr.setRequestHeader("Content-Type", "application/json");
+							//데이터를 전송하기 전에 헤더에 csrf값을 설정한다.					
+							xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+						},  				
+						success : function(msg) {
+							var title = '<spring:message code="resc.label.confirm"/>';		    			
+							$.messager.alert(title, msg, "info",  function(){
+								reload();
+							});						
+						},
+						error : function(xhr, status, error) {
+							console.log("error: " + status);
+						}
+		    		});
+			    }
+			    </script>
 			</td>			
 		</tr>
 	</table>

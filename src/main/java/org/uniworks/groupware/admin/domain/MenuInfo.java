@@ -19,7 +19,7 @@ import org.pojomatic.annotations.AutoProperty;
  *
  */
 @XmlRootElement(name = "MenuInfo") 
-@XmlType(propOrder = {"coId", "menuId", "highMenuId", "menuDsplName", "menuLevel", "menuOrd", "topUrl", "leftUrl", "bodyUrl", "cntnId", "menuDsplIndc", "cntnLinkIndc", "linkType", "linkTypeName", "menuDesc", "dfltMenuIndc", "dlgtMenuIndc", "myMenuSetIndc", "iconFileUrl", "crtDate", "crtId", "chngDate", "chngId"}) 
+@XmlType(propOrder = {"coId", "menuId", "highMenuId", "menuDsplName", "menuLevel", "menuOrd", "topUrl", "leftUrl", "bodyUrl", "cntnId", "cntnName", "menuDsplIndc", "cntnLinkIndc", "linkType", "linkTypeName", "menuDesc", "dfltMenuIndc", "dlgtMenuIndc", "myMenuSetIndc", "iconFileUrl", "crtDate", "crtId", "chngDate", "chngId"}) 
 @AutoProperty 
 @SuppressWarnings("serial")
 public class MenuInfo implements Serializable {
@@ -33,6 +33,7 @@ public class MenuInfo implements Serializable {
 	private String leftUrl;
 	private String bodyUrl;
 	private String cntnId;
+	private String cntnName;
 	private String menuDsplIndc;
 	private String cntnLinkIndc;
 	private String linkType;
@@ -106,6 +107,12 @@ public class MenuInfo implements Serializable {
 	}
 	public void setCntnId(String cntnId) {
 		this.cntnId = cntnId;
+	}
+	public String getCntnName() {
+		return cntnName;
+	}
+	public void setCntnName(String cntnName) {
+		this.cntnName = cntnName;
 	}
 	public String getMenuDsplIndc() {
 		return menuDsplIndc;

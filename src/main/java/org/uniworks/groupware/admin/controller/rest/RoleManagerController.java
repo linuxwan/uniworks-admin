@@ -174,13 +174,14 @@ public class RoleManagerController {
 		
 		for (CommonCode commonCode : langList) {
 			String roleName = StringUtil.null2void((String)model.get("roleName_" + commonCode.getRescKeyValue()));	
-			String roleDetl = StringUtil.null2void((String)model.get("roleDetl_" + commonCode.getRescKeyValue()));	
+			String roleDetl = StringUtil.null2void((String)model.get("roleDetl_" + commonCode.getRescKeyValue()));
+			map.put("locale", commonCode.getRescKeyValue());
 			if (defaultLang.equalsIgnoreCase(commonCode.getRescKeyValue())) {
 				nw106m.setRoleName(roleName);
 				nw106m.setRoleDetl(roleDetl);
 				Nw107m tempNw107m = nw107mService.getNw107m(map);
-				if (tempNw107m != null && tempNw107m.getRole().equalsIgnoreCase(nw106m.getRole())) {
-					result = messageSource.getMessage("resc.msg.roleExist", null, response.getLocale());
+				if (tempNw107m != null && !tempNw107m.getRole().equalsIgnoreCase(nw106m.getRole())) {
+					result = messageSource.getMessage("resc.msg.roleLangNotExist", null, response.getLocale());
 					return new ResponseEntity<String>(result, HttpStatus.OK);
 				}
 			}

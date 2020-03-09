@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.uniworks.groupware.admin.domain.MenuInfo;
+import org.uniworks.groupware.admin.domain.Nw020m;
+import org.uniworks.groupware.admin.domain.Nw021m;
 
 /**
  * @author Park Chung Wan
@@ -21,4 +23,35 @@ public interface MenuService {
 	 * @return
 	 */
 	List<MenuInfo> getMenuAllList(Map<String, Object> map);
+	
+	/**
+	 * 메뉴 정보를 가져온다.
+	 * @param map
+	 * @return
+	 */
+	MenuInfo selectByMenuId(Map<String, Object> map);
+	
+	/**
+	 * 메뉴를 등록한다. 
+	 * @param nw020m
+	 * @param nw021mList
+	 * @return
+	 */
+	int addMenu(Nw020m nw020m, List<Nw021m> nw021mList);
+	
+	/**
+	 * 메뉴 정보를 수정한다.
+	 * @param nw020m
+	 * @param nw021m
+	 * @return
+	 */
+	int modifyMenu(Nw020m nw020m, List<Nw021m> nw021mList);
+	
+	/**
+	 * 메뉴 삭제
+	 * @param coId
+	 * @param menuId
+	 * @return
+	 */
+	int deleteMenu(String coId, String menuId);
 }
