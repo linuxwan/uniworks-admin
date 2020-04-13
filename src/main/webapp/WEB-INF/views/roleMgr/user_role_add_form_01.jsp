@@ -50,7 +50,7 @@
     
     function fnSelectUser() {
     	var coId = $("#coId").textbox('getValue');					    	
-		var url = "<c:out value="${contextPath}"/>/admin/userSearchForm";						
+		var url = "<c:out value="${contextPath}"/>/admin/userSearchForm?targetObj=user";						
 		
 		$.popupWindow(url, { name: "userId", height: 500, width: 450 });		
     }        
@@ -58,6 +58,12 @@
     function fnSelectUserClear(userId) {
     	$('#userName').textbox('setValue', '');
     }
+    
+    //직원 검색 PopUp 창에서 호출하는 Function
+  	function callBackEmpInfo(targetObj, userId, userName) {
+  		$('#' + targetObj + "Name").textbox('setValue', userName + "(" + userId + ")");
+    	$('#' + targetObj + "Id").val(userId);    	
+  	}
     </script>
 </head>
 <body>

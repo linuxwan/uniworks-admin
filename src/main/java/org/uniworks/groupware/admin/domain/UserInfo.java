@@ -8,7 +8,6 @@ package org.uniworks.groupware.admin.domain;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
