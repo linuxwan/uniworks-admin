@@ -1,3 +1,55 @@
+.f-row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+.f-column {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+}
+.f-full {
+  -webkit-box-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+.f-noshrink {
+  -webkit-flex-shrink: 0;
+  -moz-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+.f-content-center {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+}
+.f-vcenter {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+}
 * {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -126,6 +178,7 @@
   background: linear-gradient(to bottom,#EFF5FF 0,#E0ECFF 100%);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EFF5FF,endColorstr=#E0ECFF,GradientType=0);
+  color: #0E2D5F;
 }
 .panel-body {
   background-color: #ffffff;
@@ -143,6 +196,7 @@
   border: 1px solid #95B8E7;
   overflow: hidden;
   background: #F4F4F4;
+  color: #000000;
 }
 .panel-footer-noborder {
   border-width: 1px 0 0 0;
@@ -659,7 +713,7 @@
   margin: 0 4px 0 24px;
 }
 .l-btn-icon-left .l-btn-icon {
-  left: 4px;
+  left: 6px;
 }
 .l-btn-icon-right .l-btn-text {
   margin: 0 24px 0 4px;
@@ -885,8 +939,8 @@
 .textbox-label {
   display: inline-block;
   width: 80px;
-  height: 22px;
-  line-height: 22px;
+  height: 30px;
+  line-height: 30px;
   vertical-align: middle;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -911,7 +965,7 @@
 .textbox-icon {
   display: inline-block;
   width: 18px;
-  height: 16px;
+  height: 20px;
   overflow: hidden;
   vertical-align: top;
   background-position: center center;
@@ -943,6 +997,27 @@
   border-color: #ffa8a8;
   background-color: #fff3f3;
 }
+.form-floating-label.form-field .textbox-text {
+  padding: 0;
+}
+.form-floating-label.form-field .textbox-label {
+  position: relative;
+  height: 20px;
+  line-height: 20px;
+  transition: all .3s;
+  font-size: 12px;
+  z-index: 9;
+}
+.form-floating-label.form-field-empty .textbox-label {
+  cursor: text;
+  font-size: 12px;
+  transform: translate(0,25px);
+}
+.form-floating-label.form-field-empty.form-field-focused .textbox-label {
+  cursor: default;
+  font-size: 12px;
+  transform: translate(0,0);
+}
 .passwordbox-open {
   background: url('images/passwordbox_open.png') no-repeat center center;
 }
@@ -971,7 +1046,7 @@
 }
 .combo-arrow {
   width: 18px;
-  height: 16px;
+  height: 20px;
   overflow: hidden;
   display: inline-block;
   vertical-align: top;
@@ -1741,7 +1816,7 @@
 }
 .datagrid-header-row,
 .datagrid-row {
-  height: 25px;
+  height: 32px;
 }
 .datagrid-header td,
 .datagrid-body td,
@@ -2179,11 +2254,12 @@
 }
 .calendar-header {
   position: relative;
-  height: 28px;
+  height: 36px;
 }
 .calendar-title {
   text-align: center;
-  height: 28px;
+  height: 36px;
+  line-height: 36px;
 }
 .calendar-title span {
   position: relative;
@@ -2214,19 +2290,19 @@
   border-radius: 5px 5px 5px 5px;
 }
 .calendar-prevmonth {
-  left: 20px;
+  left: 30px;
   background: url('images/calendar_arrows.png') no-repeat -16px 0;
 }
 .calendar-nextmonth {
-  right: 20px;
+  right: 30px;
   background: url('images/calendar_arrows.png') no-repeat -32px 0;
 }
 .calendar-prevyear {
-  left: 3px;
+  left: 10px;
   background: url('images/calendar_arrows.png') no-repeat 0px 0;
 }
 .calendar-nextyear {
-  right: 3px;
+  right: 10px;
   background: url('images/calendar_arrows.png') no-repeat -48px 0;
 }
 .calendar-body {
@@ -2359,6 +2435,15 @@
   color: #000000;
   border: 1px solid #ffab3f;
   padding: 0;
+}
+.calendar-info {
+  background-color: #E0ECFF;
+  font-size: 28px;
+  height: 70px;
+  padding: 10px 20px;
+}
+.calendar-info .year {
+  font-size: 14px;
 }
 .datebox-calendar-inner {
   height: 250px;
@@ -2545,7 +2630,7 @@
 }
 .searchbox-button {
   width: 18px;
-  height: 16px;
+  height: 20px;
   overflow: hidden;
   display: inline-block;
   vertical-align: top;
@@ -2626,8 +2711,8 @@
   position: absolute;
   display: block;
   outline: none;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   top: 50%;
   margin-top: -10px;
   margin-left: -10px;
@@ -2988,7 +3073,7 @@
   padding: 0;
 }
 .tree-node {
-  height: 18px;
+  height: 26px;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -3112,8 +3197,8 @@
 .tree-editor {
   border: 1px solid #95B8E7;
   font-size: 12px;
-  height: 16px;
-  line-height: 16px;
+  height: 26px;
+  line-height: 26px;
   padding: 0 4px;
   margin: 0;
   width: 80px;
@@ -3134,6 +3219,10 @@
 .tree-node-selected {
   background: #ffe48d;
   color: #000000;
+}
+.tree-node-disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 .tree-node-hidden {
   display: none;
@@ -3179,8 +3268,6 @@
   border-style: solid;
   border-width: 6px;
   border-color: transparent;
-  _border-color: tomato;
-  _filter: chroma(color=tomato);
 }
 .tooltip-arrow {
   display: none \9;
@@ -3331,6 +3418,12 @@
 .switchbutton-readonly {
   cursor: default;
 }
+.switchbutton:focus {
+  -moz-box-shadow: 0 0 3px 0 #bbb;
+  -webkit-box-shadow: 0 0 3px 0 #bbb;
+  box-shadow: 0 0 3px 0 #bbb;
+  outline: none;
+}
 .radiobutton {
   position: relative;
   border: 2px solid #ffab3f;
@@ -3403,8 +3496,8 @@
   color: #0E2D5F;
 }
 .sidemenu .accordion-header .panel-title {
-  height: 16px;
-  line-height: 16px;
+  height: 30px;
+  line-height: 30px;
   color: #0E2D5F;
 }
 .sidemenu .accordion-header:hover {
@@ -3421,7 +3514,7 @@
   background: #ffe48d;
 }
 .sidemenu .tree-node {
-  height: 18px;
+  height: 40px;
 }
 .sidemenu .tree-title {
   margin: 11px 0;
@@ -3447,6 +3540,12 @@
   left: 50%;
   margin-left: -8px;
 }
+.sidemenu-collapsed .collapsed-icon {
+  position: relative;
+}
+.sidemenu-collapsed .collapsed-text {
+  text-align: center;
+}
 .sidemenu-tooltip {
   padding: 0;
   margin: 0 -12px;
@@ -3458,4 +3557,97 @@
 .sidemenu-tooltip .tooltip-arrow-outer,
 .sidemenu-tooltip .tooltip-arrow {
   display: none;
+}
+.timepicker-panel .clock-wrap {
+  position: relative;
+}
+.timepicker-panel .clock {
+  position: relative;
+  background: #E0ECFF;
+  color: #0E2D5F;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+.timepicker-panel .clock .item {
+  width: 32px;
+  height: 32px;
+  left: 50%;
+  top: 50%;
+  margin-left: -16px;
+  margin-top: -16px;
+  position: absolute;
+  user-select: none;
+  border-radius: 50%;
+  z-index: 9;
+  cursor: pointer;
+}
+.timepicker-panel .clock .item-selected {
+  background: #ffab3f;
+  color: #000000;
+}
+.timepicker-panel .clock .hand {
+  width: 2px;
+  bottom: 50%;
+  left: 50%;
+  margin-left: -1px;
+  top: 20px;
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+  position: absolute;
+  will-change: transform;
+  z-index: 1;
+  background-color: #ffab3f;
+}
+.timepicker-panel .clock .hand .drag {
+  top: -16px;
+  left: -15px;
+  width: 4px;
+  height: 4px;
+  border: 14px solid #ffab3f;
+  position: absolute;
+  box-sizing: content-box;
+  border-radius: 100%;
+  background-color: #000000;
+}
+.timepicker-panel .clock .center {
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  background-color: #ffab3f;
+}
+.timepicker-panel .panel-header {
+  height: 70px;
+  border: 0;
+  font-size: 36px;
+  position: relative;
+}
+.timepicker-panel .body {
+  position: relative;
+}
+.timepicker-panel .panel-header .ampm {
+  font-size: 16px;
+  padding-left: 10px;
+  position: absolute;
+  right: 20px;
+}
+.timepicker-panel .panel-header .sep {
+  opacity: 0.6;
+}
+.timepicker-panel .panel-header .title {
+  cursor: pointer;
+  opacity: 0.6;
+}
+.timepicker-panel .panel-header .title:hover {
+  opacity: 1.0;
+}
+.timepicker-panel .panel-header .title-selected,
+.timepicker-panel .panel-header .title-selected:hover {
+  cursor: default;
+  opacity: 1.0;
 }
