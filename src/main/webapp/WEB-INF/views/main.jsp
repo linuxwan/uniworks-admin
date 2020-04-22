@@ -27,7 +27,11 @@
     		        location.href = '<c:out value="${contextPath}"/>/changeLanguage?lang=' + newValue;
     		    }
     		});       		    		    		
-    	});                	    	    	    	    	    	
+    	});            
+    	
+    	function resizeTopIframe(dynheight) {  
+        	document.getElementById("frmMain").style.height = parseInt(dynheight) + 'px';  
+        } 
     </script>
         
 </head>
@@ -68,8 +72,8 @@
 		    </div>
         </div>
         <div id="content" data-options="region:'center',fit:true,title:'Main Title',iconCls:'icon-ok'" style="width:100%;">
-        	<div data-options="border:false,plain:true">
-				<iframe id="frmMain" name="frmMain" width="100%" src="" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation allow-pointer-lock" seamless="seamless"></iframe>
+        	<div style="height:auto" data-options="border:false,plain:true">
+				<iframe id="frmMain" name="frmMain" width="100%"  src="" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation allow-pointer-lock" seamless="seamless" style="overflow-x:hidden; overflow:auto; width:100%;"></iframe>
 			</div>
         </div>
     </div>    

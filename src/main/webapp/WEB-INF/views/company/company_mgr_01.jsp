@@ -314,11 +314,21 @@
     		return false;
     	}    	
     }
+    
+    function callResize()  
+    {  
+        var height = document.body.scrollHeight;
+        document.getElementById("companyList").style.height = parseInt(height) * 0.8 + 'px';
+        document.getElementById("detailView").style.height = parseInt(height) * 0.8 + 'px';
+        parent.resizeTopIframe(height);  
+	} 
+    
+    window.onload = callResize;
     </script>
 </head>
 <body>
 	<input type="hidden" id="mode" name="mode" value=""/>			
-	<table style="width:100%">
+	<table id="companyList" style="width:100%;height:100vh;">
 		<tr>
 			<td style="width:40%">				
        			<table id="coTree" title="<spring:message code="resc.label.companyMgr"/>" class="easyui-treegrid" style="width:100%;height:100%"
@@ -356,10 +366,10 @@
 				</div>  			
 			</td>
 			<td style="width:60%">
-				<div class="easyui-panel" title="" style="width:100%;padding:10px 10px;">
+				<div id="detailView" class="easyui-panel" title="" style="width:100%;height:100vh;padding:10px 10px;">
 			        <form id="frmCompany">			
 			        <jsp:include page="/WEB-INF/views/include/hidden_type_01.jsp"></jsp:include>        
-			        <table style="width:100%">
+			        <table style="width:100%;">
 			        <tr>
 			        	<td style="width:50%;padding:0px 10px;">			        	
 				            <div style="margin-bottom:10px">

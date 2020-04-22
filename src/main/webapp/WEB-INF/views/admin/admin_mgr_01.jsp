@@ -105,11 +105,20 @@
 		
 		return data;
 	}
+    
+    function callResize()  
+    {  
+        var height = document.body.scrollHeight;
+        document.getElementById("adminList").style.height = parseInt(height) * 0.8 + 'px';
+        parent.resizeTopIframe(height);  
+	} 
+    
+    window.onload = callResize;
     </script>
 </head>
-<body style="height:97vh;width:98%;">
+<body style="width:99%;">
 	<input type="hidden" id="mode" name="mode" value=""/>		
-    <table id="adminList" class="easyui-datagrid" style="width:100%;height:100%" 		        
+    <table id="adminList" class="easyui-datagrid" style="width:100%;height:100vh;" 		        
        		title="<spring:message code="resc.label.adminList"/>" 
        		data-options="rownumbers:true, singleSelect:true, toolbar:'#tb', pagination:true, autoRowHeight:false, pageSize:20">
         <thead>
