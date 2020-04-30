@@ -39,7 +39,7 @@
     <div style="margin:0px 0;"></div>
     <div class="easyui-layout" style="width:100%;height:100%;">
         <div data-options="region:'north'" style="height:50px;"></div>
-        <div data-options="region:'south',split:true" style="height:50px;"><div style="padding:8px;" align="center">Copyright(c) 2019 Park Chung Wan. All Right Reserved.</div></div>
+        <div data-options="region:'south',split:true" style="height:50px;"><div style="padding:8px;" align="center">Copyright(c) 2020 Park Chung Wan. All Right Reserved.</div></div>
         <div data-options="region:'east',split:true" title="<spring:message code="resc.msg.welcome" />" style="width:10%;">
         	<div id="user" class="easyui-panel" title="${userSession.adminId}" style="width:100%;height:auto;border:false;padding:1px" data-options="border:false">
 				<a href="<c:out value="${contextPath}"/>/logout" class="easyui-linkbutton" style="width:100%"><spring:message code="resc.btn.logout"/></a>

@@ -131,7 +131,7 @@
     	
     	switch(boardType) {
     		case 'B01':	//댓글게시판
-    			fnCheckedRadioButtonById("rplyIndcN"); fnDisabledRadioButtonById('rplyIndc', false);   	
+    			fnCheckedRadioButtonById("rplyIndcN"); fnDisabledRadioButtonById('rplyIndc', true);   	
     			fnCheckedRadioButtonById("cmntIndcY"); fnDisabledRadioButtonById('cmntIndc', true);
     			fnCheckedRadioButtonById("apprIndcN"); fnDisabledRadioButtonById('apprIndc', true);
     			fnCheckedRadioButtonById("evalIndcN"); fnDisabledRadioButtonById('evalIndc', false);
