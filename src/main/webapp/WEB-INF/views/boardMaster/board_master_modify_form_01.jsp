@@ -44,9 +44,9 @@
     					fnDisabledCheckBoxById('company_${company.coId}', true);    					
     				} 	   
     				
-    				if (registCompany.indexOf('${company.coId}') > -1 && coId != '${company.coId}') {
-    					fnCheckedCheckBoxById('company_${company.coId}');
-    					fnDisabledCheckBoxById('company_${company.coId}', false);
+    				if (registCompany.indexOf('${company.coId}') == -1 && coId != '${company.coId}') {
+    					fnUnCheckedCheckBoxById('company_${company.coId}');
+    					fnDisabledCheckBoxById('company_${company.coId}', false);    					
     				}
                 	</c:forEach>                         	                	
     			}
