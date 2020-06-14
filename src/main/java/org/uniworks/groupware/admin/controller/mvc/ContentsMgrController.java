@@ -412,21 +412,13 @@ public class ContentsMgrController {
 	@RequestMapping(value = "/contentsMgr/contentSearchForm", method = RequestMethod.GET)
 	public ModelAndView roleSearchForm(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("contentsMgr/content_search_form_01");
-		String targetObj = StringUtil.null2void(request.getParameter("targetObj"));
+		String typeCodeName = StringUtil.null2void(request.getParameter("typeCodeName"));
 		
 		//Session 정보를 가져온다.		
 		UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
-				
-		Map<String, Object> map = new HashMap<String, Object>();
-		//지원 언어 목록 체크
-		map.put("coId", userSession.getCoId());
-		map.put("lang", userSession.getLang());
-		map.put("majCode", "CD023"); //컨텐츠 검색 항목(CD023)
-		map.put("orderBy", "rescKey");	//코드 정렬 방법 셋팅
-		List<CommonCode> searchTypeList = commonService.getCommonSubCodeList(map);	
-		
-		mav.addObject("searchTypeList", searchTypeList);
-		mav.addObject("targetObj", targetObj);
+	
+		mav.addObject("userSession", userSession);
+		mav.addObject("typeCodeName", typeCodeName);
 		return mav;
 	}
 }

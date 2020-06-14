@@ -50,7 +50,7 @@
 		});	 
     	
     	$('#btnSelectContent').bind('click', function(){
-    		
+    		fnSelectTypeCode('cntnId');
     	});    	
     	
     	$('#cntnLinkIndcY').radiobutton({
@@ -73,7 +73,13 @@
     	fnCheckedRadioButtonById("cntnLinkIndcN");
     	fnCheckedRadioButtonById("dlgtMenuIndcN");
     	fnCheckedRadioButtonById("myMenuSetIndcN");
-    });                   
+    });  
+    
+    function fnSelectTypeCode(typeCodeName) {
+    	var coId = '${menuInfo.coId}';
+		var url = "<c:out value="${contextPath}"/>/admin/contentsMgr/contentSearchForm?coId=" + coId + "&typeCodeName=" + typeCodeName;						
+		$.popupWindow(url, { name: typeCodeName, height: 460, width: 400 });		
+    }     
     </script>
 </head>
 <body>
@@ -193,8 +199,7 @@
 	            </td>
 	            <td style="width:50%;padding:0px 10px;">			        		            
 		            <div style="margin-bottom:10px" >
-		                <input class="easyui-textbox" id="cntnName" name="cntnName" style="width:60%" value="" data-options="label:'<spring:message code="resc.label.cntnId"/>:',labelWidth:120">
-		                <input type="hidden" id="cntnId" name="cntnId"/>		                
+		                <input class="easyui-textbox" id="cntnId" name="cntnId" style="width:70%" value="" data-options="label:'<spring:message code="resc.label.cntnId"/>:',labelWidth:120">	                
 		                <a href="#" id="btnSelectContent" class="easyui-linkbutton" style="width:80px"><spring:message code="resc.btn.cntnSelect"/></a>
 		            </div>
 	            </td>
