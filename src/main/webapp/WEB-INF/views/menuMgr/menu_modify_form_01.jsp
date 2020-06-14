@@ -182,8 +182,8 @@
 	            <td style="width:50%;padding:0px 10px;">			        		            
 		            <div style="margin-bottom:10px" >
 		                <input class="easyui-textbox" id="cntnName" name="cntnName" style="width:60%" value="${menuInfo.cntnName}" data-options="label:'<spring:message code="resc.label.cntnId"/>:',labelWidth:120">
-		                <input type="hidden" id="userId" name="cntnId" value="${menuInfo.cntnId}"/>		                
-		                <a href="javascript:fnSelectContents()" id="btnSelectContent" class="easyui-linkbutton" style="width:80px"><spring:message code="resc.btn.cntnSelect"/></a>
+		                <input type="hidden" id="cntnId" name="cntnId" value="${menuInfo.cntnId}"/>		                
+		                <a href="#" id="btnSelectContent" class="easyui-linkbutton" style="width:80px"><spring:message code="resc.btn.cntnSelect"/></a>
 		            </div>
 	            </td>
 	        </tr>
