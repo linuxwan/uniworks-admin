@@ -58,24 +58,14 @@ public class SessionCheckInterceptor extends HandlerInterceptorAdapter {
 				//response.sendRedirect(redirectUrl);
 			}
 		}
-<<<<<<< HEAD
 
         super.postHandle(request, response, handler, modelAndView);
         if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor postHandle end");
     }
- 
+  
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
     	if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor afterCompletion start");
-		
-=======
-        super.postHandle(request, response, handler, modelAndView);
-        if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor postHandle end");
-    }
- 
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {		
->>>>>>> branch 'master' of https://github.com/linuxwan/uniworks-admin.git
         super.afterCompletion(request, response, handler, ex);
         if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor afterCompletion end");
     }
