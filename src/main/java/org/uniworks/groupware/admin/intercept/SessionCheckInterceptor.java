@@ -47,22 +47,25 @@ public class SessionCheckInterceptor extends HandlerInterceptorAdapter {
 	 
 	@Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        super.postHandle(request, response, handler, modelAndView);
-    }
- 
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-    	if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor afterCompletion start");
+		if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor postHandle start");
     	UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
     	String url = request.getRequestURI();
     	logger.debug("SessionCheckInterceptor afterCompletion url : " + url);
     	if (url.indexOf("loginForm") > -1 || url.indexOf("logout") > -1) {			
 			if (userSession != null) {
-				if (logger.isDebugEnabled()) logger.debug("userSession not null : SessionCheckInterceptor afterCompletion end");
+				if (logger.isDebugEnabled()) logger.debug("userSession not null : SessionCheckInterceptor postHandle end");
 				//String redirectUrl = ApplicationConfigReader.get("webAppRoot") + "/main";
 				//response.sendRedirect(redirectUrl);
 			}
 		}
+
+        super.postHandle(request, response, handler, modelAndView);
+        if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor postHandle end");
+    }
+ 
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    	if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor afterCompletion start");
 		
         super.afterCompletion(request, response, handler, ex);
         if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor afterCompletion end");
