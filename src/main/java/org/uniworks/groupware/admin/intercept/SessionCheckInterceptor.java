@@ -50,7 +50,7 @@ public class SessionCheckInterceptor extends HandlerInterceptorAdapter {
 		if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor postHandle start");
     	UserSession userSession = (UserSession) WebUtils.getSessionAttribute(request, "userSession");
     	String url = request.getRequestURI();
-    	logger.debug("SessionCheckInterceptor afterCompletion url : " + url);
+    	logger.debug("SessionCheckInterceptor postHandle url : " + url);
     	if (url.indexOf("loginForm") > -1 || url.indexOf("logout") > -1) {			
 			if (userSession != null) {
 				if (logger.isDebugEnabled()) logger.debug("userSession not null : SessionCheckInterceptor postHandle end");
@@ -58,6 +58,7 @@ public class SessionCheckInterceptor extends HandlerInterceptorAdapter {
 				//response.sendRedirect(redirectUrl);
 			}
 		}
+<<<<<<< HEAD
 
         super.postHandle(request, response, handler, modelAndView);
         if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor postHandle end");
@@ -67,6 +68,14 @@ public class SessionCheckInterceptor extends HandlerInterceptorAdapter {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
     	if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor afterCompletion start");
 		
+=======
+        super.postHandle(request, response, handler, modelAndView);
+        if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor postHandle end");
+    }
+ 
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {		
+>>>>>>> branch 'master' of https://github.com/linuxwan/uniworks-admin.git
         super.afterCompletion(request, response, handler, ex);
         if (logger.isDebugEnabled()) logger.debug("SessionCheckInterceptor afterCompletion end");
     }
