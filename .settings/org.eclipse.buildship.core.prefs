@@ -1,2 +1,13 @@
-#Fri Nov 24 14:13:09 KST 2017
+arguments=
+auto.sync=false
+build.scans.enabled=false
+connection.gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
 connection.project.dir=
+eclipse.preferences.version=1
+gradle.user.home=C\:/Users/linux/.gradle
+java.home=C\:/01.devdk/jdk/jdk8u402-b06
+jvm.arguments=
+offline.mode=false
+override.workspace.settings=true
+show.console.view=false
+show.executions.view=false
